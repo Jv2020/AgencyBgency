@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%
 String ifurl = request.getServletPath();  //프로젝트의 경로값만 가져옴
-// System.out.println(ifurl);
+ System.out.println(ifurl);
 
 if (ifurl.contains("aboutus.jsp")){
 %>
@@ -13,11 +13,14 @@ if (ifurl.contains("aboutus.jsp")){
 
 <!-- exhibit -->
 <% 
-if (ifurl.contains("exhibit.jsp")){
+if (ifurl.substring(8).contains("exhibit")){
 %>
-<h2>현재전시</h2>
+<h2 id="ex-title" >현재전시</h2>
 <%
-}	
+}else{%>
+	<h2 id="ex-title"></h2>
+<%
+}
 %>		
 
 <!-- schedule -->
@@ -70,15 +73,14 @@ if (ifurl.contains("join.jsp")){
 <%
 }	
 %>
-
 <!-- Reservation -->
 <% 
 if (ifurl.contains("reserv.jsp")){
 %>
 <h2>예매하기</h2>
 <%
-}	
-%>	
+}   
+%>
 	
 
 
