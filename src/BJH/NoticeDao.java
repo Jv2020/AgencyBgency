@@ -15,14 +15,14 @@ public class NoticeDao {
 	private static NoticeDao noticedao = new NoticeDao();
  	
 	private NoticeDao() {
-		
+		DBConnection.initConnection();
 	}
 	
 	public static NoticeDao getInstance() {
 		return noticedao;
 	}
 	
-	// °øÁö ¸®½ºÆ® 
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® 
 	public List<NoticeDto> getNoticeList(){
 		String sql = " SELECT SEQ, REF, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
 				+ " FROM NOTICE "
@@ -66,7 +66,7 @@ public class NoticeDao {
 		return noticeList;
 
 	}
-	// °øÁö µî·Ï 
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
 	public boolean notice_Insert(NoticeDto dto) {
 		
 		String sql = " INSERT INTO NOTICE(SEQ,REF,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE)"

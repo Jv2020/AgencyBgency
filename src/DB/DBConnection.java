@@ -19,7 +19,7 @@ public class DBConnection {
 	public static Connection getConnection() {		
 		Connection conn = null;		
 		try {
-			//conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.2.38:1521:xe", "hr", "hr");
+//			conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.2.38:1521:xe", "hr", "hr");
 			conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.2.23:1521:xe", "hr", "hr");
 			System.out.println("DB Connection Success!");			
 		} catch (SQLException e) {
