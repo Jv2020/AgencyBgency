@@ -21,23 +21,24 @@
 .frm_cont .frm_line .cont input.ttxt {width:200px;}
 .frm_cont .frm_line .cont input.byear{width:90px;}
 .frm_cont .frm_line .cont input.bday{width:90px;}
-span.alert-birth {color:red; font-size:13px;}
+span.alert-red {color:red; font-size:13px;}
+span.alert-green {color:#3ec629; font-size:13px;}
 .frm_cont .frm_line .cont span.frm-mg {display:inline-block; font-size:20px; margin:0 10px; vertical-align:-7px;}
 .frm_cont .frm_line .cont select {
-	width:90px; height:30px;
-	border-radius:0; outline:0; border:1px solid #a1a1a1;
-	-webkit-appearance: none;
-	-moz-appearance: none; 
-	appearance: none; 
-	background:#fff url(../images/sub/sel_arrow.png) no-repeat 92% 50%;
-	padding-left:10px; font-size:13px; color:#333;
-	margin-right:20px;
+   width:90px; height:30px;
+   border-radius:0; outline:0; border:1px solid #a1a1a1;
+   -webkit-appearance: none;
+   -moz-appearance: none; 
+   appearance: none; 
+   background:#fff url(../images/sub/sel_arrow.png) no-repeat 92% 50%;
+   padding-left:10px; font-size:13px; color:#333;
+   margin-right:20px;
 }
 
 .frm_cont .frm_line .cont select.select-hint {
-	width:450px;
-	font-size:15px;
-	background:#fff url(../images/sub/sel_arrow.png) no-repeat 97% 50%;
+   width:450px;
+   font-size:15px;
+   background:#fff url(../images/sub/sel_arrow.png) no-repeat 97% 50%;
 }
 .frm_cont .frm_line .cont .hint-answer{width:300px; margin-top:8px;}
 
@@ -49,9 +50,9 @@ text-align:center; background:#5f0080; color:#fff; cursor:pointer;}
 
 input[type="radio"] {display:none;}
 input[type="radio"] + label  {
-	
-	display: inline-block;
-	color:#333; font-size:17px; line-height:30px; margin-right:35px;
+   
+   display: inline-block;
+   color:#333; font-size:17px; line-height:30px; margin-right:35px;
     padding-left:30px;
     background: #fff url(../images/sub/ico_radio_off.png) no-repeat 0 center;
     color: #000;
@@ -82,147 +83,212 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 
 <div class="insertFrm">
-	<form method="post" action="">
-		<div class="frm_cont border-btm">
-			<div class="category">
-				<div class="category-radius categoryBox">
-					<span class="on">일반회원</span>
-					<span class="curatorBtn">큐레이터</span>
-				</div>
-			</div>
-			<div class="frm_line clfix">
-				<div class="tit">아이디</div>
-				<div class="cont">
-					<input class="ttext" type="text" value="">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">비밀번호</div>
-				<div class="cont">
-					<input class="ttext" type="password" value="">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">비밀번호 재확인</div>
-				<div class="cont">
-					<input class="ttext" type="password" value="">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">이름</div>
-				<div class="cont">
-					<input class="ttext" type="text" value="">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">연락처</div>
-				<div class="cont">
-					<input type="text" placeholder="-없이 입력해주세요">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">이메일 주소</div>
-				<div class="cont i-mg-none">
-					<input type="text">
-					<span class="frm-mg">@</span>
-					<input type="text">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">생년월일</div>
-				<div class="cont">
-					<input class="byear" type="text" value="" maxlength="4" placeholder="년(4자)">
-				</div>				
-				<div class="cont">
-					<select class="select-month">
-						<option value="월">월</option>
-						<option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option>
-						<option value="11">11</option>
-						<option value="12">12</option>
-					</select>
-				</div>
-				<div class="cont">
-					<input class="bday" type="text" value="" maxlength="2" placeholder="일">	
-					<span class="alert-birth">태어난 년도 4자리를 정확하게 입력하세요.</span>				
-				</div>									
-			</div>
-			
-			<div class="frm_line clfix">
-				<div class="tit">성별</div>
-				<div class="cont">
-					<input type="radio" id="male" name="gnder" checked="checked"/><label for="male"><span></span>남성</label>
-  					<input type="radio" id="female" name="gnder" /><label for="female"><span></span>여성</label>
-				</div>				
-			</div>			
-			
-			<div class="frm_line clfix">
-				<div class="tit">주소</div>
-				<div class="cont">
-					<input type="text" class="frm-address" value=""><span class="frm_adr_btn">주소검색</span><br>
-					<input class="mt08" type="text" value="">
-				</div>				
-			</div>
-			
-			<div class="frm_line clfix" style="padding:40px 0;">
-				<div class="tit floatNone">비밀번호 찾기 질문</div>
-				<div class="cont floatNone mt20">
-					<select class="select-hint">
-						<option value="">기억에 남는 추억의 장소는?</option>
-						<option value="">나의 보물 1호는?</option>
-						<option value="">나의 출신 초등학교는?</option>
-						<option value="">가장 좋아하는 색깔은?</option>
-						<option value="">아버지 성함은?</option>
-					</select><br>
-					<input class="hint-answer" type="text" placeholder="답을 입력해주세요">
-				</div>				
-			</div>		
-			
-			<div class="frm_line curator clfix">
-				<div class="tit">전시관명</div>
-				<div class="cont">
-					<input type="text">
-				</div>				
-			</div>
-			
-			<div class="frm_line curator clfix">
-				<div class="tit">자격증번호</div>
-				<div class="cont">
-					<input type="text">
-				</div>	
-			</div>					
-		</div><!-- frm_cont -->		
-		
-		<button class="reserv_btn">가입하기</button>
-		
-	</form><!-- insertFrm -->
+   <form method="post" action="joinAf.jsp">
+      <div class="frm_cont border-btm">
+         <div class="category">
+            <div class="category-radius categoryBox">
+               <span class="on">일반회원</span>
+               <span class="curatorBtn">큐레이터</span>
+            </div>
+         </div>
+         <div class="frm_line clfix">
+            <div class="tit">아이디</div>
+            <div class="cont idComentColor">
+               <input class="ttext memberId" type="text" maxlength="20" name="memberId" value="" placeholder="아이디">
+               <span class="idCheck"></span>
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">비밀번호</div>
+            <div class="cont pwdComentColor">
+               <input class="ttext memberPwd" type="password" maxlength="20" name="memberPassword" value="">
+               <span class="pwdCheck"></span>
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">비밀번호 재확인</div>
+            <div class="cont pwdReCheckComentColor">
+               <input class="ttext memberPwdReCheck" type="password" maxlength="20" value="">
+               <span class="pwdEqualCheck"></span>
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">이름</div>
+            <div class="cont">
+               <input class="ttext" type="text" name="memberName" value="">
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">연락처</div>
+            <div class="cont phoneComentColor">
+               <input class="memberPhone" type="text" maxlength="11" name="memberPhone" placeholder="-없이 입력해주세요">
+               <span class="phoneCheck"></span>
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">이메일 주소</div>
+            <div class="cont i-mg-none">
+            	<input class="memberEmail" type="hidden" name="memberEmail">
+               <input class="memberEmail1" type="text" name="memberEmail1">
+               <span class="frm-mg">@</span>
+               <input class="memberEmail2" type="text" name="memberEmail2">
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">생년월일</div>
+            <div class="cont">
+               <input class="byear" type="text" name="memberYear" value="" maxlength="4" placeholder="년(4자)">
+            </div>            
+            <div class="cont">
+               <select class="select-month" name="memberMonth">
+                  <option value="월">월</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+               </select>
+            </div>
+            <div class="cont">
+               <input class="bday" type="text" name="memberDate" value="" maxlength="2" placeholder="일">   
+               <span class="">태어난 년도 4자리를 정확하게 입력하세요.</span>            
+            </div>                           
+         </div>
+         
+         <div class="frm_line clfix">
+            <div class="tit">성별</div>
+            <div class="cont">
+               <input type="radio" id="male" name="gnder" checked="checked"/><label for="male"><span></span>남성</label>
+                 <input type="radio" id="female" name="gnder" /><label for="female"><span></span>여성</label>
+            </div>            
+         </div>         
+         
+         <div class="frm_line clfix">
+            <div class="tit">주소</div>
+            <div class="cont">
+               <!-- <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="frm-address" value=""><span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
+               <input id="sample4_detailAddress" placeholder="상세주소" class="mt08" type="text" value=""> -->
+
+               
+               <input type="text" id="sample4_postcode" placeholder="우편번호"> 
+			   <input type="button" onclick="sample4_execDaumPostcode()" class="frm_adr_btn"value="우편번호 찾기"><br>
+			   <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+			   <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
+			   <span id="guide" style="color:#999;display:none"></span>
+			   <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+			   <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
+            </div>            
+         </div>
+         
+         <div class="frm_line clfix" style="padding:40px 0;">
+            <div class="tit floatNone">비밀번호 찾기 질문</div>
+            <div class="cont floatNone mt20">
+               <select class="select-hint">
+                  <option value="">기억에 남는 추억의 장소는?</option>
+                  <option value="">나의 보물 1호는?</option>
+                  <option value="">나의 출신 초등학교는?</option>
+                  <option value="">가장 좋아하는 색깔은?</option>
+                  <option value="">아버지 성함은?</option>
+               </select><br>
+               <input class="hint-answer" type="text" placeholder="답을 입력해주세요">
+            </div>            
+         </div>      
+         
+         <div class="frm_line curator clfix">
+            <div class="tit">전시관명</div>
+            <div class="cont">
+               <input type="text">
+            </div>            
+         </div>
+         
+         <div class="frm_line curator clfix">
+            <div class="tit">자격증번호</div>
+            <div class="cont">
+               <input type="text">
+            </div>   
+         </div>               
+      </div><!-- frm_cont -->      
+      
+      <!-- <input type="submit" value="가입하기"> -->
+      <button class="reserv_btn">가입하기</button>
+      
+   </form><!-- insertFrm -->
 </div><!-- formWrap -->
 
+<script src="../js/join.js"></script>
+
+<!-- 카카오 주소 검색 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
-$('.categoryBox span').click(function(){
-	$('.categoryBox span').removeClass('on');
-	$(this).addClass('on');
-	if($('span.curatorBtn').hasClass('on')){	
-		$('.frm_line.curator').show()		
-	}else{	
-		$('.frm_line.curator').hide()		
-	}
-});
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
 </script>
 
 
-<%@include file ="../include/footer.jsp" %>		
+<%@include file ="../include/footer.jsp" %>      
