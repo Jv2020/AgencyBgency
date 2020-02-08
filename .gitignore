@@ -10,7 +10,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
-src/DB/DBConnection.java
+src/DB/
 local.properties
 .settings/
 .loadpath
