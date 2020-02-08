@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.e_list li{float:left;width:240px;margin-right:30px;margin-top:40px}
+.e_list li:nth-child(4n){margin-right:0px}.e_list li:nth-child(-n+4){margin-top:0}
+.e_list li .img{
+}
+.e_list li .img img{
+	width:100%;
+}
+.listmore{
+	width:240px;
+	height:70px;
+	margin: 70px auto 0;
+	border: 1px solid #5f0080;
+	text-align: center;
+	line-height: 68px;
+	font-size: 18px;
+	color:#5f0080;
+	cursor: pointer;
+}
+.listmore:hover{
+	background: #5f0080;
+	color:white;
+	transition:all 0.2s ease-in-out;
+}
