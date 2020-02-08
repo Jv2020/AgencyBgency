@@ -98,7 +98,7 @@ $(document).ready(function () {
 					<h3>공지사항관리</h3>
 					<div align="right">
 							<input type="button" name="btn_noticeWrite" value="공지등록" onclick="location.href='./noticeWrite.jsp'">							
-							<input type="button" name="btn_noticeDelete" value="삭제" onclick="location.href='./noticeDelete.jsp'">
+							<input type="button" name="btn_noticeDelete" value="삭제" onclick="checkAll();"/>
 					</div>
 					<table border="1">					
 						<col width="70"><col width="100"><col width="400"><col width="100"><col width="200"><col width="20">
@@ -275,6 +275,7 @@ function searchNotice(){
 
 $( document ).ready( function() {
     $( '.checkboxAll' ).click( function() {
+    	for()
       $( '.checkbox' ).prop( 'checked', this.checked );
     } );
   } );
