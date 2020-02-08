@@ -17,14 +17,14 @@ if (lourl.contains("aboutus.jsp")){
 
 <!-- exhibit -->
 <% 
-if (lourl.contains("exhibit.jsp")){
+if (lourl.contains("exhibit")){
 %>
 <div class="location">
 	<span>HOME</span>
 	<img src="../images/sub/lo_arrow.jpg" alt=">">
 	<span>EXHIBIT</span>
 	<img src="../images/sub/lo_arrow.jpg" alt=">">
-	<span>현재전시</span>
+	<span id="loc_depth02">현재전시</span>
 </div>
 <%
 }	
@@ -122,14 +122,12 @@ if (lourl.contains("join.jsp")){
 if (lourl.contains("reserv.jsp")){
 %>
 <div class="location">
-	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
-	<span>RESERVATION</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
-	<span>예매하기</span>
+   <span>HOME</span>
+   <img src="../images/sub/lo_arrow.jpg" alt=">">
+   <span>RESERVATION</span>
+   <img src="../images/sub/lo_arrow.jpg" alt=">">
+   <span>예매하기</span>
 </div>
 <%
-}	
-%>	
-
-
+}   
+%>
