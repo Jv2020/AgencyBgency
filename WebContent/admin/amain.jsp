@@ -5,6 +5,7 @@
     pageEncoding="UTF-8"%>
     
 <% 
+
 //공지사항
 NoticeDao noticeDao = NoticeDao.getInstance();
 //List<NoticeDto> noticeList = noticeDao.getNoticeList();

@@ -15,7 +15,7 @@ public class NoticeDao {
 	private static NoticeDao noticedao = new NoticeDao();
  	
 	private NoticeDao() {
-		DBConnection.initConnection();
+		
 	}
 	
 	public static NoticeDao getInstance() {
