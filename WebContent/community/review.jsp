@@ -3,4 +3,4 @@
 
 <p>준비중입니다.</p>
 
-<%@include file ="../include/footer.jsp" %>		
+<%@include file ="../include/footer.jsp" %>
