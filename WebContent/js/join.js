@@ -2,6 +2,7 @@ $('.categoryBox span').click(function(){
 	// 일반 / 큐레이터 선택
    $('.categoryBox span').removeClass('on');
    $(this).addClass('on');
+   $('.categoryBox span').value = 0;
    
    // 큐레이터 추가 질문	
    if($('span.curatorBtn').hasClass('on')){   

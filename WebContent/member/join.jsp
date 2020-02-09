@@ -1,5 +1,8 @@
 <%@include file ="../include/header.jsp" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%
+request.setCharacterEncoding("UTF-8");
+%>    
 <style>
 .insertFrm {}
 .frm_cont {}
@@ -83,7 +86,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 
 <div class="insertFrm">
-   <form method="post" action="joinAf.jsp">
+
+   <form method="post" action="<%=request.getContextPath()%>/memberinsert">
       <div class="frm_cont border-btm">
          <div class="category">
             <div class="category-radius categoryBox">
@@ -171,8 +175,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix">
             <div class="tit">성별</div>
             <div class="cont">
-               <input type="radio" id="male" name="gnder" checked="checked"/><label for="male"><span></span>남성</label>
-                 <input type="radio" id="female" name="gnder" /><label for="female"><span></span>여성</label>
+               <input type="radio" id="male" name="memberGender" checked="checked" value="male"/><label for="male"><span></span>남성</label>
+               <input type="radio" id="female" name="memberGender" value="female" /><label for="female"><span></span>여성</label>
             </div>            
          </div>         
          
@@ -183,12 +187,12 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
                <input id="sample4_detailAddress" placeholder="상세주소" class="mt08" type="text" value=""> -->
 
                
-               <input type="text" id="sample4_postcode" placeholder="우편번호"> 
+               <input type="text" id="sample4_postcode" name="memberPostCode" placeholder="우편번호"> 
 			   <input type="button" onclick="sample4_execDaumPostcode()" class="frm_adr_btn"value="우편번호 찾기"><br>
-			   <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
+			   <input type="text" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
 			   <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
 			   <span id="guide" style="color:#999;display:none"></span>
-			   <input type="text" id="sample4_detailAddress" placeholder="상세주소">
+			   <input type="text" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
 			   <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
             </div>            
          </div>
@@ -196,28 +200,28 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix" style="padding:40px 0;">
             <div class="tit floatNone">비밀번호 찾기 질문</div>
             <div class="cont floatNone mt20">
-               <select class="select-hint">
-                  <option value="">기억에 남는 추억의 장소는?</option>
-                  <option value="">나의 보물 1호는?</option>
-                  <option value="">나의 출신 초등학교는?</option>
-                  <option value="">가장 좋아하는 색깔은?</option>
-                  <option value="">아버지 성함은?</option>
+               <select class="select-hint" name="memberQuestion">
+                  <option value="1" selected>기억에 남는 추억의 장소는?</option>
+                  <option value="2">나의 보물 1호는?</option>
+                  <option value="3">나의 출신 초등학교는?</option>
+                  <option value="4">가장 좋아하는 색깔은?</option>
+                  <option value="5">아버지 성함은?</option>
                </select><br>
-               <input class="hint-answer" type="text" placeholder="답을 입력해주세요">
+               <input class="hint-answer" type="text" name="memberAnswer" placeholder="답을 입력해주세요">
             </div>            
          </div>      
          
          <div class="frm_line curator clfix">
             <div class="tit">전시관명</div>
             <div class="cont">
-               <input type="text">
+               <input type="text" name="memberExhibit_name">
             </div>            
          </div>
          
          <div class="frm_line curator clfix">
             <div class="tit">자격증번호</div>
             <div class="cont">
-               <input type="text">
+               <input type="text" name="memberCerti_num">
             </div>   
          </div>               
       </div><!-- frm_cont -->      
