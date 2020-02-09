@@ -27,7 +27,7 @@ document.querySelector("#loc_depth02").innerHTML="예정전시";
 document.addEventListener("DOMContentLoaded", function(){
 		$.ajax({
 			// 초기 예정 전시 가져오기 
-			url:"../exhibitinsert",
+			url:"../exhibitlist",
 			data:"choice=future&page=0",
 			type:"get",
 			dataType:"json",
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-							"<a href='ex_detail.jsp?ex=fut&seq="+data[i].seq+"'>"+
+							"<a href='exde?ex=fut&seq="+data[i].seq+"'>"+
 								"<img src='https://www.sangsangmadang.com/feah/temp/2019/201909/3a1d6da3-fa6b-40fe-8637-7e8f078d105c'>"+
 							"</a>"+
 							"</div>"+

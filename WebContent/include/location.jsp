@@ -8,7 +8,7 @@ if (lourl.contains("aboutus.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>ABOUT US</span>
 </div>
 <%
@@ -21,9 +21,9 @@ if (lourl.contains("exhibit")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>EXHIBIT</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span id="loc_depth02">현재전시</span>
 </div>
 <%
@@ -37,7 +37,7 @@ if (lourl.contains("schedule.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>SCHEDULE</span>
 </div>
 <%
@@ -50,9 +50,9 @@ if (lourl.contains("notice.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>COMMUNITY</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>공지사항</span>
 </div>
 <%
@@ -64,9 +64,9 @@ if (lourl.contains("faq.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>COMMUNITY</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>자주하는 질문</span>
 </div>
 <%
@@ -78,10 +78,10 @@ if (lourl.contains("review.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>COMMUNITY</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
-	<span>공지사항</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>리뷰보기</span>
 </div>
 <%
 }	
@@ -94,9 +94,9 @@ if (lourl.contains("login.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>MEMBER</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>LOGIN</span>
 </div>
 <%
@@ -108,9 +108,9 @@ if (lourl.contains("join.jsp")){
 %>
 <div class="location">
 	<span>HOME</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>MEMBER</span>
-	<img src="../images/sub/lo_arrow.jpg" alt=">">
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>회원가입</span>
 </div>
 <%
@@ -123,9 +123,9 @@ if (lourl.contains("reserv.jsp")){
 %>
 <div class="location">
    <span>HOME</span>
-   <img src="../images/sub/lo_arrow.jpg" alt=">">
+   <img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
    <span>RESERVATION</span>
-   <img src="../images/sub/lo_arrow.jpg" alt=">">
+   <img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
    <span>예매하기</span>
 </div>
 <%

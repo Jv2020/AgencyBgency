@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%
 String durl = request.getServletPath();  
-System.out.println(durl);
 // exhibit
 if (durl.substring(8).contains("exhibit")){
 %>

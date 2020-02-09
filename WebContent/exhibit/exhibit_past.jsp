@@ -27,7 +27,7 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 document.addEventListener("DOMContentLoaded", function(){
 		$.ajax({
 			// 지난 전시 가져오기 
-			url:"../exhibitinsert",
+			url:"../exhibitlist",
 			data:"choice=past&page=0",
 			type:"get",
 			dataType:"json",
@@ -40,12 +40,12 @@ document.addEventListener("DOMContentLoaded", function(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-							"<a href='ex_detail.jsp?ex=past&seq="+data[i].seq+"'>"+
+							"<a href='../exdetail?ex=past&seq="+data[i].seq+"'>"+
 								"<img src='https://www.sangsangmadang.com/feah/temp/2019/201909/3a1d6da3-fa6b-40fe-8637-7e8f078d105c'>"+
 							"</a>"+
 							"</div>"+
 							"<div class='txt'>"+
-							"<a href='ex_detail.jsp?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+							"<a href='../exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
 								"<p>"+data[i].content+"</p>"+
 								"<span>"+begindate+" ~ "+enddate+"</span>"+
 							"</div>"+
@@ -96,12 +96,12 @@ function listmore(){
 				document.querySelector("#main-exhibits").innerHTML += 
 					"<li>"+
 						"<div class='img'>" + 
-							"<a href='ex_detail.jsp?ex=past&seq="+data[i].seq+"'>"+
+							"<a href='../exdetail?ex=past&seq="+data[i].seq+"'>"+
 							"<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>"+
 							"</a>"+
 						"</div>"+
 						"<div class='txt'>"+
-							"<a href='ex_detail.jsp?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+							"<a href='../exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
 							"<p>"+data[i].content+"</p>"+
 							"<span>"+begindate+" ~ "+enddate+"</span>"+
 						"</div>"+

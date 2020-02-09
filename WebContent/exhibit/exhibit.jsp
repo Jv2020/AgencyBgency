@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function(){
 // 처음 로딩화면
 $.ajax({
 	// 현재 전시 가져오기 
-	url:"../exhibitinsert",
+	url:"../exhibitlist",
 	data:"choice=now&page=0",
 	type:"get",
 	dataType:"json",
@@ -113,7 +113,7 @@ var choice = document.querySelector("#current").value;
 document.querySelector("#now").onclick = function(){
 $.ajax({
 	// 현재 전시 가져오기 
-	url:"../exhibitinsert",
+	url:"../exhibitlist",
 	data:"choice=now&page=0",
 	type:"get",
 	dataType:"json",
