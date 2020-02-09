@@ -17,6 +17,13 @@ public class MemberDto {
 	
 	public MemberDto() {
 	}
+	
+	public MemberDto(String name, String email, String phone) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.phone = phone;
+	}
 
 	public MemberDto(String id, String password, String name, String email, String address, String birthday,
 			String gender, String phone, String question, String hint, String exhibit_name, String certi_num,

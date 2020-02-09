@@ -16,6 +16,8 @@ System.out.println("로그인에프터: " + mem.toString());
 <title>Insert title here</title>
 </head>
 <body>
-
+<script>
+	location.href="<%=request.getContextPath()%>/main/main.jsp"
+</script>
 </body>
 </html>

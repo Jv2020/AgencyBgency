@@ -117,5 +117,45 @@ public MemberDto login(MemberDto dto) {
 		}
 		return mem;
 	}
+
+	public String memberFindId(MemberDto dto) {
+		String sql = " SELECT ID "
+				+    " FROM MEMBER"
+				+ 	 " WHERE NAME = ? AND EMAIL = ? AND PHONE = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String id = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 memberFindId success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 memberFindId success");
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getEmail());
+			psmt.setString(3, dto.getPhone());
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 memberFindId success");
+			
+			if(rs.next()) {
+				id = rs.getString(1);
+			}
+			System.out.println("4/6 memberFindId success");
+			
+			
+		} catch (SQLException e) {
+			System.out.println("memberFindId fail");
+			e.printStackTrace();
+		}
+		
+		return id;
+		
+	}
+	
 	
 }
