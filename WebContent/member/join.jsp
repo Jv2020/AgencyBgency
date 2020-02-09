@@ -232,8 +232,6 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
    </form><!-- insertFrm -->
 </div><!-- formWrap -->
 
-<script src="../js/join.js"></script>
-
 <!-- 카카오 주소 검색 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
@@ -293,6 +291,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
         }).open();
     }
 </script>
+
+<script src="../js/join.js"></script>
 
 
 <%@include file ="../include/footer.jsp" %>      
