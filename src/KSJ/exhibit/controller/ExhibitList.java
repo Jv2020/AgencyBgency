@@ -3,6 +3,7 @@ package KSJ.exhibit.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,8 +23,13 @@ public class ExhibitList extends HttpServlet {
 
 		String choice = req.getParameter("choice");
 		String spage = req.getParameter("page");
-		int page = Integer.parseInt(spage);
-		
+		int page = 0;
+		if(spage!=null && !spage.equals("")) {
+			page = Integer.parseInt(spage);
+		}
+		if( choice == null || choice.equals("")) {	//null일때 
+			choice = "now";
+		}
 
 		ExhibitDao dao = ExhibitDao.getInstance();
 		List<ExhibitDto> list = dao.getExhibitList(choice, page);
@@ -31,14 +37,19 @@ public class ExhibitList extends HttpServlet {
 		resp.setContentType("application/json");	// 보내는 데이터 형식을 json으로 변환
 		resp.setCharacterEncoding("utf-8");			// 한글을 정상으로 출력
 		
+		String sendLink="";
+		if(choice.equals("now")) {
+			sendLink="exhibit.jsp";
+		}else if(choice.equals("past")) {
+			sendLink="exhibit_past.jsp";
+			
+		}else if(choice.equals("fut")) {
+			sendLink="exhibit_future.jsp";
+		}
 		
-//		System.out.println("Title : " + list.get(0).getTitle());
-//		System.out.println("Content : " + list.get(0).getContent());
-//		System.out.println("time : " + list.get(0).getEx_time());
 		
-		String gson = new Gson().toJson(list);
-		resp.getWriter().write(gson);
-	
+		req.setAttribute("list", list);
+		req.getRequestDispatcher("./exhibit/"+sendLink).forward(req, resp);
 	
 	}
 
