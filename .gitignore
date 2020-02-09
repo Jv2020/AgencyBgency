@@ -3,6 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=java,macos,windows,eclipse
 
 ### Eclipse ###
+build/
 .metadata
 bin/
 tmp/
@@ -152,3 +153,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.gitignore.io/api/java,macos,windows,eclipse
+
+
+
