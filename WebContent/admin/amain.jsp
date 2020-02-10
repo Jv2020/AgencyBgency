@@ -99,7 +99,7 @@ $(document).ready(function () {
 					<h3>공지사항관리</h3>
 					<div align="right">
 							<input type="button" name="btn_noticeWrite" value="공지등록" onclick="location.href='./noticeWrite.jsp'">							
-							<input type="button" name="btn_noticeDelete" value="삭제" onclick="checkAll();"/>
+							<input type="button" name="btn_noticeDelete" id ="btn_noticeDelete" value="삭제" >
 					</div>
 					<table border="1">					
 						<col width="70"><col width="100"><col width="400"><col width="100"><col width="200"><col width="20">
@@ -108,7 +108,7 @@ $(document).ready(function () {
 							<th colspan="2">목록</th>
 							<th>작성자</th>
 							<th>작성일</th>
-							<th><input type="checkbox" name="checkboxAll" class="checkboxAll"></th>
+							<th><input type="checkbox" name="checkboxAll" class="checkboxAll" id="checkboxAll"></th>
 						</tr>
 						
 						<%
@@ -153,7 +153,7 @@ $(document).ready(function () {
 							</td>
 							<td><%=noticeDto.getId() %></td>
 							<td><%=noticeDto.getReg_date() %></td>
-							<td><input type="checkbox" name="checkbox" value="<%=noticeDto.getRef()%>"></td>
+							<td><input type="checkbox" id ="checkbox" name="checkbox" value="<%=noticeDto.getRef()%>"></td>
 						</tr>
 						<% 
 								}
@@ -255,38 +255,81 @@ function goPage(pageNum) {
 	
 	if(word == ""){
 		document.getElementById("noticeSearchChoice").value='sel';
-	}
+	};
 	var linkStr = "amain.jsp?noticePageNumber=" + pageNum;
 	if(choice != 'sel' && word != ""){
 		linkStr = linkStr + "&noticeSearchWord=" + word + "&noticeSearchChoice=" + choice;
-	}
+	};
 	location.href = linkStr;
 	
-}
+};
 function searchNotice(){
 	var choice = $("#noticeSearchChoice").val();
 	var word = $("#noticeSearchWord").val();
 	
 	if(word==""){
 		document.getElementById("noticeSearchChoice").value='sel';
-	}
+	};
 	
 	location.href = "./amain.jsp?noticeSearchWord=" + word + "&noticeSearchChoice=" + choice;
-}
+};
 
-$( document ).ready( function() {
-    $( '.checkboxAll' ).click( function() {
-    	for()
-      $( '.checkbox' ).prop( 'checked', this.checked );
-    } );
-  } );
+
+
+$(document).ready(function(){
+    //최상단 체크박스 클릭
+    $("#checkboxAll").click(function(){
+        //클릭되었으면
+        if($("#checkboxAll").prop("checked")){
+            //input태그의 name이 checkbox인 태그들을 찾아서 checked옵션을 true로 정의
+            $("input[name=checkbox]").prop("checked",true);
+            alert("체크박스 전체선택");
+            //클릭이 안되있으면
+        }else{
+            //input태그의 name이 checkbox인 태그들을 찾아서 checked옵션을 false로 정의
+            $("input[name=checkbox]").prop("checked",false);
+            alert("체크박스 전체해제");
+        }
+    });
+    
+	
+	var checkboxCount = $('input:checkbox[id="checkbox"]:checked').length ;
+	var checkbox_val = $('input:checkbox[id="checkbox"]').val();
+	
+	
+	$("#btn_noticeDelete").click(function(){
+		var noticeDel = confirm("정말로 삭제 하시겠습니까?");
+		var deleteList = new Array();
+	  	if(noticeDel){
+		   $('input[name="checkbox"]:checked').each(function(index, item){
+			   deleteList.push($(item).val());
+		   });// for each end
+			   alert(deleteList);
+				   $.ajax({
+						type : "POST",
+						url : "../BJH/Notice_delete",
+						data : {"deleteList":deleteList},
+						datatype : "json",
+				  		success : function(data) {
+				       		 alert("성공적으로 삭제되었습니다.");
+				        },
+				    	error : function(xhr,status,error) {
+				    		// Ajax error
+				    		alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+
+				    		
+				    	}
+				 
+					});// ajax end
+	  	}// if end
+	}); //click end
+}); //JQuery ready end
+
+
 
 
 </script>
-				<!-- //JH 작업 영역 -->	
-					
-				
-			
+				<!-- //JH 작업 영역  end-->	
 					
 
 			<span></span>

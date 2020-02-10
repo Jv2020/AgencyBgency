@@ -18,7 +18,7 @@ public class ExhibitDao {
 	private static ExhibitDao dao = null;
 	
 	private ExhibitDao() {
-		DBConnection.initConnection();
+		DBConnection.initConnection();	// DB initial connection
 	}
 	
 	public static ExhibitDao getInstance() {
@@ -26,7 +26,7 @@ public class ExhibitDao {
 		return dao;
 	}
 	
-	// 전시회  리스트 불러오기 
+	// 전시회 모든 리스트 불러오기 
 	public List<ExhibitDto> getExhibitList(String choice, int page) {
 		
 		// 현재전시 
@@ -46,7 +46,8 @@ public class ExhibitDao {
 		sql += str;
 		
 		sql += " ORDER BY BEGINDATE DESC, TITLE ASC ) " +
-				" WHERE RNUM >= 1 AND RNUM <= 4 ";
+				" WHERE RNUM >= 1 AND RNUM <= 12 ";
+		// 처음 리스트에 뿌릴 데이터의 개수는 12, 더보기는 8개씩 추가된다.
 	
 		
 		Connection conn = null;
@@ -117,20 +118,9 @@ public class ExhibitDao {
 	
 		// 
 		
-		int setContentSize = 4;	// 초기에 뿌릴데이터 사이즈 
-		int start = setContentSize + count * 4 ;
-		int end = start + 4;
-		/*
-		
-SELECT
-FROM ( SELECT ROW_NUMBER()OVER( ORDER BY BEGINDATE DESC ) AS RNUM,
-	SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM
-	 FROM EXHIBIT
-	 WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE )  
-WHERE RNUM >= 1
- ORDER BY BEGINDATE DESC, TITLE ASC 
-		 */
-	
+		int setContentSize = 12;	// 초기에 뿌릴데이터 사이즈 =12개 
+		int start = setContentSize + count * 8 ;
+		int end = start + 8;
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -174,13 +164,10 @@ WHERE RNUM >= 1
 			DBClose.close(psmt, conn, rs);
 		}
 		
-		System.out.println(list.get(0).getTitle());
 		return list;
 		
-		
-		
-		
 	}
+	
 	// 전시의 개수 구하기 
 	public int getContentNumber(String choice) {
 		
@@ -226,6 +213,53 @@ WHERE RNUM >= 1
 		
 		
 		return size;
+	}
+	
+	// 디테일 보기를 위해 전시 select
+	public ExhibitDto getExDetail(int seq) {
+		
+		String sql = " SELECT * FROM EXHIBIT WHERE SEQ = " + seq;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		ExhibitDto dto = new ExhibitDto();
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				int i=1;
+				dto = new ExhibitDto(rs.getInt(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getInt(i++), 
+									rs.getString(i++), 
+									rs.getString(i++));
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return dto;
+		
 	}
 	
 	

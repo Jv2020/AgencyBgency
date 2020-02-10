@@ -17,6 +17,7 @@ import java.io.Serializable;
     
     CONTACT 	VARCHAR2(20),
     CERTI_NUM 	VARCHAR2(50) NOT NULL
+   	PRICE		NUMBER
 );
  */
 
@@ -34,7 +35,7 @@ public class ExhibitDto implements Serializable {
 		private String contact;
 		private String certi_num;
 		
-		
+		//가격 추가하기 	
 		
 		public ExhibitDto() {
 			super();

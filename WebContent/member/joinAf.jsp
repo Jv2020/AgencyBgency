@@ -1,24 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%
-String email1 = request.getParameter("memberEmail1");
-String email2 = request.getParameter("memberEmail2");
-System.out.println(email1);
-System.out.println(email2);
-String email = email1 + "@" + email2;
-System.out.println(email);
+request.setCharacterEncoding("UTF-8");
+%>
 
-String year = request.getParameter("memberYear");
-String month = request.getParameter("memberMonth");
-String date = request.getParameter("memberDate");
-System.out.println(year);
-System.out.println(month);
-System.out.println(date);
-String birth = year + "-" + month + "-" + date;
-System.out.println(birth);
-
-
-%>    
+<%
+String isS = request.getParameter("isS");
+System.out.println(isS);
+%>
+   
     
 <!DOCTYPE html>
 <html>
@@ -27,6 +18,20 @@ System.out.println(birth);
 <title>Insert title here</title>
 </head>
 <body>
+
+<%
+if(isS.equals("true")){
+%>
+	alert("환영합니다.");
+	location.href="login.jsp";
+<%
+} else { 
+%>	
+	alert("회원가입에 실패하였습니다. 입력사항을 다시 확인하여 주시기 바랍니다.");
+	location.href="join.jsp";
+<%
+}
+%>
 
 </body>
 </html>

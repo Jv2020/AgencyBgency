@@ -22,7 +22,7 @@ public class NoticeDao {
 		return noticedao;
 	}
 	
-	// ���� ����Ʈ 
+	// 占쏙옙占쏙옙 占쏙옙占쏙옙트 
 	public List<NoticeDto> getNoticeList(){
 		String sql = " SELECT SEQ, REF, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
 				+ " FROM NOTICE "
@@ -66,7 +66,7 @@ public class NoticeDao {
 		return noticeList;
 
 	}
-	// ���� ��� 
+	// 占쏙옙占쏙옙 占쏙옙占� 
 	public boolean notice_Insert(NoticeDto dto) {
 		
 		String sql = " INSERT INTO NOTICE(SEQ,REF,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE)"

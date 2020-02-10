@@ -1,0 +1,97 @@
+@charset "UTF-8";
+
+.ex-datail-top{	
+}
+.ex-datail-top .img{
+	position:relative; width:400px; height:575px;
+	float:left;
+}
+.ex-datail-top .img img{
+	position:absolute; top:50%; left:50%;
+	max-width:400px; max-height:575px; 
+	width:auto; height:auto;
+	transform:translate(-50%, -50%);
+	
+}
+.ex-datail-top .cont{
+	float:right;
+	width: 550px;
+	height: 575px;
+	position: relative;
+}
+.ex-datail-top .cont h4{
+	font-size: 35px;
+	margin-bottom: 50px;
+}
+.ex-datail-top .cont p{
+	line-height:60px;
+	font-size: 25px;
+}
+.ex-datail-top .cont p span{ 
+	display: inline-block;
+	width: 110px;
+	color:#868686;
+}
+.ex-datail-top .cont a{
+	display:block; width:240px; height:70px; line-height:68px;
+margin:70px auto 0; border:1px solid #5f0080; background: #5f0080; outline:none;
+font-size:18px; color:#fff; text-align: center;
+position: absolute; bottom:0; right:50%;margin-right:-120px;
+border-radius: 10px;
+}
+
+.ex-datail-mid{
+	border-top: 1px solid #ddd;
+	margin-top:60px;
+	padding: 40px 0;
+	min-height:300px;
+}
+.ex-datail-mid h5 {
+	font-size: 30px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+.ex-datail-mid .txt{
+	font-size: 18px;
+}
+.ex-datail-btm{
+	position:relative;
+	min-height:300px;
+}
+/* .ex-detail-btm:before {position:absolute; top:0; left:50%; margin-left:-960px; width:1920px; height:100px; content:''; background:#ccc;} */
+.ex-datail-btm h5{
+	font-size: 30px;
+	margin-bottom: 50px;
+	text-align: center;
+}
+.ex-datail-btm h5{}
+.ex-datail-btm .cont{}
+.ex-datail-btm .cont ul{}
+.ex-datail-btm .cont ul li{
+	float: left;
+	width: 240px;
+	margin-left:30px;
+	box-shadow: 0 0 10px rgba(0,0,0,0.1);
+	padding:20px;
+	transition:all 0.3s ease-in-out;
+	
+}
+
+.ex-datail-btm .cont ul li:first-child{
+	margin-left:0;
+}
+.ex-datail-btm .cont ul li:hover{
+	transform:translatey(-12px);
+}
+.ex-datail-btm .cont ul li .ex-star{ text-align: center; }
+.ex-datail-btm .cont ul li p{margin:12px 0;
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2; /* 라인수 */
+-webkit-box-orient: vertical;
+word-wrap:break-word; 
+line-height: 24px;
+height: 48px;}
+.ex-datail-btm .cont ul li span{ display:block; color: #868686; text-align: right;}
+	
