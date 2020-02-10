@@ -1,4 +1,3 @@
-<%@page import="NWH.member.dto.MemberDto"%>
 <%@page import="CYH.ReviewDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
@@ -8,14 +7,15 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <%
 //로그인 세션
-MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
-boolean logincheck = false;
+//MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
+boolean logincheck = true;
 
 //로그인 여부 확인하기
-if(loginuser != null){
+/* if( mem != null){
 	logincheck= true;
 } 
-%>
+ */%>
+
 <%
 	// 전시 종류(현재,지난,예정)를 확인해주는 값  
 	String ex = (String)request.getAttribute("ex");
@@ -38,7 +38,7 @@ if(loginuser != null){
 		<p><span>장소</span><%=dto.getPlace() %> </p>
 		<p><span>기간</span><%= dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
 		<p><span>시간	</span><%=dto.getEx_time().substring(0, 2) +":" +dto.getEx_time().substring(2, 4)+" - " + dto.getEx_time().substring(4, 6) +":" +dto.getEx_time().substring(6, 8) %></p>
-		<p><span>관람료</span><%=dto.getPrice() %></p>
+		<p id="price"><span>관람료</span></p>
 		<p><span>문의</span><%= dto.getContact() %></p>
 		<a href="#" id="resvBtn">예매하기</a>
 		<!-- ${pageContext.request.contextPath}/reservation/reserv.jsp -->
@@ -124,6 +124,21 @@ $("#resvBtn").click(function() {
 	
 });
 
+	var total = <%=dto.getPrice()%>;
+	//ex) 7000원 -> 7,000원
+	var len, point, str;	
+	total = total + "";
+	point = total.length % 3 ;
+	len = total.length;
+	
+	totalPrice = total.substring(0, point);
+	while (point < len) {
+		if (totalPrice != "") totalPrice += ",";
+		totalPrice += total.substring(point, point + 3);
+		point += 3;
+	}
+
+$("#price").append(totalPrice+"원");
 
 </script>
 

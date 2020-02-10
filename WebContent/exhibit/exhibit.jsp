@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/exhibit/css/exhibitlist.css">
 
 <%
-// 로그인 세션
+/* // 로그인 세션
 String loginuser = (String)session.getAttribute("loginuser");
 boolean logincheck = false;
 
@@ -14,7 +14,7 @@ boolean logincheck = false;
 if(loginuser != null){
 	logincheck= true;
 }
-System.out.println("id : "+ logincheck);
+System.out.println("id : "+ logincheck); */
 %>
 
 <!-- 데이터 뿌리기 -->
