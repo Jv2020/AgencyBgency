@@ -1,5 +1,14 @@
+<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
+
+<% 
+// 전시 디테일 dto
+ ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
+
+System.out.println("edto title : " + edto.getTitle());
+
+%>	
 <style>
 .reserv_exInfo {width:100%; padding:30px 10px; border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin-bottom:40px;}
 .reserv_exInfo h3 {font-size:25px;}
@@ -50,14 +59,14 @@ input[type="radio"] + label  {
 	display: inline-block;
 	color:#333; font-size:17px; line-height:30px; margin-right:35px;
     padding-left:30px;
-    background: #fff url(../images/sub/ico_radio_off.png) no-repeat 0 center;
+    background: #fff url(/AgencyBgencyy/images/sub/ico_radio_off.png) no-repeat 0 center;
     color: #000;
     cursor: pointer;
     white-space:nowrap;
 }
 
 input[type="radio"]:checked + label {
-    background: #fff url(../images/sub/ico_radio_on.png) no-repeat 0 center;
+    background: #fff url(/AgencyBgencyy/images/sub/ico_radio_on.png) no-repeat 0 center;
 }
 
 .frm_cont .frm_line .cont .qtyBox{width:100%; font-size:0;}
@@ -78,13 +87,13 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 </style>
 
 <div class="reserv_exInfo">
-	<h3>서울 국제 공공 광고제</h3>
+	<h3><%=edto.getTitle() %> </h3>
 	<ul>
-		<li><span>장 &nbsp; 소</span>상상마당 홍대</li>
-		<li><span>기 &nbsp; 간</span>2020-02-01 ~ 2020-05-20</li>
-		<li><span>시 &nbsp; 간</span>09:00 - 17:00</li>
-		<li><span>가 &nbsp; 격</span><i class="ex_price">7,000</i>원</li>
-		<li><span>문 &nbsp; 의</span>02-1234-5678</li>
+		<li><span>장 &nbsp; 소</span><%=edto.getPlace() %></li>
+		<li><span>기 &nbsp; 간</span><%= edto.getBegindate().substring(0, 10)+" ~ "+ edto.getEnddate().substring(0, 10) %></li>
+		<li><span>시 &nbsp; 간</span><%=edto.getEx_time().substring(0, 2) +":" +edto.getEx_time().substring(2, 4)+" - " + edto.getEx_time().substring(4, 6) +":" +edto.getEx_time().substring(6, 8) %></li>
+		<li><span>가 &nbsp; 격</span><input class="ex_price_hidden" type="hidden" value='<%=edto.getPrice() %>'><i class="ex_price"></i>원</li>
+		<li><span>문 &nbsp; 의</span><%=edto.getContact() %></li>
 	</ul>
 </div>
 
@@ -243,52 +252,53 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-
-//입장권 수량 + / - 하기
-function minus(){
-   var qty = $(".qtyBox input").val();
-   qty = (Number(qty)-1); // 수량 -1
-   if(qty>=0){ // 0 이하는 적용 안됨
-	$(".qtyBox input").val(qty);
-	calc();
-   }   
-};
-
-function plus() {
-   var qty = $(".qtyBox input").val();
-   qty = (Number(qty)+1); // 수량 +1
-   if($(".qtyBox input").val()<50){ // 50 이상은 적용 안됨
-	$(".qtyBox input").val(qty);
-	 calc();
-   }
-};
-
-// 총 결제 금액 계산하기
-function calc(){
-	var ex_price = $('i.ex_price').text().replace(",","");
-	var qty = $(".qtyBox input").val();
-	var total = "";	
-	total = (Number(ex_price))*(Number(qty));	
-	$(".totalPrice input").val(total);
-	
-	
-	// ex) 7000원 -> 7,000원
-	var len, point, str;	
-	total = total + "";
-	point = total.length % 3 ;
-	len = total.length;
-	
-	totalPrice = total.substring(0, point);
-	while (point < len) {
-		if (totalPrice != "") totalPrice += ",";
-		totalPrice += total.substring(point, point + 3);
-		point += 3;
-	}
-
-	$(".tprice").text(totalPrice);
-}
-
 $(document).ready(function(){	
+	//입장권 수량 + / - 하기
+	function minus(){
+	   var qty = $(".qtyBox input").val();
+	   qty = (Number(qty)-1); // 수량 -1
+	   if(qty>=0){ // 0 이하는 적용 안됨
+		$(".qtyBox input").val(qty);
+		calc();
+	   }   
+	};
+	
+	function plus() {
+	   var qty = $(".qtyBox input").val();
+	   qty = (Number(qty)+1); // 수량 +1
+	   if($(".qtyBox input").val()<50){ // 50 이상은 적용 안됨
+		$(".qtyBox input").val(qty);
+		 calc();
+	   }
+	};	
+	
+	// 총 결제 금액 계산하기
+	function calc(){
+		var ex_price = $('i.ex_price').text().replace(",","");
+		var qty = $(".qtyBox input").val();
+		var total = "";	
+		total = (Number(ex_price))*(Number(qty));	
+		$(".totalPrice input").val(total);
+		
+		
+		// ex) 7000원 -> 7,000원
+		var len, point, str;	
+		total = total + "";
+		point = total.length % 3 ;
+		len = total.length;
+		
+		totalPrice = total.substring(0, point);
+		while (point < len) {
+			if (totalPrice != "") totalPrice += ",";
+			totalPrice += total.substring(point, point + 3);
+			point += 3;
+		}
+	
+		$(".tprice").text(totalPrice);
+		
+	}
+	
+
 	// 결제하기 누르면 submit / input 값 없을 때 focus 
 	$('button.reserv_btn').click(function(){
 		if( $("input[name=reservName]").val().trim() == "" ){

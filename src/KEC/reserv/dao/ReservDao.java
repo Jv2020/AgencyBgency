@@ -46,6 +46,7 @@ public class ReservDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getReserv success");
 			
+			
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getName());
 			psmt.setString(3, dto.getBirthdate());
@@ -73,13 +74,6 @@ public class ReservDao {
 	}
 	
 	
-	// 총 결제 금액                        전시회 가격     예매 수량
-	public int reservPrice(int price, int qty){		
-		
-		int totalPrice = price * qty;	
-		
-		return totalPrice;		
-	}
 	
 	
 	

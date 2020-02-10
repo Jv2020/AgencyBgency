@@ -7,14 +7,14 @@
 
 <%
 // 로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
-boolean logincheck = false;
-
+/* String loginuser = (String)session.getAttribute("loginuser");
+boolean logincheck = false; */
+/* 
 // 로그인 여부 확인하기
 if(loginuser != null){
 	logincheck= true;
 }
-System.out.println("id : "+ logincheck);
+System.out.println("id : "+ logincheck); */
 %>
 
 <!-- 데이터 뿌리기 -->
