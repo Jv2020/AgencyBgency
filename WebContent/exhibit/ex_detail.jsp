@@ -116,7 +116,7 @@ $("#resvBtn").click(function() {
 			}
 		}else {
 			// 예매 페이지로 이동
-			$("#resvBtn").attr("href", "${pageContext.request.contextPath}/reservation/reserv.jsp");
+			$("#resvBtn").attr("href", "${pageContext.request.contextPath}/reserveset?seq=<%=dto.getSeq()%>");
 		}
 		
 	}
