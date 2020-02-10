@@ -4,8 +4,8 @@
 <%
 	// 여기는 contextPath 
 	String contextPath = request.getContextPath();
-	// 로그인 세션
-	MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+/* 	// 로그인 세션
+	MemberDto mem = (MemberDto)session.getAttribute("loginuser"); */
 %>
 <!DOCTYPE html>
 <html>
@@ -35,7 +35,7 @@
 		<div class="header_top">
 			<div class="inner">
 				<%
-				if( mem == null){	
+				if(((MemberDto)session.getAttribute("loginuser")) == null){	
 				%>
 					<!--로그인세션이 없을때 -->
 					<span><a href="<%=contextPath %>/member/login.jsp">로그인</a></span>
