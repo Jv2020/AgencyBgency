@@ -7,14 +7,15 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <%
 //로그인 세션
-//MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
-boolean logincheck = true;
+MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
+boolean logincheck =false;
 
 //로그인 여부 확인하기
-/* if( mem != null){
+if( loginuser != null){
 	logincheck= true;
 } 
- */%>
+
+%>
 
 <%
 	// 전시 종류(현재,지난,예정)를 확인해주는 값  

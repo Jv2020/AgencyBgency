@@ -46,7 +46,7 @@ public class ExhibitDao {
 		sql += str;
 		
 		sql += " ORDER BY BEGINDATE DESC, TITLE ASC ) " +
-				" WHERE RNUM >= 1 AND RNUM <= 12 ";
+				" WHERE RNUM >= 1 AND RNUM <= ? ";
 		// 처음 리스트에 뿌릴 데이터의 개수는 12, 더보기는 8개씩 추가된다.
 	
 		
@@ -61,6 +61,7 @@ public class ExhibitDao {
 			
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, page);
 			
 			rs = psmt.executeQuery();
 			
@@ -264,6 +265,112 @@ public class ExhibitDao {
 		return dto;
 		
 	}
+	
+	// 이달의 새로운 전시 불러오기
+	public List<ExhibitDto> getNewExhibits(){
+		String sql =  " SELECT * "
+					+ " FROM EXHIBIT "
+					+ " WHERE TO_CHAR(BEGINDATE,'MM') = TO_CHAR(SYSDATE,'MM') ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++),
+												rs.getInt(i++));
+				list.add(dto);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+
+	// 이달의 마감 전시 불러오기
+	public List<ExhibitDto> getEndExhibits(){
+		String sql =  " SELECT * "
+				+ " FROM EXHIBIT "
+				+ " WHERE TO_CHAR(ENDDATE,'MM') = TO_CHAR(SYSDATE,'MM') ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getInt(i++), 
+						rs.getString(i++), 
+						rs.getString(i++),
+						rs.getInt(i++));
+				list.add(dto);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+		
+	}
+	// 이달의 추천전시 불러오기 ( 일단은 랜덤 / 나중에 
+	public ExhibitDto getRecommandExhibit() {
+		
+		return null;
+	
+	}
+
 	
 	
 	
