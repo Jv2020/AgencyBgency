@@ -1,6 +1,14 @@
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 <style>
+.reserv_exInfo {width:100%; padding:30px 10px; border-top:1px solid #ddd; border-bottom:1px solid #ddd; margin-bottom:40px;}
+.reserv_exInfo h3 {font-size:25px;}
+.reserv_exInfo ul {margin-top:20px;}
+.reserv_exInfo ul li {position:relative; font-size:18px; line-height:32px; color:#333; padding-left:20px;}
+.reserv_exInfo ul li:before {position:absolute; top:50%; left:0; margin-top:-2px; content:''; background:#5f0080; width:4px; height:4px;}
+.reserv_exInfo ul li span {display:inline-block; width:120px; letter-spacing:5px; color:#333; font-weight:500;}
+.reserv_exInfo ul li i.ex_price {font-style:normal;}
+
 .insertFrm {}
 .frm_cont {}
 .frm_cont .frm_line {padding:20px 0; border-top:1px solid #ddd;}
@@ -12,6 +20,7 @@
 .frm_cont .frm_line .cont.i-mg-none input {margin:0;}
 .frm_cont .frm_line.reser-birth .cont input{margin-right:0 !important;}
 .frm_cont .frm_line .cont input {border:1px solid #a1a1a1; height:30px; padding:0 10px; margin-right:10px;}
+input.readOnly[type="text"] {background:#f1e9ff;}
 .frm_cont .frm_line .cont input.ttxt {width:200px;}
 .frm_cont .frm_line .cont input.byear{width:90px;}
 .frm_cont .frm_line .cont input.bmonth{width:90px;}
@@ -68,6 +77,16 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 </style>
 
+<div class="reserv_exInfo">
+	<h3>서울 국제 공공 광고제</h3>
+	<ul>
+		<li><span>장 &nbsp; 소</span>상상마당 홍대</li>
+		<li><span>기 &nbsp; 간</span>2020-02-01 ~ 2020-05-20</li>
+		<li><span>시 &nbsp; 간</span>09:00 - 17:00</li>
+		<li><span>가 &nbsp; 격</span><i class="ex_price">7,000</i>원</li>
+		<li><span>문 &nbsp; 의</span>02-1234-5678</li>
+	</ul>
+</div>
 
 <div class="insertFrm">
 	<form method="post" action="">
@@ -75,20 +94,20 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit">예매자 이름</div>
 				<div class="cont">
-					<input name="reservName" class="ttext" type="text" value="김비트" placeholer="김비트" readonly="readonly">
+					<input name="reservName" class="ttext readOnly" type="text" value="김비트" readonly="readonly">
 				</div>				
 			</div>
 			
 			<div class="frm_line reser-birth clfix">
 				<div class="tit">생년월일</div>
 				<div class="cont mr20">
-					<input name="reservYear" class="byear" type="text" value="2000" maxlength="4" readonly="readonly"> 년
+					<input name="reservYear" class="byear readOnly" type="text" value="2000" maxlength="4" readonly="readonly"> 년
 				</div>				
 				<div class="cont mr20">
-					<input name="reservMonth" class="bmonth" type="text" value="09" maxlength="4" readonly="readonly"> 월
+					<input name="reservMonth" class="bmonth readOnly" type="text" value="09" maxlength="4" readonly="readonly"> 월
 				</div>
 				<div class="cont">
-					<input name="reservDay" class="bday" type="text" value="02" maxlength="2" readonly="readonly"> 일			
+					<input name="reservDay" class="bday readOnly" type="text" value="02" maxlength="2" readonly="readonly"> 일			
 				</div>									
 			</div>
 			
@@ -113,8 +132,6 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit">주소</div>
 				<div class="cont">
-					<!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
-					<input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
 					<input name="post" type="text" id="sample4_postcode" readonly="readonly" placeholder="우편번호"> 
 				    <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
 				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" placeholder="도로명주소">
@@ -128,8 +145,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit floatNone">티켓 수령방법</div>
 				<div class="cont floatNone mt20">
-					<input type="radio" id="r-ticket1" name="r-ticket" checked="checked" value="현장수령"/><label for="r-ticket1"><span></span>현장수령</label>
-  					<input type="radio" id="r-ticket2" name="r-ticket" value="배송"/><label for="r-ticket2"><span></span>배송</label>
+					<input type="radio" id="r-ticket1" name="r-ticket" checked="checked" value="direct"/><label for="r-ticket1"><span></span>현장수령</label>
+  					<input type="radio" id="r-ticket2" name="r-ticket" value="delivery"/><label for="r-ticket2"><span></span>배송</label>
 				</div>				
 			</div>
 			
@@ -147,15 +164,16 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit floatNone">결제 수단</div>
 				<div class="cont floatNone mt20">					
-					<input type="radio" id="r-payment1" name="r-payment" value="무통장 입금" checked="checked"><label for="r-payment1"><span></span>무통장 입금</label>
-					<input type="radio" id="r-payment2" name="r-payment" value="신용카드"><label for="r-payment2"><span></span>신용카드</label>
-					<input type="radio" id="r-payment3" name="r-payment" value="휴대폰"><label for="r-payment3"><span></span>휴대폰</label>
-					<input type="radio" id="r-payment4" name="r-payment" value="카카오페이"><label for="r-payment4"><span></span>카카오페이</label>
+					<input type="radio" id="r-payment1" name="r-payment" value="bankDeposit" checked="checked"><label for="r-payment1"><span></span>무통장 입금</label>
+					<input type="radio" id="r-payment2" name="r-payment" value="creditCard"><label for="r-payment2"><span></span>신용카드</label>
+					<input type="radio" id="r-payment3" name="r-payment" value="mobilePay"><label for="r-payment3"><span></span>휴대폰</label>
+					<input type="radio" id="r-payment4" name="r-payment" value="kakaoPay"><label for="r-payment4"><span></span>카카오페이</label>
 				</div>				
 			</div>	
 			
 			<div class="frm_line totalPrice clfix">
-				결제금액<strong>0</strong>원						
+				<input type="hidden" value="0" name="totalprice">
+				결제금액<strong class="tprice">0</strong>원						
 			</div>		
 						
 		</div><!-- frm_cont -->
@@ -232,20 +250,46 @@ function minus(){
    qty = (Number(qty)-1); // 수량 -1
    if(qty>=0){ // 0 이하는 적용 안됨
 	$(".qtyBox input").val(qty);
+	calc();
    }   
 };
 
 function plus() {
    var qty = $(".qtyBox input").val();
    qty = (Number(qty)+1); // 수량 +1
-   if($(".qtyBox input").val()<100){ // 100 이상은 적용 안됨
+   if($(".qtyBox input").val()<50){ // 50 이상은 적용 안됨
 	$(".qtyBox input").val(qty);
+	 calc();
    }
 };
 
-$(document).ready(function(){
+// 총 결제 금액 계산하기
+function calc(){
+	var ex_price = $('i.ex_price').text().replace(",","");
+	var qty = $(".qtyBox input").val();
+	var total = "";	
+	total = (Number(ex_price))*(Number(qty));	
+	$(".totalPrice input").val(total);
 	
-	// 결제하기 누르면 submit 
+	
+	// ex) 7000원 -> 7,000원
+	var len, point, str;	
+	total = total + "";
+	point = total.length % 3 ;
+	len = total.length;
+	
+	totalPrice = total.substring(0, point);
+	while (point < len) {
+		if (totalPrice != "") totalPrice += ",";
+		totalPrice += total.substring(point, point + 3);
+		point += 3;
+	}
+
+	$(".tprice").text(totalPrice);
+}
+
+$(document).ready(function(){	
+	// 결제하기 누르면 submit / input 값 없을 때 focus 
 	$('button.reserv_btn').click(function(){
 		if( $("input[name=reservName]").val().trim() == "" ){
 			alert("이름을 입력해주세요");
@@ -274,6 +318,14 @@ $(document).ready(function(){
 		}else if( $("input[name=reservPhone03]").val().trim() == ""){
 			alert("연락처를 입력해주세요");
 			$("input[name=reservPhone03]").focus();
+			return false;
+		}else if( $("input[name=reservEmail01]").val().trim() == ""){
+			alert("이메일을 입력해주세요");
+			$("input[name=reservEmail01]").focus();
+			return false;
+		}else if( $("input[name=reservEmail02]").val().trim() == ""){
+			alert("이메일을 입력해주세요");
+			$("input[name=reservEmail02]").focus();
 			return false;
 		}else if( $("[name=post]").val().trim() == ""){
 			alert("우편번호를 입력해주세요");

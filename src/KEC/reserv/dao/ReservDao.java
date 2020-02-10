@@ -26,7 +26,7 @@ public class ReservDao {
 		return dao;
 	}
 	
-	// 예매하기 메소드** (INSERT)
+	// 예매하기 (INSERT)** 
 	public boolean getReserv(ReservDto dto){
 		
 		String sql = " INSERT INTO RESERVATION (SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
@@ -65,12 +65,20 @@ public class ReservDao {
 			e.printStackTrace();
 			System.out.println("getReserv fail");
 		} finally {
-			DBClose.close(psmt, conn, null);			
+			DBClose.close(psmt, conn, rs);
 		}
 		
-		return count > 0 ? true:false;
+		return count > 0 ? true:false;	
 		
+	}
+	
+	
+	// 총 결제 금액                        전시회 가격     예매 수량
+	public int reservPrice(int price, int qty){		
 		
+		int totalPrice = price * qty;	
+		
+		return totalPrice;		
 	}
 	
 	
