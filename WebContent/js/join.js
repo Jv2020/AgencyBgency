@@ -122,10 +122,45 @@ phone.addEventListener("blur", function(e){
         	$('.phoneComentColor span').addClass('alert-green');
         	document.querySelector(".phoneCheck").innerHTML = "";
 		}
-	} 
+	}
+});
+
+$('button.sBtn').click(function(){
+	if($('.idComentColor span').hasClass('alert-red') || $('.memberId').val().trim() == "") {
+		alert("아이디를 확인해주세요");
+		$('.memberId').focus();
+		return false;
+	} else if($('.pwdComentColor span').hasClass('alert-red') || $('.memberPwd').val().trim() == "") {
+		alert("비밀번호를 확인해주세요");
+		$('.memberPwd').focus();
+		return false;
+	} else if($('.pwdReCheckComentColor span').hasClass('alert-red') || $('.memberPwdReCheck').val().trim() == "") {
+		alert("비밀번호 재확인을 확인해주세요");
+		$('.memberPwdReCheck').focus();
+		return false;
+	} else if($('input[name=memberName]').val().trim() == "") {
+		alert("이름을 입력해 주세요");
+		$('input[name=memberName]').focus();
+		return false;
+	} else if($('.phoneComentColor span').hasClass('alert-red') || $('.memberPhone').val().trim() == "") {
+		alert("연락처를 확인해주세요");
+		$('.memberPhone').focus();
+		return false;
+	} else if($('input[name=memberEmail1]').val().trim() == "" || $('input[name=memberEmail2]').val().trim() == "" ) {
+		alert("이메일을 확인해주세요");
+		$('.memberEmail1').focus();
+		return false;
+	} else if($('.select-month').val() == "월"){
+		alert("생년월일을 확인해주세요");
+		$('.memberPhone').focus();
+		return false;
+	}
+	
 });
 
 
+
+//<%=request.getContextPath()%>/memberinsert
 
 
 

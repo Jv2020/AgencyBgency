@@ -60,12 +60,22 @@ public class MemberInsert extends HttpServlet {
 		System.out.println("memberPostCode: "+PostCode);
 		System.out.println("memberStreetName: "+StreetName);
 		System.out.println("memberDetailStreetName: "+DetailStreetName);
-		String address = PostCode + "-" + StreetName + "-" + DetailStreetName;
+		String address = PostCode + "/" + StreetName + "/" + DetailStreetName;
 		System.out.println("memberAddress: "+address);
 		System.out.println("memberQuestion: "+question);
 		System.out.println("memberAnswer: "+hint);
 		System.out.println("memberExhibit_name: "+exhibit_name);
 		System.out.println("memberCerti_num: "+certi_num);
+		
+		// date가 한자리 수일때 0 붙여주는 작업
+		if(date.length() < 2) {
+			date = "0"+date;
+		}
+		System.out.println("0작업후 : "+ date);
+		birthday = year + "-" + month + "-" + date;
+		System.out.println("0작업후 : "+ birthday);
+		
+		
 		
 		MemberDao dao = MemberDao.getInstance();
 		
@@ -74,7 +84,6 @@ public class MemberInsert extends HttpServlet {
 		
 	}
 	
-//	
 	
 
 }

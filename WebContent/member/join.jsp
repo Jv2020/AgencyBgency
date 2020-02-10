@@ -87,7 +87,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 <div class="insertFrm">
 
-   <form method="post" action="<%=request.getContextPath()%>/memberinsert">
+   <form method="post" action="">
       <div class="frm_cont border-btm">
          <div class="category">
             <div class="category-radius categoryBox">
@@ -137,7 +137,6 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix">
             <div class="tit">이메일 주소</div>
             <div class="cont i-mg-none">
-            	<input class="memberEmail" type="hidden" name="memberEmail">
                <input class="memberEmail1" type="text" name="memberEmail1">
                <span class="frm-mg">@</span>
                <input class="memberEmail2" type="text" name="memberEmail2">
@@ -225,7 +224,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
       </div><!-- frm_cont -->      
       
       <!-- <input type="submit" value="가입하기"> -->
-      <button class="reserv_btn">가입하기</button>
+      <button class="reserv_btn sBtn">가입하기</button>
       
    </form><!-- insertFrm -->
 </div><!-- formWrap -->
