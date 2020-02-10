@@ -6,7 +6,7 @@
 
 	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");
 	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");
-	
+	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");
 %>    
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/exhibit/css/exdetail.css">
 
@@ -16,7 +16,7 @@
 	</div>
 	<div style="float: left;width:250px;">
 		2월의 추천전시
-		<h1>여기다 제목을 넣는다 .. </h1>
+		<h1><%=recommandDto.getTitle() %></h1>
 	</div>
 <div style="float: right; width: 450px; height:400px; border: 1px solid">
 	ss

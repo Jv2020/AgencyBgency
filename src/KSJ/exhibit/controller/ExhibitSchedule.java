@@ -24,8 +24,11 @@ public class ExhibitSchedule extends HttpServlet {
 			List<ExhibitDto> newlist = dao.getNewExhibits();
 			List<ExhibitDto> endlist = dao.getEndExhibits();
 			
+			ExhibitDto recommandDto = dao.getRecommandExhibit();
+			
 			req.setAttribute("newlist", newlist);
 			req.setAttribute("endlist", endlist);
+			req.setAttribute("recommandDto", recommandDto);
 			
 			req.getRequestDispatcher("/schedule/schedule.jsp").forward(req, resp);;
 	

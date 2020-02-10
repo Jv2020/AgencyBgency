@@ -364,12 +364,53 @@ public class ExhibitDao {
 		return list;
 		
 	}
-	// 이달의 추천전시 불러오기 ( 일단은 랜덤 / 나중에 
+	
+	// 이달의 추천전시 불러오기 ( 일단은 가격순  / 나중에 
 	public ExhibitDto getRecommandExhibit() {
 		
-		return null;
-	
+		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+					+ " FROM ( SELECT ROW_NUMBER()OVER( ORDER BY PRICE DESC ) AS RNUM,  "
+					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+					+ " FROM EXHIBIT "
+					+ " WHERE  TO_CHAR(ENDDATE,'YYMM') > TO_CHAR(SYSDATE,'YYMM') AND "
+					+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')) "
+					+ " WHERE RNUM = 1 ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		ExhibitDto dto = new ExhibitDto();
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				int i=1;
+				dto = new ExhibitDto(rs.getInt(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getInt(i++), 
+									rs.getString(i++), 
+									rs.getString(i++),
+									rs.getInt(i++));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return dto;
 	}
+	// 월별 전시 목록 보기
+	
 
 	
 	
