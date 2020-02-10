@@ -146,21 +146,39 @@ $('button.sBtn').click(function(){
 		alert("연락처를 확인해주세요");
 		$('.memberPhone').focus();
 		return false;
-	} else if($('input[name=memberEmail1]').val().trim() == "" || $('input[name=memberEmail2]').val().trim() == "" ) {
+	} else if($('input[name="memberEmail1"]').val().trim() == "" || $('input[name=memberEmail2]').val().trim() == "" ) {
 		alert("이메일을 확인해주세요");
 		$('.memberEmail1').focus();
 		return false;
 	} else if($('.select-month').val() == "월"){
 		alert("생년월일을 확인해주세요");
-		$('.memberPhone').focus();
+		$('.select-month').focus();
 		return false;
+	} else if($('input[name=memberYear]').val().length < 4){
+		alert("생년월일을 확인해주세요");
+		$('input[name=memberYear]').focus();
+		return false;
+	} else if(parseInt($('input[name=memberDate]').val()) > 31){
+		alert("생년월일을 확인해주세요");
+		$('input[name=memberDate]').focus();
+		return false;
+	} else if($('input[name=memberPostCode]').val().trim() == ""){
+		alert("주소를 확인해주세요");
+		$('input[name=memberPostCode]').focus();
+		return false;
+	} else if($('input[name=memberAnswer]').val().trim() == ""){
+		alert("비밀번호 찾기 질문을 확인해주세요");
+		$('input[name=memberAnswer]').focus();
+		return false;
+	} else {
+		$("form").attr("action", "../memberinsert").submit();
 	}
 	
 });
 
 
 
-//<%=request.getContextPath()%>/memberinsert
+//
 
 
 
