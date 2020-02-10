@@ -1,6 +1,6 @@
-<%@page import="BJH.NoticeDto"%>
+<%@page import="BJH.notice.dto.NoticeDto"%>
 <%@page import="java.util.List"%>
-<%@page import="BJH.NoticeDao"%>
+<%@page import="BJH.notice.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -304,21 +304,22 @@ $(document).ready(function(){
 		   $('input[name="checkbox"]:checked').each(function(index, item){
 			   deleteList.push($(item).val());
 		   });// for each end
-			   alert(deleteList);
-				   $.ajax({
-						type : "POST",
-						url : "../BJH/Notice_delete",
-						data : {"deleteList":deleteList},
-						datatype : "json",
-				  		success : function(data) {
-				       		 alert("성공적으로 삭제되었습니다.");
-				        },
-				    	error : function(xhr,status,error) {
-				    		// Ajax error
-				    		alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+		   var jsonData = JSON.stringify({ "pdeleteList": deleteList });
+		   alert(deleteList);
+			   $.ajax({
+					type : "POST",
+					url : "${pageContext.request.contextPath}/Notice_delete",
+					data : jsonData,
+					datatype : "json",
+			  		success : function(data) {
+			       		 alert("성공적으로 삭제되었습니다.");
+			        },
+			    	error : function(xhr,status,error) {
+			    		// Ajax error
+			    		alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
 
-				    		
-				    	}
+			    		
+			    	}
 				 
 					});// ajax end
 	  	}// if end

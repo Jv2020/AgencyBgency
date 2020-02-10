@@ -1,4 +1,3 @@
-<%@page import="com.sun.xml.internal.bind.v2.runtime.Location"%>
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
     

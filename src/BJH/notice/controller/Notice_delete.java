@@ -1,4 +1,4 @@
-package BJH;
+package BJH.notice.controller;
 
 import javax.servlet.http.HttpServlet;
 
