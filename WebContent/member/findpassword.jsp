@@ -4,9 +4,6 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
-<%
-MemberDto mem = (MemberDto)session.getAttribute("loginuser");
-%>
 
 
 <h1>비밀번호 찾기</h1>
