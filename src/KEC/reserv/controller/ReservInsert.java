@@ -26,9 +26,7 @@ public class ReservInsert extends HttpServlet {
 		String reservYear = req.getParameter("reservYear");	
 		String reservMonth = req.getParameter("reservMonth");	
 		String reservDay = req.getParameter("reservDay");	
-		String reservPhone01 = req.getParameter("reservPhone01");
-		String reservPhone02 = req.getParameter("reservPhone02");
-		String reservPhone03 = req.getParameter("reservPhone03");		
+		String reservPhone = req.getParameter("reservPhone");	
 		String reservEmail01 = req.getParameter("reservEmail01");		
 		String reservEmail02 = req.getParameter("reservEmail02");		
 		String post = req.getParameter("post");		
@@ -44,9 +42,7 @@ public class ReservInsert extends HttpServlet {
 		System.out.println("reservYear : " + reservYear);
 		System.out.println("reservMonth : " + reservMonth);
 		System.out.println("reservDay : " + reservDay);			
-		System.out.println("reservPhone01 : " + reservPhone01);
-		System.out.println("reservPhone02 : " + reservPhone02);
-		System.out.println("reservPhone03 : " + reservPhone03);		
+		System.out.println("reservPhone : " + reservPhone);	
 		System.out.println("reservEmail01 : " + reservEmail01);
 		System.out.println("reservEmail02 : " + reservEmail02);		
 		System.out.println("post : " + post);

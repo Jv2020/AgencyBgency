@@ -45,8 +45,7 @@ request.setCharacterEncoding("UTF-8");
 				<input class="sBtn" type="submit" value="로그인">
 			</li>	
 				
-		</ul>
-	</form>
+		</ul>s
 </div>
 
 

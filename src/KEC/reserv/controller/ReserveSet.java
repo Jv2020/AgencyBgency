@@ -34,15 +34,6 @@ public class ReserveSet extends HttpServlet{
 		dis.forward(req, resp);
 				
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
-		
-	
-	
-	}
-	
 	
 
 }
