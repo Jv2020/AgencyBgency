@@ -29,7 +29,7 @@ public class ExhibitList extends HttpServlet {
 		}
 		if( choice == null || choice.equals("")) {	//null일때 
 			choice = "now";
-		}
+		} 
 
 		ExhibitDao dao = ExhibitDao.getInstance();
 		List<ExhibitDto> list = dao.getExhibitList(choice, page);

@@ -19,7 +19,6 @@ public class MemberDao {
 		String sql = " INSERT INTO "
 				+ 	 " (ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, HINT, EXHIBIT_NAME, CERTI_NUM, AUTH) "
 				+ 	 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-		//git
 		return true;
 	}
 	

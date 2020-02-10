@@ -44,6 +44,24 @@ System.out.println("id : "+ logincheck);
 	}
 %>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </ul>
 <input type="hidden" id="current" value="now">
 <div class="listmore" id="moreBtn" onclick="listmore()">더보기</div>
