@@ -296,7 +296,6 @@ $(document).ready(function(){
 	var checkboxCount = $('input:checkbox[id="checkbox"]:checked').length ;
 	var checkbox_val = $('input:checkbox[id="checkbox"]').val();
 	
-	
 	$("#btn_noticeDelete").click(function(){
 		var noticeDel = confirm("정말로 삭제 하시겠습니까?");
 		var deleteList = new Array();
@@ -310,7 +309,7 @@ $(document).ready(function(){
 					type : "POST",
 					url : "${pageContext.request.contextPath}/Notice_delete",
 					data : jsonData,
-					datatype : "json",
+					dataType : "json",
 			  		success : function(data) {
 			       		 alert("성공적으로 삭제되었습니다.");
 			        },

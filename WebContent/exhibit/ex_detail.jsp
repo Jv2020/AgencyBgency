@@ -1,9 +1,14 @@
+<%@page import="NWH.member.dto.MemberDto"%>
+<%@page import="CYH.ReviewDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@include file ="/include/header.jsp" %>
+<!-- font awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <%
 //로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
+MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
 boolean logincheck = false;
 
 //로그인 여부 확인하기
@@ -12,13 +17,18 @@ if(loginuser != null){
 } 
 %>
 <%
+	// 전시 종류(현재,지난,예정)를 확인해주는 값  
 	String ex = (String)request.getAttribute("ex");
+
+	// 전시 디테일 dto
 	ExhibitDto dto = (ExhibitDto)request.getAttribute("dto");
 	String nowpath = request.getContextPath();
+	
+	// 해당 전시에 달린 리뷰 리스트 
+	List<ReviewDto> reviewList =  (List<ReviewDto>) request.getAttribute("reviewList");
+	
 %>
 <link rel="stylesheet" type="text/css" href="<%=nowpath %>/exhibit/css/exdetail.css">
-
-
 <div class="ex-datail-top clfix">
 	<div class="img">
 		<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586">
@@ -44,34 +54,35 @@ if(loginuser != null){
 	<h5>Review</h5>
 	<div class="cont">
 		<ul class="clfix">
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
+		<%
+		if(reviewList.size()>0){
+			for(int i = 0; i < reviewList.size(); i++ ){
+			ReviewDto rdto = reviewList.get(i);
+			
+		%>
+
+		<li>
+			<div class="ex-star">
+				<%
+					for(int j=0; j<rdto.getStar(); j++){
+						%>
+						<i class="fas fa-star"></i>
+						<%
+					}
+				%>
+			</div>
+			<p><%=rdto.getReview() %></p>
+			<span>by <%=rdto.getId() %></span>
+			<!-- 여기에 더보기 버튼으로 링크 걸어두기 (시간남으면) -->
+		</li>
+	<% 	 }
+		}
+	else{
+		%>
+			<div style="text-align: center">등록된 리뷰가 없습니다! </div>
+		<%
+	}
+	%>
 		</ul>
 	</div>
 </div>

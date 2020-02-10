@@ -31,12 +31,15 @@ public class ExhibitDetail extends HttpServlet {
 		
 		// 리뷰 데이터
 		ReviewDao rdao = ReviewDao.getInstance();
-		List<ReviewDto> reviewList = rdao.getReviewToDetail();
+		List<ReviewDto> reviewList = rdao.getReviewToDetail(dto.getTitle());
+	
+		System.out.println("list : " + reviewList.size());
 		
 		// 짐싸기
 		req.setAttribute("dto", dto);			// 전시 디테일보내기 
 		req.setAttribute("ex", ex);						
 		req.setAttribute("reviewList", reviewList);		// 리뷰 베스트 4 뽑아오기 
+		
 		
 		// 보내기 -> detail view 
 		RequestDispatcher dis = req.getRequestDispatcher("./exhibit/ex_detail.jsp");
