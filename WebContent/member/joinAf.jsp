@@ -22,13 +22,17 @@ System.out.println(isS);
 <%
 if(isS.equals("true")){
 %>
+	<script type="text/javascript">
 	alert("환영합니다.");
 	location.href="login.jsp";
+	</script>
 <%
 } else { 
 %>	
+	<script type="text/javascript">
 	alert("회원가입에 실패하였습니다. 입력사항을 다시 확인하여 주시기 바랍니다.");
-	location.href="join.jsp";
+	location.href=history.back();
+	</script>
 <%
 }
 %>

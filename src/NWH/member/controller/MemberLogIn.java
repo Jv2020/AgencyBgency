@@ -29,7 +29,6 @@ public class MemberLogIn extends HttpServlet {
 		
 		MemberDao dao = MemberDao.getInstance();
 		MemberDto mem = dao.login(new MemberDto(id, password, "","", "", "", "", "", "", "", "", "", 0));
-		System.out.println("로그인서블릿: "+ mem.toString());
 		
 
 		HttpSession session = request.getSession();

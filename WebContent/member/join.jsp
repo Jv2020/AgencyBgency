@@ -1,4 +1,4 @@
-<%@include file ="../include/header.jsp" %>
+<%@include file ="/include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 request.setCharacterEncoding("UTF-8");
@@ -152,15 +152,15 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
             <div class="cont">
                <select class="select-month" name="memberMonth">
                   <option value="월">월</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
                   <option value="10">10</option>
                   <option value="11">11</option>
                   <option value="12">12</option>
@@ -183,17 +183,15 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix">
             <div class="tit">주소</div>
             <div class="cont">
-               <!-- <input type="text" id="sample4_roadAddress" placeholder="도로명주소" class="frm-address" value=""><span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-               <input id="sample4_detailAddress" placeholder="상세주소" class="mt08" type="text" value=""> -->
-
-               
-               <input type="text" id="sample4_postcode" name="memberPostCode" placeholder="우편번호"> 
-			   <input type="button" onclick="sample4_execDaumPostcode()" class="frm_adr_btn"value="우편번호 찾기"><br>
-			   <input type="text" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
-			   <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
-			   <span id="guide" style="color:#999;display:none"></span>
-			   <input type="text" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
-			   <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
+               <!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
+               <input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
+               <input name="post" type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호"> 
+                <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
+                <input name="address01" type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
+                <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
+                <span id="guide" style="color:#999;display:none"></span>
+                <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
+                <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
             </div>            
          </div>
          

@@ -8,7 +8,11 @@ request.setCharacterEncoding("UTF-8");
 <%
 session.invalidate();
 %>
-로그아웃되었습니다.	
+<script>
+	alert("정상적으로 로그아웃되었습니다.");
+	location.href="<%=request.getContextPath()%>/main/main.jsp"
+</script>
+	
 
 
 
