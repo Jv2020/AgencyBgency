@@ -1,6 +1,7 @@
 package NWH;
 
 import DB.DBConnection;
+import NWH.member.dto.MemberDto;
 
 public class MemberDao {
 
