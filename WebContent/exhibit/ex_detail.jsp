@@ -28,7 +28,7 @@ if(loginuser != null){
 		<p><span>장소</span><%=dto.getPlace() %> </p>
 		<p><span>기간</span><%= dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
 		<p><span>시간	</span><%=dto.getEx_time().substring(0, 2) +":" +dto.getEx_time().substring(2, 4)+" - " + dto.getEx_time().substring(4, 6) +":" +dto.getEx_time().substring(6, 8) %></p>
-		<p><span>관람료</span>price dto 만들어야함</p>
+		<p><span>관람료</span><%=dto.getPrice() %></p>
 		<p><span>문의</span><%= dto.getContact() %></p>
 		<a href="#" id="resvBtn">예매하기</a>
 		<!-- ${pageContext.request.contextPath}/reservation/reserv.jsp -->

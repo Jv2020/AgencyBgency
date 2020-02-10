@@ -30,9 +30,9 @@ public class ExhibitDao {
 	public List<ExhibitDto> getExhibitList(String choice, int page) {
 		
 		// 현재전시 
-		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM "
+		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
 					+" FROM ( SELECT ROW_NUMBER()OVER( ORDER BY BEGINDATE DESC ) AS RNUM, "
-						 + " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM "
+						 + " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
 						 + "  FROM EXHIBIT ";
 		String str="";
 		if(choice.equals("now")) {	// 현재 전시
@@ -76,7 +76,8 @@ public class ExhibitDao {
 												rs.getString(i++), 
 												rs.getInt(i++), 
 												rs.getString(i++), 
-												rs.getString(i++));
+												rs.getString(i++),
+												rs.getInt(i++));
 				list.add(dto);
 				
 			}
@@ -94,9 +95,9 @@ public class ExhibitDao {
 	}
 	// 더보기로 끌어오는 경우 작업
 	public List<ExhibitDto> getMoreExhibit(String choice, int count) {
-		String sql =  " SELECT  SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM "
+		String sql =  " SELECT  SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
 					+ " FROM ( SELECT ROW_NUMBER()OVER( ORDER BY BEGINDATE DESC ) AS RNUM,"
-							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM "
+							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
 							+ " FROM EXHIBIT ";
 		
 		String str = "";
@@ -150,7 +151,8 @@ public class ExhibitDao {
 												rs.getString(i++), 
 												rs.getInt(i++), 
 												rs.getString(i++), 
-												rs.getString(i++));
+												rs.getString(i++),
+												rs.getInt(i++));
 				list.add(dto);
 				
 			}
@@ -245,7 +247,8 @@ public class ExhibitDao {
 									rs.getString(i++), 
 									rs.getInt(i++), 
 									rs.getString(i++), 
-									rs.getString(i++));
+									rs.getString(i++),
+									rs.getInt(i++));
 				
 			}
 			

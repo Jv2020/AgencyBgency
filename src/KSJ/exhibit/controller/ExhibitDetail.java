@@ -1,6 +1,7 @@
 package KSJ.exhibit.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import CYH.ReviewDao;
+import CYH.ReviewDto;
 import KSJ.exhibit.dao.ExhibitDao;
 import KSJ.exhibit.dto.ExhibitDto;
 
@@ -22,16 +25,18 @@ public class ExhibitDetail extends HttpServlet {
 		String ex = req.getParameter("ex");
 		int seq = Integer.parseInt(sseq);
 		
-		System.out.println("servlet seq : " + seq );
-		System.out.println("servlet ex : " + ex );
 		
 		ExhibitDao dao = ExhibitDao.getInstance();
 		ExhibitDto dto = dao.getExDetail(seq);
 		
+		// 리뷰 데이터
+		ReviewDao rdao = ReviewDao.getInstance();
+		List<ReviewDto> reviewList = rdao.getReviewToDetail();
 		
 		// 짐싸기
-		req.setAttribute("dto", dto);
-		req.setAttribute("ex", ex);
+		req.setAttribute("dto", dto);			// 전시 디테일보내기 
+		req.setAttribute("ex", ex);						
+		req.setAttribute("reviewList", reviewList);		// 리뷰 베스트 4 뽑아오기 
 		
 		// 보내기 -> detail view 
 		RequestDispatcher dis = req.getRequestDispatcher("./exhibit/ex_detail.jsp");

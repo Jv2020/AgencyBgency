@@ -34,18 +34,16 @@ public class ExhibitDto implements Serializable {
 		private int del;
 		private String contact;
 		private String certi_num;
+		private int price;
 		
-		//가격 추가하기 	
 		
 		public ExhibitDto() {
-			super();
-			// TODO Auto-generated constructor stub
+
 		}
 
-
-
+		// constructor using field
 		public ExhibitDto(int seq, String begindate, String enddate, String title, String place, String content,
-				String ex_time, String loc_info, int del, String contact, String certi_num) {
+				String ex_time, String loc_info, int del, String contact, String certi_num, int price) {
 			super();
 			this.seq = seq;
 			this.begindate = begindate;
@@ -58,14 +56,17 @@ public class ExhibitDto implements Serializable {
 			this.del = del;
 			this.contact = contact;
 			this.certi_num = certi_num;
+			this.price = price;
 		}
 
-
-
+		
+		
+		
+		// TODO:getter + setter
+		
 		public int getSeq() {
 			return seq;
 		}
-
 
 
 		public void setSeq(int seq) {
@@ -73,11 +74,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getBegindate() {
 			return begindate;
 		}
-
 
 
 		public void setBegindate(String begindate) {
@@ -85,11 +84,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getEnddate() {
 			return enddate;
 		}
-
 
 
 		public void setEnddate(String enddate) {
@@ -97,11 +94,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getTitle() {
 			return title;
 		}
-
 
 
 		public void setTitle(String title) {
@@ -109,11 +104,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getPlace() {
 			return place;
 		}
-
 
 
 		public void setPlace(String place) {
@@ -121,11 +114,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getContent() {
 			return content;
 		}
-
 
 
 		public void setContent(String content) {
@@ -133,11 +124,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getEx_time() {
 			return ex_time;
 		}
-
 
 
 		public void setEx_time(String ex_time) {
@@ -145,11 +134,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getLoc_info() {
 			return loc_info;
 		}
-
 
 
 		public void setLoc_info(String loc_info) {
@@ -157,11 +144,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public int getDel() {
 			return del;
 		}
-
 
 
 		public void setDel(int del) {
@@ -169,11 +154,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getContact() {
 			return contact;
 		}
-
 
 
 		public void setContact(String contact) {
@@ -181,11 +164,9 @@ public class ExhibitDto implements Serializable {
 		}
 
 
-
 		public String getCerti_num() {
 			return certi_num;
 		}
-
 
 
 		public void setCerti_num(String certi_num) {
@@ -193,16 +174,26 @@ public class ExhibitDto implements Serializable {
 		}
 
 
+		public int getPrice() {
+			return price;
+		}
 
+
+		public void setPrice(int price) {
+			this.price = price;
+		}
+
+		
+		
+		// toString 
+		
 		@Override
 		public String toString() {
 			return "ExhibitDto [seq=" + seq + ", begindate=" + begindate + ", enddate=" + enddate + ", title=" + title
 					+ ", place=" + place + ", content=" + content + ", ex_time=" + ex_time + ", loc_info=" + loc_info
-					+ ", del=" + del + ", contact=" + contact + ", certi_num=" + certi_num + "]";
+					+ ", del=" + del + ", contact=" + contact + ", certi_num=" + certi_num + ", price=" + price + "]";
 		}
-		
-		
-		
+
 		
 	
 	
