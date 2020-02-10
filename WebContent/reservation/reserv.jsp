@@ -75,46 +75,53 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit">예매자 이름</div>
 				<div class="cont">
-					<input class="ttext" type="text" value="김비트" placeholer="김비트" readonly="readonly">
+					<input name="reservName" class="ttext" type="text" value="김비트" placeholer="김비트" readonly="readonly">
 				</div>				
 			</div>
 			
 			<div class="frm_line reser-birth clfix">
 				<div class="tit">생년월일</div>
 				<div class="cont mr20">
-					<input class="byear" type="text" value="2000" maxlength="4" readonly="readonly"> 년
+					<input name="reservYear" class="byear" type="text" value="2000" maxlength="4" readonly="readonly"> 년
 				</div>				
 				<div class="cont mr20">
-					<input class="bmonth" type="text" value="09" maxlength="4" readonly="readonly"> 월
+					<input name="reservMonth" class="bmonth" type="text" value="09" maxlength="4" readonly="readonly"> 월
 				</div>
 				<div class="cont">
-					<input class="bday" type="text" value="02" maxlength="2" readonly="readonly"> 일			
+					<input name="reservDay" class="bday" type="text" value="02" maxlength="2" readonly="readonly"> 일			
 				</div>									
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">연락처</div>
 				<div class="cont i-mg-none">
-					<input type="text" value="010"><span class="frm-mg">-</span>
-					<input type="text" value="1234"><span class="frm-mg">-</span>
-					<input type="text" value="5678">
+					<input name="reservPhone01" type="text" value="010"><span class="frm-mg">-</span>
+					<input name="reservPhone02" type="text" value="1234"><span class="frm-mg">-</span>
+					<input name="reservPhone03" type="text" value="5678">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">이메일 주소</div>
 				<div class="cont i-mg-none">
-					<input type="text" value="agency">
+					<input name="reservEmail01" type="text" value="agency">
 					<span class="frm-mg">@</span>
-					<input type="text" value="naver.com">
+					<input name="reservEmail02" type="text" value="naver.com">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">주소</div>
 				<div class="cont">
-					<input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
-					<input class="mt08" type="text" value="2층 2강의실" readonly="readonly">
+					<!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
+					<input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
+					<input name="post" type="text" id="sample4_postcode" readonly="readonly" placeholder="우편번호"> 
+				    <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
+				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" placeholder="도로명주소">
+				    <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
+				    <span id="guide" style="color:#999;display:none"></span>
+				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" placeholder="상세주소">
+				    <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
 				</div>				
 			</div>
 			
@@ -128,11 +135,11 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			
 			<div class="frm_line clfix">
 				<div class="tit floatNone">입장권 수량</div>
-				<div class="cont floatNone mt20">
-					<div class="qtyBox clfix">						
-						<span class="minus">-</span>
-						<input type="text" value="0" readonly="readonly">
-						<span class="plus">+</span>
+				<div class="cont floatNone mt20">					
+					<div class="qtyBox clfix">						 			
+						<span class="minus" onclick="minus()">-</span>
+						<input name="qty" type="text" value="0" readonly="readonly">
+						<span class="plus" onclick="plus()">+</span>
 					</div>
 				</div>				
 			</div>		
@@ -140,7 +147,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit floatNone">결제 수단</div>
 				<div class="cont floatNone mt20">					
-					<input type="radio" id="r-payment1" name="r-payment" value="무통장 입금"><label for="r-payment1"><span></span>무통장 입금</label>
+					<input type="radio" id="r-payment1" name="r-payment" value="무통장 입금" checked="checked"><label for="r-payment1"><span></span>무통장 입금</label>
 					<input type="radio" id="r-payment2" name="r-payment" value="신용카드"><label for="r-payment2"><span></span>신용카드</label>
 					<input type="radio" id="r-payment3" name="r-payment" value="휴대폰"><label for="r-payment3"><span></span>휴대폰</label>
 					<input type="radio" id="r-payment4" name="r-payment" value="카카오페이"><label for="r-payment4"><span></span>카카오페이</label>
@@ -157,5 +164,139 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 		
 	</form><!-- insertFrm -->
 </div><!-- formWrap -->
+<!-- 카카오 주소 검색 -->
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                } else {
+                    document.getElementById("sample4_extraAddress").value = '';
+                }
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'none'; // block -> none;
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+    }
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+
+//입장권 수량 + / - 하기
+function minus(){
+   var qty = $(".qtyBox input").val();
+   qty = (Number(qty)-1); // 수량 -1
+   if(qty>=0){ // 0 이하는 적용 안됨
+	$(".qtyBox input").val(qty);
+   }   
+};
+
+function plus() {
+   var qty = $(".qtyBox input").val();
+   qty = (Number(qty)+1); // 수량 +1
+   if($(".qtyBox input").val()<100){ // 100 이상은 적용 안됨
+	$(".qtyBox input").val(qty);
+   }
+};
+
+$(document).ready(function(){
+	
+	// 결제하기 누르면 submit 
+	$('button.reserv_btn').click(function(){
+		if( $("input[name=reservName]").val().trim() == "" ){
+			alert("이름을 입력해주세요");
+			$("input[name=reservName]").focus();
+			return false;
+		}else if( $("input[name=reservYear]").val().trim() == ""){
+			alert("년도를 입력해주세요");
+			return false;
+			$("input[name=reservYear]").focus();
+		}else if( $("input[name=reservMonth]").val().trim() == ""){
+			alert("월 입력해주세요");
+			$("input[name=reservMonth]").focus();
+			return false;
+		}else if( $("input[name=reservDay]").val().trim() == ""){
+			alert("일을 입력해주세요");
+			$("input[name=reservDay]").focus();
+			return false;
+		}else if( $("input[name=reservPhone01]").val().trim() == ""){
+			alert("연락처를 입력해주세요");
+			$("input[name=reservPhone01]").focus();
+			return false;
+		}else if( $("input[name=reservPhone02]").val().trim() == ""){
+			alert("연락처를 입력해주세요");
+			$("input[name=reservPhone02]").focus();
+			return false;
+		}else if( $("input[name=reservPhone03]").val().trim() == ""){
+			alert("연락처를 입력해주세요");
+			$("input[name=reservPhone03]").focus();
+			return false;
+		}else if( $("[name=post]").val().trim() == ""){
+			alert("우편번호를 입력해주세요");
+			$("[name=post]").focus();
+			return false;
+		}else if( $("input[name=address01]").val().trim() == ""){
+			alert("도로명 주소를 입력해주세요");
+			$("input[name=address01]").focus();
+			return false;
+		}else if( $("input[name=address02]").val().trim() == ""){
+			alert("상세주소를 입력해주세요");
+			$("input[name=address02]").focus();
+			return false;
+		}else if( $("input[name=qty]").val() == "0"){
+			alert("입장권 매수를 선택해주세요");
+			$("input[name=qty]").focus();
+			return false;
+		}else {
+			$("form").attr({"action":"../reservinsert"}).submit();
+		}
+		
+	});
+});
+</script>
 
 <%@include file ="../include/footer.jsp" %>		
