@@ -1,4 +1,4 @@
-package BJH;
+package BJH.notice.controller;
 
 import java.io.IOException;
 

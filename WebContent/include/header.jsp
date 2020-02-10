@@ -1,8 +1,11 @@
+<%@page import="NWH.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	// 여기는 contextPath 
 	String contextPath = request.getContextPath();
+/* 	// 로그인 세션
+	MemberDto mem = (MemberDto)session.getAttribute("loginuser"); */
 %>
 <!DOCTYPE html>
 <html>
@@ -31,10 +34,26 @@
 	<div id="header" class="sub">		
 		<div class="header_top">
 			<div class="inner">
-				<span><a href="<%=contextPath %>/member/login.jsp">로그인</a></span>
-				<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
-				<span><a href="<%=contextPath %>/member/join.jsp">회원가입</a></span>
-				<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
+				<%
+				if(((MemberDto)session.getAttribute("loginuser")) == null){	
+				%>
+					<!--로그인세션이 없을때 -->
+					<span><a href="<%=contextPath %>/member/login.jsp">로그인</a></span>
+					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
+					<span><a href="<%=contextPath %>/member/join.jsp">회원가입</a></span>
+					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
+				<%
+				} else {
+				%>
+				<!--로그인세션이 있을때 -->
+					<span><a href="<%=contextPath %>/member/logout.jsp">로그아웃</a></span>
+					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
+					<span><a href="<%=contextPath %>/member/mypage.jsp">마이페이지</a></span>
+					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
+				<%
+				}
+				%>
+				
 				<span><a href="<%=contextPath %>/community/notice.jsp">공지사항</a></span>
 				<h1 class="logo"><a href="<%=contextPath %>/main/main.jsp">
 					<img src="<%=contextPath %>/images/main/logo.png" alt="모두의 전시" />

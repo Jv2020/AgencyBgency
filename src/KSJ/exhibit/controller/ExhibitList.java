@@ -32,7 +32,7 @@ public class ExhibitList extends HttpServlet {
 		} 
 
 		ExhibitDao dao = ExhibitDao.getInstance();
-		List<ExhibitDto> list = dao.getExhibitList(choice, page);
+		List<ExhibitDto> list = dao.getExhibitList(choice,12);
 		
 		resp.setContentType("application/json");	// 보내는 데이터 형식을 json으로 변환
 		resp.setCharacterEncoding("utf-8");			// 한글을 정상으로 출력

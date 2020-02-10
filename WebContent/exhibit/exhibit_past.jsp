@@ -5,17 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/exhibit/css/exhibitlist.css">
 
-<%
-// 로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
-boolean logincheck = false;
 
-// 로그인 여부 확인하기
-if(loginuser != null){
-	logincheck= true;
-}
-
-%>
 <script>
 // 처음 로딩화면
 document.querySelector("#ex-title").innerHTML = "지난전시";

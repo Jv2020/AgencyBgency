@@ -71,7 +71,7 @@ public class ReviewDao {
 	
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
 		String sql = " INSERT INTO EXHIBIT_REVIEW "
-					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL) "
+					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL ) "
 					+ " VALUE(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0, 0, 0 ) ";
 		
 		Connection conn = null;
@@ -230,13 +230,13 @@ public class ReviewDao {
 	
 	
 	// 전시 디테일 뷰에 뿌릴 리뷰 3개 
-	public List<ReviewDto> getReviewToDetail(){
+	public List<ReviewDto> getReviewToDetail(String title){
 		String sql =  " SELECT ID, TITLE, REG_DATE, STAR, REVIEW "
 					+ " FROM  ( SELECT ROW_NUMBER()OVER (ORDER BY LIKE_NUMBER DESC) AS RNUM, "
 								+ " ID, TITLE, REG_DATE, STAR, REVIEW "
 							+ " FROM EXHIBIT_REVIEW  "
-							+ " WHERE DEL = 0  "
-							+ " ORDER BY LIKE_NUMBER DESC ) "
+							+ " WHERE DEL = 0  AND TITLE = ? "
+							+ " ORDER BY LIKE_NUMBER DESC, DISLIKE ASC ) "
 					+ " WHERE RNUM <= 4 ";
 		
 		Connection conn = null;
@@ -249,8 +249,12 @@ public class ReviewDao {
 			conn = DBConnection.getConnection();
 			System.out.println("1/6 getReviewList Success");
 			
+			
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getReviewList Success");
+			
+			psmt.setString(1, title);
+			
 			
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getReviewList Success");

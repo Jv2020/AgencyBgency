@@ -6,7 +6,6 @@ request.setCharacterEncoding("UTF-8");
 %>
 <%
 MemberDto mem = (MemberDto)session.getAttribute("loginuser");
-System.out.println("로그인에프터: " + mem.toString());
 %>
     
 <!DOCTYPE html>
@@ -16,8 +15,22 @@ System.out.println("로그인에프터: " + mem.toString());
 <title>Insert title here</title>
 </head>
 <body>
-<script>
-	location.href="<%=request.getContextPath()%>/main/main.jsp"
-</script>
+	<%
+	if(mem == null){
+	%>
+		<script>
+			alert("아이디와 비밀번호를 다시 확인해 주세요.");
+			location.href=history.back();
+		</script>
+	<%
+	} else {
+	%>
+		<script>
+			location.href="<%=request.getContextPath()%>/main/main.jsp"
+		</script>
+	<%
+	}
+	%>
+
 </body>
 </html>

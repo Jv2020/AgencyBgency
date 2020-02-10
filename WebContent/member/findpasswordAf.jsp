@@ -5,8 +5,8 @@
 request.setCharacterEncoding("UTF-8");
 %>
 <%
-String findId = (String)request.getAttribute("findid");
-System.out.println("파인드아이디에프터:"+findId);
+String findPassword = (String)request.getAttribute("findPassword");
+System.out.println("파인드패스워드에프터:"+findPassword);
 %>
     
 <!DOCTYPE html>
@@ -17,10 +17,10 @@ System.out.println("파인드아이디에프터:"+findId);
 </head>
 <body>
 <%
-if(!findId.equals("")){
+if(!findPassword.equals("")){
 %>
 	<script type="text/javascript">
-		alert("<%=findId%>");
+		alert("<%=findPassword%>");
 		location.href="<%=request.getContextPath()%>/member/login.jsp";
 	</script>
 <%

@@ -157,5 +157,44 @@ public MemberDto login(MemberDto dto) {
 		
 	}
 	
+	public String memberFindPassword(MemberDto dto) {
+		String sql = " SELECT PASSWORD "
+				+    " FROM MEMBER"
+				+ 	 " WHERE ID = ? AND NAME = ? AND QUESTION = ? AND HINT = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		String password = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 memberFindPassword success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 memberFindPassword success");
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getName());
+			psmt.setString(3, dto.getQuestion());
+			psmt.setString(4, dto.getHint());
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 memberFindPassword success");
+			
+			if(rs.next()) {
+				password = rs.getString(1);
+			}
+			System.out.println("4/6 memberFindPassword success");
+			
+			
+		} catch (SQLException e) {
+			System.out.println("memberFindPassword fail");
+			e.printStackTrace();
+		}
+		
+		return password;
+		
+	}
 	
 }

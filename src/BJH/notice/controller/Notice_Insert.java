@@ -1,4 +1,4 @@
-package BJH;
+package BJH.notice.controller;
 
 import java.io.IOException;
 
@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
+import BJH.notice.dao.NoticeDao;
+import BJH.notice.dto.NoticeDto;
 
 
 @WebServlet("/Notice")

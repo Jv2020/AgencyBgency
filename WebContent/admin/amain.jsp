@@ -1,6 +1,6 @@
-<%@page import="BJH.NoticeDto"%>
+<%@page import="BJH.notice.dto.NoticeDto"%>
 <%@page import="java.util.List"%>
-<%@page import="BJH.NoticeDao"%>
+<%@page import="BJH.notice.dao.NoticeDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -296,29 +296,33 @@ $(document).ready(function(){
 	var checkboxCount = $('input:checkbox[id="checkbox"]:checked').length ;
 	var checkbox_val = $('input:checkbox[id="checkbox"]').val();
 	
-	
 	$("#btn_noticeDelete").click(function(){
 		var noticeDel = confirm("정말로 삭제 하시겠습니까?");
 		var deleteList = new Array();
-	  	if(noticeDel){
-		   $('input[name="checkbox"]:checked').each(function(index, item){
+		 $('input[name="checkbox"]:checked').each(function(index, item){
 			   deleteList.push($(item).val());
 		   });// for each end
-			   alert(deleteList);
-				   $.ajax({
-						type : "POST",
-						url : "../BJH/Notice_delete",
-						data : {"deleteList":deleteList},
-						datatype : "json",
-				  		success : function(data) {
-				       		 alert("성공적으로 삭제되었습니다.");
-				        },
-				    	error : function(xhr,status,error) {
-				    		// Ajax error
-				    		alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
-
-				    		
-				    	}
+		   var jsonData = { "pdeleteList": deleteList };
+		   console.log(jsonData);
+		   
+	  	if(noticeDel){
+		  
+		   alert(deleteList);
+			   $.ajax({
+					type : "POST",
+					url : "${pageContext.request.contextPath}/Notice_delete",
+					data : jsonData,
+					contentType :"application/x-www-form-urlencoded; charset=UTF-8",
+					dataType : "json",
+			  		success : function(data) {
+			       		 alert("성공적으로 삭제되었습니다.");
+			        }
+					,
+			    	error : function(xhr,status,error) {
+			    		// Ajax error
+			    		alert("error\nxhr : " + xhr + ", status : " + status + ", error : " + error);
+			    		console.log(xhr);
+			    	} 
 				 
 					});// ajax end
 	  	}// if end

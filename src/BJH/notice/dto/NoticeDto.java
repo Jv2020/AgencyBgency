@@ -1,4 +1,4 @@
-package BJH;
+package BJH.notice.dto;
 
 import java.io.Serializable;
 

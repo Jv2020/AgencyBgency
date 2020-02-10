@@ -1,24 +1,35 @@
+<%@page import="CYH.ReviewDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%> 
 <%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@include file ="/include/header.jsp" %>
+<!-- font awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <%
 //로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
-boolean logincheck = false;
+MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
+boolean logincheck =false;
 
 //로그인 여부 확인하기
-if(loginuser != null){
+if( loginuser != null){
 	logincheck= true;
 } 
+
 %>
+
 <%
+	// 전시 종류(현재,지난,예정)를 확인해주는 값  
 	String ex = (String)request.getAttribute("ex");
+
+	// 전시 디테일 dto
 	ExhibitDto dto = (ExhibitDto)request.getAttribute("dto");
 	String nowpath = request.getContextPath();
+	
+	// 해당 전시에 달린 리뷰 리스트 
+	List<ReviewDto> reviewList =  (List<ReviewDto>) request.getAttribute("reviewList");
+	
 %>
 <link rel="stylesheet" type="text/css" href="<%=nowpath %>/exhibit/css/exdetail.css">
-
-
 <div class="ex-datail-top clfix">
 	<div class="img">
 		<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586">
@@ -28,7 +39,7 @@ if(loginuser != null){
 		<p><span>장소</span><%=dto.getPlace() %> </p>
 		<p><span>기간</span><%= dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
 		<p><span>시간	</span><%=dto.getEx_time().substring(0, 2) +":" +dto.getEx_time().substring(2, 4)+" - " + dto.getEx_time().substring(4, 6) +":" +dto.getEx_time().substring(6, 8) %></p>
-		<p><span>관람료</span><%=dto.getPrice() %></p>
+		<p id="price"><span>관람료</span></p>
 		<p><span>문의</span><%= dto.getContact() %></p>
 		<a href="#" id="resvBtn">예매하기</a>
 		<!-- ${pageContext.request.contextPath}/reservation/reserv.jsp -->
@@ -44,34 +55,35 @@ if(loginuser != null){
 	<h5>Review</h5>
 	<div class="cont">
 		<ul class="clfix">
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
-			<li>
-				<div class="ex-star">
-					☆☆☆☆☆
-				</div>
-				<p>리뷰 내용입니다 리뷰 내용입니다리뷰리뷰 내용입니다 리뷰 내용입니다리뷰</p>
-				<span>by Id1234</span>
-			</li>
+		<%
+		if(reviewList.size()>0){
+			for(int i = 0; i < reviewList.size(); i++ ){
+			ReviewDto rdto = reviewList.get(i);
+			
+		%>
+
+		<li>
+			<div class="ex-star">
+				<%
+					for(int j=0; j<rdto.getStar(); j++){
+						%>
+						<i class="fas fa-star"></i>
+						<%
+					}
+				%>
+			</div>
+			<p><%=rdto.getReview() %></p>
+			<span>by <%=rdto.getId() %></span>
+			<!-- 여기에 더보기 버튼으로 링크 걸어두기 (시간남으면) -->
+		</li>
+	<% 	 }
+		}
+	else{
+		%>
+			<div style="text-align: center">등록된 리뷰가 없습니다! </div>
+		<%
+	}
+	%>
 		</ul>
 	</div>
 </div>
@@ -104,7 +116,7 @@ $("#resvBtn").click(function() {
 			}
 		}else {
 			// 예매 페이지로 이동
-			$("#resvBtn").attr("href", "${pageContext.request.contextPath}/reservation/reserv.jsp");
+			$("#resvBtn").attr("href", "${pageContext.request.contextPath}/reserveset?seq=<%=dto.getSeq()%>");
 		}
 		
 	}
@@ -113,6 +125,21 @@ $("#resvBtn").click(function() {
 	
 });
 
+	var total = <%=dto.getPrice()%>;
+	//ex) 7000원 -> 7,000원
+	var len, point, str;	
+	total = total + "";
+	point = total.length % 3 ;
+	len = total.length;
+	
+	totalPrice = total.substring(0, point);
+	while (point < len) {
+		if (totalPrice != "") totalPrice += ",";
+		totalPrice += total.substring(point, point + 3);
+		point += 3;
+	}
+
+$("#price").append(totalPrice+"원");
 
 </script>
 

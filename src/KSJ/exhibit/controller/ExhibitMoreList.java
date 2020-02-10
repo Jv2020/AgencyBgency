@@ -24,15 +24,12 @@ public class ExhibitMoreList extends HttpServlet {
 
 		String choice = req.getParameter("choice");
 		String scount =  req.getParameter("count");
-		System.out.println("choice: "+choice);
-		System.out.println("count: "+scount);
 		
 		int count = Integer.parseInt(scount);
 		int numOfContent = 4;	// 초기 데이터 사이즈
 		int numOfPlus = 4;		// 추가되는 데이터 사이즈
 		int allContentSize = dao.getContentNumber(choice);
 		
-		System.out.println("allContentSize : "+allContentSize);
 		
 		if( numOfContent + count * numOfPlus > allContentSize ) {
 			System.out.println("콘텐츠 초과됨 ");
@@ -41,7 +38,6 @@ public class ExhibitMoreList extends HttpServlet {
 		}
 		
 		List<ExhibitDto> list =  dao.getMoreExhibit(choice, count);
-//		System.out.println(list.get(0).getTitle());
 		
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("utf-8");

@@ -1,4 +1,4 @@
-package BJH;
+package BJH.notice.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import BJH.notice.dto.NoticeDto;
 import DB.DBClose;
 import DB.DBConnection;
 
@@ -15,7 +16,7 @@ public class NoticeDao {
 	private static NoticeDao noticedao = new NoticeDao();
  	
 	private NoticeDao() {
-		
+		DBConnection.initConnection();
 	}
 	
 	public static NoticeDao getInstance() {

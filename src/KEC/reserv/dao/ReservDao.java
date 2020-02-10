@@ -26,7 +26,7 @@ public class ReservDao {
 		return dao;
 	}
 	
-	// 예매하기 메소드** (INSERT)
+	// 예매하기 (INSERT)** 
 	public boolean getReserv(ReservDto dto){
 		
 		String sql = " INSERT INTO RESERVATION (SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
@@ -45,6 +45,7 @@ public class ReservDao {
 				
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getReserv success");
+			
 			
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getName());
@@ -65,13 +66,14 @@ public class ReservDao {
 			e.printStackTrace();
 			System.out.println("getReserv fail");
 		} finally {
-			DBClose.close(psmt, conn, null);			
+			DBClose.close(psmt, conn, rs);
 		}
 		
-		return count > 0 ? true:false;
-		
+		return count > 0 ? true:false;	
 		
 	}
+	
+	
 	
 	
 	
