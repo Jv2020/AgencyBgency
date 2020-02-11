@@ -21,6 +21,8 @@ public class DeleteReviewController extends HttpServlet {
 		
 		ReviewDao dao = ReviewDao.getInstance();
 		boolean isS = dao.deleteReview(seq);
+		
+		
 	}
 	
 }

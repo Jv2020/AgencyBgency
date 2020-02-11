@@ -17,15 +17,12 @@ public class ReviewDao {
 		DBConnection.initConnection();
 	}
 	
-	
-	
 	public static ReviewDao getInstance() {
 		return reviewDao;
 	}
 	
 	public List<ReviewDto> getReviewList() {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
-		String sql = " SELECT *  "
-					+ " FROM EXHIBIT_REVIEW ";
+		String sql = " SELECT * FROM EXHIBIT_REVIEW ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -67,6 +64,69 @@ public class ReviewDao {
 		}
 		
 		return reviewList;
+	}
+	
+	public List<ReviewDto> getReviewList(int page) {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
+		// 1번 페이지 : 1 ~ 5
+		// 2번 페이지 : 6 ~ 10
+		int startNum = (page - 1) * 5 + 1;		// 예를 들어, 6번페이지의 글은 26번째 글 부터 시작해
+		int endNum = page * 5;					// 6번 페이지의 글의 끝번호는 30번이야
+		
+		String sql = " SELECT *  "
+					+ " FROM (SELECT * "
+					+ " FROM (SELECT ROWNUM row_num, * FROM EXHIBIT_REVIEW) "
+					+ " WHERE row_num >= ?) "
+					+ " WHERE row_num <= ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReviewDto> reviewList = new ArrayList<ReviewDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getReviewList Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getReviewList Success");
+			
+			psmt.setInt(1, startNum);
+			psmt.setInt(2, endNum);
+			System.out.println("3/6 getReviewList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getReviewList Success");
+			
+			while(rs.next()) {
+				int i = 1;
+				
+				ReviewDto dto = new ReviewDto(	rs.getInt(i++),		//seq
+												rs.getString(i++),	//id
+												rs.getString(i++),	//exhibition_title
+												rs.getString(i++),	//regdate
+												rs.getInt(i++),		//star_number
+												rs.getString(i++),	//review
+												rs.getInt(i++),		//like_number
+												rs.getInt(i++),		//dislike_number
+												rs.getInt(i++)	);	//del
+				reviewList.add(dto);
+			}
+			System.out.println("5/6 getReviewList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getReviewList Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return reviewList;
+	}
+	
+	public ReviewDto getReview(int seq) {
+		String sql = " SELECT * FROM EXHIBIT_REVIEW "
+					+ " WHERE SEQ=? ";
 	}
 	
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
@@ -285,6 +345,40 @@ public class ReviewDao {
 		return list;
 		
 	}
+	
+	public int getAllCount() {
+		String sql = " SELECT COUNT(*) FROM EXHIBIT_REVIEW ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getAllCount Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getAllCount Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getAllCount Success");
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getAllCount Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return count;
+	}
+	
+	
 	
 }
 

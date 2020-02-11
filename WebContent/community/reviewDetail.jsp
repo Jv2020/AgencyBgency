@@ -12,29 +12,19 @@
 
 <link rel="stylesheet" href="/AgencyBgencyy/community/css/reviewDetail.css">
 
-<p><b>뮤지컬 `모차르트!` 10주년 기념공연</b><p>
+<%
+int seq = Integer.parseInt(request.getParameter("seq"));
 
-<div class="setcionInfo">
-	<img src="http://www.sejongpac.or.kr/upload/PERFORM1/200611_g_b257_2.jpg" alt="" align="left" hspace="30">
-		
-		<ul class="list border_line">
-			<li><span>기간 : </span><p>2020.06.11 (목)  ~ 2020.08.09 (일)</p></li>
-					
-			<li><span>장소 : </span>
-				<p>
-				세종대극장	
-				</p>
-			</li>
-			<li><span>시간 : </span><p>화목 오후7시<br>
-					수금 오후3시, 오후8시<br>
-					토 오후2시, 오후7시 <br>
-					일 오후3시
-					(공연시간 : 175  분 / 인터미션 : 20 분)
-						
-			</p></li>
-		</ul>
-</div>
-<br clear="left">
+
+%>
+
+
+
+
+
+<%-- <p><b><%=dto.getTitle() %></b><p> --%>
+
+
 
 <div class="container"><!-- 리뷰를 작성할꺼야! -->
 <form action="writereview">

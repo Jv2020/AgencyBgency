@@ -25,7 +25,7 @@ if (durl.contains("community")){
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/community/faq.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/community/faq.jsp">FAQ</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/community/review.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/community/review.jsp">리뷰보기</a>
+	href="/AgencyBgencyy/showReviewList">리뷰보기</a>
 </div>
 <%
 }	
