@@ -4,18 +4,28 @@
 <%
 request.setCharacterEncoding("UTF-8");
 %>
+<style>
+.findPasswordBox {
+	width:500px; 
+	height:400px; 
+	border:1px solid #ddd;
+	margin: 0 auto;
+	padding: 30px;
+}
+.findPasswordBox ul li #id{margin-left:20px; margin-top:0px;}
+.findPasswordBox ul li p{margin-left:20px; margin-top:20px;}
+.findPasswordBox ul li input{border:1px solid #ddd; background:#fff; color:#000; font-size:14px; width:395px; height:50px;  padding:0 10px; margin-left:20px; margin-top:3px; display:block}
+.findPasswordBox ul li .sBtn{border:1px solid #5f0080; color:#5f0080; width:300px; height:40px; margin-left: 68px; margin-top: 25px;}
+</style>
 
 
-<h1>비밀번호 찾기</h1>
-<div>
+<div class="findPasswordBox">
 	<form action="<%=request.getContextPath() %>/memberfindpassword" method="post">
-		<%-- <div>
-		<%=mem.getId() %>님
-		</div> --%>
-		<div>
-			<!-- 아이디 입력 -->
-			아이디:<input type="text" name="memberId">
-		</div>
+		<ul>
+			<li>	
+				<!-- 아이디 입력 -->
+				아이디:<input type="text" id="id" name="memberId">
+			</li>
 		<div>
 			<!-- 이름 입력 -->
 			이름:<input type="text" name="memberName">
@@ -36,6 +46,7 @@ request.setCharacterEncoding("UTF-8");
           
 			<!-- 가입하기 버튼 -->
 			<input type="submit" value="비밀번호 찾기">
+		</ul>
 	</form>
 </div>
 

@@ -251,4 +251,55 @@ public MemberDto login(MemberDto dto) {
 		return list;
 	}
 	
+	public MemberDto getMemberById(String findId){
+		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, AUTH "
+				+    " FROM MEMBER ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDto dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getMemberById success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getMemberById success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getMemberById success");
+			
+			if(rs.next()) {
+				int i = 1;
+				String id = rs.getString(i++);
+				String password = rs.getString(i++);
+				String name = rs.getString(i++);
+				String email = rs.getString(i++);
+				String address = rs.getString(i++);
+				String birthday = rs.getString(i++);
+				String gender = rs.getString(i++);
+				String phone = rs.getString(i++);
+				String question = rs.getString(i++);
+				String hint = rs.getString(i++);
+				String exhibit_name = rs.getString(i++);
+				String certi_num = rs.getString(i++);
+				int auth = rs.getInt(i++);
+				
+				
+				dto = new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, auth);
+				
+			}
+			System.out.println("4/6 getMemberById success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMemberById fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return dto;
+	}
+	
 }
