@@ -91,11 +91,10 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 
 <div class="insertFrm">
-
    <form method="post" action="">
       <div class="frm_cont border-btm">
          <div class="category">
-            <div class="category-radius categoryBox">
+            <div class="category-radius">
             	<%
             	if(mem.getAuth() == 0){
             	%>
@@ -114,7 +113,6 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 				<%            		
             	}
             	%>
-               	
             </div>
          </div>
          <div class="frm_line clfix">
@@ -146,59 +144,59 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
                <%
                String[] emailArray = mem.getEmail().split("@");
                %>
-               <input class="memberEmail1" type="text" name="memberEmail1" value="<%=emailArray[0]%>">
+               <input class="memberEmail1" type="text" name="memberEmail1" value="<%=emailArray[0]%>" readonly>
                <span class="frm-mg">@</span>
-               <input class="memberEmail2" type="text" name="memberEmail2" value="<%=emailArray[1]%>">
+               <input class="memberEmail2" type="text" name="memberEmail2" value="<%=emailArray[1]%>" readonly>
             </div>            
          </div>
          
          <div class="frm_line clfix">
             <div class="tit">생년월일</div>
             <div class="cont">
-               <input class="byear" type="text" name="memberYear" value="" maxlength="4" placeholder="년(4자)">
+	            <%
+	            String[] birthArray = mem.getBirthday().split("-");
+	            %>
+                <input class="byear" type="text" name="memberYear" value="<%=birthArray[0] %>" maxlength="4" readonly>
             </div>            
             <div class="cont">
-               <select class="select-month" name="memberMonth">
-                  <option value="월">월</option>
-                  <option value="01">1</option>
-                  <option value="02">2</option>
-                  <option value="03">3</option>
-                  <option value="04">4</option>
-                  <option value="05">5</option>
-                  <option value="06">6</option>
-                  <option value="07">7</option>
-                  <option value="08">8</option>
-                  <option value="09">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
-               </select>
+                <input class="byear" type="text" name="memberMonth" value="<%=birthArray[1] %>" readonly>
             </div>
             <div class="cont">
-               <input class="bday" type="text" name="memberDate" value="" maxlength="2" placeholder="일">   
-               <span class="">태어난 년도 4자리를 정확하게 입력하세요.</span>            
+                <input class="bday" type="text" name="memberDate" value="<%=birthArray[2] %>" maxlength="2" placeholder="일" readonly>               
             </div>                           
          </div>
          
          <div class="frm_line clfix">
             <div class="tit">성별</div>
             <div class="cont">
-               <input type="radio" id="male" name="memberGender" checked="checked" value="male"/><label for="male"><span></span>남성</label>
-               <input type="radio" id="female" name="memberGender" value="female" /><label for="female"><span></span>여성</label>
+	           	<%
+	           	if(mem.getGender().equals("male")){
+	       		%>
+	   		 		<input type="text" id="male" name="memberGender" value="남성" readonly>
+	       		<%	
+	           	} else if(mem.getGender().equals("female")){ 
+				%>
+					<input type="text" id="female" name="memberGender" value="여성" readonly>
+				<%            		
+	           	}
+	           	%>
             </div>            
          </div>         
          
          <div class="frm_line clfix">
             <div class="tit">주소</div>
             <div class="cont">
+            	<%
+	            String[] addressArray = mem.getAddress().split("/");
+	            %>
                <!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
                <input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
-               <input type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호"> 
-                <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
+               <input type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" value="<%=addressArray[0] %>" readonly><br>
+                <!-- <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br> -->
+                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" value="<%=addressArray[1] %>" readonly>
                 <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
                 <span id="guide" style="color:#999;display:none"></span>
-                <input type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
+                <input type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" value="<%=addressArray[2] %>" readonly>
                 <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
             </div>            
          </div>
@@ -216,7 +214,6 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
                <input class="hint-answer" type="text" name="memberAnswer" placeholder="답을 입력해주세요">
             </div>            
          </div>      
-         
          <div class="frm_line curator clfix">
             <div class="tit">전시관명</div>
             <div class="cont">
@@ -235,7 +232,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
    </form><!-- insertFrm -->
 </div><!-- formWrap -->
 
-<div class="memEdit">
+<!-- <div class="memEdit">
 	<form>
 		<ul>
 			<li>
@@ -244,7 +241,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			</li>
 		</ul>
 	</form>
-</div>
+</div> -->
 
 <%@include file ="../include/footer.jsp" %>
 

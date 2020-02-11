@@ -49,10 +49,10 @@ if (durl.contains("mypage")){
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreserv.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myreserv.jsp">나의 예매내역
+	</a>
 	<%
 	if(mem.getAuth() != 0){
 	%>
-		</a>
 		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
 		href="/AgencyBgencyy/mypage/curatordetail.jsp">나의 전시
 		</a>
