@@ -37,6 +37,25 @@ public class ReservDto implements Serializable {
 	
 	public ReservDto() {
 	}
+	
+	
+
+	public ReservDto(String id, String name, String birthdate, String phone, String email, String address,
+			String receive, int qty, int totalPrice, String payMethod) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.birthdate = birthdate;
+		this.phone = phone;
+		this.email = email;
+		this.address = address;
+		this.receive = receive;
+		this.qty = qty;
+		this.totalPrice = totalPrice;
+		this.payMethod = payMethod;
+	}
+
+
 
 	public ReservDto(int seq, String id, String name, String birthdate, String phone, String email, String address,
 			String receive, int qty, int totalPrice, String payMethod, int del) {

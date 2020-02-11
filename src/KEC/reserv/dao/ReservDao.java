@@ -9,6 +9,7 @@ import java.util.List;
 import DB.DBClose;
 import DB.DBConnection;
 import KEC.reserv.dto.ReservDto;
+import NWH.member.dto.MemberDto;
 
 public class ReservDao {
 	
@@ -21,7 +22,7 @@ public class ReservDao {
 	
 	public static ReservDao getInstance(){
 		if(dao == null) {
-			new ReservDao();
+			dao = new ReservDao();
 		}
 		return dao;
 	}
@@ -31,7 +32,7 @@ public class ReservDao {
 		
 		String sql = " INSERT INTO RESERVATION (SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
 				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL) "
-				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1) ";
+				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0) ";
 		
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
@@ -71,6 +72,122 @@ public class ReservDao {
 		
 		return count > 0 ? true:false;	
 		
+	}
+	
+	// 예매 확인 (정보 뿌리기)** 
+	public ReservDto getReservId(String reservId){
+		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL "
+				+ " FROM RESERVATION";
+	
+		Connection conn = null;			// DB Connection
+		PreparedStatement psmt = null;	// SQL
+		ResultSet rs = null;			// result
+		
+		ReservDto dto = null;
+	
+		try {
+			
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getReservId success");
+		
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getReservId success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getReservId success");
+		
+			if(rs.next()) {
+				int i = 1;
+				int seq = rs.getInt(i++);
+				String id = rs.getString(i++);
+				String name = rs.getString(i++);
+				String birthdate = rs.getString(i++);
+				String phone = rs.getString(i++);
+				String email = rs.getString(i++);
+				String address = rs.getString(i++);
+				String receive = rs.getString(i++);
+				int qty = rs.getInt(i++);
+				int totalPrice = rs.getInt(i++);
+				String payMethod = rs.getString(i++);
+				int del = rs.getInt(i++);
+				
+				
+				
+				dto = new ReservDto(seq, id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, del);
+				
+			}
+			
+			System.out.println("4/6 getReservId success");
+				
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("getReservId fail");
+				
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return dto;
+	}
+	
+	// 예매 정보 수정**
+	public int update(int seq, String phone, String email, String address, String receive) {		
+		String sql = " UPDATE RESERVATION SET PHONE = ?, EMAIL = ?, ADDRESS = ?, RECEIVE = ? "
+				    + "	WHERE SEQ = ?" ;
+		
+		Connection conn = null;			// DB Connection
+		PreparedStatement psmt = null;	// SQL
+		ResultSet rs = null;			// result
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 update success");
+		
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 update success");
+			psmt.setString(1, phone);
+			psmt.setString(2, email);
+			psmt.setString(3, address);
+			psmt.setString(4, receive);
+			psmt.setInt(5, seq);
+			
+			return psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		
+		return -1; // 데이터베이스 오류
+
+	}
+	
+	// 예매 정보 삭제**
+	public int delete(int seq) {
+		String sql = "UPDATE RESERVATION SET DEL = 1 WHERE SEQ = ?";
+		
+		Connection conn = null;			// DB Connection
+		PreparedStatement psmt = null;	// SQL
+		ResultSet rs = null;			// result
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 update success");
+		
+			psmt = conn.prepareStatement(sql);
+
+			psmt.setInt(1, seq);
+			
+			return psmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return -1; // 데이터베이스 오류
 	}
 	
 	
