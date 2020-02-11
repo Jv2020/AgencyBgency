@@ -132,6 +132,23 @@ if (lourl.contains("/findid.jsp")){
 </div>
 <%
 }	
+%>
+
+<!-- 비밀번호 찾기 -->
+<% 
+if (lourl.contains("/findpassword.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MEMBER</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>LOGIN</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>비밀번호 찾기</span>
+</div>
+<%
+}	
 %>	
 
 <!-- Reservation -->

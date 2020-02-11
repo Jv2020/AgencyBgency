@@ -82,6 +82,14 @@ if (ifurl.contains("findid.jsp")){
 }	
 %>
 
+<% 
+if (ifurl.contains("findpassword.jsp")){
+%>
+<h2>비밀번호 찾기</h2>
+<%
+}	
+%>
+
 <!-- Reservation -->
 <% 
 if (ifurl.contains("/reserv.jsp")){

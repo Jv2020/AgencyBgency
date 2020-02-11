@@ -87,11 +87,10 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 <div class="insertFrm">
 
-   <form method="post" action="<%=request.getContextPath() %>/memberinsert">
+   <form method="post" action="">
       <div class="frm_cont border-btm">
          <div class="category">
             <div class="category-radius categoryBox">
-               <input type="hidden" name="memberAuth" id="memberAuth">
                <span class="on">일반회원<input type="hidden" name="memberAuth" value="0"></span>
                <span class="curatorBtn">큐레이터<input type="hidden" value="1"></span>
             </div>
