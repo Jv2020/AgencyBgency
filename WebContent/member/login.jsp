@@ -42,7 +42,7 @@ request.setCharacterEncoding("UTF-8");
 			</li>
 			<li>
 				<!-- 로그인 버튼 -->
-				<input class="sBtn" type="submit" value="로그인">
+				<input class="sBtn" style="cursor:pointer" type="submit" value="로그인">
 			</li>
 			<li>
 				<!-- 가입하기 버튼 -->

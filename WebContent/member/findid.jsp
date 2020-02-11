@@ -40,7 +40,7 @@ request.setCharacterEncoding("UTF-8");
 			</li>
 				<!-- 아이디 찾기 버튼 -->
 			<li>	
-				<input type="submit" class="sBtn" value="아이디 찾기">
+				<input type="submit" style="cursor:pointer" class="sBtn" value="아이디 찾기">
 			</li>
 		</ul>
 	</form>

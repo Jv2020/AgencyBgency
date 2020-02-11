@@ -1,5 +1,6 @@
+
 DROP TABLE MEMBER
-CASCADE CONSTRAINT;
+CASCADE CONSTRAINTS;
 
 CREATE TABLE MEMBER (
 	ID VARCHAR2(30) PRIMARY KEY,
@@ -14,6 +15,7 @@ CREATE TABLE MEMBER (
 	HINT VARCHAR2(100) NOT NULL,
 	EXHIBIT_NAME VARCHAR2(50),
 	CERTI_NUM VARCHAR2(50),
+	DEL NUMBER(8) NOT NULL,
 	AUTH NUMBER(8) NOT NULL
 );
 
@@ -29,10 +31,16 @@ ADD CONSTRAINT UK_MEMBER_CERTI_NUM UNIQUE(CERTI_NUM);
 SELECT * FROM MEMBER;
 
 INSERT INTO MEMBER
-VALUES ('admin', 'admin', '관리자', '0', '0', '0', '0', '0', '0', '0', '0', '0', 3);
+VALUES ('test001', 'test001', 'test1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 0, 0);
 
+INSERT INTO MEMBER
+VALUES ('test002', 'test002', 'test2', '2', '2', '2', '2', '2', '2', '2', '2', '2', 0, 1);
 
+INSERT INTO MEMBER
+VALUES ('test003', 'test003', 'test3', '3', '3', '3', '3', '3', '3', '3', '3', '3', 0, 2);
 
+INSERT INTO MEMBER
+VALUES ('test004', 'test004', 'test4', '4', '4', '4', '4', '4', '4', '4', '4', '4', 1, 0);
 
 
 

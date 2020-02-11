@@ -1,3 +1,4 @@
+<%@page import="NWH.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -34,6 +35,7 @@ if (durl.contains("community")){
 <!-- community -->
 <% 
 if (durl.contains("mypage")){
+	MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 %>
 <div class="depth02 mypageDepth">
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/mypage.jsp' ? ' active' : ''}"
@@ -47,14 +49,23 @@ if (durl.contains("mypage")){
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreserv.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myreserv.jsp">나의 예매내역
-	</a>
-	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/curatordetail.jsp">나의 전시
-	</a>
-	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatorwrite.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/curatorwrite.jsp">전시 등록하기
-	</a>
+	<%
+	if(mem.getAuth() != 0){
+	%>
+		</a>
+		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
+		href="/AgencyBgencyy/mypage/curatordetail.jsp">나의 전시
+		</a>
+		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatorwrite.jsp' ? ' active' : ''}"
+		href="/AgencyBgencyy/mypage/curatorwrite.jsp">전시 등록하기
+		</a>
+	<%	
+	}
+	%>
+	
 </div>
+
+<script src=""></script>
 <%
 }	
 %>	
