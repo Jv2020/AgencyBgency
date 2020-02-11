@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@page import="java.util.List"%>
 <%@include file ="../include/header.jsp" %>
@@ -11,10 +12,59 @@
 	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
 	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
 	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
-%>    
-<%
 
+%>    
+<%! 
+// 현재 날짜 확인하기
+public String getDate(){
+	Calendar cal = Calendar.getInstance();
+	int year = cal.get(Calendar.YEAR);
+	int month = cal.get(Calendar.MONTH)+1;
+	int day = cal.get(Calendar.DATE);
+	
+	String today ="";
+	today += year;
+	
+	if(month<10){ today += "0" + month; }
+	else{ today += month; }
+	
+	if(day<10){ today += "0" + day; }
+	else{ today += day; }
+	
+		
+	return today;
+}
+public String getDate(String date){
+	String str = date.substring(0,11);
+	str = str.replaceAll("-", "").trim();
+	return str;
+}
+public String getExPeriod(String begindatefull, String enddatefull){
+	String status="";
+	// 기준 : 오늘 
+	int today = Integer.parseInt(getDate());
+	int begindate = Integer.parseInt(getDate(begindatefull));
+	int enddate = Integer.parseInt(getDate(enddatefull));
+	
+	if( today >= begindate && today <= enddate ){
+		// 현재 전시 
+		status = "now";
+	}else if( today <= begindate) {
+		// 예정 전시 
+		status = "fut";
+	}else{
+		// 지난 전시 	
+		status = "past";
+	} 
+	return status;
+}
 %>
+<%
+	// 추천전시 상태 
+	String recommandPeriod = getExPeriod(recommandDto.getBegindate(),recommandDto.getEnddate() );
+%>
+
+
 <!-- 추천전시 및 일정 -->
 <div class="sch-top clfix">
 	<div class="recommand clfix">
@@ -24,7 +74,7 @@
 		<div class="txt">
 			<strong>이달의 추천전시</strong>
 			<h3>
-				<a href="${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=recommandDto.getSeq()%>">
+				<a href="${pageContext.request.contextPath}/exdetail?ex=<%=recommandPeriod %>&seq=<%=recommandDto.getSeq()%>">
 					<%=recommandDto.getTitle() %>
 				</a>
 			</h3>
@@ -45,13 +95,16 @@
 			<ul id="cal-data">
 		<!-- 캘린더 데이터 들어감 -->
 		<%
+			
+			
 			for(int i=0; i< monthList.size(); i++){ 
 				ExhibitDto dto = monthList.get(i);
-		%>
+				String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
+			%>
 				<li>
 					<div class="day"><%=i+1 %></div>
 					<div class="desc">
-						<h4><a href="<%=request.getContextPath()%>/exdetail?ex=now&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></h4>
+						<h4><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></h4>
 						<p><%=dto.getPlace() %></p>
 					</div>
 				</li>
@@ -72,19 +125,24 @@
 	<ul class="e_list clfix">
 	<% 
 	if(newlist.size() > 0 ){
-		for(int i=0; i<newlist.size();i++) {
-		ExhibitDto dto = newlist.get(i);
-		String bdate = dto.getBegindate().substring(0,11);
-		String edate = dto.getEnddate().substring(0,11);
+			//exstatus="";	// 현재/지난/예정 전시인지 확인하기 
+			for(int i=0; i<newlist.size();i++) {
+		
+			ExhibitDto dto = newlist.get(i);
+			String bdate = getDate(dto.getBegindate());
+			String edate = getDate(dto.getEnddate());
+			
+			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
+		
 		%>
 		<li>
 			<div class='img'>
-				<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+				<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 					<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
 				</a>
 			</div>
 			<div class='txt'>
-				<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+				<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 					<h3><%=dto.getTitle() %></h3>
 				</a> 
 				<p><%=dto.getPlace() %></p>
@@ -117,15 +175,17 @@
 					ExhibitDto dto = endlist.get(i);
 					String bdate = dto.getBegindate().substring(0,11);
 					String edate = dto.getEnddate().substring(0,11);
+					
+					String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
 					%>
 					<li>
 						<div class='img'>
-							<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 								<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
 							</a>
 						</div>
 						<div class='txt'>
-							<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 								<h3><%=dto.getTitle() %></h3>
 							</a> 
 							<p><%=dto.getPlace() %></p>
@@ -180,13 +240,29 @@ $("#prev").click(function() {
 		dataType: "json",
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success: function( data ) {
-		//	alert(data[0].title);
 			var str = "";
+			var exstatus ="";
+
 			for(var i=0; i<data.length; i++){
+				
+				var begindate = data[i].begindate.substring(0,4)+data[i].begindate.substring(5,7)+data[i].begindate.substring(8,10);
+				var enddate = data[i].enddate.substring(0,4)+data[i].enddate.substring(5,7)+data[i].enddate.substring(8,10);
+				begindate = parseInt(begindate);
+				enddate = parseInt(enddate);
+				today = parseInt(getDate());
+				
+				if( today >= begindate && today <= enddate ){
+					exstatus = "now";
+				}else if( today > enddate ){
+					exstatus = "past";
+				}else{
+					exstatus = "fut";
+				}
+				
 				str += '<li>'
 						+'<div class="day">'+(1+i)+'</div>'
 						+'<div class="desc">'
-						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex='+exstatus+'&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
 						+	'<p>'+data[i].place+'</p>'
 						+'</div></li>';
 			}
@@ -194,9 +270,6 @@ $("#prev").click(function() {
 			$("#cal-data").html(str);
 		}
 	});
-	
-	
-	
 });
 
 $("#next").click(function() {
@@ -226,12 +299,28 @@ $("#next").click(function() {
 		dataType: "json",
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 		success: function( data ) {
-			var str = "";
+			var str = "";	// html 담을 변수 
+			var exstatus="";	// 전시 상태를 담을 변수 
 			for(var i=0; i<data.length; i++){
+				
+				var begindate = data[i].begindate.substring(0,4)+data[i].begindate.substring(5,7)+data[i].begindate.substring(8,10);
+				var enddate = data[i].enddate.substring(0,4)+data[i].enddate.substring(5,7)+data[i].enddate.substring(8,10);
+				begindate = parseInt(begindate);
+				enddate = parseInt(enddate);
+				var today = parseInt(getDate());
+				
+				if( today >= begindate && today <= enddate ){
+					exstatus = "now";
+				}else if( today > enddate ){
+					exstatus = "past";
+				}else{
+					exstatus = "fut";
+				}
+				//if(begindate>)
 				str += '<li>'
 						+'<div class="day">'+(1+i)+'</div>'
 						+'<div class="desc">'
-						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex='+exstatus+'&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
 						+	'<p>'+data[i].place+'</p>'
 						+'</div></li>';
 			}
@@ -242,6 +331,22 @@ $("#next").click(function() {
 	
 	
 });
+function getDate(){
+	var date = new Date();
+	var y = date.getFullYear();
+	var m = date.getMonth()+1;
+	var d = date.getDate();
+
+	if(m < 10){ 
+		m = "0" + m;
+	}if(d < 10){
+		d = "0" + d;
+	}
+	return y + m + d + "";
+}
+
+
+
 </script>
 <!-- Ajax  -->
 <%@include file ="../include/footer.jsp" %>		

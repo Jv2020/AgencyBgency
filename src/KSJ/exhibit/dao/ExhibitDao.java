@@ -449,8 +449,6 @@ public class ExhibitDao {
 			// 현재 월 일 때 
 			if(year.equals("") ||  month.equals("")) {
 				psmt = conn.prepareStatement(sql);
-				System.out.println("여기 옴 ");
-
 			}
 			// 다른 월일 때
 			else {
