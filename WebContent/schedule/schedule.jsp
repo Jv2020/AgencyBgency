@@ -2,83 +2,246 @@
 <%@page import="java.util.List"%>
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="/AgencyBgencyy/schedule/css/schedule.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<%
+	
+	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");	// 이달의 새로운 전시 
+	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
+	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
+	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
+%>    
 <%
 
-	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");
-	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");
+%>
+<!-- 추천전시 및 일정 -->
+<div class="sch-top clfix">
+	<div class="recommand clfix">
+		<div class="img">
+			<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586">
+		</div>
+		<div class="txt">
+			<strong>이달의 추천전시</strong>
+			<h3>
+				<a href="${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=recommandDto.getSeq()%>">
+					<%=recommandDto.getTitle() %>
+				</a>
+			</h3>
+			<p><%= recommandDto.getBegindate().substring(0,11)+" ~ " +  recommandDto.getEnddate().substring(0,11) %></p>
+		</div>
+	</div>
+<!-- 캘린더 -->
+	<div class="calendar">
+		<div class="cal-top">
+			<span class="prev" id="prev"> <i class="fas fa-chevron-left"></i> </span>
+			<div class="month">
+				<span id="year">2020</span>
+				<strong id="month">02</strong>
+			</div>
+			<span class="next" id="next"> <i class="fas fa-chevron-right"></i> </span>
+		</div>
+		<div class="cal-cont">
+			<ul id="cal-data">
+		<!-- 캘린더 데이터 들어감 -->
+		<%
+			for(int i=0; i< monthList.size(); i++){ 
+				ExhibitDto dto = monthList.get(i);
+		%>
+				<li>
+					<div class="day"><%=i+1 %></div>
+					<div class="desc">
+						<h4><a href="<%=request.getContextPath()%>/exdetail?ex=now&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></h4>
+						<p><%=dto.getPlace() %></p>
+					</div>
+				</li>
+				
+				<%
+			}
+		%>
+			</ul>
+		</div>
 	
-%>    
-<link rel="stylesheet" type="text/css" href="/AgencyBgencyy/exhibit/css/exdetail.css">
-
-<div class="ex-datail-top clfix" style="border: 1px solid;">
-	<div style="width:250px; float: left">
-		<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586" width="250px">
 	</div>
-	<div style="float: left;width:250px;">
-		2월의 추천전시
-		<h1>여기다 제목을 넣는다 .. </h1>
-	</div>
-<div style="float: right; width: 450px; height:400px; border: 1px solid">
-	ss
-</div>
 </div>
 
-
-<div class="ex-datail-mid">
-	<h5>이달의 새로운 전시</h5>
-	<%
-	if(newlist.size() > 0) {
-		for(int i= 0; i<newlist.size(); i++){
-			ExhibitDto dto = newlist.get(i);
-			%>
-			
+<!-- 이달의 새로운 전시 -->
+<div class="sch-btm">
+<h5>이달의 새로운 전시</h5>
 	<div class="txt">
-			제목 [
-			<%= i+" ] " + dto.getTitle() %>
-		</div>
-			
-			<%
-		}
-	}else{
-		// 리스트 불러올게 없을 때 
-		
-			%>
-			<div class="txt">
-				새로운 전시가 없습니다.
+	<ul class="e_list clfix">
+	<% 
+	if(newlist.size() > 0 ){
+		for(int i=0; i<newlist.size();i++) {
+		ExhibitDto dto = newlist.get(i);
+		String bdate = dto.getBegindate().substring(0,11);
+		String edate = dto.getEnddate().substring(0,11);
+		%>
+		<li>
+			<div class='img'>
+				<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+					<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
+				</a>
 			</div>
-			<%
+			<div class='txt'>
+				<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+					<h3><%=dto.getTitle() %></h3>
+				</a> 
+				<p><%=dto.getPlace() %></p>
+				<span><%=bdate+"~ "+edate%></span>
+			</div>
+		</li>
+		
+		<% 
+		}
+	}else{	// 리스트가 없을 시
+		%>
+			<li>
+				<div>
+					새로운 전시가 없습니다.
+				</div>
+			</li>
+		<%
 	}
 	%>
+	</ul>
+</div>
+<div class="sch-btm">
+<!-- 이달의 마감전시 -->
+<h5>이달의 마감전시</h5>
+	<div class="txt">
+			<ul class="e_list clfix">
+				<% 
+				if(endlist.size() > 0 ){
+					for(int i=0; i<endlist.size();i++) {
+					ExhibitDto dto = endlist.get(i);
+					String bdate = dto.getBegindate().substring(0,11);
+					String edate = dto.getEnddate().substring(0,11);
+					%>
+					<li>
+						<div class='img'>
+							<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+								<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
+							</a>
+						</div>
+						<div class='txt'>
+							<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+								<h3><%=dto.getTitle() %></h3>
+							</a> 
+							<p><%=dto.getPlace() %></p>
+							<span><%=bdate+"~ "+edate%></span>
+						</div>
+					</li>
+					
+					<% 
+					}
+				}else{	// 리스트가 없을 시
+					%>
+					<li>
+						<div>
+							새로운 전시가 없습니다.
+						</div>
+					</li>
+					<%
+				}
+				%>
+				</ul>
+	</div>
+</div>
 </div>
 
-<div class="ex-datail-mid">
-	<h5>이달의 마감 전시</h5>
-	<%
-	if(endlist.size() > 0) {
-		for(int i= 0; i<endlist.size(); i++){
-			ExhibitDto dto = endlist.get(i);
-			%>
-			
-		<div class="txt" style="width: 30px; float: left">
-			제목 [
-			<%= i+" ] " + dto.getTitle() %>
-		</div>
-
-			
-			<%
-		}
-	}else{
-		// 리스트 불러올게 없을 때 
-		
-			%>
-			<div class="txt">
-				새로운 전시가 없습니다.
-			</div>
-			<%
-	}
-	%>
+<!-- 전시 스케쥴 보기 버튼 바꿈 -->
+<script>
 	
-</div>
+$("#prev").click(function() {
 
+	var syear = $("#year").text();
+	var smonth = $("#month").text();
+	
+	var year = parseInt(syear);
+	var month = parseInt(smonth);
 
+	if(smonth === '01'){
+		year = year-1;
+		month = 12;
+	}else{
+		month = month-1;
+	}
+	if(month < 10){
+		month = "0" + month;
+	}
+	$("#year").text(year);
+	$("#month").text(month);
+	
+	$.ajax({
+		url: "./exhibitmonthsch",
+		type:"post",
+		data:"year="+year+"&month="+month,
+		dataType: "json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function( data ) {
+		//	alert(data[0].title);
+			var str = "";
+			for(var i=0; i<data.length; i++){
+				str += '<li>'
+						+'<div class="day">'+(1+i)+'</div>'
+						+'<div class="desc">'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+	'<p>'+data[i].place+'</p>'
+						+'</div></li>';
+			}
+					
+			$("#cal-data").html(str);
+		}
+	});
+	
+	
+	
+});
+
+$("#next").click(function() {
+
+	var syear = $("#year").text();
+	var smonth = $("#month").text();
+	
+	var year = parseInt(syear);
+	var month = parseInt(smonth);
+
+	if(smonth === '12'){
+		year = year+1;
+		month = 1;
+	}else{
+		month = month+1;
+	}
+	if(month < 10){
+		month = "0" + month;
+	}
+	$("#year").text(year);
+	$("#month").text(month);
+	
+	$.ajax({
+		url: "./exhibitmonthsch",
+		type:"post",
+		data:"year="+year+"&month="+month,
+		dataType: "json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function( data ) {
+			var str = "";
+			for(var i=0; i<data.length; i++){
+				str += '<li>'
+						+'<div class="day">'+(1+i)+'</div>'
+						+'<div class="desc">'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+	'<p>'+data[i].place+'</p>'
+						+'</div></li>';
+			}
+			$("#cal-data").html(str);
+		}
+	});
+	
+	
+	
+});
+</script>
+<!-- Ajax  -->
 <%@include file ="../include/footer.jsp" %>		

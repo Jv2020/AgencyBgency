@@ -1,4 +1,7 @@
 package KEC.reserv.dto;
+
+import java.io.Serializable;
+
 /*
 
 CREATE TABLE RESERVATION(
@@ -17,7 +20,7 @@ CREATE TABLE RESERVATION(
 );
 
 */
-public class ReservDto {
+public class ReservDto implements Serializable {
 	
 	int seq;
 	String id;

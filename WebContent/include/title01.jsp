@@ -13,7 +13,7 @@ if (ifurl.contains("aboutus.jsp")){
 
 <!-- exhibit -->
 <% 
-if (ifurl.substring(8).contains("exhibit")){
+if (ifurl.substring(8).contains("/exhibit")){
 %>
 <h2 id="ex-title" >현재전시</h2>
 <%
@@ -50,7 +50,7 @@ if (ifurl.contains("notice.jsp")){
 %>	
 
 <% 
-if (ifurl.contains("review.jsp")){
+if (ifurl.contains("/review.jsp")){
 %>
 <h2>리뷰보기</h2>
 <%
@@ -73,11 +73,93 @@ if (ifurl.contains("join.jsp")){
 <%
 }	
 %>
+
+<% 
+if (ifurl.contains("findid.jsp")){
+%>
+<h2>아이디 찾기</h2>
+<%
+}	
+%>
+
+<% 
+if (ifurl.contains("findpassword.jsp")){
+%>
+<h2>비밀번호 찾기</h2>
+<%
+}	
+%>
+
 <!-- Reservation -->
 <% 
-if (ifurl.contains("reserv.jsp")){
+if (ifurl.contains("/reserv.jsp")){
 %>
 <h2>예매하기</h2>
+<%
+}   
+%>
+<!-- Mypage -->
+<% 
+if (ifurl.contains("/myexhibit.jsp")){
+%>
+<h2>관람한 전시</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("/myreview.jsp")){
+%>
+<h2>나의 리뷰</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("myreserv.jsp")){
+%>
+<h2>나의 예매내역</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("mypage.jsp")){
+%>
+<h2>회원정보</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("memupdate.jsp")){
+%>
+<h2>회원정보 수정</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("memdelete.jsp")){
+%>
+<h2>회원 탈퇴</h2>
+<%
+}   
+%>
+
+<!-- Mypage 큐레이터 -->
+<% 
+if (ifurl.contains("curatordetail.jsp")){
+%>
+<h2>나의 전시</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("curatorwrite.jsp")){
+%>
+<h2>전시등록하기</h2>
 <%
 }   
 %>

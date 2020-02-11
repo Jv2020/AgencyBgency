@@ -91,8 +91,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
       <div class="frm_cont border-btm">
          <div class="category">
             <div class="category-radius categoryBox">
-               <span class="on">일반회원</span>
-               <span class="curatorBtn">큐레이터</span>
+               <span class="on">일반회원<input type="hidden" name="memberAuth" value="0"></span>
+               <span class="curatorBtn">큐레이터<input type="hidden" value="1"></span>
             </div>
          </div>
          <div class="frm_line clfix">
@@ -184,12 +184,12 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
             <div class="cont">
                <!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
                <input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
-               <input name="post" type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호"> 
+               <input type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호"> 
                 <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-                <input name="address01" type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
+                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
                 <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
                 <span id="guide" style="color:#999;display:none"></span>
-                <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
+                <input type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">
                 <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
             </div>            
          </div>

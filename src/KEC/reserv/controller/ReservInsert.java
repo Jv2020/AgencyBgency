@@ -22,15 +22,16 @@ public class ReservInsert extends HttpServlet {
 		// 국문 깨지는 문제 해결 코드
 		req.setCharacterEncoding("utf-8");
 				
-		String reservName = req.getParameter("reservName");	
-		String reservYear = req.getParameter("reservYear");	
-		String reservMonth = req.getParameter("reservMonth");	
-		String reservDay = req.getParameter("reservDay");	
-		String reservPhone01 = req.getParameter("reservPhone01");
-		String reservPhone02 = req.getParameter("reservPhone02");
-		String reservPhone03 = req.getParameter("reservPhone03");		
+		String name = req.getParameter("reservName");	
+		String year = req.getParameter("reservYear");	
+		String month = req.getParameter("reservMonth");	
+		String day = req.getParameter("reservDay");	
+		String phone = req.getParameter("reservPhone");	
+		
 		String reservEmail01 = req.getParameter("reservEmail01");		
-		String reservEmail02 = req.getParameter("reservEmail02");		
+		String reservEmail02 = req.getParameter("reservEmail02");	
+		String email = reservEmail01 + "@" + reservEmail02;	
+		
 		String post = req.getParameter("post");		
 		String address01 = req.getParameter("address01");
 		String address02 = req.getParameter("address02");				
@@ -40,13 +41,11 @@ public class ReservInsert extends HttpServlet {
 		String totalprice = req.getParameter("totalprice");
 		
 		
-		System.out.println("reservName : " + reservName);		
-		System.out.println("reservYear : " + reservYear);
-		System.out.println("reservMonth : " + reservMonth);
-		System.out.println("reservDay : " + reservDay);			
-		System.out.println("reservPhone01 : " + reservPhone01);
-		System.out.println("reservPhone02 : " + reservPhone02);
-		System.out.println("reservPhone03 : " + reservPhone03);		
+		System.out.println("reservName : " + name);		
+		System.out.println("reservYear : " + year);
+		System.out.println("reservMonth : " + month);
+		System.out.println("reservDay : " + day);			
+		System.out.println("phone : " + phone);	
 		System.out.println("reservEmail01 : " + reservEmail01);
 		System.out.println("reservEmail02 : " + reservEmail02);		
 		System.out.println("post : " + post);
@@ -58,6 +57,8 @@ public class ReservInsert extends HttpServlet {
 		System.out.println("totalprice : " + totalprice);		
 		
 		ReservDao dao = ReservDao.getInstance();
+		
+	    dao.getReserv(new ReservDto(reservName, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, del))
 		
 				
 	}

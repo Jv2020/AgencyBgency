@@ -7,6 +7,12 @@
 .e_list li .img img{
 	width:100%;
 }
+.e_list li .txt h3, .e_list li .txt p{
+	width:100%;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}	
 .listmore{
 	width:240px;
 	height:70px;

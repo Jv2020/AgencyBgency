@@ -4,9 +4,23 @@
 
 <% 
 // 전시 디테일 dto
- ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
+ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
+//System.out.println("edto title : " + edto.getTitle());
 
-System.out.println("edto title : " + edto.getTitle());
+// member 
+MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+// email - split
+String email = mem.getEmail();
+String[] edata = email.split("@");
+
+// address - split
+String address = mem.getAddress();
+String[] madr = address.split("/");
+String detail="";
+if(madr.length == 3){
+detail= madr[2];
+	
+}
 
 %>	
 <style>
@@ -103,50 +117,48 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit">예매자 이름</div>
 				<div class="cont">
-					<input name="reservName" class="ttext readOnly" type="text" value="김비트" readonly="readonly">
+					<input name="reservName" class="ttext readOnly" type="text" value=" <%=mem.getName() %>" readonly="readonly">
 				</div>				
 			</div>
 			
 			<div class="frm_line reser-birth clfix">
 				<div class="tit">생년월일</div>
 				<div class="cont mr20">
-					<input name="reservYear" class="byear readOnly" type="text" value="2000" maxlength="4" readonly="readonly"> 년
+					<input name="reservYear" class="byear readOnly" type="text" value="<%=mem.getBirthday().substring(0, 4) %>" maxlength="4" readonly="readonly"> 년
 				</div>				
 				<div class="cont mr20">
-					<input name="reservMonth" class="bmonth readOnly" type="text" value="09" maxlength="4" readonly="readonly"> 월
+					<input name="reservMonth" class="bmonth readOnly" type="text" value="<%=mem.getBirthday().substring(5, 7) %>" maxlength="2" readonly="readonly"> 월
 				</div>
 				<div class="cont">
-					<input name="reservDay" class="bday readOnly" type="text" value="02" maxlength="2" readonly="readonly"> 일			
+					<input name="reservDay" class="bday readOnly" type="text" value="<%=mem.getBirthday().substring(8, 10) %>" maxlength="2" readonly="readonly"> 일			
 				</div>									
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">연락처</div>
 				<div class="cont i-mg-none">
-					<input name="reservPhone01" type="text" value="010"><span class="frm-mg">-</span>
-					<input name="reservPhone02" type="text" value="1234"><span class="frm-mg">-</span>
-					<input name="reservPhone03" type="text" value="5678">
+					<input name="reservPhone" type="text" value="<%=mem.getPhone() %>">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">이메일 주소</div>
 				<div class="cont i-mg-none">
-					<input name="reservEmail01" type="text" value="agency">
+					<input name="reservEmail01" type="text" value="<%=edata[0]%>">
 					<span class="frm-mg">@</span>
-					<input name="reservEmail02" type="text" value="naver.com">
+					<input name="reservEmail02" type="text" value="<%=edata[1]%>">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">주소</div>
 				<div class="cont">
-					<input name="post" type="text" id="sample4_postcode" readonly="readonly" placeholder="우편번호"> 
+					<input name="post" type="text" id="sample4_postcode" readonly="readonly" value="<%=madr[0] %>" placeholder="우편번호"> 
 				    <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" placeholder="도로명주소">
+				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" value="<%=madr[1] %>" placeholder="도로명주소">
 				    <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
 				    <span id="guide" style="color:#999;display:none"></span>
-				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" placeholder="상세주소">
+				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" value="<%=detail %>" placeholder="상세주소">
 				    <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
 				</div>				
 			</div>
@@ -252,53 +264,56 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-$(document).ready(function(){	
-	//입장권 수량 + / - 하기
-	function minus(){
-	   var qty = $(".qtyBox input").val();
-	   qty = (Number(qty)-1); // 수량 -1
-	   if(qty>=0){ // 0 이하는 적용 안됨
-		$(".qtyBox input").val(qty);
-		calc();
-	   }   
-	};
-	
-	function plus() {
-	   var qty = $(".qtyBox input").val();
-	   qty = (Number(qty)+1); // 수량 +1
-	   if($(".qtyBox input").val()<50){ // 50 이상은 적용 안됨
-		$(".qtyBox input").val(qty);
-		 calc();
-	   }
-	};	
-	
-	// 총 결제 금액 계산하기
-	function calc(){
-		var ex_price = $('i.ex_price').text().replace(",","");
-		var qty = $(".qtyBox input").val();
-		var total = "";	
-		total = (Number(ex_price))*(Number(qty));	
-		$(".totalPrice input").val(total);
-		
-		
-		// ex) 7000원 -> 7,000원
-		var len, point, str;	
-		total = total + "";
-		point = total.length % 3 ;
-		len = total.length;
-		
-		totalPrice = total.substring(0, point);
-		while (point < len) {
-			if (totalPrice != "") totalPrice += ",";
-			totalPrice += total.substring(point, point + 3);
-			point += 3;
-		}
-	
-		$(".tprice").text(totalPrice);
-		
-	}
-	
 
+//입장권 수량 + / - 하기
+function minus(){
+   var qty = $(".qtyBox input").val();
+   qty = (Number(qty)-1); // 수량 -1
+   if(qty>=0){ // 0 이하는 적용 안됨
+	$(".qtyBox input").val(qty);
+	calc();
+   }   
+};
+
+function plus() {
+   var qty = $(".qtyBox input").val();
+   qty = (Number(qty)+1); // 수량 +1
+   if($(".qtyBox input").val()<50){ // 50 이상은 적용 안됨
+	$(".qtyBox input").val(qty);
+	 calc();
+   }
+};	
+
+$('.ex_price').text($('.ex_price_hidden').val());
+
+// 총 결제 금액 계산하기
+function calc(){
+	// var ex_price = $('i.ex_price').text().replace(",","");
+	var ex_price = $('input.ex_price_hidden').val();
+	var qty = $(".qtyBox input").val();
+	var total = "";	
+	total = ex_price*qty;	
+	$(".totalPrice input").val(total);
+	
+	
+	// ex) 7000원 -> 7,000원
+	var len, point, str;	
+	total = total + "";
+	point = total.length % 3 ;
+	len = total.length;
+	
+	totalPrice = total.substring(0, point);
+	while (point < len) {
+		if (totalPrice != "") totalPrice += ",";
+		totalPrice += total.substring(point, point + 3);
+		point += 3;
+	}
+
+	$(".tprice").text(totalPrice);
+	
+}
+	
+$(document).ready(function(){	
 	// 결제하기 누르면 submit / input 값 없을 때 focus 
 	$('button.reserv_btn').click(function(){
 		if( $("input[name=reservName]").val().trim() == "" ){
@@ -317,17 +332,9 @@ $(document).ready(function(){
 			alert("일을 입력해주세요");
 			$("input[name=reservDay]").focus();
 			return false;
-		}else if( $("input[name=reservPhone01]").val().trim() == ""){
+		}else if( $("input[name=reservPhone]").val().trim() == ""){
 			alert("연락처를 입력해주세요");
-			$("input[name=reservPhone01]").focus();
-			return false;
-		}else if( $("input[name=reservPhone02]").val().trim() == ""){
-			alert("연락처를 입력해주세요");
-			$("input[name=reservPhone02]").focus();
-			return false;
-		}else if( $("input[name=reservPhone03]").val().trim() == ""){
-			alert("연락처를 입력해주세요");
-			$("input[name=reservPhone03]").focus();
+			$("input[name=reservPhone]").focus();
 			return false;
 		}else if( $("input[name=reservEmail01]").val().trim() == ""){
 			alert("이메일을 입력해주세요");
@@ -354,7 +361,7 @@ $(document).ready(function(){
 			$("input[name=qty]").focus();
 			return false;
 		}else {
-			$("form").attr({"action":"../reservinsert"}).submit();
+			$("form").attr({"action":"/AgencyBgencyy/reservinsert"}).submit();
 		}
 		
 	});

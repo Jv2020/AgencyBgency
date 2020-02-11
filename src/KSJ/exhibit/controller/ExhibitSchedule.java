@@ -20,12 +20,17 @@ public class ExhibitSchedule extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 			ExhibitDao dao = ExhibitDao.getInstance();
-			
+
 			List<ExhibitDto> newlist = dao.getNewExhibits();
 			List<ExhibitDto> endlist = dao.getEndExhibits();
+			List<ExhibitDto> monthList = dao.getMonthSchedule("","");
+			
+			ExhibitDto recommandDto = dao.getRecommandExhibit();
 			
 			req.setAttribute("newlist", newlist);
 			req.setAttribute("endlist", endlist);
+			req.setAttribute("monthList", monthList);
+			req.setAttribute("recommandDto", recommandDto);
 			
 			req.getRequestDispatcher("/schedule/schedule.jsp").forward(req, resp);;
 	

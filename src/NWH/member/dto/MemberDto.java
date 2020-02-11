@@ -13,11 +13,20 @@ public class MemberDto {
 	private String hint;
 	private String exhibit_name;
 	private String certi_num;
+	private int del;
 	private int auth;
 	
 	public MemberDto() {
 	}
+
+	// 로그인용
+	public MemberDto(String id, String password) {
+		super();
+		this.id = id;
+		this.password = password;
+	}
 	
+	// 아이디 찾기용 
 	public MemberDto(String name, String email, String phone) {
 		super();
 		this.name = name;
@@ -27,6 +36,7 @@ public class MemberDto {
 	
 	
 
+	
 	public MemberDto(String id, String name, String question, String hint) {
 		super();
 		this.id = id;
@@ -36,7 +46,7 @@ public class MemberDto {
 	}
 
 	public MemberDto(String id, String password, String name, String email, String address, String birthday,
-			String gender, String phone, String question, String hint, String exhibit_name, String certi_num,
+			String gender, String phone, String question, String hint, String exhibit_name, String certi_num, int del,
 			int auth) {
 		super();
 		this.id = id;
@@ -51,6 +61,7 @@ public class MemberDto {
 		this.hint = hint;
 		this.exhibit_name = exhibit_name;
 		this.certi_num = certi_num;
+		this.del = del;
 		this.auth = auth;
 	}
 
@@ -150,6 +161,14 @@ public class MemberDto {
 		this.certi_num = certi_num;
 	}
 
+	public int getDel() {
+		return del;
+	}
+
+	public void setDel(int del) {
+		this.del = del;
+	}
+
 	public int getAuth() {
 		return auth;
 	}
@@ -162,9 +181,11 @@ public class MemberDto {
 	public String toString() {
 		return "MemberDto [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", address="
 				+ address + ", birthday=" + birthday + ", gender=" + gender + ", phone=" + phone + ", question="
-				+ question + ", hint=" + hint + ", exhibit_name=" + exhibit_name + ", certi_num=" + certi_num
-				+ ", auth=" + auth + "]";
+				+ question + ", hint=" + hint + ", exhibit_name=" + exhibit_name + ", certi_num=" + certi_num + ", del="
+				+ del + ", auth=" + auth + "]";
 	}
+	
+	
 	
 	
 	

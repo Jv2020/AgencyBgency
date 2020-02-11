@@ -16,16 +16,16 @@ public class NoticeDao {
 	private static NoticeDao noticedao = new NoticeDao();
  	
 	private NoticeDao() {
-		DBConnection.initConnection();
+		
 	}
 	
 	public static NoticeDao getInstance() {
 		return noticedao;
 	}
 	
-	// 占쏙옙占쏙옙 占쏙옙占쏙옙트 
+	// ���� ����Ʈ 
 	public List<NoticeDto> getNoticeList(){
-		String sql = " SELECT SEQ, REF, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
 				+ " FROM NOTICE "
 				+ " ORDER BY SEQ DESC ";
 		
@@ -46,7 +46,6 @@ public class NoticeDao {
 			while(rs.next()) {
 				int i = 1;
 				NoticeDto noticeDto = new NoticeDto(rs.getInt(i++),	//SEQ
-													rs.getInt(i++),
 													rs.getString(i++),//ID
 													rs.getString(i++),//TITLE
 													rs.getString(i++),//CONTENT
@@ -67,11 +66,11 @@ public class NoticeDao {
 		return noticeList;
 
 	}
-	// 占쏙옙占쏙옙 占쏙옙占� 
+	// ���� ��� 
 	public boolean notice_Insert(NoticeDto dto) {
 		
-		String sql = " INSERT INTO NOTICE(SEQ,REF,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE)"
-				+ " VALUES(SEQ_NOTICE.NEXTVAL, (SELECT NVL(MAX(REF), 0) + 1 FROM NOTICE) ,?, ?, ?, SYSDATE, 0, 0, ?) ";
+		String sql = " INSERT INTO NOTICE(SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE)"
+				+ " VALUES(SEQ_NOTICE.NEXTVAL ,?, ?, ?, SYSDATE, 0, 0, ?) ";
 			
 		
 		Connection conn = null;
@@ -106,24 +105,26 @@ public class NoticeDao {
 	
 	public List<NoticeDto> getNoticePagingList(String choice, String searchWord, int page){
 		System.out.println("int page = "+page);
-		String sql = " SELECT SEQ, REF,ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
 				+ " FROM ";
 		
-			   sql += " (SELECT ROW_NUMBER()OVER(ORDER BY REF DESC) AS RNUM, "
-				+ " SEQ, REF,ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+			   sql += " (SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC) AS RNUM, "
+				+ " SEQ,ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
 				+ " FROM NOTICE ";
 			   
 	    String sqlWord = "";
 	    
 	    if(choice.equals("title")) {
-	    	sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+	    	sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
+	    }else if(choice.equals("content")){
+	    	sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
 	    }else {
-	    	sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
+	    	sqlWord = " WHERE DEL=0 ";
 	    }
 	    
 	    sql += sqlWord;
 	    
-	    sql += " ORDER BY REF DESC) ";
+	    sql += " ORDER BY SEQ DESC) ";
 	    sql += " WHERE RNUM >= ? AND RNUM <= ? ";
 	    
 	    Connection conn = null;
@@ -151,7 +152,6 @@ public class NoticeDao {
 			while(rs.next()) {
 				int i = 1;
 				NoticeDto noticeDto = new NoticeDto(rs.getInt(i++), //seq
-										rs.getInt(i++), //ref
 										rs.getString(i++), // id
 										rs.getString(i++), // title
 										rs.getString(i++), // content
@@ -180,9 +180,9 @@ public class NoticeDao {
 		String sqlWord = "";
 		
 		if(choice.equals("title")) {
-			sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";
+			sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
 		}else {
-			sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";
+			sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
 		}
 		sql += sqlWord;
 		
@@ -209,5 +209,84 @@ public class NoticeDao {
 			DBClose.close(psmt, conn, rs);			
 		}
 		return len;	
+	}
+	
+	public boolean notice_delete(String[] sdeleteList) {
+	
+		String sql = "UPDATE NOTICE "
+				+ " SET DEL=1 "
+				+ " WHERE SEQ = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int[] deleteList = new int[sdeleteList.length];
+		int result = 0;
+		
+		for (int i = 0; i < sdeleteList.length; i++) {
+			deleteList[i] = Integer.parseInt(sdeleteList[i]);
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/4 deleteList["+i+"]번째");
+				psmt= conn.prepareStatement(sql);
+				System.out.println("2/4 deleteList["+i+"]번째");
+				psmt.setInt(1, deleteList[i]);
+				System.out.println("3/4 deleteList["+i+"]번째");
+				result = psmt.executeUpdate();
+				System.out.println("4/4 deleteList["+i+"]번째 Success" );
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				DBClose.close(psmt, conn, null);
+			}
+			
+		}// for end 
+		
+		
+		return result>0?true:false;
+		
+	}
+	public NoticeDto notice_detail(int seq) {
+		String sql = " SELECT SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE "
+				+ " FROM NOTICE "
+				+ " WHERE SEQ=? " ;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		NoticeDto noticeDto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt= conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				int i=1;
+				noticeDto = new NoticeDto(rs.getInt(i++),
+											rs.getString(i++),
+											rs.getString(i++),
+											rs.getString(i++),
+											rs.getString(i++),
+											rs.getInt(i++),
+											rs.getInt(i++),
+											rs.getInt(i++));
+				
+			}
+			System.out.println(noticeDto);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		
+		}
+		return noticeDto;
+		
+		
+		
 	}
 }

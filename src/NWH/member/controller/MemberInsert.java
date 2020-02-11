@@ -42,6 +42,8 @@ public class MemberInsert extends HttpServlet {
 		String hint = request.getParameter("memberAnswer");
 		String exhibit_name = request.getParameter("memberExhibit_name");
 		String certi_num = request.getParameter("memberCerti_num");
+		String sauth = request.getParameter("memberAuth");
+		int auth = Integer.parseInt(sauth);
 
 		System.out.println("memberId: "+ id);
 		System.out.println("memberPassword: "+password);
@@ -66,6 +68,7 @@ public class MemberInsert extends HttpServlet {
 		System.out.println("memberAnswer: "+hint);
 		System.out.println("memberExhibit_name: "+exhibit_name);
 		System.out.println("memberCerti_num: "+certi_num);
+		System.out.println("memberAuth: "+auth);
 		
 		// date가 한자리 수일때 0 붙여주는 작업
 		if(date.length() < 2) {
@@ -79,7 +82,7 @@ public class MemberInsert extends HttpServlet {
 		
 		MemberDao dao = MemberDao.getInstance();
 		
-		boolean isS = dao.addMember(new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, 0));
+		boolean isS = dao.addMember(new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, 0, auth));
 		resp.sendRedirect(request.getContextPath()+"/member/joinAf.jsp?isS="+isS);
 		
 	}

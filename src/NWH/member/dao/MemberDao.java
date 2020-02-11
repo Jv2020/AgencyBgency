@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import DB.DBClose;
 import DB.DBConnection;
@@ -21,10 +23,11 @@ public class MemberDao {
 		return dao;
 	}
 
+	// 조인하기
 	public boolean addMember(MemberDto dto) {
 		String sql = " INSERT INTO MEMBER "
-				+ " (ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, AUTH) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0) ";
+				+ " (ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH) "
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0) ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -47,6 +50,8 @@ public class MemberDao {
 			psmt.setString(10, dto.getHint());
 			psmt.setString(11, dto.getExhibit_name());
 			psmt.setString(12, dto.getCerti_num());
+			psmt.setInt(12, dto.getDel());
+			psmt.setInt(13, dto.getAuth());
 
 
 			System.out.println("2/6 addMember success");
@@ -64,11 +69,12 @@ public class MemberDao {
 		return count>0?true:false;
 	}
 	
-public MemberDto login(MemberDto dto) {
+	// 로그인
+	public MemberDto login(MemberDto dto) {
 		
-		String sql = " SELECT ID, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, AUTH "
+		String sql = " SELECT ID, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH "
 				+ " FROM MEMBER "
-				+ " WHERE ID=? AND PASSWORD=? ";
+				+ " WHERE ID=? AND PASSWORD=? AND DEL=0 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -102,10 +108,11 @@ public MemberDto login(MemberDto dto) {
 				String hint = rs.getString(i++);
 				String exhibit_name = rs.getString(i++);
 				String certi_num = rs.getString(i++);
+				int del = rs.getInt(i++);
 				int auth = rs.getInt(i++);
 				
 				
-				mem = new MemberDto(id, null, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, auth);				
+				mem = new MemberDto(id, null, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, del, auth);				
 			}
 			System.out.println("4/6 login success");
 			
@@ -117,7 +124,9 @@ public MemberDto login(MemberDto dto) {
 		}
 		return mem;
 	}
+	
 
+	// 아이디 찾기
 	public String memberFindId(MemberDto dto) {
 		String sql = " SELECT ID "
 				+    " FROM MEMBER"
@@ -157,6 +166,7 @@ public MemberDto login(MemberDto dto) {
 		
 	}
 	
+	// 비밀번호 찾기
 	public String memberFindPassword(MemberDto dto) {
 		String sql = " SELECT PASSWORD "
 				+    " FROM MEMBER"
@@ -194,6 +204,148 @@ public MemberDto login(MemberDto dto) {
 		}
 		
 		return password;
+		
+	}
+	
+	// 멤버 리스트
+	public List<MemberDto> getMemberList(){
+		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH "
+				+    " FROM MEMBER ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDto dto = null;
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getMemberList success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getMemberList success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getMemberList success");
+			
+			while(rs.next()) {
+				int i = 1;
+				String id = rs.getString(i++);
+				String password = rs.getString(i++);
+				String name = rs.getString(i++);
+				String email = rs.getString(i++);
+				String address = rs.getString(i++);
+				String birthday = rs.getString(i++);
+				String gender = rs.getString(i++);
+				String phone = rs.getString(i++);
+				String question = rs.getString(i++);
+				String hint = rs.getString(i++);
+				String exhibit_name = rs.getString(i++);
+				String certi_num = rs.getString(i++);
+				int del = rs.getInt(i++);
+				int auth = rs.getInt(i++);
+				
+				
+				dto = new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, del, auth);
+				list.add(dto);
+			}
+			System.out.println("4/6 getMemberList success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMemberList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return list;
+	}
+	
+	// DTO 하나 선택
+	public MemberDto getMemberById(String findId){
+		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH "
+				+    " FROM MEMBER ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDto dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getMemberById success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getMemberById success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getMemberById success");
+			
+			if(rs.next()) {
+				int i = 1;
+				String id = rs.getString(i++);
+				String password = rs.getString(i++);
+				String name = rs.getString(i++);
+				String email = rs.getString(i++);
+				String address = rs.getString(i++);
+				String birthday = rs.getString(i++);
+				String gender = rs.getString(i++);
+				String phone = rs.getString(i++);
+				String question = rs.getString(i++);
+				String hint = rs.getString(i++);
+				String exhibit_name = rs.getString(i++);
+				String certi_num = rs.getString(i++);
+				int del = rs.getInt(i++);
+				int auth = rs.getInt(i++);
+				
+				
+				dto = new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, del, auth);
+				
+			}
+			System.out.println("4/6 getMemberById success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMemberById fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return dto;
+	}
+	
+	//ADMIN MEMBER DELETE
+	public boolean member_delete(String[] deleteList) {
+		
+		String sql = " UPDATE MEMBER "
+				+ " SET DEL=1 "
+				+ " WHERE ID=? " ;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int result =0;
+		
+		for (int i = 0; i < deleteList.length; i++) {
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/4 member_delete ["+i+"]번째");
+				psmt= conn.prepareStatement(sql);
+				System.out.println("2/4 member_delete["+i+"]번째");
+				psmt.setString(1, deleteList[i]);
+				System.out.println("3/4 member_delete["+i+"]번째");
+				result = psmt.executeUpdate();
+				System.out.println("4/4 member_delete["+i+"]번째 Success" );
+				
+			} catch (SQLException e) {
+				System.out.println(" member_delete["+i+"]번째 fail" );
+				e.printStackTrace();
+			}finally {
+				DBClose.close(psmt, conn, null);
+			}
+		}
+		
+		return result>0?true:false;
 		
 	}
 	

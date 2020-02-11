@@ -1,15 +1,20 @@
 $('.categoryBox span').click(function(){
-	// 일반 / 큐레이터 선택
+	// 일반 / 큐레이터 선택 
    $('.categoryBox span').removeClass('on');
    $(this).addClass('on');
-   $('.categoryBox span').value = 0;
    
    // 큐레이터 추가 질문	
    if($('span.curatorBtn').hasClass('on')){   
-      $('.frm_line.curator').show()      
+      $('.frm_line.curator').show();      
    }else{   
-      $('.frm_line.curator').hide()      
-   }
+      $('.frm_line.curator').hide();
+   }  
+   
+   // 큐레이터 / 일반 value값 넘겨주기
+   if($('.frm_cont .category span').hasClass('on')){   
+	   $('.frm_cont .category span').find('input').attr({"name":""}); 
+	   $(this).find('input').attr({"name":"memberAuth"}); 
+   }    
 });
 
 // 아이디 체크(정규식 + 멘트)
@@ -152,15 +157,37 @@ $('button.sBtn').click(function(){
 		return false;
 	} else if($('.select-month').val() == "월"){
 		alert("생년월일을 확인해주세요");
-		$('.memberPhone').focus();
+		$('.select-month').focus();
 		return false;
+	} else if($('input[name=memberYear]').val().length < 4){
+		alert("생년월일을 확인해주세요");
+		$('input[name=memberYear]').focus();
+		return false;
+	} else if(parseInt($('input[name=memberDate]').val()) > 31){
+		alert("생년월일을 확인해주세요");
+		$('input[name=memberDate]').focus();
+		return false;
+	} else if($('input[name=memberPostCode]').val().trim() == ""){
+		alert("주소를 확인해주세요");
+		$('input[name=memberPostCode]').focus();
+		return false;
+	} else if($('input[name=memberDetailStreetName]').val().trim() == ""){
+		alert("상세주소를 확인해주세요");
+		$('input[name=memberDetailStreetName]').focus();
+		return false;
+	} else if($('input[name=memberAnswer]').val().trim() == ""){
+		alert("비밀번호 찾기 질문을 확인해주세요");
+		$('input[name=memberAnswer]').focus();
+		return false;
+	} else {
+		$("form").attr("action", "../memberinsert").submit();
 	}
 	
 });
 
 
 
-//<%=request.getContextPath()%>/memberinsert
+//
 
 
 
