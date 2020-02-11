@@ -48,7 +48,7 @@
 				<!--로그인세션이 있을때 -->
 					<span><a href="<%=contextPath %>/member/logout.jsp">로그아웃</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
-					<span><a href="<%=contextPath %>/member/mypage.jsp">마이페이지</a></span>
+					<span><a href="<%=contextPath %>/mypage/mypage.jsp">마이페이지</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
 				<%
 				}

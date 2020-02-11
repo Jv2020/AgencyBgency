@@ -28,7 +28,8 @@ ADD CONSTRAINT UK_MEMBER_CERTI_NUM UNIQUE(CERTI_NUM);
 
 SELECT * FROM MEMBER;
 
-
+INSERT INTO MEMBER
+VALUES ('admin', 'admin', '관리자', '0', '0', '0', '0', '0', '0', '0', '0', '0', 3);
 
 
 
