@@ -18,7 +18,7 @@ import BJH.notice.dto.NoticeDto;
 
 
 @WebServlet("/Notice")
-public class Notice_Insert extends HttpServlet{
+public class Notice_Insert extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,7 +38,7 @@ public class Notice_Insert extends HttpServlet{
 		int sizeLimit = 10 * 1024 * 1024 ;// 10MB
 		// upload Path
 		String uploadPath = req.getRealPath("./file");
-		
+		//String uploadPath = "/WebContent/file/";
 		try {
 		multi = new MultipartRequest(req, uploadPath, sizeLimit, "utf-8", new DefaultFileRenamePolicy());
 		

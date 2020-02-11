@@ -19,7 +19,7 @@ import java.io.Serializable;
 public class NoticeDto implements Serializable {
 
 		private int seq;
-		private int ref;
+
 		private String id;
 		private String title;
 		private String content;
@@ -36,11 +36,10 @@ public class NoticeDto implements Serializable {
 		
 		
 
-		public NoticeDto(int seq, int ref, String id, String title, String content, String reg_date, int readCount,
+		public NoticeDto(int seq, String id, String title, String content, String reg_date, int readCount,
 				int del, int choice) {
 			super();
 			this.seq = seq;
-			this.ref = ref;
 			this.id = id;
 			this.title = title;
 			this.content = content;
@@ -69,18 +68,6 @@ public class NoticeDto implements Serializable {
 		public void setSeq(int seq) {
 			this.seq = seq;
 		}
-		
-		
-
-		public int getRef() {
-			return ref;
-		}
-
-
-		public void setRef(int ref) {
-			this.ref = ref;
-		}
-
 
 		public String getId() {
 			return id;
@@ -144,7 +131,7 @@ public class NoticeDto implements Serializable {
 
 		@Override
 		public String toString() {
-			return "NoticeDto [seq=" + seq + ", ref=" + ref + ", id=" + id + ", title=" + title + ", content=" + content
+			return "NoticeDto [seq=" + seq  + ", id=" + id + ", title=" + title + ", content=" + content
 					+ ", reg_date=" + reg_date + ", readCount=" + readCount + ", del=" + del + ", choice=" + choice
 					+ "]";
 		}
