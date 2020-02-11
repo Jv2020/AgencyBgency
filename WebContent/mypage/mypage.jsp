@@ -117,41 +117,25 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
                	
             </div>
          </div>
-         <div class="frm_line clfix">j
+         <div class="frm_line clfix">
             <div class="tit">아이디</div>
             <div class="cont idComentColor">
-               <input class="ttext memberId" type="text" maxlength="20" name="memberId" value="" placeholder="아이디">
+               <input class="ttext memberId" type="text" maxlength="20" name="memberId" value="<%=mem.getId() %>" readonly>
                <span class="idCheck"></span>
-            </div>            
-         </div>
-         
-         <div class="frm_line clfix">
-            <div class="tit">비밀번호</div>
-            <div class="cont pwdComentColor">
-               <input class="ttext memberPwd" type="password" maxlength="20" name="memberPassword" value="">
-               <span class="pwdCheck"></span>
-            </div>            
-         </div>
-         
-         <div class="frm_line clfix">
-            <div class="tit">비밀번호 재확인</div>
-            <div class="cont pwdReCheckComentColor">
-               <input class="ttext memberPwdReCheck" type="password" maxlength="20" value="">
-               <span class="pwdEqualCheck"></span>
             </div>            
          </div>
          
          <div class="frm_line clfix">
             <div class="tit">이름</div>
             <div class="cont">
-               <input class="ttext" type="text" name="memberName" value="">
+               <input class="ttext" type="text" name="memberName" value="<%=mem.getName() %>" readonly>
             </div>            
          </div>
          
          <div class="frm_line clfix">
             <div class="tit">연락처</div>
             <div class="cont phoneComentColor">
-               <input class="memberPhone" type="text" maxlength="11" name="memberPhone" placeholder="-없이 입력해주세요">
+               <input class="memberPhone" type="text" maxlength="11" name="memberPhone" value="<%=mem.getPhone() %>" readonly>
                <span class="phoneCheck"></span>
             </div>            
          </div>
@@ -159,9 +143,12 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix">
             <div class="tit">이메일 주소</div>
             <div class="cont i-mg-none">
-               <input class="memberEmail1" type="text" name="memberEmail1">
+               <%
+               String[] emailArray = mem.getEmail().split("@");
+               %>
+               <input class="memberEmail1" type="text" name="memberEmail1" value="<%=emailArray[0]%>">
                <span class="frm-mg">@</span>
-               <input class="memberEmail2" type="text" name="memberEmail2">
+               <input class="memberEmail2" type="text" name="memberEmail2" value="<%=emailArray[1]%>">
             </div>            
          </div>
          

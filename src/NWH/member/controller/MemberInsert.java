@@ -55,7 +55,10 @@ public class MemberInsert extends HttpServlet {
 		System.out.println("memberEmail: "+email);
 		System.out.println("memberYear: "+year);
 		System.out.println("memberMonth: "+month);
-		System.out.println("memberDate: "+date);
+		if(date.length() < 2) {
+			date = "0"+date;
+		}
+		System.out.println("0작업후 : "+ date);
 		String birthday = year + "-" + month + "-" + date;
 		System.out.println("memberBirth: "+ birthday);
 		System.out.println("memberGender: "+gender);
@@ -71,12 +74,7 @@ public class MemberInsert extends HttpServlet {
 		System.out.println("memberAuth: "+auth);
 		
 		// date가 한자리 수일때 0 붙여주는 작업
-		if(date.length() < 2) {
-			date = "0"+date;
-		}
-		System.out.println("0작업후 : "+ date);
-		birthday = year + "-" + month + "-" + date;
-		System.out.println("0작업후 : "+ birthday);
+		
 		
 		
 		

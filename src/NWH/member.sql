@@ -42,6 +42,29 @@ VALUES ('test003', 'test003', 'test3', '3', '3', '3', '3', '3', '3', '3', '3', '
 INSERT INTO MEMBER
 VALUES ('test004', 'test004', 'test4', '4', '4', '4', '4', '4', '4', '4', '4', '4', 1, 0);
 
+INSERT INTO MEMBER
+VALUES ('test005', 'test005', 'test5', '5@5', '5', '5', '5', '5', '5', '5', '5', '5', 0, 0);
+
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test001';
+
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test002';
+
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test003';
+
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test004';
+
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test005';
+
 
 
 

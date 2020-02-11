@@ -27,7 +27,7 @@ public class MemberDao {
 	public boolean addMember(MemberDto dto) {
 		String sql = " INSERT INTO MEMBER "
 				+ " (ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH) "
-				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0) ";
+				+ " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?) ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -50,7 +50,6 @@ public class MemberDao {
 			psmt.setString(10, dto.getHint());
 			psmt.setString(11, dto.getExhibit_name());
 			psmt.setString(12, dto.getCerti_num());
-			psmt.setInt(12, dto.getDel());
 			psmt.setInt(13, dto.getAuth());
 
 

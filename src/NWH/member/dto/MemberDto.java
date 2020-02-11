@@ -34,9 +34,6 @@ public class MemberDto {
 		this.phone = phone;
 	}
 	
-	
-
-	
 	public MemberDto(String id, String name, String question, String hint) {
 		super();
 		this.id = id;
