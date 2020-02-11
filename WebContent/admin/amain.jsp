@@ -381,7 +381,7 @@ $(document).ready(function () {
 								<input type="text" id="memberDetail"name="memberDetail" width="80" value="">
 								<!-- 회원검색이동  -->
 								<input type="button" id="btn_id" name="btn_id" value="검색" onclick="location.href='#'">
-								<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기"onclick="location.href='admin_memberList.jsp'">
+								<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기"onclick="location.href='${pageContext.request.contextPath}/Member_list'">
 							</td>
 						</tr>
 					</table>

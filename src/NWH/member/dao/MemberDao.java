@@ -302,4 +302,39 @@ public MemberDto login(MemberDto dto) {
 		return dto;
 	}
 	
+	//ADMIN MEMBER DELETE
+	public boolean member_delete(String[] deleteList) {
+		
+		String sql = " UPDATE MEMBER "
+				+ " SET AUTH=4 "
+				+ " WHERE ID=? " ;
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int result =0;
+		
+		for (int i = 0; i < deleteList.length; i++) {
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/4 member_delete ["+i+"]번째");
+				psmt= conn.prepareStatement(sql);
+				System.out.println("2/4 member_delete["+i+"]번째");
+				psmt.setString(1, deleteList[i]);
+				System.out.println("3/4 member_delete["+i+"]번째");
+				result = psmt.executeUpdate();
+				System.out.println("4/4 member_delete["+i+"]번째 Success" );
+				
+			} catch (SQLException e) {
+				System.out.println(" member_delete["+i+"]번째 fail" );
+				e.printStackTrace();
+			}finally {
+				DBClose.close(psmt, conn, null);
+			}
+		}
+		
+		return result>0?true:false;
+		
+	}
+	
 }
