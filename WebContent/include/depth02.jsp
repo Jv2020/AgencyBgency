@@ -33,7 +33,7 @@ if (durl.contains("community")){
 
 <!-- community -->
 <% 
-if (durl.contains("mypage.jsp")){
+if (durl.contains("mypage")){
 %>
 <div class="depth02 mypageDepth">
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/mypage.jsp' ? ' active' : ''}"
@@ -49,7 +49,7 @@ if (durl.contains("mypage.jsp")){
 	href="/AgencyBgencyy/mypage/myreserv.jsp">나의 예매내역
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/curatordetail.jsp">나의전시
+	href="/AgencyBgencyy/mypage/curatordetail.jsp">나의 전시
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatorwrite.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/curatorwrite.jsp">전시 등록하기
