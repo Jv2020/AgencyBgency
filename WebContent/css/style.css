@@ -81,10 +81,13 @@ p.copyright {font-size:13px; color:#333; line-height:25px; font-weight:300;}
 .sub_tit span {display:inline-block; margin-top:15px; width:50px; height:3px; background:#5f0080;}
 
 .depth02{text-align:center; margin-top:40px;}
-.depth02 a{display:inline-blok; color:#333; font-size:16px; margin:0 20px;}
+.depth02 a{display:inline-blok; color:#333; font-size:16px; margin:0 20px; transition:all 0.2s ease-in-out;}
 .depth02 a.active{color:#5f0080;}
 .depth02 a:hover{color:#5f0080;}
-
+.depth02.mypageDepth {width:100%; font-size:0;}
+.depth02.mypageDepth a {display:inline-block; width:140px; height:50px; line-height:48px; margin:0 5px; color:#5f0080; border:1px solid #5f0080;}
+.depth02.mypageDepth a.active{background:#5f0080; color:#fff;}
+.depth02.mypageDepth a:hover{background:#5f0080; color:#fff;}
 .sub_cont {margin-top:40px;}
 
 

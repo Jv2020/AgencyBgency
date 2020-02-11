@@ -48,13 +48,8 @@ request.setCharacterEncoding("UTF-8");
 				<!-- 가입하기 버튼 -->
 				<button class="joinBtn" type="button" onclick="location.href='join.jsp'">가입하기</button>
 			</li>	
-<<<<<<< Updated upstream
-				
-		</ul>s
-=======
 		</ul>
 	</form>
->>>>>>> Stashed changes
 </div>
 
 
