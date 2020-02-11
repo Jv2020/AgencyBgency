@@ -27,7 +27,7 @@ public class ExhibitDao {
 	}
 	
 	// 전시회 모든 리스트 불러오기 
-	public List<ExhibitDto> getExhibitList(String choice, int page) {
+	public List<ExhibitDto> getExhibitList(String choice, int numOfContents) {
 		
 		// 현재전시 
 		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
@@ -61,7 +61,7 @@ public class ExhibitDao {
 			
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, page);
+			psmt.setInt(1, numOfContents);
 			
 			rs = psmt.executeQuery();
 			
@@ -410,7 +410,7 @@ public class ExhibitDao {
 		return dto;
 	}
 	// 월별 전시 목록 보기
-	
+//	public 
 
 	
 	
