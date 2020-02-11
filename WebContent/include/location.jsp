@@ -131,3 +131,131 @@ if (lourl.contains("reserv.jsp")){
 <%
 }   
 %>
+
+<!-- mypage -->
+<% 
+if (lourl.contains("myexhibit.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>관람한 전시</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("myreview.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>나의리뷰</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("myreserv.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>나의 예매내역</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("memupdate.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>회원정보수정</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("memdelete.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>회원탈퇴</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("myexhibit.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>관람한 전시</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("myexhibit.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>관람한 전시</span>
+</div>
+<%
+}	
+%>
+
+<!-- mypage 큐레이터 -->
+<% 
+if (lourl.contains("curatordetail.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>나의전시</span>
+</div>
+<%
+}	
+%>
+
+<% 
+if (lourl.contains("curatorwrite.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>전시등록하기</span>
+</div>
+<%
+}	
+%>

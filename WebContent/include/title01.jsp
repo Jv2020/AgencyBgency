@@ -81,6 +81,63 @@ if (ifurl.contains("reserv.jsp")){
 <%
 }   
 %>
+<!-- Mypage -->
+<% 
+if (ifurl.contains("myexhibit.jsp")){
+%>
+<h2>관람한 전시</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("myreview.jsp")){
+%>
+<h2>나의리뷰</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("myreserv.jsp")){
+%>
+<h2>나의 예매내역</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("memupdate.jsp")){
+%>
+<h2>회원정보 수정</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("memdelete.jsp")){
+%>
+<h2>회원 탈퇴</h2>
+<%
+}   
+%>
+
+<!-- Mypage 큐레이터 -->
+<% 
+if (ifurl.contains("curatordetail.jsp")){
+%>
+<h2>나의전시</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("curatorwrite.jsp")){
+%>
+<h2>전시등록하기</h2>
+<%
+}   
+%>
 	
 
 
