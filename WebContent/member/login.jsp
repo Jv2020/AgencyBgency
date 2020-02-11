@@ -13,7 +13,7 @@ div.loginBox{
 .loginBox ul li input{border:1px solid #5f0080; background:#5f0080; color:#fff; font-size:18px; width:400px; height:50px;  padding:0 10px; margin-left:19px; margin-top:15px; display:block}
 .loginBox ul li button{border:1px solid #5f0080; background:#fff; color:#5f0080; font-size:18px; width:400px; height:50px;  padding:0 10px; margin-left:19px; margin-top:15px; display:block}
 .loginBox ul li input.textBox{border:1px solid #ddd; background:#fff; color:#000; font-size:14px; width:400px; height:50px;  padding:0 10px; margin-left:19px; margin-top:15px; display:block}
-.loginBox ul li a.findId{font-size:14px;  margin-left:250px; display:inline-block;  }
+.loginBox ul li a.findId{font-size:14px;  margin-left:250px; display:inline-block; margin-top:10px; }
 
 
 </style>   

@@ -73,6 +73,15 @@ if (ifurl.contains("join.jsp")){
 <%
 }	
 %>
+
+<% 
+if (ifurl.contains("findid.jsp")){
+%>
+<h2>아이디 찾기</h2>
+<%
+}	
+%>
+
 <!-- Reservation -->
 <% 
 if (ifurl.contains("/reserv.jsp")){

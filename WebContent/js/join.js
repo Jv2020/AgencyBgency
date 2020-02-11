@@ -2,13 +2,16 @@ $('.categoryBox span').click(function(){
 	// 일반 / 큐레이터 선택
    $('.categoryBox span').removeClass('on');
    $(this).addClass('on');
-   $('.categoryBox span').value = 0;
    
    // 큐레이터 추가 질문	
    if($('span.curatorBtn').hasClass('on')){   
       $('.frm_line.curator').show()      
    }else{   
       $('.frm_line.curator').hide()      
+   }
+   
+   if($('span.curatorBtn').hasClass('on') && $('input[name=memberAuth0]').val().trim() == "0"){
+	   
    }
 });
 
@@ -146,7 +149,7 @@ $('button.sBtn').click(function(){
 		alert("연락처를 확인해주세요");
 		$('.memberPhone').focus();
 		return false;
-	} else if($('input[name="memberEmail1"]').val().trim() == "" || $('input[name=memberEmail2]').val().trim() == "" ) {
+	} else if($('input[name=memberEmail1]').val().trim() == "" || $('input[name=memberEmail2]').val().trim() == "" ) {
 		alert("이메일을 확인해주세요");
 		$('.memberEmail1').focus();
 		return false;

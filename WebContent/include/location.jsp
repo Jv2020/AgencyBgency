@@ -115,6 +115,23 @@ if (lourl.contains("/join.jsp")){
 </div>
 <%
 }	
+%>
+
+<!-- 아이디 찾기 -->
+<% 
+if (lourl.contains("/findid.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MEMBER</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>LOGIN</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>아이디 찾기</span>
+</div>
+<%
+}	
 %>	
 
 <!-- Reservation -->
