@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import DB.DBClose;
 import DB.DBConnection;
@@ -195,6 +197,58 @@ public MemberDto login(MemberDto dto) {
 		
 		return password;
 		
+	}
+	
+	public List<MemberDto> getMemberList(){
+		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, AUTH "
+				+    " FROM MEMBER ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		MemberDto dto = null;
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getMemberList success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getMemberList success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getMemberList success");
+			
+			while(rs.next()) {
+				int i = 1;
+				String id = rs.getString(i++);
+				String password = rs.getString(i++);
+				String name = rs.getString(i++);
+				String email = rs.getString(i++);
+				String address = rs.getString(i++);
+				String birthday = rs.getString(i++);
+				String gender = rs.getString(i++);
+				String phone = rs.getString(i++);
+				String question = rs.getString(i++);
+				String hint = rs.getString(i++);
+				String exhibit_name = rs.getString(i++);
+				String certi_num = rs.getString(i++);
+				int auth = rs.getInt(i++);
+				
+				
+				dto = new MemberDto(id, password, name, email, address, birthday, gender, phone, question, hint, exhibit_name, certi_num, auth);
+				list.add(dto);
+			}
+			System.out.println("4/6 getMemberList success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMemberList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return list;
 	}
 	
 }
