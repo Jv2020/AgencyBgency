@@ -4,11 +4,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/schedule/css/schedule.css">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <%
 	
 	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");	// 이달의 새로운 전시 
 	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
+	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
 	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
 %>    
 <%
@@ -30,41 +31,34 @@
 			<p><%= recommandDto.getBegindate().substring(0,11)+" ~ " +  recommandDto.getEnddate().substring(0,11) %></p>
 		</div>
 	</div>
+<!-- 캘린더 -->
 	<div class="calendar">
 		<div class="cal-top">
-			<span class="prev"> <i class="fas fa-chevron-left"></i> </span>
+			<span class="prev" id="prev"> <i class="fas fa-chevron-left"></i> </span>
 			<div class="month">
-				<span>2020</span>
-				<strong>02</strong>
+				<span id="year">2020</span>
+				<strong id="month">02</strong>
 			</div>
-			<span class="next"> <i class="fas fa-chevron-right"></i> </span>
+			<span class="next" id="next"> <i class="fas fa-chevron-right"></i> </span>
 		</div>
 		<div class="cal-cont">
-			<ul>
+			<ul id="cal-data">
+		<!-- 캘린더 데이터 들어감 -->
+		<%
+			for(int i=0; i< monthList.size(); i++){ 
+				ExhibitDto dto = monthList.get(i);
+		%>
 				<li>
-					<div class="day">01</div>
+					<div class="day"><%=i+1 %></div>
 					<div class="desc">
-						<h4><a href="#">시간의 풍경 제목은 두줄까지 함</a></h4>
-						<p>상상마당</p>
+						<h4><a href="<%=request.getContextPath()%>/exdetail?ex=now&seq=<%=dto.getSeq()%>"><%=dto.getTitle() %></a></h4>
+						<p><%=dto.getPlace() %></p>
 					</div>
 				</li>
 				
-				<li>
-					<div class="day">01</div>
-					<div class="desc">
-						<h4><a href="#">시간의 풍경 제목은 두줄까지 함</a></h4>
-						<p>상상마당</p>
-					</div>
-				</li>
-				
-				<li>
-					<div class="day">01</div>
-					<div class="desc">
-						<h4><a href="#">시간의 풍경 제목은 두줄까지 함</a></h4>
-						<p>상상마당</p>
-					</div>
-				</li>
-				
+				<%
+			}
+		%>
 			</ul>
 		</div>
 	
@@ -156,5 +150,98 @@
 </div>
 </div>
 
+<!-- 전시 스케쥴 보기 버튼 바꿈 -->
+<script>
+	
+$("#prev").click(function() {
 
+	var syear = $("#year").text();
+	var smonth = $("#month").text();
+	
+	var year = parseInt(syear);
+	var month = parseInt(smonth);
+
+	if(smonth === '01'){
+		year = year-1;
+		month = 12;
+	}else{
+		month = month-1;
+	}
+	if(month < 10){
+		month = "0" + month;
+	}
+	$("#year").text(year);
+	$("#month").text(month);
+	
+	$.ajax({
+		url: "./exhibitmonthsch",
+		type:"post",
+		data:"year="+year+"&month="+month,
+		dataType: "json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function( data ) {
+		//	alert(data[0].title);
+			var str = "";
+			for(var i=0; i<data.length; i++){
+				str += '<li>'
+						+'<div class="day">'+(1+i)+'</div>'
+						+'<div class="desc">'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+	'<p>'+data[i].place+'</p>'
+						+'</div></li>';
+			}
+					
+			$("#cal-data").html(str);
+		}
+	});
+	
+	
+	
+});
+
+$("#next").click(function() {
+
+	var syear = $("#year").text();
+	var smonth = $("#month").text();
+	
+	var year = parseInt(syear);
+	var month = parseInt(smonth);
+
+	if(smonth === '12'){
+		year = year+1;
+		month = 1;
+	}else{
+		month = month+1;
+	}
+	if(month < 10){
+		month = "0" + month;
+	}
+	$("#year").text(year);
+	$("#month").text(month);
+	
+	$.ajax({
+		url: "./exhibitmonthsch",
+		type:"post",
+		data:"year="+year+"&month="+month,
+		dataType: "json",
+		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+		success: function( data ) {
+			var str = "";
+			for(var i=0; i<data.length; i++){
+				str += '<li>'
+						+'<div class="day">'+(1+i)+'</div>'
+						+'<div class="desc">'
+						+ '<h4><a href="/AgencyBgencyy/exdetail?ex=now&seq='+data[i].seq+'">'+data[i].title+'</a></h4>'
+						+	'<p>'+data[i].place+'</p>'
+						+'</div></li>';
+			}
+			$("#cal-data").html(str);
+		}
+	});
+	
+	
+	
+});
+</script>
+<!-- Ajax  -->
 <%@include file ="../include/footer.jsp" %>		

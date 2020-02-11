@@ -410,7 +410,87 @@ public class ExhibitDao {
 		return dto;
 	}
 	// 월별 전시 목록 보기
-//	public 
+	public List<ExhibitDto> getMonthSchedule(String year, String month){
+		
+		String sql = "";	// 현재 월
+		String sql2= "";	// 다른 월 
+		
+		if( year.equals("") ||  month.equals("") ) {
+			sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "	// CERTI_NUM : 바꾸기
+				+ " FROM EXHIBIT "
+				+ "  WHERE BEGINDATE <= LAST_DAY(SYSDATE) "
+						+ " AND ENDDATE >= TO_CHAR(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1),'YYYYMMDD') "
+				+ " ORDER BY BEGINDATE ASC ";
+			System.out.println("여기 옴 ");
+		}
+		
+		else {
+			sql2 = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "	// CERTI_NUM : 바꾸기
+				+ " FROM EXHIBIT "
+				+ " WHERE BEGINDATE <= LAST_DAY( TO_DATE ( ? , 'YYYYMM') ) "
+						+ " AND ENDDATE >= TO_DATE( ?, 'YYYYMMDD' ) "
+				+ " ORDER BY BEGINDATE ASC ";
+		}
+		
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			
+			// 현재 월 일 때 
+			if(year.equals("") ||  month.equals("")) {
+				psmt = conn.prepareStatement(sql);
+				System.out.println("여기 옴 ");
+
+			}
+			// 다른 월일 때
+			else {
+				psmt = conn.prepareStatement(sql2);
+				psmt.setString(1, year+month);
+				psmt.setString(2, year+month+"01");
+			}
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getString(i++), 
+						rs.getInt(i++), 
+						rs.getString(i++), 
+						rs.getString(i++),
+						rs.getInt(i++));
+				list.add(dto);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	
+	}
 
 	
 	
