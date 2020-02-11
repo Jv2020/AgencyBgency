@@ -9,9 +9,18 @@ ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
 
 // member 
 MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+// email - split
 String email = mem.getEmail();
 String[] edata = email.split("@");
 
+// address - split
+String address = mem.getAddress();
+String[] madr = address.split("/");
+String detail="";
+if(madr.length == 3){
+detail= madr[2];
+	
+}
 
 %>	
 <style>
@@ -144,12 +153,12 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit">주소</div>
 				<div class="cont">
-					<input name="post" type="text" id="sample4_postcode" readonly="readonly" placeholder="우편번호"> 
+					<input name="post" type="text" id="sample4_postcode" readonly="readonly" value="<%=madr[0] %>" placeholder="우편번호"> 
 				    <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" placeholder="도로명주소">
+				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" value="<%=madr[1] %>" placeholder="도로명주소">
 				    <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
 				    <span id="guide" style="color:#999;display:none"></span>
-				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" placeholder="상세주소">
+				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" value="<%=detail %>" placeholder="상세주소">
 				    <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
 				</div>				
 			</div>
@@ -352,7 +361,7 @@ $(document).ready(function(){
 			$("input[name=qty]").focus();
 			return false;
 		}else {
-			$("form").attr({"action":"../reservinsert"}).submit();
+			$("form").attr({"action":"/AgencyBgencyy/reservinsert"}).submit();
 		}
 		
 	});

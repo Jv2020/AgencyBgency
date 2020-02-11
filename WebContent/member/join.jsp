@@ -92,8 +92,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="category">
             <div class="category-radius categoryBox">
                <input type="hidden" name="memberAuth" id="memberAuth">
-               <span class="on abcde">일반회원<input type="hidden" id="memberAuth0" name="memberAuth0" value="0"></span>
-               <span class="curatorBtn abcde">큐레이터<input type="hidden" id="memberAuth0" name="memberAuth1" value="1"></span>
+               <span class="on">일반회원<input type="hidden" name="memberAuth" value="0"></span>
+               <span class="curatorBtn">큐레이터<input type="hidden" value="1"></span>
             </div>
          </div>
          <div class="frm_line clfix">

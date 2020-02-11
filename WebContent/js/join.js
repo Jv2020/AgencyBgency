@@ -1,16 +1,20 @@
 $('.categoryBox span').click(function(){
-	// 일반 / 큐레이터 선택
+	// 일반 / 큐레이터 선택 
    $('.categoryBox span').removeClass('on');
    $(this).addClass('on');
    
    // 큐레이터 추가 질문	
    if($('span.curatorBtn').hasClass('on')){   
-      $('.frm_line.curator').show()      
+      $('.frm_line.curator').show();      
    }else{   
-      $('.frm_line.curator').hide()      
-   }
+      $('.frm_line.curator').hide();
+   }  
    
-   
+   // 큐레이터 / 일반 value값 넘겨주기
+   if($('.frm_cont .category span').hasClass('on')){   
+	   $('.frm_cont .category span').find('input').attr({"name":""}); 
+	   $(this).find('input').attr({"name":"memberAuth"}); 
+   }    
 });
 
 //// 아이디 체크(정규식 + 멘트)
