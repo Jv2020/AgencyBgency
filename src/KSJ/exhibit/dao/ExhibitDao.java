@@ -529,6 +529,7 @@ public class ExhibitDao {
 		
 		return count>0? true:false;
 		
+
 		
 		
 	}

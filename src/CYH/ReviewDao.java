@@ -9,6 +9,7 @@ import java.util.List;
 
 import DB.DBClose;
 import DB.DBConnection;
+import KSJ.exhibit.dto.ExhibitDto;
 
 public class ReviewDao {
 	private static ReviewDao reviewDao = new ReviewDao();
@@ -124,9 +125,151 @@ public class ReviewDao {
 		return reviewList;
 	}
 	
-	public ReviewDto getReview(int seq) {
+	public List<ReviewDto> getReviewList(String title) {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
 		String sql = " SELECT * FROM EXHIBIT_REVIEW "
-					+ " WHERE SEQ=? ";
+					+ " WHERE TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReviewDto> reviewList = new ArrayList<ReviewDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getReviewList Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getReviewList Success");
+			
+			psmt.setString(1, title);
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getReviewList Success");
+			
+			while(rs.next()) {
+				int i = 1;
+				
+				ReviewDto dto = new ReviewDto(	rs.getInt(i++),		//seq
+												rs.getString(i++),	//id
+												rs.getString(i++),	//exhibition_title
+												rs.getString(i++),	//regdate
+												rs.getInt(i++),		//star_number
+												rs.getString(i++),	//review
+												rs.getInt(i++),		//like_number
+												rs.getInt(i++),		//dislike_number
+												rs.getInt(i++)	);	//del
+				reviewList.add(dto);
+			}
+			System.out.println("4/6 getReviewList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getReviewList Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return reviewList;
+	}
+	
+	public List<ReviewDto> getReviewList(String title, int re_pageNum) {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
+		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+				+ " FROM ( "
+				+ " SELECT ROWNUM AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+				+ " FROM EXHIBIT_REVIEW "
+				+ " WHERE TITLE=?) "
+				+ " WHERE RNUM >=? AND RNUM <=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReviewDto> reviewList = new ArrayList<ReviewDto>();
+		
+		// 페이징 시작과 끝
+		// 뿌릴 개수 : 5
+		int start = 1 + re_pageNum * 5;	// 처음 페이지 인덱스는 0이 들어옴
+		int end = 5 + re_pageNum * 5;		// 0번 페이지 : 1+0*5 = 1, 5+0*5 = 5
+		// 1 ~ 5, 6 ~ 10...
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getReviewList Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getReviewList Success");
+			
+			psmt.setString(1, title);
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
+			System.out.println("3/6 getReviewList Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getReviewList Success");
+			
+			while(rs.next()) {
+				int i = 1;
+				
+				ReviewDto dto = new ReviewDto(	rs.getInt(i++),		//seq
+												rs.getString(i++),	//id
+												rs.getString(i++),	//exhibition_title
+												rs.getString(i++),	//regdate
+												rs.getInt(i++),		//star_number
+												rs.getString(i++),	//review
+												rs.getInt(i++),		//like_number
+												rs.getInt(i++),		//dislike_number
+												rs.getInt(i++)	);	//del
+				reviewList.add(dto);
+			}
+			System.out.println("5/6 getReviewList Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getReviewList Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return reviewList;
+	}
+	
+	// 요청받은 전시회에 따른, 전체 리뷰갯수
+	public int getAllCount(String title) {
+		String sql = " SELECT COUNT(*) FROM EXHIBIT_REVIEW "
+					+ " WHERE TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getAllCount Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getAllCount Success");
+			
+			psmt.setString(1, title);
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getAllCount Success");
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println("4/6 getAllCount Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getAllCount Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return count;
 	}
 	
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
@@ -346,40 +489,107 @@ public class ReviewDao {
 		
 	}
 	
-	public int getAllCount() {
-		String sql = " SELECT COUNT(*) FROM EXHIBIT_REVIEW ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		int count = 0;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 getAllCount Success");
+	
+	
+	
+	//=================== 리뷰 게시판 용 ======================================================================================
+		// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
+		public List<ExhibitDto> getExhibitReview(int pageNum){
+			String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+						+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+						+ " FROM ( SELECT ROW_NUMBER()OVER ( ORDER BY BEGINDATE DESC ) AS RNUM, "
+								+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+								+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+								+ " FROM EXHIBIT "
+								+ " WHERE BEGINDATE <= SYSDATE ) "
+						+ " WHERE RNUM >= ? AND RNUM <= ? ";
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
 			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getAllCount Success");
+			List<ExhibitDto> list = new ArrayList<ExhibitDto>();
 			
-			rs = psmt.executeQuery();
-			System.out.println("3/6 getAllCount Success");
+			// 페이징 시작과 끝
+			// 뿌릴 개수 : 5 
+			int start = 1 + pageNum * 5;	// 처음 페이지 인덱스는 0이 들어옴  
+			int end = 5 + pageNum * 5;		// 0번 페이지 : 1+0*5 = 1, 5+0*5 = 5
+			// 1 ~ 5, 6 ~ 10... 
 			
-			if(rs.next()) {
-				count = rs.getInt(1);
+			
+			try {
+				
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				psmt.setInt(1, start);
+				psmt.setInt(2, end);
+				
+				rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					int i = 1;
+					ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getString(i++), 
+													rs.getInt(i++), 
+													rs.getString(i++), 
+													rs.getString(i++),
+													rs.getInt(i++));
+					list.add(dto);
+					
+				}
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally {
+				DBClose.close(psmt, conn, rs);
 			}
 			
-		} catch (SQLException e) {
-			System.out.println("getAllCount Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
+			return list;
+			
 		}
-		return count;
-	}
-	
-	
-	
+		// 페이징 할 때 모든 전시 콘텐츠 수 구하는 함수 
+		public int getReviewExhibitNum() {
+			
+			String sql =  " SELECT COUNT(*) "
+						+ " FROM EXHIBIT "
+						+ " WHERE BEGINDATE <= SYSDATE ";
+
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			ResultSet rs = null;
+			
+			int size = 0; 
+			
+			try {
+				conn = DBConnection.getConnection();
+				psmt = conn.prepareStatement(sql);
+				
+				rs = psmt.executeQuery();
+				
+				if(rs.next()) {
+					size = rs.getInt(1);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally {
+				
+				DBClose.close(psmt, conn, rs);
+				
+			}
+			
+			
+			return size;
+		}
 }
 
 

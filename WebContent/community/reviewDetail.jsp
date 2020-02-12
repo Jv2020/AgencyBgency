@@ -13,62 +13,45 @@
 <link rel="stylesheet" href="/AgencyBgencyy/community/css/reviewDetail.css">
 
 <%
-int seq = Integer.parseInt(request.getParameter("seq"));
+// 로그인 세션
+String loginuser = (String)session.getAttribute("loginuser");
+boolean logincheck = false;
 
-
-%>
-
-
-
-
-
-<%-- <p><b><%=dto.getTitle() %></b><p> --%>
-
-
-
-<div class="container"><!-- 리뷰를 작성할꺼야! -->
-<form action="writereview">
-  <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">리뷰작성</button>
-  <div id="demo" class="collapse">
-    <div class="reviewBox">
-	<div class="reviewTit">
-		<ul>
-			<li>
-				<!-- 전시명 -->
-				
-			</li>
-			<li>
-				<!-- 별점 -->
-				<div class='starrr' id='star1'></div>
-			</li>
-		</ul>
-	</div>
-	<div class="reviewCont">
-		<ul class="">
-			<li>
-				<!-- 리뷰 -->
-				<input type="text">
-			</li>
-		</ul>
-	</div>
-</div><!-- //reviewBox -->
-  </div>
-</form>
-</div> <!-- container -->
-
-
-<%
-ReviewDao dao = ReviewDao.getInstance();
-List<ReviewDto> list = dao.getReviewList();
-
-/* for(int i = 0; i < list.size(); i++) {
-	System.out.println("review title[" +i+"]" + list.get(i).getTitle() );
-	
-	System.out.println(list.get(i));
-} */
+// 로그인 여부 확인하기
+if(loginuser != null){
+	logincheck= true;
+}
+System.out.println("id : "+ logincheck);
 %>
 
 <%
+String title = request.getParameter("title");
+String sre_pageNum = request.getParameter("re_pageNum");
+int re_pageNum = Integer.parseInt(sre_pageNum);
+//System.out.println("title은 " + title);
+//System.out.println("re_pageNum은 " + re_pageNum);
+
+
+int allRe_Contents = (int)request.getAttribute("allRe_Contents");
+System.out.println("allRe_Contents는 " + allRe_Contents);
+
+/* String sallRe_Contents = (String)request.getAttribute("allRe_Contents");
+int allRe_Contents = Integer.parseInt(sallRe_Contents);
+System.out.println("allRe_Contents는 " + allRe_Contents); */
+
+int pages = (int)Math.ceil(allRe_Contents/ 5.0);
+%>
+
+<h1 style="text-align: center"><b><%=title %>에 대한 전체 리뷰</b></h1>
+
+<%
+
+
+List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
+
+// 확인용
+// System.out.println("list.size()는" + list.size());
+
 for(int i = 0; i < list.size(); i++) {
 	ReviewDto dto = list.get(i);
 %>
@@ -99,92 +82,34 @@ for(int i = 0; i < list.size(); i++) {
 				<%=dto.getRegdate() %>
 			</li>
 			<li>
-				좋아요 :<%=dto.getLike_number() %>	/
-				싫어요 :<%=dto.getDislike_number() %>
+				<a href="/AgencyBgencyy/likeadd"><img src="/AgencyBgencyy/community/LIKE.jpg?id=<%=loginuser %>" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
+				<a href="/AgencyBgencyy/dislikeadd"><img src="/AgencyBgencyy/community/DISLIKE.jpg?id=<%=loginuser %>" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
 			</li>
 		</ul>
 	</div>
 </div><!-- //reviewBox -->
-
-
 <%
 }
 %>
 
-<script>
-	$('#star1').starrr({
-		
-		change: function (e, value) {
-					if (value) {
-						$('.your-choice-was').show();
-						$('.choice').text(value);
-					} else {
-						$('.your-choice-was').hide();
-					}
-				}
-	});
-	
-	var $s2input = $('#star2_input');
-	
-	$('#star2').starrr({
-		max: 10,
-		rating: $s2input.val(),
-		change: function (e, value) {
-		$s2input.val(value).trigger('input');
-				}
-	        });
-    </script>
-    <script src="../js/starrr.js"></script>
+<div style="text-align: center">
+<%
+for(int i = 0; i < pages; i++) {
+	if(i == re_pageNum) {
+		%>
+		<span><b><%=i + 1 %></b></span>
+		<%
+	}else {
+		%>
+		<span><a href="/AgencyBgencyy/onereview?title=<%=title %>&re_pageNum=<%=i %>">[<%=i + 1 %>]</a></span>
+		<%
+	}
+	 %>
 
-<script>
-var morecount = 0;
-// 더보기버튼
-function listmore(){
-var choice = document.querySelector("#current").value;
-	$.ajax({
-		// 현재 전시 가져오기 
-		url:"${pageContext.request.contextPath}/exhibitmorelist",
-		data:"choice="+choice+"&count="+morecount,
-		type:"get",
-		dataType:"json",
-		success: function (data) {
-				console.log(data);	
-				if(data == false){
-					document.querySelector("#moreBtn").style.display = "none";
-					morecount = 0;
-					return;
-				}
-			for(var i=0; i<data.length; i++){
-				console.log(data[i].title);
-				
-				var begindate = data[i].begindate.substring(0,11);
-				var enddate = data[i].enddate.substring(0,11);
-				document.querySelector("#main-exhibits").innerHTML += 
-					"<li>"+
-						"<div class='img'>" + 
-							"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'>"+
-							"<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>"+
-							"</a>"+
-						"</div>"+
-						"<div class='txt'>"+
-							"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
-							"<p>"+data[i].content+"</p>"+
-							"<span>"+begindate+" ~ "+enddate+"</span>"+
-						"</div>"+
-					"</li>";
-			}	
-		}
-	});
-	morecount = morecount+1;
-	
-};
-</script>
-
-
-
-
-
-
+<%
+}
+%>
+</div>
 
 
 
