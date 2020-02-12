@@ -40,7 +40,7 @@ if( loginuser != null){
 		<p><span>기간</span><%= dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
 		<p><span>시간	</span><%=dto.getEx_time().substring(0, 2) +":" +dto.getEx_time().substring(2, 4)+" - " + dto.getEx_time().substring(4, 6) +":" +dto.getEx_time().substring(6, 8) %></p>
 		<p id="price"><span>관람료</span></p>
-		<p><span>문의</span><%= dto.getContact() %></p>
+		<p><span>문의</span><%= dto.getContact()==null? "": dto.getContact()%></p>
 		<a href="#" id="resvBtn">예매하기</a>
 		<!-- ${pageContext.request.contextPath}/reservation/reserv.jsp -->
 	</div>

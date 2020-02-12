@@ -489,6 +489,49 @@ public class ExhibitDao {
 		return list;
 	
 	}
+	
+	// TODO: insert Exhibit
+	public boolean insertExhibit(ExhibitDto dto) {
+		
+		String sql=   " INSERT INTO EXHIBIT ( SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE ) "
+					+ " VALUES ( SEQ_EXHIBIT.NEXTVAL, TO_DATE( ?, 'YYYYMMDD' ), TO_DATE( ?, 'YYYYMMDD' ) , "
+								+ " ?, ?, ? , ?, ?, 0 , ?, ?, ? ) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		int count = 0;
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			// 0 , BEGINDATE, ENDDATE,
+			// TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, 0, CONTACT, CERTI_NUM, PRICE
+			psmt.setString(1, dto.getBegindate());	// BEGINDATE
+			psmt.setString(2, dto.getEnddate());	// ENDDATE
+			psmt.setString(3, dto.getTitle());	// TITLE
+			psmt.setString(4, dto.getPlace());	// PLACE
+			psmt.setString(5, dto.getContent());	// CONTENT
+			psmt.setString(6, dto.getEx_time());	// EX_TIME
+			psmt.setString(7, dto.getLoc_info());	// LOC_INFO
+			psmt.setString(8, dto.getContact());	// CONTACT
+			psmt.setString(9, dto.getCerti_num());	// CERTI_NUM
+			psmt.setInt(10, dto.getPrice());	// PRICE - int
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return count>0? true:false;
+		
+		
+		
+	}
 //
 ////=================== 리뷰 게시판 용 ======================================================================================
 //	// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
