@@ -116,7 +116,7 @@ div.memEdit{
 
 </style>
 
-
+<%-- 
 <div class="insertFrm">
    <form method="post" action="">
       <div class="frm_cont border-btm">
@@ -287,43 +287,31 @@ div.memEdit{
    </form><!-- insertFrm -->
 </div><!-- formWrap -->
 
+ --%>
 <div class="memEdit">
 	<form>
 		<ul>
 			<li>
 				<button class="memUpdate">회원수정</button>
-				<button id ="dell" class="memDelete" value="<%=mem.getId() %>">회원탈퇴</button>
+				<button id ="dell" class="memDelete" onclick="location.href='myexhibit.jsp'" name="dell" value="<%=mem.getId() %>">회원탈퇴</button>
 			</li>
 		</ul>
 	</form>
 </div>
-
 <script>
-$("#dell").click(function(){
-	var seletedId = {"id" : $("#dell").val()};
-	alert(seletedId.id);
-	$.ajax({
-		url: "../memberdeleteid",
-		type: "post",
-		dataType: "json",
-		contentType :"application/x-www-form-urlencoded; charset=UTF-8",
-		data : seletedId,
-		async:false,
-		success : function(data){
-			alert("성공");
-			console.log("성공");
-		},
-		error : function(request,status,error){
-			alert("실패");
-		  // alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
-		}
-
-	
-	});
+/* var deleteId = document.querySelector("#dell");
+deleteId.addEventListener("click", function(e){
 });
-
-
+ */
+/*  $("#dell").click(function() {
+	 alert('aaa');
+	location.href="myexhibit.jsp";
+	
+}); */
 </script>
+
+
+
 <%-- <script src="<%=request.getContextPath() %>/js/mypage.js"></script> --%>
 
 <%@include file ="../include/footer.jsp" %>

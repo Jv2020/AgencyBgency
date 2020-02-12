@@ -333,7 +333,6 @@ public class MemberDao {
 			System.out.println("2/6 delMemberById success");
 			
 			count = psmt.executeUpdate();
-			System.out.println("count" +count); 
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
