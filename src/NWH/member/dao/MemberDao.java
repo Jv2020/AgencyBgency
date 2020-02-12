@@ -378,5 +378,39 @@ public class MemberDao {
 		return result>0?true:false;
 		
 	}
+	//ADMIN MEMBER RECOVER
+			public boolean member_recover(String[] recoverList) {
+				
+				String sql = " UPDATE MEMBER "
+						+ " SET DEL=0 "
+						+ " WHERE ID=? " ;
+				
+				Connection conn = null;
+				PreparedStatement psmt = null;
+				int result =0;
+				
+				for (int i = 0; i < recoverList.length; i++) {
+					
+					try {
+						conn = DBConnection.getConnection();
+						System.out.println("1/4 member_delete ["+i+"]번째");
+						psmt= conn.prepareStatement(sql);
+						System.out.println("2/4 member_delete["+i+"]번째");
+						psmt.setString(1, recoverList[i]);
+						System.out.println("3/4 member_delete["+i+"]번째");
+						result = psmt.executeUpdate();
+						System.out.println("4/4 member_delete["+i+"]번째 Success" );
+						
+					} catch (SQLException e) {
+						System.out.println(" member_delete["+i+"]번째 fail" );
+						e.printStackTrace();
+					}finally {
+						DBClose.close(psmt, conn, null);
+					}
+				}
+				
+				return result>0?true:false;
+				
+			}
 	
 }

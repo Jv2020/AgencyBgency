@@ -51,6 +51,7 @@ public class Notice_delete extends HttpServlet {
 		
 //		boolean -> resp.getWriter().write("ddd") ;
 //		gson -> resp.getWriter().write(gson) ;
+		
 		req.setCharacterEncoding("utf-8");
 		resp.setContentType("application/json");
 		

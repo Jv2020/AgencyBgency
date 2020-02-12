@@ -224,7 +224,7 @@ $(document).ready(function () {
 						
 						
 					</div>
->
+
 <!-- //공지사항 end -->				
 		
 				<div>	
@@ -353,7 +353,7 @@ $(document).ready(function () {
 							<select id="accessSearchChoice">
 								<option value="select" selected="selected">선택</option>
 								<option value="title">전시관명</option>
-								<option value="content">실</option>
+								<option value="content">성명</option>
 							</select>
 							<input type="text" id ="accessSearchWord" name="accessSearchWord" width="80" value="">
 							<input type="button" name="btn_accessSearch" value="검색" onclick="searchAccess()">
@@ -374,14 +374,25 @@ $(document).ready(function () {
 						<tr>
 							<td>
 								<select id="memberSearchChoice">
-								<option value="select" selected="selected">선택</option>
-								<option value="id">ID</option>
-								<option value="name">이름</option>
-								
-								<input type="text" id="memberDetail"name="memberDetail" width="80" value="">
+									<option value="select" selected="selected">선택</option>
+									<option value="id">ID</option>
+									<option value="name">이름</option>
+								</select>
+								<input type="text" id="memberSearchWord"name="memberSearchWord" width="80" value="">
 								<!-- 회원검색이동  -->
-								<input type="button" id="btn_id" name="btn_id" value="검색" onclick="location.href='#'">
-								<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기"onclick="location.href='${pageContext.request.contextPath}/Member_list'">
+								<input type="button" id="btn_id" name="btn_id" value="검색" onclick="location.href='<%=request.getContextPath()%>/Member_detail'">
+								
+								
+								<!-- <form method="post" action="../Member_list">
+									<input type="submit" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기">
+								</form> -->
+								
+								<!-- 회원검색이동  -->
+								
+								<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기"
+										onclick="location.href='<%=request.getContextPath()%>/Member_list'">
+								
+								
 							</td>
 						</tr>
 					</table>
@@ -393,7 +404,7 @@ $(document).ready(function () {
 
 
 
-// notice area javascript
+// 공지사항  javascript
 function noticeGoPage(pageNum) {
 	var choice = $("#noticeSearchChoice").val();
 	var word = $("#noticeSearchWord").val();
@@ -418,6 +429,11 @@ function searchNotice(){
 	
 	location.href = "./amain.jsp?noticeSearchWord=" + word + "&noticeSearchChoice=" + choice;
 };
+
+//큐레이터 승인
+function acc
+
+
 
 
 
@@ -464,8 +480,10 @@ $(document).ready(function(){
 					contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 					datatype : "json",
 			  		success : function(data) {
+			  			 console.log(data);
 			       		 alert("성공적으로 삭제되었습니다.");
 			       		 location.href="amain.jsp";
+			       		 
 			        },
 			    	error : function(xhr,status,error) {
 			    		// Ajax error
