@@ -305,7 +305,7 @@ $("#dell").click(function(){
 	$.ajax({
 		url: "../memberdeleteid",
 		type: "post",
-		dataType: "text",
+		dataType: "json",
 		contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 		data : seletedId,
 		async:false,
@@ -313,9 +313,11 @@ $("#dell").click(function(){
 			alert("성공");
 			console.log("성공");
 		},
-		error : function(){
+		error : function(request,status,error){
 			alert("실패");
+		  // alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
 		}
+
 	
 	});
 });

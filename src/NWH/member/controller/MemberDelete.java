@@ -18,8 +18,8 @@ public class MemberDelete extends HttpServlet{
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
+
+		
 		resp.setCharacterEncoding("utf-8");
 	    resp.setContentType("application/json");
 		
@@ -28,16 +28,16 @@ public class MemberDelete extends HttpServlet{
 		System.out.println("딜리트서블릿: "+id);
 		
 		MemberDao dao = MemberDao.getInstance();
+		
 		boolean bisS = dao.delMemberById(id);
 		System.out.println("딜리트서블릿불린: "+bisS);
 		String isS = String.valueOf(bisS);
-		System.out.println("딜리트서블릿스프링: "+isS);
-	//	String gson = new Gson().toJson(isS);
-		
+		 System.out.println("딜리트서블릿스프링: "+isS);
+		String gson = new Gson().toJson(bisS);
 		
 		PrintWriter out = resp.getWriter();
 		out.write(isS);
-		//out.flush();
+		out.flush();
 		
 		
 	}

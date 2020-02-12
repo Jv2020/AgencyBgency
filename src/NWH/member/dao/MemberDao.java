@@ -317,11 +317,10 @@ public class MemberDao {
 	public boolean delMemberById(String FindId) {
 		String sql = " UPDATE MEMBER "
 				+ " SET DEL=1 "
-				+ " WHERE ID=? ";
+				+ " WHERE ID = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
-		
 		int count = 0;
 		
 		try {
@@ -330,9 +329,11 @@ public class MemberDao {
 			
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, FindId);
+			
 			System.out.println("2/6 delMemberById success");
 			
 			count = psmt.executeUpdate();
+			System.out.println("count" +count); 
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -340,6 +341,7 @@ public class MemberDao {
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
+		System.out.println("3/6 delMemberById success");
 		return count>0?true:false;
 	}
 	
