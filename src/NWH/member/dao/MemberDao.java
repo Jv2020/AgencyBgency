@@ -313,6 +313,36 @@ public class MemberDao {
 		return dto;
 	}
 	
+	// 회원 탈퇴
+	public boolean delMemberById(String FindId) {
+		String sql = " UPDATE MEMBER "
+				+ " SET DEL=1 "
+				+ " WHERE ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 delMemberById success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, FindId);
+			System.out.println("2/6 delMemberById success");
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		return count>0?true:false;
+	}
+	
 	//ADMIN MEMBER DELETE
 	public boolean member_delete(String[] deleteList) {
 		

@@ -83,8 +83,35 @@ margin:70px auto 0; border:1px solid #5f0080; outline:none;
 font-size:18px; color:#5f0080;}
 button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
-.memEdit ul li a.memUpdate {border:1px solid #5f0080; background:#5f0080; color:#fff; font-size:18px; width:100px; height:50px;  padding:0 10px; display:inline-block}
-.memEdit ul li a.memDelete {border:1px solid #5f0080; background:#fff; color:#5f0080; font-size:18px; width:100px; height:50px;  padding:0 10px; display:inline-block}
+div.memEdit{
+	width:500px; 
+	height:360px; 
+	margin: 0 auto;
+	padding: 20px;
+	padding-left: 76px;
+}
+.memEdit ul li button.memUpdate {
+	border:1px solid #5f0080;
+	background:#5f0080;
+	color:#fff;
+	font-size:18px;
+	width:100px;
+	height:34px;
+	padding:0 10px;
+	margin-left: 50px;
+	display:inline-block;
+	text-align:center;	
+}
+.memEdit ul li button.memDelete {
+	border:1px solid #5f0080;
+	background:#fff; color:#5f0080; 
+	font-size:18px; 
+	width:100px; 
+	height:34px;  
+	padding:0 10px; 
+	margin-left: 50px; 
+	display:inline-block; 
+	text-align:center;}
 
 
 </style>
@@ -204,14 +231,42 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix" style="padding:40px 0;">
             <div class="tit floatNone">비밀번호 찾기 질문</div>
             <div class="cont floatNone mt20">
-               <select class="select-hint" name="memberQuestion">
-                  <option value="1" selected>기억에 남는 추억의 장소는?</option>
+               <%
+               if(mem.getQuestion().equals("1")){
+               %>
+              		<input class="hint-answer" type="text" name="memberAnswer" value="기억에 남는 추억의 장소는?" readonly><br>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="<%=mem.getHint() %>" readonly>
+               <%
+               } else if(mem.getQuestion().equals("2")){
+               %>
+             		<input class="hint-answer" type="text" name="memberAnswer" value="나의 보물 1호는?" readonly><br>
+              		<input class="hint-answer" type="text" name="memberAnswer" value="<%=mem.getHint() %>" readonly>
+               <%
+               } else if(mem.getQuestion().equals("3")){
+               %>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="나의 출신 초등학교는?" readonly><br>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="<%=mem.getHint() %>" readonly>
+               <%
+               } else if(mem.getQuestion().equals("4")){
+               %>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="가장 좋아하는 색깔은?" readonly><br>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="<%=mem.getHint() %>" readonly>
+               <%
+               } else if(mem.getQuestion().equals("5")){
+               %>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="아버지 성함은?" readonly><br>
+               		<input class="hint-answer" type="text" name="memberAnswer" value="<%=mem.getHint() %>" readonly>
+               <%
+               } 
+               %>
+               
+                  <!-- <option value="1" selected>기억에 남는 추억의 장소는?</option>
                   <option value="2">나의 보물 1호는?</option>
                   <option value="3">나의 출신 초등학교는?</option>
                   <option value="4">가장 좋아하는 색깔은?</option>
                   <option value="5">아버지 성함은?</option>
-               </select><br>
-               <input class="hint-answer" type="text" name="memberAnswer" placeholder="답을 입력해주세요">
+               <br>
+               <input class="hint-answer" type="text" name="memberAnswer" placeholder="답을 입력해주세요"> -->
             </div>            
          </div>      
          <div class="frm_line curator clfix">
@@ -232,16 +287,42 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
    </form><!-- insertFrm -->
 </div><!-- formWrap -->
 
-<!-- <div class="memEdit">
+<div class="memEdit">
 	<form>
 		<ul>
 			<li>
-				<a href="memupdate.jsp" class="memUpdate">회원수정</a>
-				<a href="memdelete.jsp" class="memDelete">회원탈퇴</a>
+				<button class="memUpdate">회원수정</button>
+				<button id ="dell" class="memDelete" value="<%=mem.getId() %>">회원탈퇴</button>
 			</li>
 		</ul>
 	</form>
-</div> -->
+</div>
+
+<script>
+$("#dell").click(function(){
+	var seletedId = {"id" : $("#dell").val()};
+	alert(seletedId.id);
+	$.ajax({
+		url: "../memberdeleteid",
+		type: "post",
+		dataType: "text",
+		contentType :"application/x-www-form-urlencoded; charset=UTF-8",
+		data : seletedId,
+		async:false,
+		success : function(data){
+			alert("성공");
+			console.log("성공");
+		},
+		error : function(){
+			alert("실패");
+		}
+	
+	});
+});
+
+
+</script>
+<%-- <script src="<%=request.getContextPath() %>/js/mypage.js"></script> --%>
 
 <%@include file ="../include/footer.jsp" %>
 

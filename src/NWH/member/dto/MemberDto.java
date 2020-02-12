@@ -1,6 +1,8 @@
 package NWH.member.dto;
 
-public class MemberDto {
+import java.io.Serializable;
+
+public class MemberDto implements Serializable{
 	private String id;
 	private String password;
 	private String name;

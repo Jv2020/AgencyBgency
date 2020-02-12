@@ -65,7 +65,9 @@ UPDATE MEMBER
 SET DEL = 0
 WHERE ID = 'test005';
 
-
+UPDATE MEMBER
+SET DEL = 0
+WHERE ID = 'test006';
 
 
 
