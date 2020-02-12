@@ -166,6 +166,20 @@ if (lourl.contains("/reserv.jsp")){
 }   
 %>
 
+<% 
+if (lourl.contains("/reservConfirm.jsp")){
+%>
+<div class="location">
+   <span>HOME</span>
+   <img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+   <span>RESERVATION</span>
+   <img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+   <span>결제확인</span>
+</div>
+<%
+}   
+%>
+
 <!-- mypage -->
 <% 
 if (lourl.contains("/mypage.jsp")){

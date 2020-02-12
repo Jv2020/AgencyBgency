@@ -98,6 +98,14 @@ if (ifurl.contains("/reserv.jsp")){
 <%
 }   
 %>
+
+<% 
+if (ifurl.contains("/reservConfirm.jsp")){
+%>
+<h2>결제확인</h2>
+<%
+} 
+%>
 <!-- Mypage -->
 <% 
 if (ifurl.contains("/myexhibit.jsp")){

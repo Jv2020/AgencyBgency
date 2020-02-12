@@ -9,6 +9,7 @@ ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
 
 // member 
 MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+
 // email - split
 String email = mem.getEmail();
 String[] edata = email.split("@");
@@ -101,7 +102,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 </style>
 
 <div class="reserv_exInfo">
-	<h3><%=edto.getTitle() %> </h3>
+	<h3><%=edto.getTitle() %></h3>
 	<ul>
 		<li><span>장 &nbsp; 소</span><%=edto.getPlace() %></li>
 		<li><span>기 &nbsp; 간</span><%= edto.getBegindate().substring(0, 10)+" ~ "+ edto.getEnddate().substring(0, 10) %></li>
@@ -113,9 +114,10 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 
 <div class="insertFrm">
 	<form method="post" action="">
+		<input type="hidden" name="title" value="<%=edto.getTitle() %>">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
-				<div class="tit">예매자 이름</div>
+				<div class="tit">예매자 이름 <input name="id" type="hidden" value="<%=mem.getId() %>"></div>
 				<div class="cont">
 					<input name="reservName" class="ttext readOnly" type="text" value=" <%=mem.getName() %>" readonly="readonly">
 				</div>				
@@ -166,8 +168,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit floatNone">티켓 수령방법</div>
 				<div class="cont floatNone mt20">
-					<input type="radio" id="r-ticket1" name="r-ticket" checked="checked" value="direct"/><label for="r-ticket1"><span></span>현장수령</label>
-  					<input type="radio" id="r-ticket2" name="r-ticket" value="delivery"/><label for="r-ticket2"><span></span>배송</label>
+					<input type="radio" id="r-ticket1" name="r-ticket" checked="checked" value="현장수령"/><label for="r-ticket1"><span></span>현장수령</label>
+  					<input type="radio" id="r-ticket2" name="r-ticket" value="배송"/><label for="r-ticket2"><span></span>배송</label>
 				</div>				
 			</div>
 			
@@ -185,10 +187,10 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 			<div class="frm_line clfix">
 				<div class="tit floatNone">결제 수단</div>
 				<div class="cont floatNone mt20">					
-					<input type="radio" id="r-payment1" name="r-payment" value="bankDeposit" checked="checked"><label for="r-payment1"><span></span>무통장 입금</label>
-					<input type="radio" id="r-payment2" name="r-payment" value="creditCard"><label for="r-payment2"><span></span>신용카드</label>
-					<input type="radio" id="r-payment3" name="r-payment" value="mobilePay"><label for="r-payment3"><span></span>휴대폰</label>
-					<input type="radio" id="r-payment4" name="r-payment" value="kakaoPay"><label for="r-payment4"><span></span>카카오페이</label>
+					<input type="radio" id="r-payment1" name="r-payment" value="무통장입금" checked="checked"><label for="r-payment1"><span></span>무통장 입금</label>
+					<input type="radio" id="r-payment2" name="r-payment" value="신용카드"><label for="r-payment2"><span></span>신용카드</label>
+					<input type="radio" id="r-payment3" name="r-payment" value="휴대폰"><label for="r-payment3"><span></span>휴대폰</label>
+					<input type="radio" id="r-payment4" name="r-payment" value="카카오페이"><label for="r-payment4"><span></span>카카오페이</label>
 				</div>				
 			</div>	
 			
@@ -265,6 +267,22 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 
+var total = <%=edto.getPrice() %>;
+var len, point;	
+total = total + "";
+point = total.length % 3 ;
+len = total.length;
+
+totalPrice = total.substring(0, point);
+while (point < len) {
+	if (totalPrice != "") totalPrice += ",";
+	totalPrice += total.substring(point, point + 3);
+	point += 3;
+}
+
+$(".ex_price").text(totalPrice);
+
+
 //입장권 수량 + / - 하기
 function minus(){
    var qty = $(".qtyBox input").val();
@@ -284,8 +302,6 @@ function plus() {
    }
 };	
 
-$('.ex_price').text($('.ex_price_hidden').val());
-
 // 총 결제 금액 계산하기
 function calc(){
 	// var ex_price = $('i.ex_price').text().replace(",","");
@@ -297,7 +313,7 @@ function calc(){
 	
 	
 	// ex) 7000원 -> 7,000원
-	var len, point, str;	
+	var len, point;	
 	total = total + "";
 	point = total.length % 3 ;
 	len = total.length;

@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import KEC.reserv.dao.ReservDao;
 import KEC.reserv.dto.ReservDto;
@@ -21,6 +22,8 @@ public class ReservInsert extends HttpServlet {
 		System.out.println("success do Post");
 		// 국문 깨지는 문제 해결 코드
 		req.setCharacterEncoding("utf-8");
+		
+		String title = req.getParameter("title");	
 		
 		String id = req.getParameter("id");	
 		String name = req.getParameter("reservName");	
@@ -50,6 +53,7 @@ public class ReservInsert extends HttpServlet {
 		int totalPrice = Integer.parseInt(stotalprice);
 		
 		
+		System.out.println("title : " + title);			
 		System.out.println("id : " + id);		
 		System.out.println("reservName : " + name);	
 		
@@ -74,9 +78,22 @@ public class ReservInsert extends HttpServlet {
 		System.out.println("totalprice : " + totalPrice);		
 		
 		ReservDao dao = ReservDao.getInstance();
+		ReservDto dto = new ReservDto(id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, title);
+		boolean isS = dao.getReservInsert(dto);
 		
-	    dao.getReserv(new ReservDto(id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod));
 		
+		if(isS) { // insert 성공			
+			
+			// session에 dto를 담아준다.
+			HttpSession reservSession = req.getSession();
+			reservSession.setAttribute("dto", dto);
+			
+			// 예매내역 확인 경로로 이동 
+			req.getRequestDispatcher("./reservation/reservConfirm.jsp").forward(req, resp);	
+			
+		}else { // insert 실패
+			System.out.println("실패");
+		}
 				
 	}
 

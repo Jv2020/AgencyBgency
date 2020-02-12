@@ -19,6 +19,8 @@ CREATE TABLE RESERVATION(
 	DEL NUMBER(2)
 );
 
+ALTER TABLE RESERVATION ADD TITLE VARCHAR2(200);
+
 */
 public class ReservDto implements Serializable {
 	
@@ -34,6 +36,7 @@ public class ReservDto implements Serializable {
 	int totalPrice;
 	String payMethod;
 	int del;	
+	String title;
 	
 	public ReservDto() {
 	}
@@ -41,7 +44,7 @@ public class ReservDto implements Serializable {
 	
 
 	public ReservDto(String id, String name, String birthdate, String phone, String email, String address,
-			String receive, int qty, int totalPrice, String payMethod) {
+			String receive, int qty, int totalPrice, String payMethod, String title) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -53,12 +56,13 @@ public class ReservDto implements Serializable {
 		this.qty = qty;
 		this.totalPrice = totalPrice;
 		this.payMethod = payMethod;
+		this.title = title;
 	}
 
 
 
 	public ReservDto(int seq, String id, String name, String birthdate, String phone, String email, String address,
-			String receive, int qty, int totalPrice, String payMethod, int del) {
+			String receive, int qty, int totalPrice, String payMethod, int del, String title) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -72,6 +76,7 @@ public class ReservDto implements Serializable {
 		this.totalPrice = totalPrice;
 		this.payMethod = payMethod;
 		this.del = del;
+		this.title = title;
 	}
 
 	public int getSeq() {
@@ -170,12 +175,21 @@ public class ReservDto implements Serializable {
 		this.del = del;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString() {
 		return "ReservDto [seq=" + seq + ", id=" + id + ", name=" + name + ", birthdate=" + birthdate + ", phone="
 				+ phone + ", email=" + email + ", address=" + address + ", receive=" + receive + ", qty=" + qty
-				+ ", totalPrice=" + totalPrice + ", payMethod=" + payMethod + ", del=" + del + "]";
-	}	
+				+ ", totalPrice=" + totalPrice + ", payMethod=" + payMethod + ", del=" + del + ", title=" + title + "]";
+	}
+
 	
 	
 	

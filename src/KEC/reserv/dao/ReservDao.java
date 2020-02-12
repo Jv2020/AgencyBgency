@@ -28,11 +28,11 @@ public class ReservDao {
 	}
 	
 	// 예매하기 (INSERT)** 
-	public boolean getReserv(ReservDto dto){
+	public boolean getReservInsert(ReservDto dto){
 		
 		String sql = " INSERT INTO RESERVATION (SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
-				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL) "
-				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0) ";
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE) "
+				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ? ) ";
 		
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
@@ -58,6 +58,7 @@ public class ReservDao {
 			psmt.setInt(8, dto.getQty());
 			psmt.setInt(9, dto.getTotalPrice());
 			psmt.setString(10, dto.getPayMethod());
+			psmt.setString(11, dto.getTitle());
 			
 			count = psmt.executeUpdate();
 			System.out.println("3/6 getReserv success");
@@ -75,9 +76,9 @@ public class ReservDao {
 	}
 	
 	// 예매 확인 (정보 뿌리기)** 
-	public ReservDto getReservId(String reservId){
+	public ReservDto getReserv(int seq){
 		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
-				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL "
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE "
 				+ " FROM RESERVATION";
 	
 		Connection conn = null;			// DB Connection
@@ -96,26 +97,22 @@ public class ReservDao {
 			
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getReservId success");
-		
-			if(rs.next()) {
+			
+			if (rs.next()) {
 				int i = 1;
-				int seq = rs.getInt(i++);
-				String id = rs.getString(i++);
-				String name = rs.getString(i++);
-				String birthdate = rs.getString(i++);
-				String phone = rs.getString(i++);
-				String email = rs.getString(i++);
-				String address = rs.getString(i++);
-				String receive = rs.getString(i++);
-				int qty = rs.getInt(i++);
-				int totalPrice = rs.getInt(i++);
-				String payMethod = rs.getString(i++);
-				int del = rs.getInt(i++);
-				
-				
-				
-				dto = new ReservDto(seq, id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, del);
-				
+				dto = new ReservDto(rs.getInt(i++), //seq
+									rs.getString(i++), //id
+									rs.getString(i++), //name
+									rs.getString(i++), //birthdate
+									rs.getString(i++), //phone
+									rs.getString(i++), //email
+									rs.getString(i++), //address
+									rs.getString(i++), //receive
+									rs.getInt(i++), //qty
+									rs.getInt(i++), //totalPrice
+									rs.getString(i++), //payMethod
+									rs.getInt(i++), //del
+									rs.getString(i++)); //title
 			}
 			
 			System.out.println("4/6 getReservId success");
@@ -134,7 +131,7 @@ public class ReservDao {
 	// 예매 정보 수정**
 	public int update(int seq, String phone, String email, String address, String receive) {		
 		String sql = " UPDATE RESERVATION SET PHONE = ?, EMAIL = ?, ADDRESS = ?, RECEIVE = ? "
-				    + "	WHERE SEQ = ?" ;
+				   + " WHERE SEQ = ?" ;
 		
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
