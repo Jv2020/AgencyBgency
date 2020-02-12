@@ -18,7 +18,6 @@ public class FileUpload extends HttpServlet {
 	}
 
 	
-	// 
 	public void doProcess(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException  {
 		
 		
