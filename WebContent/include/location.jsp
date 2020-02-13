@@ -181,6 +181,7 @@ if (lourl.contains("/reservConfirm.jsp")){
 %>
 
 <!-- mypage -->
+<!-- 회원정보 -->
 <% 
 if (lourl.contains("/mypage.jsp")){
 %>
@@ -190,6 +191,23 @@ if (lourl.contains("/mypage.jsp")){
 	<span>MYPAGE</span>
 	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>회원정보</span>
+</div>
+<%
+}	
+%>
+
+<!-- 회원정보 수정 -->
+<% 
+if (lourl.contains("/memupdate.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>회원정보</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>회원정보 수정</span>
 </div>
 <%
 }	
@@ -232,20 +250,6 @@ if (lourl.contains("/myreserv.jsp")){
 	<span>MYPAGE</span>
 	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
 	<span>나의 예매내역</span>
-</div>
-<%
-}	
-%>
-
-<% 
-if (lourl.contains("/memupdate.jsp")){
-%>
-<div class="location">
-	<span>HOME</span>
-	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
-	<span>MYPAGE</span>
-	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
-	<span>회원정보수정</span>
 </div>
 <%
 }	
