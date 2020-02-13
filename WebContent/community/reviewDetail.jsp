@@ -14,19 +14,19 @@
 
 <%
 // 로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
-boolean logincheck = false;
-
-// 로그인 여부 확인하기
-if(loginuser != null){
-	logincheck= true;
+MemberDto mdto = (MemberDto)session.getAttribute("loginuser");
+boolean logincheck= true;
+if(mdto == null ){
+	logincheck = false;
 }
-System.out.println("id : "+ logincheck);
+///String loginuser = mdto.getId();
+//System.out.println("id : "+ loginuser);
 %>
 
 <%
 String title = request.getParameter("title");
 String sre_pageNum = request.getParameter("re_pageNum");
+System.out.println("sre_pageNum은 " + sre_pageNum);
 int re_pageNum = Integer.parseInt(sre_pageNum);
 //System.out.println("title은 " + title);
 //System.out.println("re_pageNum은 " + re_pageNum);
@@ -34,10 +34,6 @@ int re_pageNum = Integer.parseInt(sre_pageNum);
 
 int allRe_Contents = (int)request.getAttribute("allRe_Contents");
 System.out.println("allRe_Contents는 " + allRe_Contents);
-
-/* String sallRe_Contents = (String)request.getAttribute("allRe_Contents");
-int allRe_Contents = Integer.parseInt(sallRe_Contents);
-System.out.println("allRe_Contents는 " + allRe_Contents); */
 
 int pages = (int)Math.ceil(allRe_Contents/ 5.0);
 %>
@@ -82,9 +78,20 @@ for(int i = 0; i < list.size(); i++) {
 				<%=dto.getRegdate() %>
 			</li>
 			<li>
-				<a href="/AgencyBgencyy/likeadd"><img src="/AgencyBgencyy/community/LIKE.jpg?id=<%=loginuser %>" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
-				<a href="/AgencyBgencyy/dislikeadd"><img src="/AgencyBgencyy/community/DISLIKE.jpg?id=<%=loginuser %>" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
-			</li>
+			<% if(logincheck){ %>
+				<a href="/AgencyBgencyy/likeadd?title=<%=title %>&id=<%=mdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
+				<a href="/AgencyBgencyy/dislikeadd?title=<%=title %>&id=<%=mdto.getId() %>&re_pageNum=<%=i %>"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
+				<%
+			} else{
+				%>
+				 <img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요 :<%=dto.getLike_number() %>	/
+				<img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요 :<%=dto.getDislike_number() %>
+				 
+				 <%
+			}
+			%>
+			
+			 </li>
 		</ul>
 	</div>
 </div><!-- //reviewBox -->
@@ -111,8 +118,12 @@ for(int i = 0; i < pages; i++) {
 %>
 </div>
 
+<script>
+function reload() {
+	href.reload();
+}
 
-
+</script>
 
 
 

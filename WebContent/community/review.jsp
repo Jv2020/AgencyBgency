@@ -8,25 +8,13 @@
 <link rel="stylesheet" href="/AgencyBgencyy/community/css/review.css">
 
 <%
-// 로그인 세션
-String loginuser = (String)session.getAttribute("loginuser");
-boolean logincheck = false;
-
-// 로그인 여부 확인하기
-if(loginuser != null){
-	logincheck= true;
-}
-System.out.println("id : "+ logincheck);
-%>
-
-<%
-String spageNum = request.getParameter("pageNum");	// 
+String spageNum = request.getParameter("pageNum");
 //System.out.println("pageNum은 " + spageNum);
 int pageNum = Integer.parseInt(spageNum);
 
 
 int allContents = (int)request.getAttribute("allContents");
-//int allContents = Integer.parseInt();
+
 System.out.println("allcontents는 " + allContents);
 
 int pages = (int)Math.ceil(allContents / 5.0);	// 전체 페이지수를 pages에 담았어

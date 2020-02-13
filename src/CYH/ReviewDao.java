@@ -373,10 +373,80 @@ public class ReviewDao {
 		return count > 0 ? true : false;
 	}
 	
-	public void likeCount(int seq) {		// '좋아요'수를 올려줘
+	// 어떤 아이디가 어떤 전회명에 대해 '좋아요'를 눌렀는지 안눌렀는지 판정할꺼야
+	public int getLIKE_Decision(String id, String title) {
+		String sql = " SELECT LIKE_DECISION "
+					+ " FROM LI_DI_DECISION "
+					+ " WHERE ID=? AND TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getLIKE_Decision Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getLIKE_Decision Success");
+			
+			psmt.setString(1, id);
+			psmt.setString(2, title);
+			System.out.println("3/6 getLIKE_Decision Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getLIKE_Decision Success");
+			
+			while(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println("5/6 getLIKE_Decision Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getLIKE_Decision Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return count;
+	}
+	
+	public void setLIKE_Decision(String id, String title) {
+		String sql = " UPDATE LI_DI_DECISION "
+					+ " SET LIKE_DECISION=1, ID=?, TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 setLIKE_Decision Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 setLIKE_Decision Success");
+			
+			psmt.setString(1, id);
+			psmt.setString(2, title);
+			System.out.println("3/6 setLIKE_Decision Success");
+			
+			psmt.executeUpdate();
+			System.out.println("4/6 setLIKE_Decision Success");
+			
+		} catch (SQLException e) {
+			System.out.println("setLIKE_Decision Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+	}
+	
+	public void likeCount(String id, String title) {		// '좋아요'수를 올려줘
 		String sql = " UPDATE EXHIBIT_REVIEW "
 					+ " SET LIKE_NUMBER=LIKE_NUMBER+1 "
-					+ " WHERE SEQ=? ";
+					+ " WHERE ID=? AND TITLE=? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -388,7 +458,8 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 likeCount Success");
 			
-			psmt.setInt(1, seq);
+			psmt.setString(1, id);
+			psmt.setString(2, title);
 			System.out.println("3/6 likeCount Success");
 			
 			psmt.executeUpdate();
@@ -402,10 +473,79 @@ public class ReviewDao {
 		}
 	}
 	
-	public void dislikeCount(int seq) {	// '싫어요'수를 올려줘
+	public int getDISLIKE_Decision(String id, String title) {
+		String sql = " SELECT DISLIKE_DECISION "
+					+ " FROM LI_DI_DECISION "
+					+ " WHERE ID=? AND TITLE=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getDISLIKE_Decision Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getDISLIKE_Decision Success");
+			
+			psmt.setString(1, id);
+			psmt.setString(2, title);
+			System.out.println("3/6 getDISLIKE_Decision Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/6 getDISLIKE_Decision Success");
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println("5/6 getDISLIKE_Decision Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getDISLIKE_Decision Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return count;
+	}
+	
+	public void setDISLIKE_Decision(String id, String title) {
+		String sql = " UPDATE LI_DI_DECISION "
+					+ " SET LIKE_DECISION=1, ID=?, TITLE=? ";
+	
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 DISLIKE_Decision Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 DISLIKE_Decision Success");
+			
+			psmt.setString(1, id);
+			psmt.setString(2, title);
+			System.out.println("3/6 DISLIKE_Decision Success");
+			
+			psmt.executeUpdate();
+			System.out.println("4/6 DISLIKE_Decision Success");
+			
+		} catch (SQLException e) {
+			System.out.println("DISLIKE_Decision Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+	}
+	
+	public void dislikeCount(String id, String title) {	// '싫어요'수를 올려줘
 		String sql = " UPDATE EXHIBIT_REVIEW "
 				+ " SET DISLIKE=DISLIKE+1 "
-				+ " WHERE SEQ=? ";
+				+ " WHERE ID=? AND TITLE=? ";
 	
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -417,7 +557,8 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 dislikeCount Success");
 			
-			psmt.setInt(1, seq);
+			psmt.setString(1, id);
+			psmt.setString(2, title);
 			System.out.println("3/6 dislikeCount Success");
 			
 			psmt.executeUpdate();
@@ -430,7 +571,6 @@ public class ReviewDao {
 			DBClose.close(psmt, conn, null);
 		}
 	}
-	
 	
 	// 전시 디테일 뷰에 뿌릴 리뷰 3개 
 	public List<ReviewDto> getReviewToDetail(String title){
@@ -488,9 +628,6 @@ public class ReviewDao {
 		return list;
 		
 	}
-	
-	
-	
 	
 	//=================== 리뷰 게시판 용 ======================================================================================
 		// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
