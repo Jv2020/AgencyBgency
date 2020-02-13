@@ -102,7 +102,7 @@ if (ifurl.contains("/reserv.jsp")){
 <% 
 if (ifurl.contains("/reservConfirm.jsp")){
 %>
-<h2>결제확인</h2>
+<h2>결제 완료</h2>
 <%
 } 
 %>
@@ -119,6 +119,14 @@ if (ifurl.contains("/myexhibit.jsp")){
 if (ifurl.contains("/myreview.jsp")){
 %>
 <h2>나의 리뷰</h2>
+<%
+}   
+%>
+
+<% 
+if (ifurl.contains("/rsvConfirm.jsp")){
+%>
+<h2>예매내역</h2>
 <%
 }   
 %>

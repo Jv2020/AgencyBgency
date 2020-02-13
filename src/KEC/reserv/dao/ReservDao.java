@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import DB.DBClose;
@@ -31,8 +32,8 @@ public class ReservDao {
 	public boolean getReservInsert(ReservDto dto){
 		
 		String sql = " INSERT INTO RESERVATION (SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
-				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE) "
-				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ? ) ";
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING) "
+				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, SYSDATE, ? ) ";
 		
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQLll
@@ -59,6 +60,7 @@ public class ReservDao {
 			psmt.setInt(9, dto.getTotalPrice());
 			psmt.setString(10, dto.getPayMethod());
 			psmt.setString(11, dto.getTitle());
+			psmt.setString(12, dto.getDuring());
 			
 			count = psmt.executeUpdate();
 			System.out.println("3/6 getReserv success");
@@ -75,11 +77,109 @@ public class ReservDao {
 		
 	}
 	
-	// 예매 확인 (정보 뿌리기)** 
-	public ReservDto getReserv(int seq){
+	// 마이페이지 나의 예매내역 list 뿌리기**
+	public List<ReservDto> ReserveList() {
 		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
-				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE "
-				+ " FROM RESERVATION";
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
+				+ " FROM RESERVATION "
+				+ " ORDER BY SEQ DESC ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReservDto> list =  new ArrayList<ReservDto>();	
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 ReserveList success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 ReserveList success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 ReserveList success");
+			
+			while (rs.next()) {
+				int i = 1;
+				ReservDto dto = new ReservDto(rs.getInt(i++), //seq
+											  rs.getString(i++), //id
+											  rs.getString(i++), //name
+											  rs.getString(i++), //birthdate
+											  rs.getString(i++), //phone
+											  rs.getString(i++), //email
+											  rs.getString(i++), //address
+											  rs.getString(i++), //receive
+											  rs.getInt(i++), //qty
+											  rs.getInt(i++), //totalPrice
+											  rs.getString(i++), //payMethod
+											  rs.getInt(i++), //del
+											  rs.getString(i++), //title
+											  rs.getString(i++), //rdate
+											  rs.getString(i++) ); //during
+				list.add(dto);
+				System.out.println("4/6 ReserveList success");
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("ReserveList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		return list;
+	}
+	
+	// 나의 예매내역 총 개수  ( 한 페이지당 10개씩 추출 )
+	public int getAllreserve() {
+		String sql = " SELECT COUNT(*) FROM RESERVATION ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int len = 0;
+		
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getAllreserve success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getAllreserve success");
+			
+			if(rs.next()) {
+				len = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getAllreserve fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return len;		
+	}
+	
+	// paging 처리 
+	/*
+	public List<ReservDto> getPaging() {
+		/*
+			1. row 번호
+			2. 검색
+			3. 정렬
+			4. 범위 1 ~ 10
+		
+		
+		
+	}
+	*/
+	
+	// 예매 확인 (정보 뿌리기 - 1개 )** 
+	public ReservDto getReserve(int seq){
+		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
+				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
+				+ " FROM RESERVATION ";
 	
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
@@ -90,13 +190,13 @@ public class ReservDao {
 		try {
 			
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 getReservId success");
+			System.out.println("1/6 getReserve success");
 		
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getReservId success");
+			System.out.println("2/6 getReserve success");
 			
 			rs = psmt.executeQuery();
-			System.out.println("3/6 getReservId success");
+			System.out.println("3/6 getReserve success");
 			
 			if (rs.next()) {
 				int i = 1;
@@ -112,14 +212,16 @@ public class ReservDao {
 									rs.getInt(i++), //totalPrice
 									rs.getString(i++), //payMethod
 									rs.getInt(i++), //del
-									rs.getString(i++)); //title
+									rs.getString(i++), //title
+									rs.getString(i++), //RDATE
+									rs.getString(i++) ); //DURING
 			}
 			
-			System.out.println("4/6 getReservId success");
+			System.out.println("4/6 getReserve success");
 				
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("getReservId fail");
+			System.out.println("getReserve fail");
 				
 		} finally {
 			DBClose.close(psmt, conn, rs);			

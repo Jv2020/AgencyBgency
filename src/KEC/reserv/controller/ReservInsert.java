@@ -23,6 +23,7 @@ public class ReservInsert extends HttpServlet {
 		// 국문 깨지는 문제 해결 코드
 		req.setCharacterEncoding("utf-8");
 		
+		String during = req.getParameter("during");
 		String title = req.getParameter("title");	
 		
 		String id = req.getParameter("id");	
@@ -53,6 +54,7 @@ public class ReservInsert extends HttpServlet {
 		int totalPrice = Integer.parseInt(stotalprice);
 		
 		
+		System.out.println("during : " + during);		
 		System.out.println("title : " + title);			
 		System.out.println("id : " + id);		
 		System.out.println("reservName : " + name);	
@@ -78,7 +80,7 @@ public class ReservInsert extends HttpServlet {
 		System.out.println("totalprice : " + totalPrice);		
 		
 		ReservDao dao = ReservDao.getInstance();
-		ReservDto dto = new ReservDto(id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, title);
+		ReservDto dto = new ReservDto(id, name, birthdate, phone, email, address, receive, qty, totalPrice, payMethod, title, during);
 		boolean isS = dao.getReservInsert(dto);
 		
 		

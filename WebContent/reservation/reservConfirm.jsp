@@ -25,6 +25,8 @@ detail= radr[2];
 
 .ConfirmFrm .frm_cont .frm_line > div.tit {padding:10px 0;}
 .ConfirmFrm .frm_cont .frm_line > div.cont {padding:10px 20px; background:#f7f7f7; width:630px; font-size:16px;}
+.ConfirmFrm > h3 {line-height:1; text-align:center; font-size:23px; margin-bottom:30px; font-weight:500;}
+.ConfirmFrm > h3 span {color:#5f0080;}
 
 .frm_cont {}
 .frm_cont .frm_line {padding:20px 0; border-top:1px solid #ddd;}
@@ -89,22 +91,15 @@ margin:70px auto 0; border:1px solid #5f0080; outline:none;
 font-size:18px; color:#5f0080;}
 button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
-.reserv_btnWrap {width:100%; text-align:center; margin:70px 0 0; overflow:hidden;}
-.reserv_btnWrap button:first-child {margin-left:0;}
-.reserv_btnWrap a.reserv_btn02 {float:right; width:200px; background:#5f0080; color:#fff;}
-button.reserv_btn02, a.reserv_btn02 {display:block; float:left; width:160px; height:60px; line-height:58px;
-border:1px solid #5f0080; outline:none; margin-left:20px;
-font-size:18px; color:#5f0080;}
-button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
+.reserv_btnWrap {width:100%; text-align:center; font-size:0; margin:70px 0 0; overflow:hidden;}
+button.reserv_btn02, a.reserv_btn02 {display:inline-block; width:160px; height:60px; line-height:58px;
+border:1px solid #5f0080; outline:none; margin-left:20px; font-size:18px; color:#5f0080;}
+button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
-.ConfirmFrm b {font-weight:900; color:#5f0080;}
-.frm_cont .frm_line .cont input.input-modify {}
-.frm_cont .frm_line .cont input.input-modify::placeholder{}
-.bgnone {background:none !important; padding:10px 0 !important;}
 </style>
 
 <div class="ConfirmFrm">
-	<p style="text-align:right; margin-bottom:20px;"><b>*</b> 표시가 있는 부분은 수정 가능합니다</p>
+	<h3><span><%=dto.getId() %></span>님의 결제가 정상적으로 완료되었습니다.</h3>
 	<form method="post" action="">
 		<input type="hidden" value="<%=dto.getSeq() %>">
 		<div class="frm_cont">
@@ -115,9 +110,9 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 				</div>				
 			</div>
 			<div class="frm_line clfix">
-				<div class="tit">예매자 이름 <b>*</b></div>
-				<div class="cont bgnone">					
-					<input type="text" value="<%=dto.getName() %>" class="input-modify" placeholder="">
+				<div class="tit">예매자 이름</div>
+				<div class="cont">
+					<%=dto.getName() %>
 				</div>				
 			</div>
 			
@@ -179,9 +174,8 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 		</div><!-- frm_cont -->
 		
 		<div class="reserv_btnWrap">
-			<button class="reserv_btn02 modify">정보수정</button>
-			<button class="reserv_btn02 del">결제취소</button>
-			<a class="reserv_btn02 resCf" href="/AgencyBgencyy/main/main.jsp">결제확인</a>
+			<a class="reserv_btn02" href="/AgencyBgencyy/exhibitlist">전시보기</a>
+			<a class="reserv_btn02" href="/AgencyBgencyy/mypage/myreserv.jsp">예매내역확인</a>
 		</div>
 		
 	</form><!-- ConfirmFrm -->
@@ -207,16 +201,6 @@ while (point < len) {
 
 $(".totalPrice strong").text(totalPrice);
 
-
-$('button.modify').click(function(){
-	$("form").attr({"action":"/AgencyBgencyy/reserveupdate"}).submit();
-});
-
-$('button.del').click(function(){
-	$("form").attr({"action":"/AgencyBgencyy/reservedelte"}).submit();
-});
-
-	
 
 </script>
 

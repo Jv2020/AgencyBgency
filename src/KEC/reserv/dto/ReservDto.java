@@ -37,6 +37,8 @@ public class ReservDto implements Serializable {
 	String payMethod;
 	int del;	
 	String title;
+	String rdate;
+	String during;
 	
 	public ReservDto() {
 	}
@@ -44,7 +46,7 @@ public class ReservDto implements Serializable {
 	
 
 	public ReservDto(String id, String name, String birthdate, String phone, String email, String address,
-			String receive, int qty, int totalPrice, String payMethod, String title) {
+			String receive, int qty, int totalPrice, String payMethod, String title, String during) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -57,12 +59,13 @@ public class ReservDto implements Serializable {
 		this.totalPrice = totalPrice;
 		this.payMethod = payMethod;
 		this.title = title;
+		this.during = during;
 	}
 
 
 
 	public ReservDto(int seq, String id, String name, String birthdate, String phone, String email, String address,
-			String receive, int qty, int totalPrice, String payMethod, int del, String title) {
+			String receive, int qty, int totalPrice, String payMethod, int del, String title, String rdate, String during) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -77,6 +80,8 @@ public class ReservDto implements Serializable {
 		this.payMethod = payMethod;
 		this.del = del;
 		this.title = title;
+		this.rdate = rdate;
+		this.during = during;
 	}
 
 	public int getSeq() {
@@ -183,12 +188,35 @@ public class ReservDto implements Serializable {
 		this.title = title;
 	}
 
+	public String getRdate() {
+		return rdate;
+	}
+
+	public void setRdate(String rdate) {
+		this.rdate = rdate;
+	}
+
+	public String getDuring() {
+		return during;
+	}
+
+	public void setDuring(String during) {
+		this.during = during;
+	}
+
 	@Override
 	public String toString() {
 		return "ReservDto [seq=" + seq + ", id=" + id + ", name=" + name + ", birthdate=" + birthdate + ", phone="
 				+ phone + ", email=" + email + ", address=" + address + ", receive=" + receive + ", qty=" + qty
-				+ ", totalPrice=" + totalPrice + ", payMethod=" + payMethod + ", del=" + del + ", title=" + title + "]";
+				+ ", totalPrice=" + totalPrice + ", payMethod=" + payMethod + ", del=" + del + ", title=" + title
+				+ ", rdate=" + rdate + ", during=" + during + "]";
 	}
+
+
+	
+	
+	
+
 
 	
 	

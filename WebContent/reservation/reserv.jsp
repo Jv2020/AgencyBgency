@@ -115,6 +115,7 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
 <div class="insertFrm">
 	<form method="post" action="">
 		<input type="hidden" name="title" value="<%=edto.getTitle() %>">
+		<input type="hidden" name="during" value="<%= edto.getBegindate().substring(0, 10)+" ~ "+ edto.getEnddate().substring(0, 10) %>">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
 				<div class="tit">예매자 이름 <input name="id" type="hidden" value="<%=mem.getId() %>"></div>

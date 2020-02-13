@@ -20,7 +20,7 @@ public class ReserveDelete extends HttpServlet {
 		
 		// singleton
 		ReservDao dao = ReservDao.getInstance();
-		dao.reserveDelete(seq);
+		
 		
 		
 	}
