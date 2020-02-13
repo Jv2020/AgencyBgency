@@ -263,7 +263,8 @@ public class MemberDao {
 	// DTO 하나 선택
 	public MemberDto getMemberById(String findId){
 		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH "
-				+    " FROM MEMBER ";
+				+    " FROM MEMBER "
+				+ 	 " WHERE ID=?";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -276,6 +277,7 @@ public class MemberDao {
 			System.out.println("1/6 getMemberById success");
 			
 			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, findId);
 			System.out.println("2/6 getMemberById success");
 			
 			rs = psmt.executeQuery();

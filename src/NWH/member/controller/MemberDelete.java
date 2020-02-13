@@ -12,16 +12,36 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import NWH.member.dao.MemberDao;
+import NWH.member.dto.MemberDto;
 
 @WebServlet("/memberdeleteid")
 public class MemberDelete extends HttpServlet{
+	
+	
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		String id = req.getParameter("deleteId");
+		
+		System.out.println("딜리트서블릿: "+ id);
+		
+		MemberDao dao = MemberDao.getInstance();
+		boolean bisS = dao.delMemberById(id);
+		String isS = String.valueOf(bisS);
+		resp.sendRedirect(req.getContextPath()+"/mypage/memdelete.jsp?isS="+isS);
+		
+		
+		
+	}
+
+	
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doGet(req, resp);
 		
-		String id = req.getParameter("dell");
-		
-		System.out.println("딜리트서블릿: "+id);
 		
 //		MemberDao dao = MemberDao.getInstance();
 //		

@@ -15,14 +15,10 @@ import NWH.member.dto.MemberDto;
 public class MemberInsert extends HttpServlet {
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-
-	}
-
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		
 		request.setCharacterEncoding("UTF-8");
 		
 		String id = request.getParameter("memberId");
@@ -75,8 +71,7 @@ public class MemberInsert extends HttpServlet {
 		
 		// date가 한자리 수일때 0 붙여주는 작업
 		
-		
-		
+				
 		
 		MemberDao dao = MemberDao.getInstance();
 		
