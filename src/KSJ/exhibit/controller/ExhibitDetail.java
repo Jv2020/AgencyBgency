@@ -21,6 +21,8 @@ public class ExhibitDetail extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setCharacterEncoding("utf-8");
+		
 		String sseq = req.getParameter("seq");
 		String ex = req.getParameter("ex");
 		int seq = Integer.parseInt(sseq);

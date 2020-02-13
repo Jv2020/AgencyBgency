@@ -18,7 +18,9 @@ public class ExhibitSchedule extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+
+		req.setCharacterEncoding("utf-8");
+		
 			ExhibitDao dao = ExhibitDao.getInstance();
 
 			List<ExhibitDto> newlist = dao.getNewExhibits();

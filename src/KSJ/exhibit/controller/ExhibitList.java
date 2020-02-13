@@ -21,6 +21,8 @@ public class ExhibitList extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setCharacterEncoding("utf-8");
+		
 		String choice = req.getParameter("choice");
 		String spage = req.getParameter("page");
 		int page = 0;

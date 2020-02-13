@@ -20,6 +20,8 @@ public class ExhibitMonthSch extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
+		req.setCharacterEncoding("utf-8");
 		
 		String year = req.getParameter("year");
 		String month = req.getParameter("month");

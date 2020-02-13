@@ -18,7 +18,7 @@ public class ExhibitInsert extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 			
 		req.setCharacterEncoding("utf-8");
-		System.out.println("here in servlet");
+//		System.out.println("here in servlet");
 		ExhibitDao dao = ExhibitDao.getInstance();
 		
 		String title = req.getParameter("title");
@@ -32,22 +32,22 @@ public class ExhibitInsert extends HttpServlet {
 		String contact = req.getParameter("contact");
 		String content = req.getParameter("content");
 		
-		System.out.println("title "+title);
-		System.out.println("begindate "+begindate);
-		System.out.println("enddate "+enddate);
-		System.out.println("ex_time "+ex_time);
-		System.out.println("place "+place);
-		System.out.println("loc_info "+loc_info);
-		System.out.println("price "+sprice);
-		System.out.println("certi_num "+certi_num);
-		System.out.println("contact "+contact);
-		System.out.println("content "+content);
+//		System.out.println("title "+title);
+//		System.out.println("begindate "+begindate);
+//		System.out.println("enddate "+enddate);
+//		System.out.println("ex_time "+ex_time);
+//		System.out.println("place "+place);
+//		System.out.println("loc_info "+loc_info);
+//		System.out.println("price "+sprice);
+//		System.out.println("certi_num "+certi_num);
+//		System.out.println("contact "+contact);
+//		System.out.println("content "+content);
 	
 		int price = Integer.parseInt(sprice);
 		
 		ExhibitDto dto = new ExhibitDto(0, begindate, enddate, title, place, content, ex_time, loc_info, 0, contact, certi_num, price);
 		boolean b = dao.insertExhibit(dto);
-		System.out.println(b);
+//		System.out.println(b);
 		
 		if(true) {
 			resp.sendRedirect("./exhibit/insertCheck.jsp?b=true");

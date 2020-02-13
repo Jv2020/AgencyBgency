@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 
@@ -6,24 +7,32 @@
 
 <script src="./dist/mtr-datepicker-timezones.min.js"></script>
 <script src="./dist/mtr-datepicker.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- font awesome -->
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ --><!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
+
+<%
+//시간을 취득해서 파일이름으로 넣기 
+String fname = (new Date().getTime()) + "+";
+System.out.println("fname:" + fname);
+%>
 
 <style>
 .cont-top{
 	padding-left: 80px;
 }
 .cont-top .title-img{
-	border: 1px dashed;
 	position:relative; width:280px; height:400px;
 	float:left;
 }
-.cont-top .title-img .title-btn{
-	text-align: center;
-	line-height: 400px;
-	font-size: 40px;
-}
+.cont-top .title-img .imgBox{
+	position:relative; width:302px; height:402px; border:1px dashed #ccc; 
+	text-align: center; line-height: 400px; font-size: 40px;}
+.imgBox > label {position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);}
+.imgBox:hover > label {z-index:2;}
+.img_wrap {width:300px; height:400px; text-align:center; vertical-align:middle;}
+.img_wrap img {position:absolute; top:50%; left:50%;  z-index:1; display:block; max-width:300px; max-height:400px; transform:translate(-50%, -50%);}
+
 .cont-top ul{
 	float: right;
 	width: 580px;
@@ -81,6 +90,10 @@ margin: 20px auto 0;
 .fa-plus-circle:hover{
 	color:#5f0080;
 	transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+#file{
+	display: none;
 }
 </style>
 <%
@@ -92,15 +105,35 @@ MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
 request.setCharacterEncoding("UTF-8");
 
 %>
-<form id="frm" method="post">
+<form id="frm" method="post" >
  
-
 <div class="cont-top clfix">
-	<div class="title-img">
-		<div class="title-btn"> 
-			<i class="fas fa-plus-circle"></i>
-		</div>
+	 <div class="title-img">
+		
+		<div class="imgBox title-btn">
+	        <label for="file">
+	            	<i class="fas fa-plus-circle">
+	           		</i>
+	        </label>
+	        <input type="file" id="file" name="file" style="display:none;" />
+	         <input type="hidden" id="filename" name="filename" value="<%= fname%>"/> <!-- DB에 저장할 파일이름  -->
+       		 <input type="hidden" id="origin_name" name="origin_name"/>	<!-- 원래 이 -->
+       
+	         <div class="img_wrap">
+	            <img id="imgpreview" />
+	         </div>
+    	</div>
+		 
 	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<ul class="info">
 		<li>
 				<span> 제목 </span>
@@ -226,9 +259,7 @@ function getToday(){
 	}	
 	return false;
  }
- 
- // 파일추가하기
- // 
+
  
  // 작성완료 버튼 
 $("#writeBtn").click(function() {
@@ -286,11 +317,61 @@ $("#writeBtn").click(function() {
 	
 	
 }); 
- 
- 
- 
+</script>
 
+
+
+
+
+<script type="text/javascript">
+// 첨부한 이미지 미리보기
+
+var sel_file;
+
+$(document).ready(function() {
+    $("#file").on("change", handleImgFileSelect);
+}); 
+
+function handleImgFileSelect(e) {
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+
+    filesArr.forEach(function(f) {
+        if(!f.type.match("image.*")) {
+            alert("확장자는 이미지 확장자만 가능합니다.");
+            return;
+        }
+
+        sel_file = f;
+
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $("#imgpreview").attr("src", e.target.result);
+            
+            var lastIndex = $("#file").val().lastIndexOf("//");
+			if(lastIndex == -1){
+				lastIndex = $("#file").val().lastIndexOf("\\");
+			}  
+		 	alert($("#file").val());
+           var originname = $("#file").val().substring(lastIndex+1);
+			
+           var lastIndex2 = $("#file").val().lastIndexOf(".");
+           var fileextension = $("#file").val().substring(lastIndex2+1);
+           $("#origin_name").val(originname);
+           $("#filename").val("<%=fname%>"+originname);
+           
+           alert($("#origin_name").val());
+           alert("filename:"+$("#filename").val()); 
+           
+        }
+        reader.readAsDataURL(f);
+    });
+}
 
 </script>
+
+ 
+
+
 
 <%@include file ="../include/footer.jsp" %>		

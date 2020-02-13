@@ -20,6 +20,9 @@ public class ExhibitMoreList extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+
+		req.setCharacterEncoding("utf-8");
+		
 		ExhibitDao dao = ExhibitDao.getInstance();
 
 		String choice = req.getParameter("choice");
