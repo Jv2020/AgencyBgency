@@ -35,7 +35,7 @@ public class ReservDao {
 				+ " VALUES(SEQ_RESV.NEXTVAL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ? ) ";
 		
 		Connection conn = null;			// DB Connection
-		PreparedStatement psmt = null;	// SQL
+		PreparedStatement psmt = null;	// SQLll
 		ResultSet rs = null;			// result
 		
 		int count = 0;
@@ -129,7 +129,7 @@ public class ReservDao {
 	}
 	
 	// 예매 정보 수정**
-	public int update(int seq, String phone, String email, String address, String receive) {		
+	public int reserveupdate(int seq, String phone, String email, String address, String receive) {		
 		String sql = " UPDATE RESERVATION SET PHONE = ?, EMAIL = ?, ADDRESS = ?, RECEIVE = ? "
 				   + " WHERE SEQ = ?" ;
 		
@@ -162,7 +162,7 @@ public class ReservDao {
 	}
 	
 	// 예매 정보 삭제**
-	public int delete(int seq) {
+	public int reserveDelete(int seq) {
 		String sql = "UPDATE RESERVATION SET DEL = 1 WHERE SEQ = ?";
 		
 		Connection conn = null;			// DB Connection

@@ -97,10 +97,16 @@ border:1px solid #5f0080; outline:none; margin-left:20px;
 font-size:18px; color:#5f0080;}
 button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
+.ConfirmFrm b {font-weight:900; color:#5f0080;}
+.frm_cont .frm_line .cont input.input-modify {}
+.frm_cont .frm_line .cont input.input-modify::placeholder{}
+.bgnone {background:none !important; padding:10px 0 !important;}
 </style>
 
 <div class="ConfirmFrm">
+	<p style="text-align:right; margin-bottom:20px;"><b>*</b> 표시가 있는 부분은 수정 가능합니다</p>
 	<form method="post" action="">
+		<input type="hidden" value="<%=dto.getSeq() %>">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
 				<div class="tit">전시명</div>
@@ -109,9 +115,9 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 				</div>				
 			</div>
 			<div class="frm_line clfix">
-				<div class="tit">예매자 이름</div>
-				<div class="cont">
-					<%=dto.getName() %>
+				<div class="tit">예매자 이름 <b>*</b></div>
+				<div class="cont bgnone">					
+					<input type="text" value="<%=dto.getName() %>" class="input-modify" placeholder="">
 				</div>				
 			</div>
 			
@@ -173,8 +179,8 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 		</div><!-- frm_cont -->
 		
 		<div class="reserv_btnWrap">
-			<button class="reserv_btn02">정보수정</button>
-			<button class="reserv_btn02">결제취소</button>
+			<button class="reserv_btn02 modify">정보수정</button>
+			<button class="reserv_btn02 del">결제취소</button>
 			<a class="reserv_btn02 resCf" href="/AgencyBgencyy/main/main.jsp">결제확인</a>
 		</div>
 		
@@ -183,7 +189,7 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 
 <script>
 
-	
+
 var total = <%=dto.getTotalPrice() %>;	
 
 // ex) 7000원 -> 7,000원
@@ -201,6 +207,14 @@ while (point < len) {
 
 $(".totalPrice strong").text(totalPrice);
 
+
+$('button.modify').click(function(){
+	$("form").attr({"action":"/AgencyBgencyy/reserveupdate"}).submit();
+});
+
+$('button.del').click(function(){
+	$("form").attr({"action":"/AgencyBgencyy/reservedelte"}).submit();
+});
 
 	
 
