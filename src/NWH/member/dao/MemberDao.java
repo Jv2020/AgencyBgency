@@ -346,6 +346,82 @@ public class MemberDao {
 		return count>0?true:false;
 	}
 	
+	//회원 업데이트
+	public boolean updateMemberByDTO(MemberDto dto) {
+		String sql = " UPDATE MEMBER "
+				+    " SET PHONE = ?, ADDRESS = ?, QUESTION = ?, HINT = ?, EXHIBIT_NAME = ?  "
+				+    " WHERE ID = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 updateMemberByDTO success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getPhone());
+			psmt.setString(2, dto.getAddress());
+			psmt.setString(3, dto.getQuestion());
+			psmt.setString(4, dto.getHint());
+			psmt.setString(5, dto.getExhibit_name());
+			psmt.setString(6, dto.getId());
+			
+			System.out.println("2/6 updateMemberByDTO success");
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("updateMemberByDTO fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		System.out.println("3/6 updateMemberByDTO success");
+		return count>0?true:false;
+	}
+	
+	//id중복체크
+	public boolean idCheck(String memId) {
+		String sql = " SELECT ID "
+				+	 " FROM MEMBER "
+				+ 	 " WHERE ID = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 idCheck success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, memId);
+			System.out.println("2/6 idCheck success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 idCheck success");
+			
+			if(rs.next()) {
+				count = 1;
+				
+			}
+			System.out.println("4/6 idCheck success");
+			
+		} catch (SQLException e) {
+			System.out.println("idCheck fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);			
+		}
+		return count>0?true:false;
+		
+		
+	}
+	
 	//ADMIN MEMBER DELETE
 	public boolean member_delete(String[] deleteList) {
 		

@@ -140,6 +140,14 @@ if (ifurl.contains("myreserv.jsp")){
 %>
 
 <% 
+if (ifurl.contains("rsvwrite.jsp")){
+%>
+<h2>예매정보 수정</h2>
+<%
+}   
+%>
+
+<% 
 if (ifurl.contains("mypage.jsp")){
 %>
 <h2>회원정보</h2>

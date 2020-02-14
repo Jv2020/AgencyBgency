@@ -1,11 +1,11 @@
+<%@page import="KEC.reserv.dto.ReservDto"%>
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
-내가 쓴 리뷰
 
-수정 삭제
-
-페이징
-
+<script>
+	alert("예매 취소되었습니다.");
+	location.href="<%=request.getContextPath()%>/mypage/myreserv.jsp"
+</script>
 
 
 <%@include file ="../include/footer.jsp" %>		

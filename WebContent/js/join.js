@@ -1,3 +1,9 @@
+function getContextPath() {
+   var hostIndex = location.href.indexOf( location.host ) + location.host.length;
+   return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
+};
+
+
 $('.categoryBox span').click(function(){
 	// 일반 / 큐레이터 선택 
    $('.categoryBox span').removeClass('on');
@@ -23,6 +29,8 @@ memId.addEventListener("blur", function(e){
 	var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
 	if($(".memberId").val() == ""){
 		if($('span.idCheck').hasClass('alert-green')) {
+    		$('.idComentColor span').removeClass('alert-red');
+    		$('.idComentColor span').removeClass('alert-orange');
     		$('.idComentColor span').removeClass('alert-green');
     	}
 		document.querySelector(".idCheck").innerHTML = "";
@@ -38,12 +46,53 @@ memId.addEventListener("blur", function(e){
 	    }  else {
 	    	if($('span.idCheck').hasClass('alert-red')) {
 	    		$('.idComentColor span').removeClass('alert-red');
+	    		$('.idComentColor span').removeClass('alert-green');
 	    	}
-	    	$('.idComentColor span').addClass('alert-green');
-	    	document.querySelector(".idCheck").innerHTML = "멋진 아이디군요~!";
+	    	$('.idComentColor span').removeClass('alert-red');
+	    	$('.idComentColor span').removeClass('alert-green');
+	    	$('.idComentColor span').addClass('alert-orange');
+	    	document.querySelector(".idCheck").innerHTML = "중복체크 전입니다.";
 	    }
 	}
+});
+
+//var idcheck = $("#id").val();
+var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
+function idCheck(){
+	$.ajax({
+		url : `${getContextPath()}`+"/idCheck",
+		type : "post",
+		dataType:"text",
+		data : "idcheck="+$("#id").val(),
+		success:function(data){
+			if(data === "true"){
+				$('.idComentColor span').removeClass('alert-orange');
+				$('.idComentColor span').removeClass('alert-green');
+				$('.idComentColor span').addClass('alert-red');
+				document.querySelector(".idCheck").innerHTML = "이미 등록된 아이디입니다.";
+			} else {
+				$('.idComentColor span').removeClass('alert-red');
+				$('.idComentColor span').removeClass('alert-orange');
+				$('.idComentColor span').addClass('alert-green');
+				document.querySelector(".idCheck").innerHTML = "사용가능한 아이디입니다.";
+			}
+		},
+		error:function(request,status,error){
+			
+		}
+		
 	});
+};
+	
+	
+	
+//	if( !idReg.test( $(".memberId").val() )) {
+//		return false;
+//	} else {
+//		location.href = getContextPath()+"/idCheck?idcheck="+idcheck;
+//	}
+
+
 
  // 패스워드 체크(정규식 + 멘트)
     var memPwd = document.querySelector(".memberPwd");
@@ -130,6 +179,7 @@ phone.addEventListener("blur", function(e){
 	}
 });
 
+
 $('button.sBtn').click(function(){
 	if($('.idComentColor span').hasClass('alert-red') || $('.memberId').val().trim() == "") {
 		alert("아이디를 확인해주세요");
@@ -180,7 +230,6 @@ $('button.sBtn').click(function(){
 		$('input[name=memberAnswer]').focus();
 		return false;
 	} else {
-		alert("서브밋")
 		$("form").attr("action", "../memberinsert").submit();
 	}
 	

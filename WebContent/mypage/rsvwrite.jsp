@@ -21,6 +21,7 @@ detail= radr[2];
 	
 }
 
+
 %>
 <style>
 .insertFrm {}
@@ -103,8 +104,8 @@ button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff;
 </style>
 
 <div class="ConfirmFrm">
-	<form method="get" action="">
-		<input type="hidden" value="<%=dto.getSeq() %>">
+	<form method="post" action="/AgencyBgencyy/reserveupdate">
+		<input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
 				<div class="tit">전시명</div>
@@ -130,29 +131,38 @@ button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff;
 			
 			<div class="frm_line clfix">
 				<div class="tit">연락처</div>
-				<div class="cont">
-					<%=dto.getPhone() %>
+				<div class="cont">					
+					<input type="text" name="phone" value="<%=dto.getPhone() %>">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">이메일 주소</div>
-				<div class="cont">
-					<%=edata[0]%>@<%=edata[1]%>
+				<div class="cont i-mg-none">
+					<input name="reservEmail01" type="text" value="<%=edata[0]%>">
+					<span class="frm-mg">@</span>
+					<input name="reservEmail02" type="text" value="<%=edata[1]%>">
 				</div>				
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">주소</div>
 				<div class="cont">
-					[우편번호] &nbsp;<%=radr[0]%><br><%=radr[1]%> <%=radr[2]%>
-				</div>				
+					<input name="post" type="text" id="sample4_postcode" readonly="readonly" value="<%=radr[0] %>" placeholder="우편번호"> 
+				    <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
+				    <input name="address01" type="text" class="mt08" id="sample4_roadAddress" value="<%=radr[1] %>" placeholder="도로명주소">
+				    <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
+				    <span id="guide" style="color:#999;display:none"></span>
+				    <input name="address02" type="text"  class="mt08" id="sample4_detailAddress" value="<%=detail %>" placeholder="상세주소">
+				    <input type="text" style="display:none;" id="sample4_extraAddress" placeholder="참고항목">
+				</div>					
 			</div>
 			
 			<div class="frm_line clfix">
 				<div class="tit">티켓 수령방법</div>
 				<div class="cont">
-					<%=dto.getReceive() %>
+					<input type="radio" id="r-ticket1" name="r-ticket" checked="checked" value="현장수령"/><label for="r-ticket1" style="background-color:#f7f7f7;"><span></span>현장수령</label>
+  					<input type="radio" id="r-ticket2" name="r-ticket" value="배송"/><label for="r-ticket2" style="background-color:#f7f7f7;"><span></span>배송</label>
 				</div>				
 			</div>
 			
@@ -176,16 +186,16 @@ button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff;
 						
 		</div><!-- frm_cont -->		
 					
-		<div class="reserv_btnWrap">
-			<div class="clfix">
-				<button class="reserv_btn02" type="button" style="float:left; margin-left:0;" onclick="del()">예매취소</button>		
-				<a class="reserv_btn02 submit" style="float:left;" href="/AgencyBgencyy/reservget?seq=<%=dto.getSeq() %>&page=update">정보수정</a>
-				<a class="reserv_btn02" style="float:right; width:200px; background:#5f0080; color:#fff;" href="/AgencyBgencyy/exhibitlist">목록</a>7
-			</div>		
-		</div>
+		<input class="reserv_btn" type="submit" >수정완료</input>		
+		
 		
 	</form><!-- ConfirmFrm -->
 </div><!-- formWrap -->
+
+<script type="text/javascript">
+jQuery.noConflict();
+var j$ = jQuery;
+</script>
 
 <script>
 
@@ -206,21 +216,6 @@ while (point < len) {
 }
 
 $(".totalPrice strong").text(totalPrice);
-
-// 예매취소
-function del() {
-if(confirm("예매 취소하시겠습니까?")) {
-		// 확인 
-		location.href="/AgencyBgencyy/reservedelte?seq=<%=dto.getSeq() %>";
-	} else {
-		// 취소 
-	}
-}
-
-// 정보수정
-$('.reserv_btn02.submit').click(function(){
-	// $("form").attr({"action":""}).submit();
-});
 
 
 </script>
