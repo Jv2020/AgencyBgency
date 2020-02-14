@@ -175,11 +175,12 @@ public class ReservDao {
 	}
 	*/
 	
-	// 예매 확인 (정보 뿌리기 - 1개 )** 
+	// mypage - 예매내역 (정보 뿌리기 - 1개 )** 
 	public ReservDto getReserve(int seq){
 		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
 				+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
-				+ " FROM RESERVATION ";
+				+ " FROM RESERVATION " 
+				+ " WHERE SEQ = ? " ;
 	
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
@@ -194,6 +195,7 @@ public class ReservDao {
 		
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getReserve success");
+			psmt.setInt(1, seq);
 			
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getReserve success");
@@ -231,62 +233,70 @@ public class ReservDao {
 	}
 	
 	// 예매 정보 수정**
-	public int reserveupdate(int seq, String phone, String email, String address, String receive) {		
+	public boolean reserveupdate(int seq, String phone, String email, String address, String receive) {		
 		String sql = " UPDATE RESERVATION SET PHONE = ?, EMAIL = ?, ADDRESS = ?, RECEIVE = ? "
 				   + " WHERE SEQ = ?" ;
 		
 		Connection conn = null;			// DB Connection
 		PreparedStatement psmt = null;	// SQL
 		ResultSet rs = null;			// result
+		int count = 0;
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 update success");
+			System.out.println("1/6 reserveupdate success");
 		
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 update success");
+			psmt = conn.prepareStatement(sql);			
 			psmt.setString(1, phone);
 			psmt.setString(2, email);
 			psmt.setString(3, address);
 			psmt.setString(4, receive);
 			psmt.setInt(5, seq);
 			
-			return psmt.executeUpdate();
+			System.out.println("2/6 reserveupdate success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 reserveupdate success");
 			
 		} catch (Exception e) {
+			System.out.println("reserveupdate fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, rs);			
 		}
 		
-		return -1; // 데이터베이스 오류
+		return count>0?true:false;
 
 	}
 	
 	// 예매 정보 삭제**
-	public int reserveDelete(int seq) {
+	public boolean reserveDelete(int seq) {
 		String sql = "UPDATE RESERVATION SET DEL = 1 WHERE SEQ = ?";
 		
 		Connection conn = null;			// DB Connection
-		PreparedStatement psmt = null;	// SQL
-		ResultSet rs = null;			// result
+		PreparedStatement psmt = null;	// SQL		
+		int count = 0;
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 update success");
+			System.out.println("1/6 reserveDelete success");
 		
 			psmt = conn.prepareStatement(sql);
-
 			psmt.setInt(1, seq);
+			System.out.println("2/6 reserveDelete success");
 			
-			return psmt.executeUpdate();
+			count = psmt.executeUpdate();
+			System.out.println("3/6 reserveDelete success");
+			
 			
 		} catch (Exception e) {
+			System.out.println("reserveDelete fail");
 			e.printStackTrace();
 		} finally {
-			DBClose.close(psmt, conn, rs);			
+			DBClose.close(psmt, conn, null);			
 		}
-		return -1; // 데이터베이스 오류
+		
+		return count > 0 ? true:false;	
 	}
 	
 	

@@ -17,7 +17,7 @@ if (durl.substring(8).contains("/exhibit")){
 
 <!-- community -->
 <% 
-if (durl.contains("community")){
+if (durl.contains("/community")){
 %>
 <div class="depth02">
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/community/notice.jsp' ? ' active' : ''}"
@@ -34,7 +34,7 @@ if (durl.contains("community")){
 
 <!-- community -->
 <% 
-if (durl.contains("mypage")){
+if (durl.contains("/mypage")){
 	MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 %>
 <div class="depth02 mypageDepth">
@@ -47,9 +47,11 @@ if (durl.contains("mypage")){
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreview.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myreview.jsp">나의 리뷰
 	</a>
-	<a class="${pageContext.request.requestURI eq ('/AgencyBgencyy/mypage/myreserv.jsp'  || '/AgencyBgencyy/mypage/rsvConfirm.jsp') ? ' active' : ''}"
+	
+	<a class="<% if (durl.contains("reserv")){ %> active <% } %> reservedepth"	
 	href="/AgencyBgencyy/mypage/myreserv.jsp">나의 예매내역
 	</a>
+	
 	<%
 	if(mem.getAuth() != 0){
 	%>

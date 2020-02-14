@@ -256,6 +256,20 @@ if (lourl.contains("/myreserv.jsp")){
 %>
 
 <% 
+if (lourl.contains("/rsvConfirm.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>예매내역</span>
+</div>
+<%
+}	
+%>
+
+<% 
 if (lourl.contains("/memdelete.jsp")){
 %>
 <div class="location">
