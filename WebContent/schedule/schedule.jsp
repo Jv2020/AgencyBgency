@@ -6,14 +6,6 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/schedule/css/schedule.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<%
-	
-	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");	// 이달의 새로운 전시 
-	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
-	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
-	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
-
-%>    
 <%! 
 // 현재 날짜 확인하기
 public String getDate(){
@@ -34,6 +26,7 @@ public String getDate(){
 		
 	return today;
 }
+
 public String getDate(String date){
 	String str = date.substring(0,11);
 	str = str.replaceAll("-", "").trim();
@@ -59,6 +52,15 @@ public String getExPeriod(String begindatefull, String enddatefull){
 	return status;
 }
 %>
+<%
+	
+	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");	// 이달의 새로운 전시 
+	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
+	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
+	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
+
+%>    
+
 <%
 	// 추천전시 상태 
 	String recommandPeriod = getExPeriod(recommandDto.getBegindate(),recommandDto.getEnddate() );

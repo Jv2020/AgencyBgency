@@ -23,17 +23,19 @@ public class FileUpload extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
+		
+		 System.out.println("file download connected");
 
 		//2가지 방법이 있음
 		//1. tomcat에 배포(Server)	-> 자료가 사라질 가능성 있음()
 		//임시 서버 경로로 나온다
 		
-//		String fupload = req.getSession().getServletContext().getRealPath("/");
 //		String fupload = "/Users/sunjukim/Bitcamp_web/web4_jsp/ImageUpload/WebContent/upload/";		// 하드의 특정 공간에 저장
+//		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		// 하드의 특정 공간에 저장
 //		String fupload = application.getRealPath("/upload");	// project->webcontent 안에 해당 폴더가 있어야함
-
+//		Fil foldername = req.getAttribute("newFiles");
+		String fupload = req.getSession().getServletContext().getRealPath("/upload/");
 		//지정폴더 (Client)
-		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		// 하드의 특정 공간에 저장
 		System.out.println("업로드 폴더: " + fupload);
 
 

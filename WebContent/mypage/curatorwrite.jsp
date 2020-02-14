@@ -13,7 +13,7 @@
 
 <%
 //시간을 취득해서 파일이름으로 넣기 
-String fname = (new Date().getTime()) + "+";
+String fname = (new Date().getTime()) + "";
 System.out.println("fname:" + fname);
 %>
 
@@ -99,25 +99,38 @@ margin: 20px auto 0;
 <%
 // login session
 MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
+if(loginuser == null){
+	%>
+	<script>
+		alert('세션이 만료됨');
+		location.href="${pageContext.request.contextPath}/main/main.jsp";
+	</script>
+	<%
+}
+%>
 
+<%
 //encoding 
 
 request.setCharacterEncoding("UTF-8");
 
 %>
-<form id="frm" method="post" >
+<form id="frm" method="post" enctype="multipart/form-data" >
  
 <div class="cont-top clfix">
 	 <div class="title-img">
 		
 		<div class="imgBox title-btn">
-	        <label for="file">
+	        <label for="titlefile">
 	            	<i class="fas fa-plus-circle">
 	           		</i>
 	        </label>
-	        <input type="file" id="file" name="file" style="display:none;" />
-	         <input type="hidden" id="filename" name="filename" value="<%= fname%>"/> <!-- DB에 저장할 파일이름  -->
-       		 <input type="hidden" id="origin_name" name="origin_name"/>	<!-- 원래 이 -->
+	        <input type="file" id="titlefile" name="titlefile" style="display:none;" />
+	        
+	         <input type="hidden" id="filename" name="filename" value=""/> <!-- DB에 저장할 파일이름  -->
+       		 <input type="hidden" id="origin_name" name="origin_name"/>	<!-- 원래 이름 -->
+       		 <input type="hidden" id="file_seq" name="file_seq" value="1"/><!-- 표지는 모두 1 -->
+     		 	
        
 	         <div class="img_wrap">
 	            <img id="imgpreview" />
@@ -125,19 +138,10 @@ request.setCharacterEncoding("UTF-8");
     	</div>
 		 
 	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	<ul class="info">
 		<li>
 				<span> 제목 </span>
-				<input type="text" id="title" name="title" >
+				<input type="text" id="title" name="title" value="제목은 여기에 ">
 		</li>
 		<li>
 				<span> 시작일 </span>
@@ -193,7 +197,7 @@ request.setCharacterEncoding("UTF-8");
 		</li>
 		<li>
 				<span> 가격 </span>
-				<input type="text" id="price" name="price">
+				<input type="text" id="price" name="price" value="1000">
 		</li>
 		<li>
 				<span> 큐레이터번호 </span>
@@ -206,11 +210,11 @@ request.setCharacterEncoding("UTF-8");
 	</ul>
 </div>
 <div class="cont-mid">
-<textarea rows="10" cols="80" name="content"></textarea>
+<textarea rows="10" cols="80" name="content" id="content">ss</textarea>
 <input type="button" value="이미지 첨부">
 </div>
 <div class="cont-btm">
-	<input type="submit" id="writeBtn"value="작성하기">
+	<input type="button" id="writeBtn"value="작성하기">
 </div>
 </form>
 
@@ -254,7 +258,7 @@ function getToday(){
 
 // 빈칸인지 확인하기
  function checkBlank( tag ){
-	if(tag==""){
+	if(tag.trim()==""){
 		return true;
 	}	
 	return false;
@@ -287,6 +291,10 @@ $("#writeBtn").click(function() {
 	}
 	 if(checkBlank($("#price").val())){
 		alert("빈칸을 모두 채워주세요!");
+		return false;
+	}
+	 if(checkBlank($("#content").val())){
+		alert("전시 내용을 입력하세요! ");
 		return false;
 	}
 	// 날짜 확인 
@@ -329,7 +337,7 @@ $("#writeBtn").click(function() {
 var sel_file;
 
 $(document).ready(function() {
-    $("#file").on("change", handleImgFileSelect);
+    $("#titlefile").on("change", handleImgFileSelect);
 }); 
 
 function handleImgFileSelect(e) {
@@ -348,20 +356,21 @@ function handleImgFileSelect(e) {
         reader.onload = function(e) {
             $("#imgpreview").attr("src", e.target.result);
             
-            var lastIndex = $("#file").val().lastIndexOf("//");
+            var lastIndex = $("#titlefile").val().lastIndexOf("//");
 			if(lastIndex == -1){
-				lastIndex = $("#file").val().lastIndexOf("\\");
+				lastIndex = $("#titlefile").val().lastIndexOf("\\");
 			}  
-		 	alert($("#file").val());
-           var originname = $("#file").val().substring(lastIndex+1);
+		 	alert($("#titlefile").val());
+           var originname = $("#titlefile").val().substring(lastIndex+1);
 			
-           var lastIndex2 = $("#file").val().lastIndexOf(".");
-           var fileextension = $("#file").val().substring(lastIndex2+1);
+           var lastIndex2 = $("#titlefile").val().lastIndexOf(".");
+           var fileextension = $("#titlefile").val().substring(lastIndex2+1);
+           
            $("#origin_name").val(originname);
            $("#filename").val("<%=fname%>"+originname);
            
            alert($("#origin_name").val());
-           alert("filename:"+$("#filename").val()); 
+           alert($("#filename").val()); 
            
         }
         reader.readAsDataURL(f);

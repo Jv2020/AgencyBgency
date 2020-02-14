@@ -30,9 +30,9 @@ public class ExhibitDao {
 	public List<ExhibitDto> getExhibitList(String choice, int numOfContents) {
 		
 		// 현재전시 
-		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
 					+" FROM ( SELECT ROW_NUMBER()OVER( ORDER BY BEGINDATE DESC ) AS RNUM, "
-						 + " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+						 + " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE , FILENAME "
 						 + "  FROM EXHIBIT ";
 		String str="";
 		if(choice.equals("now")) {	// 현재 전시
@@ -78,7 +78,8 @@ public class ExhibitDao {
 												rs.getInt(i++), 
 												rs.getString(i++), 
 												rs.getString(i++),
-												rs.getInt(i++));
+												rs.getInt(i++),
+												rs.getString(i++));
 				list.add(dto);
 				
 			}
@@ -96,9 +97,9 @@ public class ExhibitDao {
 	}
 	// 더보기로 끌어오는 경우 작업
 	public List<ExhibitDto> getMoreExhibit(String choice, int count) {
-		String sql =  " SELECT  SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+		String sql =  " SELECT  SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 					+ " FROM ( SELECT ROW_NUMBER()OVER( ORDER BY BEGINDATE DESC ) AS RNUM,"
-							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 							+ " FROM EXHIBIT ";
 		
 		String str = "";
@@ -153,7 +154,8 @@ public class ExhibitDao {
 												rs.getInt(i++), 
 												rs.getString(i++), 
 												rs.getString(i++),
-												rs.getInt(i++));
+												rs.getInt(i++),
+												rs.getString(i++));
 				list.add(dto);
 				
 			}
@@ -249,7 +251,8 @@ public class ExhibitDao {
 									rs.getInt(i++), 
 									rs.getString(i++), 
 									rs.getString(i++),
-									rs.getInt(i++));
+									rs.getInt(i++),
+									rs.getString(i++));
 				
 			}
 			
@@ -298,7 +301,8 @@ public class ExhibitDao {
 												rs.getInt(i++), 
 												rs.getString(i++), 
 												rs.getString(i++),
-												rs.getInt(i++));
+												rs.getInt(i++),
+												rs.getString(i++));
 				list.add(dto);
 				
 			}
@@ -347,7 +351,8 @@ public class ExhibitDao {
 						rs.getInt(i++), 
 						rs.getString(i++), 
 						rs.getString(i++),
-						rs.getInt(i++));
+						rs.getInt(i++),
+						rs.getString(i++));
 				list.add(dto);
 				
 			}
@@ -368,9 +373,9 @@ public class ExhibitDao {
 	// 이달의 추천전시 불러오기 ( 일단은 가격순  / 나중에 
 	public ExhibitDto getRecommandExhibit() {
 		
-		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 					+ " FROM ( SELECT ROW_NUMBER()OVER( ORDER BY PRICE DESC ) AS RNUM,  "
-					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "
+					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 					+ " FROM EXHIBIT "
 					+ " WHERE  TO_CHAR(ENDDATE,'YYMM') > TO_CHAR(SYSDATE,'YYMM') AND "
 					+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')) "
@@ -398,7 +403,8 @@ public class ExhibitDao {
 									rs.getInt(i++), 
 									rs.getString(i++), 
 									rs.getString(i++),
-									rs.getInt(i++));
+									rs.getInt(i++),
+									rs.getString(i++));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -417,7 +423,7 @@ public class ExhibitDao {
 		
 		if( year.equals("") ||  month.equals("") ) {
 			sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
-					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "	// CERTI_NUM : 바꾸기
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "	// CERTI_NUM : 바꾸기
 				+ " FROM EXHIBIT "
 				+ "  WHERE BEGINDATE <= LAST_DAY(SYSDATE) "
 						+ " AND ENDDATE >= TO_CHAR(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1),'YYYYMMDD') "
@@ -427,7 +433,7 @@ public class ExhibitDao {
 		
 		else {
 			sql2 = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
-					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE "	// CERTI_NUM : 바꾸기
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "	// CERTI_NUM : 바꾸기
 				+ " FROM EXHIBIT "
 				+ " WHERE BEGINDATE <= LAST_DAY( TO_DATE ( ? , 'YYYYMM') ) "
 						+ " AND ENDDATE >= TO_DATE( ?, 'YYYYMMDD' ) "
@@ -472,7 +478,8 @@ public class ExhibitDao {
 						rs.getInt(i++), 
 						rs.getString(i++), 
 						rs.getString(i++),
-						rs.getInt(i++));
+						rs.getInt(i++),
+						rs.getString(i++));
 				list.add(dto);
 				
 			}
@@ -493,9 +500,9 @@ public class ExhibitDao {
 	// TODO: insert Exhibit
 	public boolean insertExhibit(ExhibitDto dto) {
 		
-		String sql=   " INSERT INTO EXHIBIT ( SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE ) "
+		String sql=   " INSERT INTO EXHIBIT ( SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME ) "
 					+ " VALUES ( SEQ_EXHIBIT.NEXTVAL, TO_DATE( ?, 'YYYYMMDD' ), TO_DATE( ?, 'YYYYMMDD' ) , "
-								+ " ?, ?, ? , ?, ?, 0 , ?, ?, ? ) ";
+								+ " ?, ?, ? , ?, ?, 0 , ?, ?, ? , ?) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -519,6 +526,7 @@ public class ExhibitDao {
 			psmt.setString(8, dto.getContact());	// CONTACT
 			psmt.setString(9, dto.getCerti_num());	// CERTI_NUM
 			psmt.setInt(10, dto.getPrice());	// PRICE - int
+			psmt.setString(11, dto.getFilename());	// FILENAME
 			
 			count = psmt.executeUpdate();
 			

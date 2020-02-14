@@ -35,15 +35,21 @@ public class ExhibitDto implements Serializable {
 		private String contact;
 		private String certi_num;
 		private int price;
+		private String filename;
 		
 		
 		public ExhibitDto() {
 
 		}
 
-		// constructor using field
+		
+		
+		
+		// TODO:getter + setter
+		
 		public ExhibitDto(int seq, String begindate, String enddate, String title, String place, String content,
-				String ex_time, String loc_info, int del, String contact, String certi_num, int price) {
+				String ex_time, String loc_info, int del, String contact, String certi_num, int price,
+				String filename) {
 			super();
 			this.seq = seq;
 			this.begindate = begindate;
@@ -57,13 +63,12 @@ public class ExhibitDto implements Serializable {
 			this.contact = contact;
 			this.certi_num = certi_num;
 			this.price = price;
+			this.filename = filename;
 		}
 
-		
-		
-		
-		// TODO:getter + setter
-		
+
+
+
 		public int getSeq() {
 			return seq;
 		}
@@ -185,16 +190,33 @@ public class ExhibitDto implements Serializable {
 
 		
 		
+		
+		public String getFilename() {
+			return filename;
+		}
+
+
+
+
+		public void setFilename(String filename) {
+			this.filename = filename;
+		}
+
+		
+		
+
+
 		// toString 
 		
 		@Override
 		public String toString() {
 			return "ExhibitDto [seq=" + seq + ", begindate=" + begindate + ", enddate=" + enddate + ", title=" + title
 					+ ", place=" + place + ", content=" + content + ", ex_time=" + ex_time + ", loc_info=" + loc_info
-					+ ", del=" + del + ", contact=" + contact + ", certi_num=" + certi_num + ", price=" + price + "]";
+					+ ", del=" + del + ", contact=" + contact + ", certi_num=" + certi_num + ", price=" + price
+					+ ", filename=" + filename + "]";
 		}
 
-		
-	
+
+
 	
 }

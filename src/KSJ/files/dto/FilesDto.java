@@ -21,13 +21,16 @@ public class FilesDto implements Serializable {
 	private String bbsName;
 	private int bbsSeq;
 	private int del;
+	private int file_seq;
+	
 	
 	public FilesDto() {
 
 	
 	}
 	
-	public FilesDto(int seq, String filename, String originName, String filepath, String bbsName, int bbsSeq, int del) {
+	public FilesDto(int seq, String filename, String originName, String filepath, String bbsName, int bbsSeq, int del,
+			int file_seq) {
 		super();
 		this.seq = seq;
 		this.filename = filename;
@@ -36,9 +39,9 @@ public class FilesDto implements Serializable {
 		this.bbsName = bbsName;
 		this.bbsSeq = bbsSeq;
 		this.del = del;
+		this.file_seq = file_seq;
 	}
 
-	
 	public int getSeq() {
 		return seq;
 	}
@@ -95,12 +98,22 @@ public class FilesDto implements Serializable {
 		this.del = del;
 	}
 
+	public int getFile_seq() {
+		return file_seq;
+	}
+
+	public void setFile_seq(int file_seq) {
+		this.file_seq = file_seq;
+	}
+
+	
+	
 	@Override
 	public String toString() {
 		return "FilesDto [seq=" + seq + ", filename=" + filename + ", originName=" + originName + ", filepath="
-				+ filepath + ", bbsName=" + bbsName + ", bbsSeq=" + bbsSeq + ", del=" + del + "]";
+				+ filepath + ", bbsName=" + bbsName + ", bbsSeq=" + bbsSeq + ", del=" + del + ", file_seq=" + file_seq
+				+ "]";
 	}
-	
 	
 	
 	
