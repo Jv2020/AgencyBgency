@@ -25,6 +25,7 @@ request.setCharacterEncoding("UTF-8");
 .frm_cont .frm_line .cont input.byear{width:90px;}
 .frm_cont .frm_line .cont input.bday{width:90px;}
 span.alert-red {color:red; font-size:13px;}
+span.alert-orange {color:orange; font-size:13px;}
 span.alert-green {color:#3ec629; font-size:13px;}
 .frm_cont .frm_line .cont span.frm-mg {display:inline-block; font-size:20px; margin:0 10px; vertical-align:-7px;}
 .frm_cont .frm_line .cont select {
@@ -48,6 +49,8 @@ span.alert-green {color:#3ec629; font-size:13px;}
 
 .frm_cont .frm_line .cont input.frm-address{width:400px;}
 .frm_cont .frm_line .cont span.frm_adr_btn {display:inline-block; width:80px; height:30px; line-height:30px;
+text-align:center; background:#5f0080; color:#fff; cursor:pointer;}
+.frm_cont .frm_line .cont button.frm_adr_btn {display:inline-block; width:80px; height:30px; line-height:30px;
 text-align:center; background:#5f0080; color:#fff; cursor:pointer;}
 
 
@@ -98,7 +101,8 @@ button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease
          <div class="frm_line clfix">
             <div class="tit">아이디</div>
             <div class="cont idComentColor">
-               <input class="ttext memberId" type="text" maxlength="20" name="memberId" value="" placeholder="아이디">
+               <input class="ttext memberId" type="text" maxlength="20" name="memberId" id="id" value="" placeholder="아이디">
+               <button type="button" onclick="idCheck()" class="frm_adr_btn">중복체크</button>
                <span class="idCheck"></span>
             </div>            
          </div>
