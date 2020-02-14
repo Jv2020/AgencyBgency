@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 <%
 //멤버세션
-MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+MemberDto mem = (MemberDto)request.getAttribute("loginuser");
 
 //address - split
 String address = mem.getAddress();
@@ -81,7 +81,7 @@ font-size:18px; color:#5f0080;}
 button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
 .reserv_btnWrap {width:100%; text-align:center; margin:0px 0 0; overflow:hidden;}
-.reserv_btnWrap button:first-child {margin-left:298px;}
+.reserv_btnWrap button:first-child {margin-left:318px;}
 .reserv_btnWrap a.reserv_btn02 {float:right; width:200px; background:#5f0080; color:#fff;}
 button.reserv_btn02, a.reserv_btn02 {display:block; float:left; width:160px; height:60px; line-height:58px;
 border:1px solid #5f0080; outline:none; margin-left:59px;
@@ -99,37 +99,45 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 }
 .frm_cont .frm_line .cont .hint-answer{width:300px; margin-top:8px;}
 
+
+
 </style>
 
 <div class="ConfirmFrm">
 	<p style="text-align:right; margin-bottom:20px;"><b>*</b> 표시가 있는 부분은 수정 가능합니다</p>
-	<form method="post" action="">
+	<form method="post" action="<%=request.getContextPath() %>/memberupdate">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
+				<!-- 아이디 -->
 				<div class="tit">아이디</div>
 				<div class="cont">
+					<input type="hidden" id="id" name="memberId" value="<%=mem.getId() %>">
 					<%=mem.getId() %>
 				</div>
 			</div>
 			<div class="frm_line clfix">
+				<!-- 이름 -->
 				<div class="tit">이름</div>
 				<div class="cont">
 					<%=mem.getName() %>
 				</div>
 			</div>
 			<div class="frm_line clfix">
+				<!-- 연락처 -->
 				<div class="tit">연락처 <b>*</b></div>
 				<div class="cont">
-					<input type="text" value="<%=mem.getPhone() %>" class="input-modify" placeholder="">
+					<input type="text" id="phone" name="memberPhone" value="<%=mem.getPhone() %>" class="input-modify" placeholder="">
 				</div>
 			</div>
 			<div class="frm_line clfix">
+				<!-- 이메일 -->
 				<div class="tit">이메일</div>
 				<div class="cont">
 					<%=mem.getEmail() %>
 				</div>
 			</div>
 			<div class="frm_line reser-birth clfix">
+				<!-- 생년월일 -->
 				<div class="tit">생년월일</div>
 				<div class="cont">
 					<%=mem.getBirthday().substring(0, 4) %> 년 &nbsp;
@@ -138,6 +146,7 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 				</div>									
 			</div>
 			<div class="frm_line clfix">
+				<!-- 성별 -->
 				<div class="tit">성별</div>
 				<div class="cont">
 					<%
@@ -154,13 +163,14 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 				</div>
 			</div>
 			<div class="frm_line clfix">
+				<!-- 주소 -->
 				<div class="tit">주소 <b>*</b></div>
 				<div class="cont">
 					<!-- <input type="text" class="frm-address" value="서울특별시 서초구 서초4동 강남대로 459" readonly="readonly"><span class="frm_adr_btn">주소검색</span><br>
                <input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
                <input type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호" value="<%=radr[0]%>"> 
                 <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소" value="<%=radr[1]%>">
+                <input type="text" class="mt08" id="sample4_roadAddress" readonly="readonly" name="memberStreetName" placeholder="도로명주소" value="<%=radr[1]%>">
                 <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
                 <span id="guide" style="color:#999;display:none"></span>
                 <input type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소" value="<%=radr[2]%>">
@@ -168,47 +178,72 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 				</div>				
 			</div>
 			<div class="frm_line clfix">
-				<div class="tit">비밀번호 힌트 질문</div>
+				<!-- 비밀번호 힌트 질문 -->
+				<div class="tit">비밀번호 힌트 질문 <b>*</b></div>
 				<div class="cont">
-	               	<select class="select-hint" name="memberQuestion">
-		                <option value="1" selected>기억에 남는 추억의 장소는?</option>
-		                <option value="2">나의 보물 1호는?</option>
-		                <option value="3">나의 출신 초등학교는?</option>
-		                <option value="4">가장 좋아하는 색깔은?</option>
-		                <option value="5">아버지 성함은?</option>
+	               	<select class="select-hint" id="memberQuestion" name="memberQuestion">
+	               		<%
+	               		if(mem.getQuestion().equals("1")){
+			            %>
+			                <option value="1" selected>기억에 남는 추억의 장소는?</option>
+			                <option value="2" >나의 보물 1호는?</option>
+			                <option value="3" >나의 출신 초등학교는?</option>
+			                <option value="4" >가장 좋아하는 색깔은?</option>
+			                <option value="5" >아버지 성함은?</option>
+			            <%
+	               		} else if(mem.getQuestion().equals("2")){
+			            %>
+			                <option value="1" >기억에 남는 추억의 장소는?</option>
+			                <option value="2" selected>나의 보물 1호는?</option>
+			                <option value="3" >나의 출신 초등학교는?</option>
+			                <option value="4" >가장 좋아하는 색깔은?</option>
+			                <option value="5" >아버지 성함은?</option>
+			            <%
+	               		} else if(mem.getQuestion().equals("3")){
+			            %>
+			                <option value="1" >기억에 남는 추억의 장소는?</option>
+			                <option value="2" >나의 보물 1호는?</option>
+			                <option value="3" selected>나의 출신 초등학교는?</option>
+			                <option value="4" >가장 좋아하는 색깔은?</option>
+			                <option value="5" >아버지 성함은?</option>
+			            <%
+	               		} else if(mem.getQuestion().equals("4")){
+			            %>
+			                <option value="1" >기억에 남는 추억의 장소는?</option>
+			                <option value="2" >나의 보물 1호는?</option>
+			                <option value="3" >나의 출신 초등학교는?</option>
+			                <option value="4" selected>가장 좋아하는 색깔은?</option>
+			                <option value="5" >아버지 성함은?</option>
+			            <%
+	               		} else if(mem.getQuestion().equals("5")){
+			            %>
+			                <option value="1" >기억에 남는 추억의 장소는?</option>
+			                <option value="2" >나의 보물 1호는?</option>
+			                <option value="3" >나의 출신 초등학교는?</option>
+			                <option value="4" >가장 좋아하는 색깔은?</option>
+			                <option value="5" selected>아버지 성함은?</option>
+			            <%
+	               		}
+	               		%>
 	                </select><br>
-               		<input class="hint-answer" type="text" name="memberAnswer" placeholder="답을 입력해주세요">
+	                <!-- 비밀번호 힌트 답 -->
+               		<input class="hint-answer" type="text" id="memberAnswer" name="memberAnswer" placeholder="답을 입력해주세요" value="<%=mem.getHint()%>">
             	</div>            
 			</div>
-			<div class="frm_line clfix"></div>
+			<div class="frm_line clfix" style="padding-bottom: 1px"></div>
+			<div style="text-align: right;margin-bottom: 20px;">
+			<!-- 비밀번호 변경 링크 -->
+			<a href="#" style="color:#5f0080">비밀번호 변경</a>
+			</div>
 		</div>
 		
+		<div class="reserv_btnWrap">
+			<!-- 수정완료 버튼 -->
+			<button type="submit" id="update" class="reserv_btn02">수정완료</button>
+		</div>
 		
 	</form><!-- ConfirmFrm -->
 </div><!-- formWrap -->
-
-<div class="reserv_btnWrap">
-	<button type="submit" class="reserv_btn02">회원정보 수정</button>
-	<button class="reserv_btn02" id="dell" value="<%=mem.getId() %>">회원탈퇴</button>
-</div>
-
-<script>
-function getContextPath() {
-	   var hostIndex = location.href.indexOf( location.host ) + location.host.length;
-	   return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) );
-	};
-
-$("#dell").click(function(){
-	var deleteId = $("#dell").val();
-	var userInput = prompt("삭제를 하시려면 아이디를 다시 입력하세요");
-	if(userInput == deleteId){
-		location.href=getContextPath()+"/memberdeleteid?deleteId="+deleteId;		
-	} else {
-		alert("잘못된 아이디를 입력하셨습니다.");
-	}
-});
-
-</script>
 
 <!-- 카카오 주소 검색 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -269,6 +304,8 @@ $("#dell").click(function(){
         }).open();
     }
 </script>
+
+
 
 
 <%@include file ="../include/footer.jsp" %>

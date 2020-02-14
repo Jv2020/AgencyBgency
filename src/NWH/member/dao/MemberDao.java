@@ -346,6 +346,42 @@ public class MemberDao {
 		return count>0?true:false;
 	}
 	
+	public boolean updateMemberByDTO(MemberDto dto) {
+		String sql = " UPDATE MEMBER "
+				+    " SET PHONE = ?, ADDRESS = ?, QUESTION = ?, HINT = ?   "
+				+    " WHERE ID = ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 updateMemberByDTO success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, dto.getPhone());
+			psmt.setString(2, dto.getAddress());
+			psmt.setString(3, dto.getQuestion());
+			psmt.setString(4, dto.getHint());
+			psmt.setString(5, dto.getId());
+			
+			System.out.println("2/6 updateMemberByDTO success");
+			
+			count = psmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("updateMemberByDTO fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+		}
+		System.out.println("3/6 updateMemberByDTO success");
+		return count>0?true:false;
+	}
+	
+	
 	//ADMIN MEMBER DELETE
 	public boolean member_delete(String[] deleteList) {
 		

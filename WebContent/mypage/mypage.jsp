@@ -3,6 +3,7 @@
 <%
 //멤버세션
 MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+System.out.println("마지막 jsp 업데이트 dto: " + mem.toString());
 
 //address - split
 String address = mem.getAddress();

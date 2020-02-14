@@ -28,6 +28,7 @@ public class MemberDto implements Serializable{
 		this.password = password;
 	}
 	
+	
 	// 아이디 찾기용 
 	public MemberDto(String name, String email, String phone) {
 		super();
@@ -36,6 +37,17 @@ public class MemberDto implements Serializable{
 		this.phone = phone;
 	}
 	
+	// 업데이트용
+	public MemberDto(String id, String address, String phone, String question, String hint) {
+		super();
+		this.id = id;
+		this.address = address;
+		this.phone = phone;
+		this.question = question;
+		this.hint = hint;
+	}
+	
+	// 비밀번호 찾기용
 	public MemberDto(String id, String name, String question, String hint) {
 		super();
 		this.id = id;
