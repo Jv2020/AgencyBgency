@@ -19,7 +19,8 @@ public class LIKEaddController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String title = req.getParameter("title");
-		String loginUser = req.getParameter("id");
+		String loginUser = req.getParameter("sessionid");
+		String writerid = req.getParameter("writerid");
 		System.out.println("TITLE:" + title);
 		
 		ReviewDao dao = ReviewDao.getInstance();
@@ -57,7 +58,7 @@ public class LIKEaddController extends HttpServlet {
 				 * dispatcher.forward(req, resp);
 				 */
 			}else {
-				dao.likeCount(loginUser, title);
+				dao.likeCount(writerid, title);
 				dao.setLIKE_Decision(loginUser, title);
 			//	resp.sendRedirect("/AgencyBgencyy/community/reviewDetail.jsp");
 			}

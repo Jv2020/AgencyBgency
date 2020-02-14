@@ -373,8 +373,8 @@ public class ReviewDao {
 		return count > 0 ? true : false;
 	}
 	
-	// 어떤 아이디가 어떤 전회명에 대해 '좋아요'를 눌렀는지 안눌렀는지 판정할꺼야
-	public int getLIKE_Decision(String id, String title) {
+	// 어떤 아이디가 어떤 전시회명에 대해 '좋아요'를 눌렀는지 안눌렀는지 판정할꺼야
+	public int getLIKE_Decision(String sessionid, String title) {
 		String sql = " SELECT LIKE_DECISION "
 					+ " FROM LI_DI_DECISION "
 					+ " WHERE ID=? AND TITLE=? ";
@@ -392,7 +392,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getLIKE_Decision Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, sessionid);
 			psmt.setString(2, title);
 			System.out.println("3/6 getLIKE_Decision Success");
 			
@@ -414,9 +414,9 @@ public class ReviewDao {
 		return count;
 	}
 	
-	public void setLIKE_Decision(String id, String title) {
-		String sql = " UPDATE LI_DI_DECISION "
-					+ " SET LIKE_DECISION=1, ID=?, TITLE=? ";
+	public void setLIKE_Decision(String sessionid, String title) {
+		String sql = " INSERT INTO LI_DI_DECISION "
+					+ " VALUES(?, ?, 1, 0) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -428,7 +428,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 setLIKE_Decision Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, sessionid);
 			psmt.setString(2, title);
 			System.out.println("3/6 setLIKE_Decision Success");
 			
@@ -443,7 +443,7 @@ public class ReviewDao {
 		}
 	}
 	
-	public void likeCount(String id, String title) {		// '좋아요'수를 올려줘
+	public void likeCount(String writerid, String title) {		// '좋아요'수를 올려줘
 		String sql = " UPDATE EXHIBIT_REVIEW "
 					+ " SET LIKE_NUMBER=LIKE_NUMBER+1 "
 					+ " WHERE ID=? AND TITLE=? ";
@@ -458,7 +458,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 likeCount Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, writerid);
 			psmt.setString(2, title);
 			System.out.println("3/6 likeCount Success");
 			
@@ -473,7 +473,7 @@ public class ReviewDao {
 		}
 	}
 	
-	public int getDISLIKE_Decision(String id, String title) {
+	public int getDISLIKE_Decision(String sessionid, String title) {
 		String sql = " SELECT DISLIKE_DECISION "
 					+ " FROM LI_DI_DECISION "
 					+ " WHERE ID=? AND TITLE=? ";
@@ -491,7 +491,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getDISLIKE_Decision Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, sessionid);
 			psmt.setString(2, title);
 			System.out.println("3/6 getDISLIKE_Decision Success");
 			
@@ -513,9 +513,9 @@ public class ReviewDao {
 		return count;
 	}
 	
-	public void setDISLIKE_Decision(String id, String title) {
-		String sql = " UPDATE LI_DI_DECISION "
-					+ " SET LIKE_DECISION=1, ID=?, TITLE=? ";
+	public void setDISLIKE_Decision(String sessionid, String title) {
+		String sql = " INSERT INTO LI_DI_DECISION "
+					+ " VALUES(?, ?, 0, 1) ";
 	
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -527,7 +527,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 DISLIKE_Decision Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, sessionid);
 			psmt.setString(2, title);
 			System.out.println("3/6 DISLIKE_Decision Success");
 			
@@ -542,7 +542,7 @@ public class ReviewDao {
 		}
 	}
 	
-	public void dislikeCount(String id, String title) {	// '싫어요'수를 올려줘
+	public void dislikeCount(String writerid, String title) {	// '싫어요'수를 올려줘
 		String sql = " UPDATE EXHIBIT_REVIEW "
 				+ " SET DISLIKE=DISLIKE+1 "
 				+ " WHERE ID=? AND TITLE=? ";
@@ -557,7 +557,7 @@ public class ReviewDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 dislikeCount Success");
 			
-			psmt.setString(1, id);
+			psmt.setString(1, writerid);
 			psmt.setString(2, title);
 			System.out.println("3/6 dislikeCount Success");
 			

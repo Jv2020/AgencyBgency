@@ -14,9 +14,9 @@
 
 <%
 // 로그인 세션
-MemberDto mdto = (MemberDto)session.getAttribute("loginuser");
+MemberDto sdto = (MemberDto)session.getAttribute("loginuser");
 boolean logincheck= true;
-if(mdto == null ){
+if(sdto == null ){
 	logincheck = false;
 }
 ///String loginuser = mdto.getId();
@@ -79,8 +79,8 @@ for(int i = 0; i < list.size(); i++) {
 			</li>
 			<li>
 			<% if(logincheck){ %>
-				<a href="/AgencyBgencyy/likeadd?title=<%=title %>&id=<%=mdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
-				<a href="/AgencyBgencyy/dislikeadd?title=<%=title %>&id=<%=mdto.getId() %>&re_pageNum=<%=i %>"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
+				<a href="/AgencyBgencyy/likeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
+				<a href="/AgencyBgencyy/dislikeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
 				<%
 			} else{
 				%>
@@ -120,9 +120,8 @@ for(int i = 0; i < pages; i++) {
 
 <script>
 function reload() {
-	href.reload();
+	location.reload();
 }
-
 </script>
 
 
