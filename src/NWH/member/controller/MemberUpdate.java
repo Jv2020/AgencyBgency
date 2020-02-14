@@ -42,16 +42,18 @@ public class MemberUpdate extends HttpServlet{
 		String address = memberPostCode +"/"+ memberStreetName +"/"+ memberDetailStreetName;
 		String question = req.getParameter("memberQuestion");
 		String hint = req.getParameter("memberAnswer");
+		String exhibit_name = req.getParameter("exhibit_name");
 		
 		System.out.println("memberId: " + id);
 		System.out.println("memberPhone: " + phone);
 		System.out.println("memberAddress: " + address);
 		System.out.println("memberQuestion: " + question);
 		System.out.println("memberAnswer: " + hint);
+		System.out.println("exhibit_name: " + exhibit_name);
 		
 		MemberDao dao = MemberDao.getInstance();
 		
-		dao.updateMemberByDTO(new MemberDto(id, address, phone, question, hint));
+		dao.updateMemberByDTO(new MemberDto(id, address, phone, question, hint, exhibit_name));
 		MemberDto mem = dao.getMemberById(id);
 		System.out.println("마지막서블릿dto: " + mem.toString());
 		

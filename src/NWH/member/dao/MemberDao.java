@@ -348,7 +348,7 @@ public class MemberDao {
 	
 	public boolean updateMemberByDTO(MemberDto dto) {
 		String sql = " UPDATE MEMBER "
-				+    " SET PHONE = ?, ADDRESS = ?, QUESTION = ?, HINT = ?   "
+				+    " SET PHONE = ?, ADDRESS = ?, QUESTION = ?, HINT = ?, EXHIBIT_NAME = ?  "
 				+    " WHERE ID = ? ";
 		
 		Connection conn = null;
@@ -364,7 +364,8 @@ public class MemberDao {
 			psmt.setString(2, dto.getAddress());
 			psmt.setString(3, dto.getQuestion());
 			psmt.setString(4, dto.getHint());
-			psmt.setString(5, dto.getId());
+			psmt.setString(5, dto.getExhibit_name());
+			psmt.setString(6, dto.getId());
 			
 			System.out.println("2/6 updateMemberByDTO success");
 			

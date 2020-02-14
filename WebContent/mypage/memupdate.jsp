@@ -226,10 +226,28 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 	               		}
 	               		%>
 	                </select><br>
-	                <!-- 비밀번호 힌트 답 -->
+	                
                		<input class="hint-answer" type="text" id="memberAnswer" name="memberAnswer" placeholder="답을 입력해주세요" value="<%=mem.getHint()%>">
             	</div>            
 			</div>
+			<%
+			if(mem.getAuth() != 0){
+			%>
+				<div class="frm_line clfix">
+					<div class="tit">전시관명 <b>*</b></div>
+					<div class="cont">
+						<input type="text" id="phone" name="exhibit_name" value="<%=mem.getExhibit_name() %>" class="input-modify" placeholder="">
+					</div>
+				</div>
+				<div class="frm_line clfix">
+					<div class="tit">자격증번호</div>
+					<div class="cont">
+						<%=mem.getCerti_num() %>
+					</div>
+				</div>
+			<%				
+			}
+			%>
 			<div class="frm_line clfix" style="padding-bottom: 1px"></div>
 			<div style="text-align: right;margin-bottom: 20px;">
 			<!-- 비밀번호 변경 링크 -->

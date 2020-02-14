@@ -180,7 +180,6 @@ $('button.sBtn').click(function(){
 		$('input[name=memberAnswer]').focus();
 		return false;
 	} else {
-		alert("서브밋")
 		$("form").attr("action", "../memberinsert").submit();
 	}
 	

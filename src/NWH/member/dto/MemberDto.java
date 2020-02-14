@@ -37,15 +37,8 @@ public class MemberDto implements Serializable{
 		this.phone = phone;
 	}
 	
-	// 업데이트용
-	public MemberDto(String id, String address, String phone, String question, String hint) {
-		super();
-		this.id = id;
-		this.address = address;
-		this.phone = phone;
-		this.question = question;
-		this.hint = hint;
-	}
+	 
+	
 	
 	// 비밀번호 찾기용
 	public MemberDto(String id, String name, String question, String hint) {
@@ -54,6 +47,17 @@ public class MemberDto implements Serializable{
 		this.name = name;
 		this.question = question;
 		this.hint = hint;
+	}
+
+	//업데이트용
+	public MemberDto(String id, String address, String phone, String question, String hint, String exhibit_name) {
+		super();
+		this.id = id;
+		this.address = address;
+		this.phone = phone;
+		this.question = question;
+		this.hint = hint;
+		this.exhibit_name = exhibit_name;
 	}
 
 	public MemberDto(String id, String password, String name, String email, String address, String birthday,

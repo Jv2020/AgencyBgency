@@ -182,6 +182,24 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 					<%=mem.getHint() %>
 				</div>
 			</div>
+			<%
+			if(mem.getAuth() != 0){
+			%>
+				<div class="frm_line clfix">
+					<div class="tit">전시관명</div>
+					<div class="cont">
+						<%=mem.getExhibit_name() %>
+					</div>
+				</div>
+				<div class="frm_line clfix">
+					<div class="tit">자격증번호</div>
+					<div class="cont">
+						<%=mem.getCerti_num() %>
+					</div>
+				</div>
+			<%				
+			}
+			%>
 			<div class="frm_line clfix"></div>
 		</div>
 		
@@ -210,6 +228,7 @@ $("#dell").click(function(){
 		alert("잘못된 아이디를 입력하셨습니다.");
 	}
 });
+
 
 </script>
 
