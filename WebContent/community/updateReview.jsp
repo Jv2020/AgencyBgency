@@ -1,4 +1,4 @@
-
+<%@page import="CYH.ReviewDto"%>
 <%@page import="NWH.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -30,10 +30,10 @@ input {
     margin: 10px 0;
 }
 </style>
-<title>리뷰쓰기</title>
-
+<title>수정하기</title>
 </head>
 <body>
+
 <%
 // 로그인 세션
 MemberDto sdto = (MemberDto)session.getAttribute("loginuser");
@@ -41,15 +41,17 @@ String id = sdto.getId();
 %>
 
 <%
-String title = request.getParameter("title");
+ReviewDto dto = (ReviewDto)request.getAttribute("dto");
+
+System.out.println(dto.getId() + dto.getTitle());
 %>
 
 
-<form action="/AgencyBgencyy/writereviewAf">
+<form action="/AgencyBgencyy/updatereviewAf">
 <div class="1">
 	<div class="2-1">
 		<div class="3-1">
-			전시명 : <input type="text" name="title" value="<%=title %>" readonly="readonly">
+			전시명 : <%=dto.getTitle() %>
 		</div>
 		<div class="3-2">
 			<div class='starrr' id='star2'></div>
@@ -57,7 +59,7 @@ String title = request.getParameter("title");
 		</div>
 	</div>
 	<div class="2-2">
-		<textarea rows="20" cols="60" name="review"></textarea>
+		<textarea rows="20" cols="60" name="review"><%=dto.getTitle() %></textarea>
 	</div>
 	<div class="2-3">
 		<div class="3-3">
@@ -75,6 +77,7 @@ String title = request.getParameter("title");
 function confirm() {
 	history.back();
 }
+
 </script>
 
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
@@ -100,27 +103,6 @@ function confirm() {
             }
         });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

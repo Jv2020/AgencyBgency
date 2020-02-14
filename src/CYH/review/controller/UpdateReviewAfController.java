@@ -10,23 +10,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import CYH.ReviewDao;
 
-@WebServlet("/deletereview")
-public class DeleteReviewController extends HttpServlet {
+@WebServlet("/updatereviewAf")
+public class UpdateReviewAfController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	//	String sseq = req.getParameter("seq");
-	//	int seq = Integer.parseInt(sseq);
-		int seq = Integer.parseInt(req.getParameter("seq"));
+		int id = Integer.parseInt(req.getParameter("id"));
+		String review = req.getParameter("review");
+		int star = Integer.parseInt(req.getParameter("star"));
 		
 		ReviewDao dao = ReviewDao.getInstance();
-		boolean isS = dao.deleteReview(seq);
+		Boolean isS = dao.updateReview(id, review, star);
 		
 		if(isS) {
-			resp.sendRedirect("/mypage/mypage.jsp");
+			resp.sendRedirect("/mypage/myexhibit.jsp");
 		}else {
-			resp.sendRedirect("/mypage/mypage.jsp");
+			resp.sendRedirect("/mypage/myexhibit.jsp");
 		}
+		
+		
 	}
-	
+
 }

@@ -18,7 +18,7 @@ public class DISLIKEaddController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String loginUser = req.getParameter("id");
+		String loginUser = req.getParameter("sessionid");
 		String title = req.getParameter("title");
 		String writerid = req.getParameter("writerid");
 		

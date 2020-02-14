@@ -234,6 +234,54 @@ public class ReviewDao {
 		return reviewList;
 	}
 	
+	public ReviewDto getOneReview(int seq) {
+		String sql = " SELECT * "
+					+ " FROM EXHIBIT_REVIEW "
+					+ " WHERE SEQ=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		ReviewDto dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/5 getOneReview 성공");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/5 getOneReview 성공");
+			
+			psmt.setInt(1, seq);
+			System.out.println("3/5 getOneReview 성공");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/5 getOneReview 성공");
+			
+			if(rs.next()) {
+				int i = 1;
+				dto = new ReviewDto(rs.getInt(i++),				//seq,
+									rs.getString(i++),			//id,
+									rs.getString(i++),			//title,
+									rs.getString(i++),			//regdate,
+									rs.getInt(i++),				//star,
+									rs.getString(i++),			//review,
+									rs.getInt(i++),				//like_number,
+									rs.getInt(i++),				//dislike_number,
+									rs.getInt(i++));			//del
+			}
+			System.out.println("5/5 getOneReview 성공");
+			
+		} catch (SQLException e) {
+			System.out.println("getOneReview 실패");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return dto;
+	}
+	
 	// 요청받은 전시회에 따른, 전체 리뷰갯수
 	public int getAllCount(String title) {
 		String sql = " SELECT COUNT(*) FROM EXHIBIT_REVIEW "
