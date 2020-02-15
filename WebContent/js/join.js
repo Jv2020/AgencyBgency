@@ -27,30 +27,25 @@ $('.categoryBox span').click(function(){
 var memId = document.querySelector(".memberId");
 memId.addEventListener("blur", function(e){
 	var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
-	if($(".memberId").val() == ""){
-		if($('span.idCheck').hasClass('alert-green')) {
+	if($(".memberId").val() == ""){ // 빈칸일 때
+		if($('span.idCheck').hasClass('alert-green')) { 
     		$('.idComentColor span').removeClass('alert-red');
-    		$('.idComentColor span').removeClass('alert-orange');
+    		$('.idComentColor span').removeClass('alert-green');
+    	} else if($('span.idCheck').hasClass('alert-red')) {
+    		$('.idComentColor span').removeClass('alert-red');
     		$('.idComentColor span').removeClass('alert-green');
     	}
 		document.querySelector(".idCheck").innerHTML = "";
-	} else {
-	    if( !idReg.test( $(".memberId").val() )) {
-	    	if($('span.idCheck').hasClass('alert-green')) {
+	} else { // 빈칸이 아닐때
+	    if( !idReg.test( $(".memberId").val() )) { // 정규식 조건에 맞지 않을때
+	    	if($('span.idCheck').hasClass('alert-green')) { // alert-green이 있으면
 	    		$('.idComentColor span').removeClass('alert-green');
 	    	}
 	    	$('.idComentColor span').addClass('alert-red');
-	    
-	    	document.querySelector(".idCheck").innerHTML = "아이디는 영문자로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
+	    	document.querySelector(".idCheck").innerHTML = "아이디는 영문자(소문자)로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
 	        return;
 	    }  else {
-	    	if($('span.idCheck').hasClass('alert-red')) {
-	    		$('.idComentColor span').removeClass('alert-red');
-	    		$('.idComentColor span').removeClass('alert-green');
-	    	}
-	    	$('.idComentColor span').removeClass('alert-red');
-	    	$('.idComentColor span').removeClass('alert-green');
-	    	$('.idComentColor span').addClass('alert-orange');
+	    	$('.idComentColor span').addClass('alert-red');
 	    	document.querySelector(".idCheck").innerHTML = "중복체크 전입니다.";
 	    }
 	}
@@ -65,16 +60,19 @@ function idCheck(){
 		dataType:"text",
 		data : "idcheck="+$("#id").val(),
 		success:function(data){
-			if(data === "true"){
-				$('.idComentColor span').removeClass('alert-orange');
-				$('.idComentColor span').removeClass('alert-green');
-				$('.idComentColor span').addClass('alert-red');
-				document.querySelector(".idCheck").innerHTML = "이미 등록된 아이디입니다.";
+			if(!idReg.test( $(".memberId").val() )){
+				document.querySelector(".idCheck").innerHTML = "아이디는 영문자(소문자)로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
 			} else {
-				$('.idComentColor span').removeClass('alert-red');
-				$('.idComentColor span').removeClass('alert-orange');
-				$('.idComentColor span').addClass('alert-green');
-				document.querySelector(".idCheck").innerHTML = "사용가능한 아이디입니다.";
+				if(data === "true"){
+					$('.idComentColor span').removeClass('alert-green');
+					$('.idComentColor span').addClass('alert-red');
+					document.querySelector(".idCheck").innerHTML = "이미 등록된 아이디입니다.";
+
+				} else {
+					$('.idComentColor span').removeClass('alert-red');
+					$('.idComentColor span').addClass('alert-green');
+					document.querySelector(".idCheck").innerHTML = "사용가능한 아이디입니다.";
+				}
 			}
 		},
 		error:function(request,status,error){
@@ -83,15 +81,6 @@ function idCheck(){
 		
 	});
 };
-	
-	
-	
-//	if( !idReg.test( $(".memberId").val() )) {
-//		return false;
-//	} else {
-//		location.href = getContextPath()+"/idCheck?idcheck="+idcheck;
-//	}
-
 
 
  // 패스워드 체크(정규식 + 멘트)

@@ -11,7 +11,7 @@ session.invalidate();
 
 <script>
 	alert("그동안 이용해 주셔서 감사합니다.");
-	location.href="<%=request.getContextPath()%>/main/main.jsp"
+	location.href="<%=request.getContextPath()%>/mainEntrance";
 </script>
 
 

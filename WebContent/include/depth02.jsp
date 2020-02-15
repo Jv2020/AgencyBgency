@@ -39,7 +39,7 @@ if (durl.contains("/mypage")){
 %>
 <div class="depth02 mypageDepth">
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/mypage.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/mypage.jsp">회원정보
+	href="/AgencyBgencyy/MyPageEntrance">회원정보
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myexhibit.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myexhibit.jsp">관람한 전시

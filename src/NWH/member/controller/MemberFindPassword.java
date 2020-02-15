@@ -33,10 +33,15 @@ public class MemberFindPassword extends HttpServlet{
 		String findPassword = dao.memberFindPassword(new MemberDto(id, name, question, answer));
 		System.out.println("파인드패스워드서블릿: "+ findPassword);
 		
-
+		if(findPassword != null) {
+			request.setAttribute("findPassword", findPassword);
+			request.getRequestDispatcher("/member/findpasswordAf.jsp").forward(request, resp);
+		} else {
+			findPassword = "1";
+			request.setAttribute("findPassword", findPassword);
+			request.getRequestDispatcher("/member/findpasswordAf.jsp").forward(request, resp);
+		}
 		
-		request.setAttribute("findPassword", findPassword);
-		request.getRequestDispatcher("/member/findpasswordAf.jsp").forward(request, resp);
 		
 	}
 }

@@ -23,6 +23,13 @@ MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 			location.href=history.back();
 		</script>
 	<%
+	} else if(mem.getAuth() == 3){
+	%>
+		<script>
+			alert("관리자");
+			location.href = "<%=request.getContextPath()%>/Admin_List";
+		</script>
+	<%		
 	} else {
 	%>
 		<script>

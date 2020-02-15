@@ -33,10 +33,15 @@ public class MemberFindId extends HttpServlet {
 		String findId = dao.memberFindId(new MemberDto(name, email, phone));
 		System.out.println("파인드아이디서블릿: "+ findId);
 		
-
+		if(findId != null) {
+			request.setAttribute("findid", findId);
+			request.getRequestDispatcher("/member/findidAf.jsp").forward(request, resp);
+		} else {
+			findId = "1";
+			request.setAttribute("findid", findId);
+			request.getRequestDispatcher("/member/findidAf.jsp").forward(request, resp);
+		}
 		
-		request.setAttribute("findid", findId);
-		request.getRequestDispatcher("/member/findidAf.jsp").forward(request, resp);
 		
 	}
 }	

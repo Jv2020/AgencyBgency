@@ -251,7 +251,7 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 			<div class="frm_line clfix" style="padding-bottom: 1px"></div>
 			<div style="text-align: right;margin-bottom: 20px;">
 			<!-- 비밀번호 변경 링크 -->
-			<a href="#" style="color:#5f0080">비밀번호 변경</a>
+			<!-- <a href="#" style="color:#5f0080">비밀번호 변경</a> -->
 			</div>
 		</div>
 		

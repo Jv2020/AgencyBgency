@@ -10,7 +10,7 @@ session.invalidate();
 %>
 <script>
 	alert("정상적으로 로그아웃되었습니다.");
-	location.href="<%=request.getContextPath()%>/main/main.jsp"
+	location.href="<%=request.getContextPath()%>/mainEntrance";
 </script>
 	
 

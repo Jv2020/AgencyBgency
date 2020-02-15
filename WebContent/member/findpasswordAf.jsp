@@ -17,18 +17,18 @@ System.out.println("파인드패스워드에프터:"+findPassword);
 </head>
 <body>
 <%
-if(!findPassword.equals("")){
+if(!findPassword.equals("1")){
 %>
 	<script type="text/javascript">
 		alert("<%=findPassword%>");
-		location.href="<%=request.getContextPath()%>/member/login.jsp";
+		location.href="<%=request.getContextPath()%>/LoginEntrance";
 	</script>
 <%
 } else {
 %>
 	<script type="text/javascript">
-		alert("찾지 못함");
-		location.href="login.jsp";
+		alert("잘못된 정보를 입력하셨습니다. 다시 확인해 주세요");
+		location.href="<%=request.getContextPath()%>/FindPasswordEntrance";
 	</script>
 <%	
 }

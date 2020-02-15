@@ -17,14 +17,14 @@ if(!mem.getId().equals("")){
 %>
 	<script>
 	alert("수정완료");
-	location.href = "<%=request.getContextPath()%>/mypage/mypage.jsp"
+	location.href="<%=request.getContextPath()%>/MyPageEntrance";
 	</script>
 <%	
 } else {
 %>
 	<script>
 	alert("수정실패");
-	location.href = "<%=request.getContextPath()%>/mypage/mypage.jsp"
+	location.href="<%=request.getContextPath()%>/MyPageEntrance";
 	</script>
 <%	
 }
