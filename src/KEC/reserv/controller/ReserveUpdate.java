@@ -51,7 +51,7 @@ public class ReserveUpdate extends HttpServlet {
 		
 		
 		if(isS) {
-			 resp.sendRedirect("/AgencyBgencyy/mypage/myreserv.jsp");
+			 resp.sendRedirect("/AgencyBgencyy/reservelist");
 		}else {
 			
 		}
