@@ -26,12 +26,13 @@ public class FileDownload extends HttpServlet{
       System.out.println("file download connected");
       String filename = request.getParameter("filename");
       String filepath = request.getParameter("filepath");
-      System.out.println(filename);
-      System.out.println(filepath);
+      System.out.println("download serv filepath :"+filepath);
+      System.out.println("download serv filename :"+filename);
 //      String uploadRoot = "/Users/sunjukim/Desktop/tmp_pic/";
       
       String uploadRoot = request.getSession().getServletContext().getRealPath(filepath);
-      System.out.println(uploadRoot);
+//      String uploadRoot = request.getContextPath()+filepath;
+      System.out.println("uploadRoot:"+uploadRoot);
 
       File f = new File(uploadRoot + filename);
 

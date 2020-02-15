@@ -518,7 +518,7 @@ public class ExhibitDao {
 			// TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, 0, CONTACT, CERTI_NUM, PRICE
 			psmt.setString(1, dto.getBegindate());	// BEGINDATE
 			psmt.setString(2, dto.getEnddate());	// ENDDATE
-			psmt.setString(3, dto.getTitle() + "이거는 돼야");	// TITLE
+			psmt.setString(3, dto.getTitle());	// TITLE
 			psmt.setString(4, dto.getPlace());	// PLACE
 			psmt.setString(5, dto.getContent());	// CONTENT
 			psmt.setString(6, dto.getEx_time());	// EX_TIME
@@ -527,6 +527,7 @@ public class ExhibitDao {
 			psmt.setString(9, dto.getCerti_num());	// CERTI_NUM
 			psmt.setInt(10, dto.getPrice());	// PRICE - int
 			psmt.setString(11, dto.getFilename());	// FILENAME
+			
 			
 			count = psmt.executeUpdate();
 			

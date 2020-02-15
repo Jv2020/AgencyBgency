@@ -21,9 +21,7 @@ upload complete<br>
 <p>이미지가 보여?
 
 </p>
-<%-- <img alt="<%=filename %>" src="${pageContext.request.contextPath}/filedownload?filename=<%=filename%>&filepath=<%=filepath%>"/>
- --%>
- <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filename=<%=filename%>&filepath=/upload/title/"/>
+ <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=<%=filepath%>&filename=<%=filename%>"/>
 
 
 </body>
