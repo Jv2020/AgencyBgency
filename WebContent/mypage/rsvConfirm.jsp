@@ -217,11 +217,6 @@ if(confirm("예매 취소하시겠습니까?")) {
 	}
 }
 
-// 정보수정
-$('.reserv_btn02.submit').click(function(){
-	// $("form").attr({"action":""}).submit();
-});
-
 
 </script>
 

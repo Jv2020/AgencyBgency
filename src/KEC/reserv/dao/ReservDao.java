@@ -10,7 +10,6 @@ import java.util.List;
 import DB.DBClose;
 import DB.DBConnection;
 import KEC.reserv.dto.ReservDto;
-import NWH.member.dto.MemberDto;
 
 public class ReservDao {
 	
@@ -147,6 +146,9 @@ public class ReservDao {
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getAllreserve success");
 			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getAllreserve success");
+			
 			if(rs.next()) {
 				len = rs.getInt(1);
 			}
@@ -161,19 +163,84 @@ public class ReservDao {
 		return len;		
 	}
 	
-	// paging 처리 
-	/*
-	public List<ReservDto> getPaging() {
+	// paging 처리 	
+	public List<ReservDto> getPagingList(int pageNumber) {
 		/*
 			1. row 번호
 			2. 검색
 			3. 정렬
 			4. 범위 1 ~ 10
+		*/
 		
+		String sql = " SELECT SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
+				   + " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
+				   + " FROM ";
 		
+			   sql += " (SELECT ROWNUM AS RNUM, "
+			   		+ "	SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
+			   		+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
+			   		+ " FROM RESERVATION "
+					+ " ORDER BY SEQ DESC) ";
+		 
+		sql += " WHERE RNUM >= ? AND RNUM <= ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReservDto> list = new ArrayList<ReservDto>();
+		
+		int start, end;
+		start = 1 + 10 * pageNumber; // 0 -> 1	1 -> 11
+		end = 10 + 10 * pageNumber;  // 0 -> 10	1 -> 20
+				
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getPaging success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, start);
+			psmt.setInt(2, end);
+			System.out.println("2/6 getPaging success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getPaging success");
+			
+			while(rs.next()) {
+				int i = 1;
+				ReservDto dto = new ReservDto(rs.getInt(i++), //seq
+						  rs.getString(i++), //id
+						  rs.getString(i++), //name
+						  rs.getString(i++), //birthdate
+						  rs.getString(i++), //phone
+						  rs.getString(i++), //email
+						  rs.getString(i++), //address
+						  rs.getString(i++), //receive
+						  rs.getInt(i++), //qty
+						  rs.getInt(i++), //totalPrice
+						  rs.getString(i++), //payMethod
+						  rs.getInt(i++), //del
+						  rs.getString(i++), //title
+						  rs.getString(i++), //rdate
+						  rs.getString(i++) ); //during
+				
+				list.add(dto);
+				System.out.println("4/6 getPaging success");
+
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("getPaging fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;	
 		
 	}
-	*/
+	
 	
 	// mypage - 예매내역 (정보 뿌리기 - 1개 )** 
 	public ReservDto getReserve(int seq){

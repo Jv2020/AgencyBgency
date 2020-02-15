@@ -1,4 +1,3 @@
-<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@page import="KEC.reserv.dto.ReservDto"%>
 <%@page import="java.util.List"%>
 <%@page import="KEC.reserv.dao.ReservDao"%>
@@ -6,16 +5,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 <%
 
-// list 
-ReservDao dao = ReservDao.getInstance();
-List<ReservDto> list = dao.ReserveList();
+List<ReservDto>list = (List<ReservDto>)request.getAttribute("list");
+int listPage = (int)request.getAttribute("listPage");
+int pageNumber = (int)request.getAttribute("pageNumber");
 
-for(ReservDto i : list){
-    System.out.println(i);
-}
-
+System.out.println(pageNumber);
+System.out.println(listPage); 
 
 %>
+
 <style>
 /* mypage - 나의 예매내역 */
 #myReserve {width:100%;}
@@ -38,6 +36,12 @@ table.reservetbl td a, table.reservetbl td button {position:relative; z-index:1;
 table.reservetbl td a:before, table.reservetbl td button:before {position:absolute; top:0; left:0; transform: translate(-100%, 0); display:inline-block; transition:all 0.3s ease-in-out; width:100%; height:100%; content:''; background:#5f0080; z-index:-1;}
 table.reservetbl td a:hover, table.reservetbl td button:hover {color:#fff;}
 table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {transform: translate(0);}
+
+.pagingWrap {width:100%; text-align:center; font-size:0;}
+.pagingWrap span {position:relative; display:inline-block; width:35px; height:35px; line-height:35px; color:#333; font-size:18px; margin:50px 10px 0; cursor:pointer;}
+.pagingWrap span.on {color:#5f0080;}
+.pagingWrap span.on:before {position:absolute; bottom:0; left:50%; margin-left:-10px; content:''; width:20px; height:2px; background:#5f0080;}
+.pagingWrap span:hover {color:#5f0080;}
 </style>
 <div id="myReserve">	
 	<table class="reservetbl">
@@ -79,8 +83,35 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 			%>					
 		</tbody>		
 	</table>	
-
+	
+	<div class="pagingWrap">
+	<%
+	for(int i = 0;i < listPage; i++){		// [1] 2 [3]
+		if(pageNumber == i){	// 현재 페이지
+			%>
+			<span class="on"><%=i + 1 %></span>
+			<%
+		}else{	// 그 외의 페이지
+			%>
+			<span onclick="goPage(<%=i %>)"><%=i + 1 %></span>
+			<%		
+		}
+	}
+	%>
+	</div>
 </div><!-- //myReserve -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+function goPage(pageNumber) {
+	// alert("pageNumber:" + pageNumber);
+	location.href = "/AgencyBgencyy/reservelist?pageNumber=" + pageNumber;
+}
+
+</script>
+
 
 
 

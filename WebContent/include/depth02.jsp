@@ -49,7 +49,7 @@ if (durl.contains("/mypage")){
 	</a>
 	
 	<a class="<% if (durl.contains("reserv")){ %> active <% } %> reservedepth"	
-	href="/AgencyBgencyy/mypage/myreserv.jsp">나의 예매내역
+	href="/AgencyBgencyy/reservelist">나의 예매내역
 	</a>
 	
 	<%

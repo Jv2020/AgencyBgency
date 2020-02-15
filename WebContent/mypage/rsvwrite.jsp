@@ -186,7 +186,7 @@ button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff;
 						
 		</div><!-- frm_cont -->		
 					
-		<input class="reserv_btn" type="submit" >수정완료</input>		
+		<button class="reserv_btn" type="submit" >수정완료</button>		
 		
 		
 	</form><!-- ConfirmFrm -->

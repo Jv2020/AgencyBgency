@@ -92,6 +92,7 @@ font-size:18px; color:#5f0080;}
 button.reserv_btn:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
 
 .reserv_btnWrap {width:100%; text-align:center; font-size:0; margin:70px 0 0; overflow:hidden;}
+.reserv_btnWrap a, .reserv_btnWrap button {vertical-align:top !important;}
 button.reserv_btn02, a.reserv_btn02 {display:inline-block; width:160px; height:60px; line-height:58px;
 border:1px solid #5f0080; outline:none; margin-left:20px; font-size:18px; color:#5f0080;}
 button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ease-in-out;}
@@ -169,13 +170,12 @@ button.reserv_btn02:hover, a.reserv_btn02:hover {background:#5f0080; color:#fff;
 			
 			<div class="frm_line totalPrice clfix">
 				결제금액<strong><%=dto.getTotalPrice() %></strong>원						
-			</div>		
-						
+			</div>								
 		</div><!-- frm_cont -->
 		
 		<div class="reserv_btnWrap">
-			<a class="reserv_btn02" href="/AgencyBgencyy/exhibitlist">전시보기</a>
-			<a class="reserv_btn02" href="/AgencyBgencyy/mypage/myreserv.jsp">예매내역확인</a>
+			<a class="reserv_btn02" href='/AgencyBgencyy/exhibitlist'>전시보기</a>
+			<button class="reserv_btn02" onclick="myreserve()">예매내역확인</button>
 		</div>
 		
 	</form><!-- ConfirmFrm -->
@@ -201,6 +201,9 @@ while (point < len) {
 
 $(".totalPrice strong").text(totalPrice);
 
+function myreserve() {
+	$("form").attr({"action":"/AgencyBgencyy/reservelist"}).submit();
+}
 
 </script>
 
