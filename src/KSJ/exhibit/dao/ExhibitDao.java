@@ -513,12 +513,12 @@ public class ExhibitDao {
 			
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			
+			System.out.println("ExhibitDao :" + dto.getTitle());
 			// 0 , BEGINDATE, ENDDATE,
 			// TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, 0, CONTACT, CERTI_NUM, PRICE
 			psmt.setString(1, dto.getBegindate());	// BEGINDATE
 			psmt.setString(2, dto.getEnddate());	// ENDDATE
-			psmt.setString(3, dto.getTitle());	// TITLE
+			psmt.setString(3, dto.getTitle() + "이거는 돼야");	// TITLE
 			psmt.setString(4, dto.getPlace());	// PLACE
 			psmt.setString(5, dto.getContent());	// CONTENT
 			psmt.setString(6, dto.getEx_time());	// EX_TIME

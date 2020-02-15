@@ -9,10 +9,10 @@
 <body>
 <%
 request.setCharacterEncoding("utf-8");
-/* String filepath = (String)request.getAttribute("filepath");
+String filepath = (String)request.getAttribute("filepath");
 String filename = (String)request.getAttribute("filename");
 System.out.println(filename);
-System.out.println(filepath); */
+System.out.println(filepath); 
 
 %>
 
@@ -23,7 +23,7 @@ upload complete<br>
 </p>
 <%-- <img alt="<%=filename %>" src="${pageContext.request.contextPath}/filedownload?filename=<%=filename%>&filepath=<%=filepath%>"/>
  --%>
- <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filename=1581673930741슬로우서울.jpg&filepath=/upload/title/"/>
+ <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filename=<%=filename%>&filepath=/upload/title/"/>
 
 
 </body>

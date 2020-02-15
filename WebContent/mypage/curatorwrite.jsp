@@ -13,7 +13,7 @@
 
 <%
 //시간을 취득해서 파일이름으로 넣기 
-String fname = (new Date().getTime()) + "";
+String fname = (new Date().getTime()) + "__";
 System.out.println("fname:" + fname);
 %>
 

@@ -202,18 +202,15 @@ public class ExhibitInsert extends HttpServlet {
 		System.out.println("orgin_name: "+ origin_name);
 
 		
-		
-		// DB에 집어넣는 부분 
-		ExhibitDao dao = ExhibitDao.getInstance();
+		ExhibitDao dao = ExhibitDao.getInstance();;
 		FilesDao fdao = FilesDao.getInstance();
-		
 		// dto로 정보 담기 
 		ExhibitDto dto = new ExhibitDto(-1, begindate, enddate, title, place, content, ex_time, 
 				loc_info, 0, contact, certi_num, price, filename);
 		
 		
 		 
-		  boolean b = dao.insertExhibit(dto);
+		boolean b = dao.insertExhibit(dto);
 		 
 		if(b) {
 			System.out.println("전시 디비입력 성공 ");
@@ -228,6 +225,8 @@ public class ExhibitInsert extends HttpServlet {
 			if(fileSuccess) {
 				req.setAttribute("filename", filename);
 				req.setAttribute("filepath", filepath);
+				System.out.println(filepath);
+				System.out.println(filename);
 				RequestDispatcher dis = req.getRequestDispatcher("./exhibit/uploadAf.jsp");
 				dis.forward(req, resp);
 				//resp.sendRedirect("filepath="+filepath+"&filename="+filename);
