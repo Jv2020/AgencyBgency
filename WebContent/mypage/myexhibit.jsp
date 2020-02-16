@@ -54,11 +54,11 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 		</colgroup>
 		<thead>
 			<tr>
-				<th>예매일</th>
 				<th>전시명</th>
-				<th>이용기간</th>
-				<th>매수</th>
-				<th>상세보기</th>
+				<th>장소</th>
+				<th>기간</th>
+				<th>시간</th>
+				<th>리뷰작성</th>
 			<tr>
 		</thead>
 		<tbody>

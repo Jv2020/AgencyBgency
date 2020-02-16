@@ -53,6 +53,7 @@ WebContent/* Common ************************************************************
 /* reset **********************************************************************/ 
 html,body {width:100%;}
 html {overflow-y:scroll; box-sizing:border-box;}
+html.active, body.active {overflow-y:hidden;}
 *, *:before, *:after{box-sizing:inherit;}
 *{
 -webkit-text-size-adjust:none;
