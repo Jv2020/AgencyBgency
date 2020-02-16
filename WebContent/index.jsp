@@ -7,7 +7,7 @@
 </head>
 <body>
 <script>           
-	location.href="./main/main.jsp";
+	location.href="<%=request.getContextPath()%>/mainEntrance";
 </script>
 
 </body>
