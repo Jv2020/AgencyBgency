@@ -2,6 +2,9 @@ package KSJ.exhibit.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,36 +27,36 @@ import KSJ.files.dto.FilesDto;
 
 @WebServlet("/exhibitinsert")
 public class ExhibitInsert extends HttpServlet {
-
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 
-		 System.out.println("file download connected");
+		 System.out.println("file upload connected");
 		 req.setCharacterEncoding("utf-8");
 		 resp.setCharacterEncoding("utf-8");
-	//			System.out.println("here in servlet");
-			
 		
 			
-		// 파일 업로딩 	
+		 List<FilesDto> flist = new ArrayList<>();
+ 		// 파일 업로딩 	
 		// FileDto - 표지 이미지만 우선 저장하기 
 
 		//2가지 방법이 있음
 		//1. tomcat에 배포(Server)	-> 자료가 사라질 가능성 있음()
 		//임시 서버 경로로 나온다
 		
-//		String fupload = "/Users/sunjukim/Bitcamp_web/web4_jsp/ImageUpload/WebContent/upload/";		// 하드의 특정 공간에 저장
-//		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		// 하드의 특정 공간에 저장
-//		String fupload = application.getRealPath("/upload");	// project->webcontent 안에 해당 폴더가 있어야함
-		 
-		
+		 // 2. 하드의 특정 공간에 저장
+//		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		
 
+		 
+
+		 // 서버 내 저장
+//		String fupload ="/Users/sunjukim/Desktop/semi/AgencyBgency/WebContent/upload/";
+		String fupload = req.getSession().getServletContext().getRealPath("/upload/");
+		System.out.println("fupload:"+fupload);
 		
-		String filepath = "/upload/title/" ;
-		String fupload = req.getSession().getServletContext().getRealPath(filepath);
+		String filepath = "/upload/";
 		
-//		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";
 		//지정폴더 (Client)
 		System.out.println("업로드 폴더: " + fupload);
 
@@ -213,43 +216,35 @@ public class ExhibitInsert extends HttpServlet {
 		boolean b = dao.insertExhibit(dto);
 		 
 		if(b) {
-			System.out.println("전시 디비입력 성공 ");
+			System.out.println("전시 디비 입력 성공 ");
 			bbs_seq = fdao.getExhibitSeq(filename);	// 파일에 저장하기 위해 시퀀스 불러오기 
 			System.out.println("bbs_seq : " + bbs_seq);
-			FilesDto newFile = new FilesDto(-1, filename, origin_name, filepath, bbs_name, bbs_seq, 0, file_seq);
-			System.out.println(newFile.toString());
+			FilesDto fdto = new FilesDto(-1, filename, origin_name, filepath, bbs_name, bbs_seq, 0, file_seq);
+			flist.add(fdto);
+			
+			System.out.println(fdto.toString());
 			//req.setAttribute("newFiles", newFile);
 			
-			boolean fileSuccess = fdao.insertFile(newFile);
+			boolean fileSuccess = fdao.insertFile(fdto);
 			
 			if(fileSuccess) {
+				
+				req.setAttribute("edto", dto);
+				req.setAttribute("flist", flist);
 				req.setAttribute("filename", filename);
 				req.setAttribute("filepath", filepath);
-				System.out.println(filepath);
-				System.out.println(filename);
-				RequestDispatcher dis = req.getRequestDispatcher("./exhibit/uploadAf.jsp");
+				
+				System.out.println("send filepath :"+filepath);
+				System.out.println("send filepath :"+filename);
+			
+				
+				RequestDispatcher dis = req.getRequestDispatcher("./mypage/curatorwriteDetail.jsp");
 				dis.forward(req, resp);
-				//resp.sendRedirect("filepath="+filepath+"&filename="+filename);
+
 			}
 		}
 
 		
-		/*
-//		// FileDto - 표지 이미지만 우선 저장하기 
-//		System.out.println(b);
-		
-//		if(true) {
-//			resp.sendRedirect("./exhibit/insertCheck.jsp?b=true");
-//		}
-		
- */
-			// DB에 집어넣기 
-		// // Dao
-		 //ExhibitDao dao = ExhibitDao.getInstance();
-		 //FilesDao fdao = FilesDao.getInstance();
-			
-			//boolean b = dao.insertExhibit(dto);
-		//resp.sendRedirect("./exhibit/uploadAf.jsp");
 	}
 	
 

@@ -1,16 +1,24 @@
+<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
 <%@page import="KEC.reserv.dto.ReservDto"%>
 <%@page import="java.util.List"%>
 <%@page import="KEC.reserv.dao.ReservDao"%>
 <%@include file ="../include/header.jsp" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>    
 <%
 
-List<ReservDto>list = (List<ReservDto>)request.getAttribute("list");
-int listPage = (int)request.getAttribute("listPage");
-int pageNumber = (int)request.getAttribute("pageNumber");
+List<ExhibitDto>list = (List<ExhibitDto>)request.getAttribute("list");
+int numOfContents = list.size();
+int pageNumber = (int)request.getAttribute("page");
+
+// 총 리스트 개수 / 10 (페이징)
+
+int allPageNum = (int)Math.ceil(numOfContents/10.0);
+
 
 System.out.println(pageNumber);
-System.out.println(listPage); 
+System.out.println("allPageNum:"+allPageNum);
 
 %>
 
@@ -55,29 +63,29 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 		<thead>
 			<tr>
 				<th>전시명</th>
-				<th>장소</th>
 				<th>기간</th>
 				<th>시간</th>
-				<th>리뷰작성</th>
+				<th>위치</th>
+				<th>상세보기</th>
 			<tr>
 		</thead>
 		<tbody>
 			<%				
 				for (int i = 0; i < list.size(); i++) {
 			%>
-			<tr>
-				<td><%=list.get(i).getRdate().substring(0, 11) %></td>
-				<td><span><%=list.get(i).getTitle() %></span></td>
-				<td><%=list.get(i).getDuring() %></td>
-				<td><%=list.get(i).getQty() %>매</td>
-				<td>
-					<%if (list.get(i).getDel() == 1)  { %>
-					<span style="color:red;">예매취소</span>
-					<% } else { %>
-					<a href="/AgencyBgencyy/reservget?seq=<%=list.get(i).getSeq() %>&page=detail">더보기 +</a>
-					<% } %>
-				</td>
-			</tr>
+				<tr>
+					<td><%=list.get(i).getTitle() %></td>
+					<td><span><%=list.get(i).getBegindate()+"~"+list.get(i).getEnddate()%></span></td>
+					<td><%=list.get(i).getEx_time().substring(0,4)+"~"+list.get(i).getEx_time().substring(4)%></td>
+					<td><%=list.get(i).getLoc_info() %></td>
+					<td>
+						<% if (list.get(i).getDel() == 1)  { %>
+						<span style="color:red;">등록취소</span>
+						<% } else { %>
+						<a href="#">더보기 +</a>
+						<% } %>
+					</td>
+				</tr>
 			<%
 				}				
 			%>					
@@ -86,7 +94,7 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 	
 	<div class="pagingWrap">
 	<%
-	for(int i = 0;i < listPage; i++){		// [1] 2 [3]
+	for(int i = 0;i < allPageNum; i++){		// [1] 2 [3]
 		if(pageNumber == i){	// 현재 페이지
 			%>
 			<span class="on"><%=i + 1 %></span>
@@ -101,7 +109,6 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 	</div>
 </div><!-- //myReserve -->
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 <script type="text/javascript">
 

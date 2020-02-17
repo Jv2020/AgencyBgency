@@ -93,17 +93,7 @@
 				  header.removeClass("fixed");
 				}
 			});
-		});
-		
-		$('.navi_btn').click(function(e){
-			if($(this).hasClass('on')){	
-				$(this).removeClass('on')		
-				$('.navi_btn img').attr("src","../images/main/navi_btn.jpg");
-			}else{	
-				$(this).addClass('on')		
-				$('.navi_btn img').attr("src","../images/main/navi_btn_close.jpg");
-			}
-		});				
+		});	
 	});
 	</script>	
 	

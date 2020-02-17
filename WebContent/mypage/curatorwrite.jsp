@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.Date"%>
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
@@ -15,6 +16,10 @@
 //시간을 취득해서 파일이름으로 넣기 
 String fname = (new Date().getTime()) + "__";
 System.out.println("fname:" + fname);
+
+
+
+System.out.println(request.getContextPath());
 %>
 
 <style>

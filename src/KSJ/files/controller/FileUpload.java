@@ -35,6 +35,10 @@ public class FileUpload extends HttpServlet {
 //		String fupload = application.getRealPath("/upload");	// project->webcontent 안에 해당 폴더가 있어야함
 //		Fil foldername = req.getAttribute("newFiles");
 		String fupload = req.getSession().getServletContext().getRealPath("/upload/");
+//		String fupload = req.getSession().getServletContext().getRealPath("/aaaaaaaa/");
+		if (fupload == null) {
+			System.out.println("null dir");
+		}
 		//지정폴더 (Client)
 		System.out.println("업로드 폴더: " + fupload);
 
