@@ -36,11 +36,11 @@ public class ExhibitDao {
 						 + "  FROM EXHIBIT ";
 		String str="";
 		if(choice.equals("now")) {	// 현재 전시
-			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE  ";
+			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE  AND DEL = 0  ";
 		}else if(choice.equals("past")) {	// 지난 전시 
-			str += " WHERE ENDDATE <= SYSDATE ";
+			str += " WHERE ENDDATE <= SYSDATE AND DEL = 0  ";
 		}else if(choice.equals("future")) {		// 예정 전시 
-			str += " WHERE BEGINDATE >= SYSDATE ";
+			str += " WHERE BEGINDATE >= SYSDATE  AND DEL = 0 ";
 		}
 		
 		sql += str;
@@ -104,14 +104,14 @@ public class ExhibitDao {
 		
 		String str = "";
 		if(choice.equals("now")) { // 현재 전시 
-			str = " WHERE BEGINDATE <= SYSDATE AND SYSDATE <= ENDDATE  ";
+			str = " WHERE BEGINDATE <= SYSDATE AND SYSDATE <= ENDDATE  AND DEL = 0  ";
 		}
 		else if(choice.equals("past")) {	// 지난 전시 
-			str = " WHERE SYSDATE > ENDDATE  ";
+			str = " WHERE SYSDATE > ENDDATE  AND DEL = 0  ";
 			
 		}
 		else if(choice.equals("future")) { // 예정 전시 
-			str = " WHERE BEGINDATE > SYSDATE  ";
+			str = " WHERE BEGINDATE > SYSDATE  AND DEL = 0  ";
 			
 		}
 		sql += str;
@@ -180,11 +180,11 @@ public class ExhibitDao {
 					+ " FROM EXHIBIT ";
 		String str="";
 		if(choice.equals("now")) {	// 현재 전시
-			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE   ";
+			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE  AND DEL = 0   ";
 		}else if(choice.equals("past")) {	// 지난 전시 
-			str += " WHERE ENDDATE < SYSDATE  ";
+			str += " WHERE ENDDATE < SYSDATE  AND DEL = 0  ";
 		}else if(choice.equals("future")) {		// 예정 전시 
-			str += " WHERE BEGINDATE > SYSDATE  ";
+			str += " WHERE BEGINDATE > SYSDATE  AND DEL = 0  ";
 		}
 		
 		sql += str;
@@ -273,7 +273,7 @@ public class ExhibitDao {
 	public List<ExhibitDto> getNewExhibits(){
 		String sql =  " SELECT * "
 					+ " FROM EXHIBIT "
-					+ " WHERE TO_CHAR(BEGINDATE,'MM') = TO_CHAR(SYSDATE,'MM') ";
+					+ " WHERE TO_CHAR(BEGINDATE,'MM') = TO_CHAR(SYSDATE,'MM')  AND DEL = 0  ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -323,7 +323,7 @@ public class ExhibitDao {
 	public List<ExhibitDto> getEndExhibits(){
 		String sql =  " SELECT * "
 				+ " FROM EXHIBIT "
-				+ " WHERE TO_CHAR(ENDDATE,'MM') = TO_CHAR(SYSDATE,'MM') ";
+				+ " WHERE TO_CHAR(ENDDATE,'MM') = TO_CHAR(SYSDATE,'MM')  AND DEL = 0  ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -378,7 +378,7 @@ public class ExhibitDao {
 					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 					+ " FROM EXHIBIT "
 					+ " WHERE  TO_CHAR(ENDDATE,'YYMM') > TO_CHAR(SYSDATE,'YYMM') AND "
-					+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')) "
+					+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')  AND DEL = 0 ) "
 					+ " WHERE RNUM = 1 ";
 
 		Connection conn = null;
@@ -426,7 +426,7 @@ public class ExhibitDao {
 					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "	// CERTI_NUM : 바꾸기
 				+ " FROM EXHIBIT "
 				+ "  WHERE BEGINDATE <= LAST_DAY(SYSDATE) "
-						+ " AND ENDDATE >= TO_CHAR(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1),'YYYYMMDD') "
+						+ " AND ENDDATE >= TO_CHAR(ADD_MONTHS(LAST_DAY(SYSDATE)+1,-1),'YYYYMMDD')  AND DEL = 0 "
 				+ " ORDER BY BEGINDATE ASC ";
 			System.out.println("여기 옴 ");
 		}
@@ -436,7 +436,7 @@ public class ExhibitDao {
 					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "	// CERTI_NUM : 바꾸기
 				+ " FROM EXHIBIT "
 				+ " WHERE BEGINDATE <= LAST_DAY( TO_DATE ( ? , 'YYYYMM') ) "
-						+ " AND ENDDATE >= TO_DATE( ?, 'YYYYMMDD' ) "
+						+ " AND ENDDATE >= TO_DATE( ?, 'YYYYMMDD' )  AND DEL = 0  "
 				+ " ORDER BY BEGINDATE ASC ";
 		}
 		
@@ -538,7 +538,9 @@ public class ExhibitDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		finally {
+			DBClose.close(psmt, conn, null);
+		}
 		return count>0? true:false;
 	}
 	
@@ -613,7 +615,7 @@ public class ExhibitDao {
 		
 		String sql =  " SELECT COUNT(*) "
 					+ " FROM EXHIBIT "
-					+ " WHERE CERTI_NUM = ? ";
+					+ " WHERE CERTI_NUM = ? AND DEL = 0 ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -645,6 +647,39 @@ public class ExhibitDao {
 		
 	}
 
+	// 전시 삭제하기
+	public boolean deleteExhibit(int seq) {
+		String sql=   " UPDATE EXHIBIT "
+					+ " SET DEL = 1 "
+					+ " WHERE SEQ = " + seq;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+
+		int count = 0;
+		System.out.println("1");
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			System.out.println("1");
+			
+			count = psmt.executeUpdate();
+			System.out.println("2");
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			System.out.println("3");
+			DBClose.close(psmt, conn, null);
+		}
+		
+		System.out.println("4");
+		return count>0? true:false;
+		
+		
+	}
 	
 	
 }

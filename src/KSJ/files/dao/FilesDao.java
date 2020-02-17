@@ -93,6 +93,115 @@ public class FilesDao {
 		
 	}
 	
+	// 	타이틀 이미지 Dto 빼기 
+	public FilesDto getTitleImg(int bbs_seq, int file_seq) {
+		String sql =  " SELECT SEQ, FILENAME, ORIGIN_NAME, FILEPATH, BBS_NAME, BBS_SEQ, DEL, FILE_SEQ "
+					+ " FROM FILES "
+					+ " WHERE BBS_NAME = 'exhibit' AND BBS_SEQ = ? AND FILE_SEQ = ? ";
+	
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		FilesDto dto = null;
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, bbs_seq);
+			psmt.setInt(2, file_seq);
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				int i =1;
+				dto = new FilesDto( rs.getInt(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getString(i++), 
+									rs.getInt(i++), 
+									rs.getInt(i++), 
+									rs.getInt(i++));
+				
+				
+			}
+			
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return dto;
+		
+	
+	}
+	
+	// 전시 삭제하기
+		public boolean deleteExhibit(String bbs_name ,int bbs_seq) {
+			String sql=   " UPDATE FILES "
+						+ " SET DEL = 1 "
+						+ " WHERE BBS_NAME = ? AND BBS_SEQ = " + bbs_seq;
+			Connection conn = null;
+			PreparedStatement psmt = null;
+
+			int count[] = null;
+			boolean result =true;
+			
+			try {
+
+				conn = DBConnection.getConnection();
+				
+				//commit 
+				conn.commit();
+				conn.setAutoCommit(false);
+				
+				psmt = conn.prepareStatement(sql);
+				
+				for (int i = 0; i < psmt.getUpdateCount(); i++) {
+					
+					psmt.setString(1, bbs_name);
+					psmt.addBatch();
+				}
+
+				count = psmt.executeBatch();
+				
+				for (int i = 0; i < count.length; i++) {
+					if(count[i]<=0) {
+						result = false;
+					}
+				}
+				
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			finally {
+				DBClose.close(psmt, conn, null);
+				try {
+					conn.setAutoCommit(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+			return result;
+			
+			
+		}
 	
 	
 	

@@ -65,16 +65,16 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 <div id="myReserve">	
 	<table class="reservetbl">
 		<colgroup>
+			<col style="width:20%">
+			<col style="width:35%">
 			<col style="width:15%">
-			<col style="width:30%">
-			<col style="width:23%">
-			<col style="width:12%">
+			<col style="width:10%">
 			<col style="width:20%">
 		</colgroup>
 		<thead>
 			<tr>
-				<th>전시명</th>
 				<th>기간</th>
+				<th>전시명</th>
 				<th>시간</th>
 				<th>위치</th>
 				<th>상세보기</th>
@@ -86,8 +86,8 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 					ExhibitDto edto = list.get(i);
 			%>
 				<tr>
-					<td><%=edto.getTitle() %></td>
 					<td><span><%=makeDate(edto.getBegindate()) +" ~ " + makeDate(edto.getEnddate())%></span></td>
+					<td><%=edto.getTitle() %></td>
 					<td><%=edto.getEx_time().substring(0,2)+":"+edto.getEx_time().substring(2,4)+"~"+edto.getEx_time().substring(4,6)+":"+list.get(i).getEx_time().substring(6)%></td>
 					<td><%=edto.getLoc_info() %></td>
 					<td>
@@ -95,7 +95,7 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 						<span style="color:red;">등록취소</span>
 						<% } else { %>
 						<!-- detailServlet으로 이동하기  -->
-						<a href="#">더보기 +</a>
+						<a href="${pageContext.request.contextPath}/exhibitcuratordetail?seq=<%=edto.getSeq()%>">더보기 +</a>
 						<% } %>
 					</td>
 				</tr>
