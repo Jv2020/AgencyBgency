@@ -77,7 +77,7 @@ public class mainSearchDao {
 	      
 	      String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
 	            + 	   " FROM EXHIBIT"
-	            + 	   " WHERE TITLE LIKE '%" + searchWord.trim() + "%' ";;
+	            + 	   " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";;
 	      
 	      Connection conn = null;
 	      PreparedStatement psmt = null;

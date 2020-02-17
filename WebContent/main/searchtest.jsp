@@ -1,11 +1,16 @@
+<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
 <%
-if(int i = 0 ; i < exhibitDtomap.get("title"))
-Map<String, Object> exhibitDtomap = (Map<String, Object>)request.getAttribute("exhibitDtolist");
-System.out.println(exhibitDtomap.get("title").toString());
+
+Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)request.getAttribute("exhibitDtolist");
+System.out.println("제목"+exhibitDtomap.get("title").get(0).getTitle());
+System.out.println("내용"+exhibitDtomap.get("content").get(0).getTitle());
+
+
 %>
 <!DOCTYPE html>
 <html>

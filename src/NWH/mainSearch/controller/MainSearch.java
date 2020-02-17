@@ -27,19 +27,32 @@ public class MainSearch extends HttpServlet{
 		System.out.println("서치 컨트롤러: "+ searchWord);
 		
 		mainSearchDao dao = mainSearchDao.getInstance();
+		Map<String, List<ExhibitDto>> exhibitDtolist = new HashMap<String, List<ExhibitDto>>();
 		
 		List<ExhibitDto> exhibitByTitleList = dao.getExhibitListAfterSeachTitle(searchWord);
-		System.out.println(exhibitByTitleList.get(0).toString());
-		List<ExhibitDto> exhibitByContentList = dao.getExhibitListAfterSeachContent(searchWord);
-		System.out.println(exhibitByContentList.get(0).toString());
+		System.out.println("size:"+exhibitByTitleList.size());
+		if(exhibitByTitleList.size()>0) {
+			System.out.println("검색음");
+			System.out.println(exhibitByTitleList.get(0).toString());
+			exhibitDtolist.put("title", exhibitByTitleList);
+			
+		} else {
+			System.out.println("검색없음");
+		}
 		
-		Map<String, Object> exhibitDtolist = new HashMap<String, Object>();
-		exhibitDtolist.put("title", exhibitByTitleList);
-		exhibitDtolist.put("content", exhibitByContentList);
+		
+		List<ExhibitDto> exhibitByContentList = dao.getExhibitListAfterSeachContent(searchWord);
+		if(exhibitByContentList.size()>0) {
+			System.out.println(exhibitByContentList.get(0).toString());
+			exhibitDtolist.put("content", exhibitByContentList);
+			
+		} else {
+			System.out.println("컨텐츠 	검색없음");
+		}
 		
 		
 		req.setAttribute("exhibitDtolist", exhibitDtolist);
-		req.getRequestDispatcher("/main/serchtest.jsp").forward(req, resp);
+		req.getRequestDispatcher("/main/mainSearch.jsp").forward(req, resp);
 		
 	}
 	

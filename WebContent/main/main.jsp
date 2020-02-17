@@ -38,24 +38,24 @@
 				if( mem == null){	
 				%>
 					<!--로그인세션이 없을때 -->
-					<span><a href="<%=contextPath %>/LoginEntrance">로그인</a></span>
+					<span><a href="<%=contextPath %>/member/login.jsp">로그인</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
-					<span><a href="<%=contextPath %>/JoinEntrance">회원가입</a></span>
+					<span><a href="<%=contextPath %>/member/join.jsp">회원가입</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
 				<%
 				} else {
 				%>
 				<!--로그인세션이 있을때 -->
-					<span><a href="<%=contextPath %>/LogOutEntrance">로그아웃</a></span>
+					<span><a href="<%=contextPath %>/member/logout.jsp">로그아웃</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
-					<span><a href="<%=contextPath %>/MyPageEntrance">마이페이지</a></span>
+					<span><a href="<%=contextPath %>/mypage/mypage.jsp">마이페이지</a></span>
 					<span><img src="<%=contextPath %>/images/main/header_dot.jpg" alt="·"></span>
 				<%
 				}
 				%>
 				
 				<span><a href="<%=contextPath %>/community/notice.jsp">공지사항</a></span>
-				<h1 class="logo"><a href="<%=contextPath %>/mainEntrance">
+				<h1 class="logo"><a href="<%=contextPath %>/main/main.jsp">
 					<img src="<%=contextPath %>/images/main/logo.png" alt="모두의 전시" />
 				</a></h1>	
 			</div><!-- //inner -->
@@ -93,7 +93,17 @@
 				  header.removeClass("fixed");
 				}
 			});
-		});	
+		});
+		
+		$('.navi_btn').click(function(e){
+			if($(this).hasClass('on')){	
+				$(this).removeClass('on')		
+				$('.navi_btn img').attr("src","../images/main/navi_btn.jpg");
+			}else{	
+				$(this).addClass('on')		
+				$('.navi_btn img').attr("src","../images/main/navi_btn_close.jpg");
+			}
+		});				
 	});
 	</script>	
 	
@@ -168,7 +178,7 @@
 
 	<div id="footer">
 		<div class="inner">
-			<div class="footer_logo"><a href="/AgencyBgencyy/mainEntrance">
+			<div class="footer_logo"><a href="/AgencyBgencyy/main/main.jsp">
 				<img src="../images/main/logo.png" alt="모두의 전시" />
 			</a></div>			
 			<address>

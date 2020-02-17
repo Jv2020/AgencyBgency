@@ -56,18 +56,13 @@ public String getExPeriod(String begindatefull, String enddatefull){
 request.setCharacterEncoding("UTF-8");
 
 %>
-<%
-/* Map<String, Object> exhibitDtolist = (Map<String, Object>)request.getAttribute("exhibitDtolist");
-System.out.println(exhibitDtolist.get("title").getTitle()); */
 
 
-List<ExhibitDto> exhibitByTitleList = (List<ExhibitDto>)request.getAttribute("listExhibitAfterSeachbytitle");
 	
 
-//String
-/* System.out.println("서치 :"+exhibitByTitleList.get(0).toString()); */
 
-%>
+
+
 
 <style>
 /* main - 전체 검색 */
@@ -98,6 +93,17 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 .pagingWrap span.on:before {position:absolute; bottom:0; left:50%; margin-left:-10px; content:''; width:20px; height:2px; background:#5f0080;}
 .pagingWrap span:hover {color:#5f0080;}
 </style>
+<%
+
+Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)request.getAttribute("exhibitDtolist");
+if(exhibitDtomap.size() > 0){
+	System.out.println("제목"+exhibitDtomap.get("title").get(0).getTitle());
+	System.out.println("내용"+exhibitDtomap.get("content").get(0).getTitle());
+	
+} else {
+	
+}
+%>
 
 <!-- 전시제목 -->
 <h1>전시 제목에 대한 결과</h1>
@@ -119,19 +125,32 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 		</thead>
 		<tbody>
 		<%
-			for(int i=0; i< exhibitByTitleList.size(); i++){ 
-			ExhibitDto dto = exhibitByTitleList.get(i);
+		if(exhibitDtomap.size() > 0){
+		%>
+			<%
+			for(int i=0; i< exhibitDtomap.get("title").size(); i++){ 
+			ExhibitDto dto = exhibitDtomap.get("title").get(i);
 			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
 		%>
 			<tr>
-				<td><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=exhibitByTitleList.get(i).getSeq()%>"><%=exhibitByTitleList.get(i).getTitle() %></a></td>
-				<td><%=exhibitByTitleList.get(i).getPlace() %></td>
-				<td><%=exhibitByTitleList.get(i).getPrice() %>원</td>
-				<td><%=exhibitByTitleList.get(i).getBegindate().substring(0,11) %> ~ <%=exhibitByTitleList.get(i).getEnddate().substring(0,11)%></td>
+				<td><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=exhibitDtomap.get("title").get(i).getSeq()%>"><%=exhibitDtomap.get("title").get(i).getTitle() %></a></td>
+				<td><%=exhibitDtomap.get("title").get(i).getPlace() %></td>
+				<td><%=exhibitDtomap.get("title").get(i).getPrice() %>원</td>
+				<td><%=exhibitDtomap.get("title").get(i).getBegindate().substring(0,11) %> ~ <%=exhibitDtomap.get("title").get(i).getEnddate().substring(0,11)%></td>
 			</tr>	
 		<%
 			}	
 		%>
+		<%
+		} else {
+		%>
+			<tr>
+				<td colspan="4">검색하신 결과가 없습니다.</td>
+			</tr>
+		<%	
+		}
+		%>
+		
 		</tbody>
 	</table>
 </div>
@@ -156,18 +175,30 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 		</thead>
 		<tbody>
 		<%
-			for(int i=0; i< exhibitByTitleList.size(); i++){ 
-			ExhibitDto dto = exhibitByTitleList.get(i);
+		if(exhibitDtomap.size() > 0){
+		%>
+			<%
+			for(int i=0; i< exhibitDtomap.get("content").size(); i++){ 
+			ExhibitDto dto = exhibitDtomap.get("content").get(i);
 			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
 		%>
 			<tr>
-				<td><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=exhibitByTitleList.get(i).getSeq()%>"><%=exhibitByTitleList.get(i).getTitle() %></a></td>
-				<td><%=exhibitByTitleList.get(i).getPlace() %></td>
-				<td><%=exhibitByTitleList.get(i).getPrice() %>원</td>
-				<td><%=exhibitByTitleList.get(i).getBegindate().substring(0,11) %> ~ <%=exhibitByTitleList.get(i).getEnddate().substring(0,11)%></td>
+				<td><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=exhibitDtomap.get("content").get(i).getSeq()%>"><%=exhibitDtomap.get("content").get(i).getTitle() %></a></td>
+				<td><%=exhibitDtomap.get("content").get(i).getPlace() %></td>
+				<td><%=exhibitDtomap.get("content").get(i).getPrice() %>원</td>
+				<td><%=exhibitDtomap.get("content").get(i).getBegindate().substring(0,11) %> ~ <%=exhibitDtomap.get("content").get(i).getEnddate().substring(0,11)%></td>
 			</tr>	
 		<%
 			}	
+		%>
+		<%
+		} else {
+		%>
+			<tr>
+				<td colspan="4">검색하신 결과가 없습니다.</td>
+			</tr>
+		<%	
+		}
 		%>
 		</tbody>
 	</table>
