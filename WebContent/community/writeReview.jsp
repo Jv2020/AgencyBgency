@@ -12,6 +12,7 @@ String id = sdto.getId();
 ExhibitDto dto = (ExhibitDto)request.getAttribute("dto");
 //System.out.println("리뷰작성팝업창에 넘어온 전시명은 " + title);
 %> --%>
+
 <!DOCTYPE html>
 <html>
 <head>

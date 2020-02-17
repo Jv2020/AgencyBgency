@@ -96,13 +96,7 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 <%
 
 Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)request.getAttribute("exhibitDtolist");
-if(exhibitDtomap.size() > 0){
-	System.out.println("제목"+exhibitDtomap.get("title").get(0).getTitle());
-	System.out.println("내용"+exhibitDtomap.get("content").get(0).getTitle());
-	
-} else {
-	
-}
+
 %>
 
 <!-- 전시제목 -->
@@ -125,12 +119,13 @@ if(exhibitDtomap.size() > 0){
 		</thead>
 		<tbody>
 		<%
-		if(exhibitDtomap.size() > 0){
+			if(exhibitDtomap.get("title") != null){
 		%>
 			<%
-			for(int i=0; i< exhibitDtomap.get("title").size(); i++){ 
-			ExhibitDto dto = exhibitDtomap.get("title").get(i);
-			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
+				System.out.println("타이틀 갯수: "+exhibitDtomap.get("title").size());
+				for(int i=0; i< exhibitDtomap.get("title").size(); i++){ 
+				ExhibitDto dto = exhibitDtomap.get("title").get(i);
+				String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
 		%>
 			<tr>
 				<td><a href="<%=request.getContextPath()%>/exdetail?ex=<%=exstatus%>&seq=<%=exhibitDtomap.get("title").get(i).getSeq()%>"><%=exhibitDtomap.get("title").get(i).getTitle() %></a></td>
@@ -142,13 +137,14 @@ if(exhibitDtomap.size() > 0){
 			}	
 		%>
 		<%
-		} else {
+			} else {
 		%>
 			<tr>
 				<td colspan="4">검색하신 결과가 없습니다.</td>
 			</tr>
 		<%	
-		}
+			}
+		
 		%>
 		
 		</tbody>
@@ -175,9 +171,10 @@ if(exhibitDtomap.size() > 0){
 		</thead>
 		<tbody>
 		<%
-		if(exhibitDtomap.size() > 0){
+		if(exhibitDtomap.get("content") != null){
 		%>
 			<%
+			System.out.println("컨텐츠 갯수: "+exhibitDtomap.get("content").size());
 			for(int i=0; i< exhibitDtomap.get("content").size(); i++){ 
 			ExhibitDto dto = exhibitDtomap.get("content").get(i);
 			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());

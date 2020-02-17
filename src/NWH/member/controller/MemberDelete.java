@@ -30,6 +30,7 @@ public class MemberDelete extends HttpServlet{
 		MemberDao dao = MemberDao.getInstance();
 		boolean bisS = dao.delMemberById(id);
 		String isS = String.valueOf(bisS);
+		System.out.println("딜리트:" + isS);
 		resp.sendRedirect(req.getContextPath()+"/mypage/memdelete.jsp?isS="+isS);
 		
 		

@@ -32,7 +32,6 @@ public class MainSearch extends HttpServlet{
 		List<ExhibitDto> exhibitByTitleList = dao.getExhibitListAfterSeachTitle(searchWord);
 		System.out.println("size:"+exhibitByTitleList.size());
 		if(exhibitByTitleList.size()>0) {
-			System.out.println("검색음");
 			System.out.println(exhibitByTitleList.get(0).toString());
 			exhibitDtolist.put("title", exhibitByTitleList);
 			

@@ -74,9 +74,10 @@ public class MemberInsert extends HttpServlet {
 
 		boolean isS = dao.addMember(new MemberDto(id, password, name, email, address, birthday, gender, phone, question,
 				hint, exhibit_name, certi_num, 0, auth));
+		System.out.println("isS: " + isS);
 
 		
-			resp.sendRedirect(request.getContextPath() + "/member/joinAf.jsp?isS"+isS);
+			resp.sendRedirect(request.getContextPath() + "/member/joinAf.jsp?isS="+isS);
 
 	}
 

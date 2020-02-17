@@ -42,7 +42,7 @@ memId.addEventListener("blur", function(e){
 	    		$('.idComentColor span').removeClass('alert-green');
 	    	}
 	    	$('.idComentColor span').addClass('alert-red');
-	    	document.querySelector(".idCheck").innerHTML = "111111아이디는 영문자(소문자)로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
+	    	document.querySelector(".idCheck").innerHTML = "아이디는 영문자(소문자)로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
 	        return;
 	    }  else {
 	    	$('.idComentColor span').addClass('alert-red');
