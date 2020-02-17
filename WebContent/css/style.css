@@ -410,6 +410,9 @@ table.reservetbl td a, table.reservetbl td button {position:relative; z-index:1;
 table.reservetbl td a:before, table.reservetbl td button:before {position:absolute; top:0; left:0; transform: translate(-100%, 0); display:inline-block; transition:all 0.3s ease-in-out; width:100%; height:100%; content:''; background:#5f0080; z-index:-1;}
 table.reservetbl td a:hover, table.reservetbl td button:hover {color:#fff;}
 table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {transform: translate(0);}
+table.reservetbl td label {cursor:pointer;}
+#myReserve > p {line-height:30px; margin-bottom:10px;}
+#myReserve > p label{cursor:pointer;}
 
 /* paging */
 .pagingWrap {width:100%; text-align:center; font-size:0;}
