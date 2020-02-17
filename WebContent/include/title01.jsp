@@ -188,6 +188,13 @@ if (ifurl.contains("curatorwrite.jsp")){
 }   
 %>
 	
-
+<!-- 메뉴 검색 -->
+<% 
+if (ifurl.contains("mainSearch.jsp")){
+%>
+<h2>검색 결과</h2>
+<%
+}   
+%>
 
 

@@ -73,8 +73,22 @@ UPDATE MEMBER
 SET DEL = 0
 WHERE ID = 'test007';
 
+SELECT * FROM EXHIBIT;
 
-
+INSERT INTO EXHIBIT
+VALUES(8, 
+	   '2020-02-17', 
+	   '2020-02-17', 
+	   '텔레토비', 
+	   '비트 강남', 
+	   '보라돌이뚜비나나뽀', 
+	   '15시', 
+	   '응응?	',
+	   0,
+	   '111', 
+	   '222',
+	    5000, 
+	    null);
 
 
 

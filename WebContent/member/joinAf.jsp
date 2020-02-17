@@ -24,7 +24,7 @@ if(isS.equals("true")){
 %>
 	<script type="text/javascript">
 	alert("환영합니다.");
-	location.href="login.jsp";
+	location.href="<%=request.getContextPath()%>/mainEntrance";
 	</script>
 <%
 } else { 

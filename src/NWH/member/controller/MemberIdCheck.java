@@ -20,7 +20,7 @@ public class MemberIdCheck extends HttpServlet{
 		// TODO Auto-generated method stub
 		
 		String id = req.getParameter("idcheck");
-		System.out.println("ajaxtest"+id);
+		System.out.println("ajaxtest: "+id);
 		
 		MemberDao dao = MemberDao.getInstance();
 		boolean bidCheck = dao.idCheck(id);

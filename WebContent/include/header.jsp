@@ -65,9 +65,9 @@
 			<div class="inner">
 				<%@include file ="./gnb.jsp" %>
 				<div class="searchWrap">
-					<form name="serach" method="get" action="">
-						<input type="text" maxlength="20" placeholder="검색어를 입력해주세요">
-						<button></button>
+					<form name="serach" method="get" action="<%=request.getContextPath() %>/mainSearch">
+						<input type="text" maxlength="20" name="mainSearchWord" placeholder="검색어를 입력해주세요">
+						<button type="submit"></button>
 					</form>
 				</div>
 			</div><!-- //inner -->
