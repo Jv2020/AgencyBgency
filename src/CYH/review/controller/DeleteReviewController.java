@@ -23,8 +23,10 @@ public class DeleteReviewController extends HttpServlet {
 		boolean isS = dao.deleteReview(seq);
 		
 		if(isS) {
+			// 삭제에 성공했을 시
 			resp.sendRedirect("/mypage/mypage.jsp");
 		}else {
+			// 삭제에 실패했을 시
 			resp.sendRedirect("/mypage/mypage.jsp");
 		}
 	}

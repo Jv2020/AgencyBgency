@@ -53,7 +53,6 @@ String title = request.getParameter("title");
 		</div>
 		<div class="3-2">
 			<div class='starrr' id='star2'></div>
-			<input type="hidden" name="star">
 		</div>
 	</div>
 	<div class="2-2">
@@ -64,67 +63,65 @@ String title = request.getParameter("title");
 			<input type="submit" value="리뷰올리기">
 		</div>
 		<div class="3-4">
-			<input type="button" onclick="confirm()" value="취소">
+			<input type="button" onclick="closeWindow()" value="취소">
 		</div>
 	</div>
 </div>
 </form>
 
 
-<script type="text/javascript">
-function confirm() {
-	history.back();
-}
-</script>
-
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
 <script src="starrr.js"></script>
+
 <script>
-        $('#star1').starrr({
-            change: function (e, value) {
-                if (value) {
-                    $('.your-choice-was').show();
-                    $('.choice').text(value);
-                } else {
-                    $('.your-choice-was').hide();
-                }
-            }
-        });
+	$('#star1').starrr({
+	    change: function (e, value) {
+	        if (value) {
+	            $('.your-choice-was').show();
+	            $('.choice').text(value);
+	        } else {
+	            $('.your-choice-was').hide();
+	        }
+	    }
+	});
 
-        var $s2input = $('#star2_input');
-        $('#star2').starrr({
-            max: 10,
-            rating: $s2input.val(),
-            change: function (e, value) {
-                $s2input.val(value).trigger('input');
-            }
-        });
+	var $s2input = $('#star2_input');
+	$('#star2').starrr({
+	    max: 5,
+	    rating: $s2input.val(),
+	    change: function (e, value) {
+	        $s2input.val(value).trigger('input');
+	        
+	        $.ajax({
+	        	url: "/AgencyBgencyy/writereviewAf",
+	        	type: "post",
+	        	data: {
+	        		star : value
+	        	},
+	        	// 통신이 성공했을 때 처리하는 callback 함수
+	        	success: function(data) {
+	        		$('#time').text(data);
+	        		alert('평점 평가가 완료됐습니다. 결과: ', data,star);
+	        	}
+	        })
+	    }
+	});
+
+
+
+
+// 모달창 꺼주는 메소드
+function closeWindow() {
+	// window tab close
+	// var는 IE를 위해서 쓴다.
+	// ES5는 let, const가 없다.
+	const cw = window.open(window.location, '_self');
+	cw.close();
+}
+
+
+
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

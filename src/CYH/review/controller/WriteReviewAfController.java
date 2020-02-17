@@ -20,6 +20,7 @@ public class WriteReviewAfController extends HttpServlet{
 		String title = req.getParameter("title");
 		String review = req.getParameter("review");
 		int star = Integer.parseInt(req.getParameter("star"));
+		System.out.println("들어온 별갯수는 " + star);
 		
 		ReviewDao dao = ReviewDao.getInstance();
 		boolean isS = dao.writeReview(new ReviewDto(id, title, review, star));

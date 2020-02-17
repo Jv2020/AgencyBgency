@@ -38,6 +38,11 @@ System.out.println("allRe_Contents는 " + allRe_Contents);
 int pages = (int)Math.ceil(allRe_Contents/ 5.0);
 %>
 
+<form action="/AgencyBgencyy/writereview">
+	<input type="submit" value="리뷰쓰기">
+	<input type="hidden" name="title" value="<%=title %>">
+</form>
+
 <h1 style="text-align: center"><b><%=title %>에 대한 전체 리뷰</b></h1>
 
 <%
@@ -112,7 +117,6 @@ for(int i = 0; i < pages; i++) {
 		<%
 	}
 	 %>
-
 <%
 }
 %>

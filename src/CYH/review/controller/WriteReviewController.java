@@ -18,6 +18,8 @@ public class WriteReviewController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int seq = Integer.parseInt(req.getParameter("seq"));
 		String id = req.getParameter("loginuser");
+		String title1 = req.getParameter("title");
+		System.out.println("title1은 " + title1);
 		
 		ExhibitDao dao = ExhibitDao.getInstance();
 		ExhibitDto dto = dao.getExDetail(seq);
