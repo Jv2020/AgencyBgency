@@ -323,7 +323,7 @@ public class ReviewDao {
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
 		String sql = " INSERT INTO EXHIBIT_REVIEW "
 					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL ) "
-					+ " VALUE(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0, 0, 0 ) ";
+					+ " VALUES(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0, 0, 0 ) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -332,22 +332,22 @@ public class ReviewDao {
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 getReviewList Success");
+			System.out.println("1/6 writeReview Success");
 			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getReivewList Success");
+			System.out.println("2/6 writeReview Success");
 			
 			psmt.setString(1, dto.getId());
 			psmt.setString(2, dto.getTitle());
 			psmt.setInt(3, dto.getStar());
 			psmt.setString(4, dto.getReview());
-			System.out.println("3/6 getReivewList Success");
+			System.out.println("3/6 writeReview Success");
 			
 			count = psmt.executeUpdate();
-			System.out.println("4/6 getReviewList Success");
+			System.out.println("4/6 writeReview Success");
 			
 		} catch (SQLException e) {
-			System.out.println("getReviewList Fail");
+			System.out.println("writeReview Fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
