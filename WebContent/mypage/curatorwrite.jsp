@@ -3,15 +3,18 @@
 <%@include file ="../include/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
 
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <link rel="stylesheet" href="./dist/mtr-datepicker.min.css">
 <link rel="stylesheet" href="./dist/mtr-datepicker.default-theme.min.css">
 
 <script src="./dist/mtr-datepicker-timezones.min.js"></script>
 <script src="./dist/mtr-datepicker.min.js"></script>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- --><!-- font awesome -->
+<!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 
+<link href="./dist/summernote/summernote.min.css" rel="stylesheet" crossorigin="anonymous">
 <%
 //시간을 취득해서 파일이름으로 넣기 
 String fname = (new Date().getTime()) + "__";
@@ -146,7 +149,7 @@ request.setCharacterEncoding("UTF-8");
 	<ul class="info">
 		<li>
 				<span> 제목 </span>
-				<input type="text" id="title" name="title" value="제목은 여기에 ">
+				<input type="text" id="title" name="title">
 		</li>
 		<li>
 				<span> 시작일 </span>
@@ -215,8 +218,8 @@ request.setCharacterEncoding("UTF-8");
 	</ul>
 </div>
 <div class="cont-mid">
-<textarea rows="10" cols="80" name="content" id="content">ss</textarea>
-<input type="button" value="이미지 첨부">
+<!-- 텍스트 에디터 -->
+	<textarea name="content" id="content"></textarea>
 </div>
 <div class="cont-btm">
 	<input type="button" id="writeBtn"value="작성하기">
@@ -225,8 +228,51 @@ request.setCharacterEncoding("UTF-8");
 
 
 
-
+<script src="./dist/summernote/summernote.js"></script>
 <script type="text/javascript">
+// summernote
+	let fileArray = [];
+	let keyCnt = 0;
+	$('#content').summernote({
+		height: 400,
+		callbacks: {
+            onImageUpload: function (files, editor, welEditable) {
+                sendFile(files[0], editor, welEditable);
+            }
+        }
+	});
+	 function sendFile(file, editor, welEditable) {
+		   let data = new FormData();
+		   data.append("file", file); 
+
+		    $.ajax({
+		      data: data,
+		      type: 'POST',
+		      url: "/AgencyBgencyy/filetempupload",
+		      cache: false,
+		      contentType: false,
+		      processData: false,
+		      enctype: 'multipart/form-data',
+		      success: function (url) { 
+		        var key = ('img_' + keyCnt);
+		    	console.log(url);
+		    	fileArray.push({
+		    		'key': key,
+		    		'filename': url.filename,
+		    		'filepath': url.filepath,
+		    		'file': file
+		    	});
+
+		    	var downloadUrl = '/AgencyBgencyy/filedownload?filename=' + url.filename + '&filepath=' + url.filepath
+	          	$("#content").summernote('editor.insertImage', downloadUrl, ('img_' + keyCnt));
+		        keyCnt++;
+		      }
+		   });
+		}
+	
+</script>
+<script type="text/javascript">
+// submit 전에 확인할 것들 
  var today = new Date();
  today.setDate(today.getDate()+7);
  
@@ -272,6 +318,32 @@ function getToday(){
  
  // 작성완료 버튼 
 $("#writeBtn").click(function() {
+	
+	var contentHtml = $('#content').val();
+	
+	var splitedCode = contentHtml.split('<img ');
+	var tempArr =[];
+	for (var ele of splitedCode) {
+		
+		if (!ele.includes('src')) continue;
+		
+		var subStr = ele.substring(0, ele.indexOf('>'));
+		var temp1 = subStr.split('filename=')[1];
+		var temp2 = subStr.split('id="')[1];
+
+		var obj = {};
+		var nameAndPath = temp1.substring(0, temp1.indexOf('\"')).split('&amp;filepath=');
+		obj.filename = nameAndPath[0];
+		obj.filepath = nameAndPath[1];
+		obj.key = temp2.substring(0, temp2.indexOf('\"'));
+		
+		console.log(obj);
+		tempArr.push(obj);
+		
+	}
+	console.log(tempArr);
+	
+	return; // submit 막음 
 	
 	// 전시 날짜 확인 
 	var start = datepicker1.toLocaleDateString();
@@ -325,20 +397,21 @@ $("#writeBtn").click(function() {
 	
 	if(confirm("전시를 등록하시겠습니까?")){
 		$("#frm").attr("action","${pageContext.request.contextPath}/exhibitinsert");
-		$("#frm").submit();
+		
+		
+		
+		
+
+		var modifiedContent = contentHtml.replace(/\/upload\/temp/gi, '/upload/content');
+		console.log(modifiedContent);
+		/* 
+		
+		$("#frm").submit(); */
 	}
 	
 	
 }); 
-</script>
-
-
-
-
-
-<script type="text/javascript">
 // 첨부한 이미지 미리보기
-
 var sel_file;
 
 $(document).ready(function() {
@@ -382,10 +455,26 @@ function handleImgFileSelect(e) {
     });
 }
 
+/*
+$('#ddbtn').click(function() {
+    let code = $('#summernote').summernote('code');
+    $.ajax({
+        data: code,
+        type: 'POST',
+        url: "/write",
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function (url) {
+            location.href="/somewhere";
+        },
+        error: function (error) {
+            console.log(error);
+            alert('Failed!!!');
+        }
+    });
+});
+ */
 </script>
-
- 
-
-
 
 <%@include file ="../include/footer.jsp" %>		

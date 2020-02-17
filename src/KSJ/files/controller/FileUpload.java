@@ -2,8 +2,10 @@ package KSJ.files.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +18,8 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import com.google.gson.Gson;
+
 @WebServlet("/fileupload")
 public class FileUpload extends HttpServlet {
 
@@ -24,18 +28,12 @@ public class FileUpload extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		
-		 System.out.println("file download connected");
+		 System.out.println("file upload to content connected");
 
-		//2가지 방법이 있음
-		//1. tomcat에 배포(Server)	-> 자료가 사라질 가능성 있음()
-		//임시 서버 경로로 나온다
-		
-//		String fupload = "/Users/sunjukim/Bitcamp_web/web4_jsp/ImageUpload/WebContent/upload/";		// 하드의 특정 공간에 저장
 //		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		// 하드의 특정 공간에 저장
-//		String fupload = application.getRealPath("/upload");	// project->webcontent 안에 해당 폴더가 있어야함
-//		Fil foldername = req.getAttribute("newFiles");
-		String fupload = req.getSession().getServletContext().getRealPath("/upload/");
-//		String fupload = req.getSession().getServletContext().getRealPath("/aaaaaaaa/");
+
+		String filepath = "/upload/content/";
+		String fupload = req.getSession().getServletContext().getRealPath(filepath);
 		if (fupload == null) {
 			System.out.println("null dir");
 		}
@@ -52,7 +50,6 @@ public class FileUpload extends HttpServlet {
 		String origin_name = "";
 		String bbs_name = "";
 		String bbs_seq = "";
-		String filepath = fupload;
 		String file_seq = "";
 
 		// file name
@@ -89,33 +86,8 @@ public class FileUpload extends HttpServlet {
 				while(it.hasNext()){
 					
 					FileItem item = it.next();
-					if(item.isFormField() ){	
-						// formfield 를 찾아서 구분해준다.
-						
-						// id, title, content 등 form field에 해당하는 String만 넘어온다
-						if(item.getFieldName().equals("filename")){
-							// id 일 때	(=getParameter 일 때)
-							filename = item.getString("utf-8");
-							
-						}else if(item.getFieldName().equals("origin_name")){
-							origin_name = item.getString("utf-8");
-							
-						}else if(item.getFieldName().equals("bbs_name")){
-							bbs_name = item.getString("utf-8");
-							
-						}else if(item.getFieldName().equals("bbs_seq")){
-							bbs_seq = item.getString("utf-8");
-							
-						}else if(item.getFieldName().equals("file_seq")){
-							file_seq = item.getString("utf-8");
-						} 
-					}
-					/*
-					 
-					 */
-					else{	
+					if(!item.isFormField()){	
 						// fileload
-						
 						// file 일 때
 						if(item.getFieldName().equals("file")){	// fileload 일 때
 							filename = processUploadFile(item, fupload);
@@ -150,25 +122,16 @@ public class FileUpload extends HttpServlet {
 			System.out.println("multipart가 아님");
 			
 		}
+		Map<String, String> map = new HashMap<>();
+		map.put("filename",filename);
+		map.put("filepath",filepath);
+		map.put("origin_name",origin_name);
 
+		resp.setContentType("application/json");
+		resp.setCharacterEncoding("utf-8");
+		String gson = new Gson().toJson(map);
+		resp.getWriter().write(gson);
 		
-//		//DB 저장
-//		FileDto dto = new FileDto(0, filename, origin_name, fupload, bbs_name, Integer.parseInt(bbs_seq), 0, Integer.parseInt(file_seq));
-//		FileDao dao = FileDao.getInstance();
-//		boolean b = dao.insertFiles(dto);
-//		if(b) {
-//			System.out.println("다운 성공 ");
-//			resp.sendRedirect("./uploadAf.jsp");
-//		}
-//		else {
-//			System.out.println("다운 실패 ");
-//			resp.sendRedirect("./index_ajax.jsp");
-//		}
-//	
-	
-	
-	
-	
 	}
 
 public String processUploadFile(FileItem fileItem, String dir ) throws IOException{

@@ -56,7 +56,7 @@ if (durl.contains("/mypage")){
 	if(mem.getAuth() != 0){
 	%>
 		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
-		href="/AgencyBgencyy/mypage/curatordetail.jsp">나의 전시
+		href="/AgencyBgencyy/curatorexhibitlist?page=0">나의 전시
 		</a>
 		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatorwrite.jsp' ? ' active' : ''}"
 		href="/AgencyBgencyy/mypage/curatorwrite.jsp">전시 등록하기

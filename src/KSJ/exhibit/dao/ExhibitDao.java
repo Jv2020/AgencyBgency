@@ -608,6 +608,42 @@ public class ExhibitDao {
 		
 		
 	}
+	// 내가 등록한 전시갯수 
+	public int getCuratorContentsNum(String certi_num) {
+		
+		String sql =  " SELECT COUNT(*) "
+					+ " FROM EXHIBIT "
+					+ " WHERE CERTI_NUM = ? ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int number = -1;
+		
+		try {
+			
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, certi_num);	// CERTI_NUM
+			
+			rs = psmt.executeQuery();
+			
+			if(rs.next()) {
+				number = rs.getInt(1);
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return number;
+		
+	}
 
 	
 	

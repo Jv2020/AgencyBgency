@@ -39,7 +39,7 @@ else{
 
 	System.out.println(filename);
 	System.out.println(filepath); 
-
+	
 	String begindate = edto.getBegindate().substring(0, 4)+"-"+ edto.getBegindate().substring(4, 6)+"-"+ edto.getBegindate().substring(6);
 	String enddate = edto.getEnddate().substring(0, 4)+"-"+ edto.getEnddate().substring(4, 6)+"-"+ edto.getEnddate().substring(6);
 	
@@ -115,7 +115,7 @@ $("#showMyExhibit").click(function() {
 		}
 	}else {
 		// 전체 목록으로 돌아가기 
-		location.href="${pageContext.request.contextPath}/curatorexhibitlist?page=0&certi_num=<%=edto.getCerti_num()%>"; 
+		location.href="${pageContext.request.contextPath}/curatorexhibitlist?page=0"; 
 	}
 		
 	

@@ -9,19 +9,30 @@
 <%
 
 List<ExhibitDto>list = (List<ExhibitDto>)request.getAttribute("list");
-int numOfContents = list.size();
+
 int pageNumber = (int)request.getAttribute("page");
+int contentsNum = (int)request.getAttribute("contentsNum");
 
 // 총 리스트 개수 / 10 (페이징)
 
-int allPageNum = (int)Math.ceil(numOfContents/10.0);
-
+int allPageNum = (int)Math.ceil(contentsNum/10.0);
 
 System.out.println(pageNumber);
+System.out.println("numOfContents:"+contentsNum);
 System.out.println("allPageNum:"+allPageNum);
 
 %>
+<%!
+public String makeDate(String date){
+	String result = "";
+	String yy = date.split("-")[0];
+	String mm = date.split("-")[1];
+	String dd = date.split("-")[2].split(" ")[0];
 
+	System.out.println(yy+"-"+mm+"-"+dd);
+	return yy+"-"+mm+"-"+dd;
+}
+%>
 <style>
 /* mypage - 나의 예매내역 */
 #myReserve {width:100%;}
@@ -72,16 +83,18 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 		<tbody>
 			<%				
 				for (int i = 0; i < list.size(); i++) {
+					ExhibitDto edto = list.get(i);
 			%>
 				<tr>
-					<td><%=list.get(i).getTitle() %></td>
-					<td><span><%=list.get(i).getBegindate()+"~"+list.get(i).getEnddate()%></span></td>
-					<td><%=list.get(i).getEx_time().substring(0,4)+"~"+list.get(i).getEx_time().substring(4)%></td>
-					<td><%=list.get(i).getLoc_info() %></td>
+					<td><%=edto.getTitle() %></td>
+					<td><span><%=makeDate(edto.getBegindate()) +" ~ " + makeDate(edto.getEnddate())%></span></td>
+					<td><%=edto.getEx_time().substring(0,2)+":"+edto.getEx_time().substring(2,4)+"~"+edto.getEx_time().substring(4,6)+":"+list.get(i).getEx_time().substring(6)%></td>
+					<td><%=edto.getLoc_info() %></td>
 					<td>
-						<% if (list.get(i).getDel() == 1)  { %>
+						<% if (edto.getDel() == 1)  { %>
 						<span style="color:red;">등록취소</span>
 						<% } else { %>
+						<!-- detailServlet으로 이동하기  -->
 						<a href="#">더보기 +</a>
 						<% } %>
 					</td>
@@ -114,7 +127,7 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 
 function goPage(pageNumber) {
 	// alert("pageNumber:" + pageNumber);
-	location.href = "/AgencyBgencyy/reservelist?pageNumber=" + pageNumber;
+	location.href="${pageContext.request.contextPath}/curatorexhibitlist?page="+pageNumber; 
 }
 
 </script>

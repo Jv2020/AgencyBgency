@@ -21,7 +21,6 @@ public class FileDownload extends HttpServlet{
       
 	  request.setCharacterEncoding("utf-8");
 	  response.setCharacterEncoding("utf-8");
-	  
 	  response.setContentType("text/html; charset=utf-8");
       System.out.println("file download connected");
       String filename = request.getParameter("filename");

@@ -52,10 +52,10 @@ public class ExhibitInsert extends HttpServlet {
 
 		 // 서버 내 저장
 //		String fupload ="/Users/sunjukim/Desktop/semi/AgencyBgency/WebContent/upload/";
-		String fupload = req.getSession().getServletContext().getRealPath("/upload/");
+		String filepath = "/upload/title/";
+		String fupload = req.getSession().getServletContext().getRealPath(filepath);
 		System.out.println("fupload:"+fupload);
 		
-		String filepath = "/upload/";
 		
 		//지정폴더 (Client)
 		System.out.println("업로드 폴더: " + fupload);
