@@ -27,6 +27,7 @@ public class NoticeDto implements Serializable {
 		private int readCount;
 		private int del;
 		private int choice;
+		private String filename;
 		
 		public NoticeDto() {
 			// TODO Auto-generated constructor stub
@@ -37,7 +38,7 @@ public class NoticeDto implements Serializable {
 		
 
 		public NoticeDto(int seq, String id, String title, String content, String reg_date, int readCount,
-				int del, int choice) {
+				int del, int choice, String filename) {
 			super();
 			this.seq = seq;
 			this.id = id;
@@ -47,19 +48,20 @@ public class NoticeDto implements Serializable {
 			this.readCount = readCount;
 			this.del = del;
 			this.choice = choice;
+			this.filename = filename;
 		}
 
 
 
-
-
-		public NoticeDto(String id, String title, String content, int choice) {
+		public NoticeDto(String id, String title, String content, int choice, String filename) {
 			super();
 			this.id = id;
 			this.title = title;
 			this.content = content;
 			this.choice = choice;
+			this.filename = filename;
 		}
+
 
 		public int getSeq() {
 			return seq;
@@ -124,6 +126,16 @@ public class NoticeDto implements Serializable {
 		public void setChoice(int choice) {
 			this.choice = choice;
 		}
+		
+
+		public String getFilename() {
+			return filename;
+		}
+
+
+		public void setFilename(String filename) {
+			this.filename = filename;
+		}
 
 
 
@@ -131,12 +143,12 @@ public class NoticeDto implements Serializable {
 
 		@Override
 		public String toString() {
-			return "NoticeDto [seq=" + seq  + ", id=" + id + ", title=" + title + ", content=" + content
-					+ ", reg_date=" + reg_date + ", readCount=" + readCount + ", del=" + del + ", choice=" + choice
-					+ "]";
+			return "NoticeDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", reg_date="
+					+ reg_date + ", readCount=" + readCount + ", del=" + del + ", choice=" + choice + ", filename="
+					+ filename + "]";
 		}
 
-		
+
 		
 
 }	

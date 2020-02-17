@@ -25,7 +25,7 @@ if(result.equals("true")){
 	%>
 	<script>
 	alert("정상적으로 등록 되었음");
-	location.href="./amain.jsp";
+	location.href="<%=request.getContextPath()%>/admin";
 	</script>
 	<%
 	}else{
@@ -33,7 +33,7 @@ if(result.equals("true")){
 	%>
 	<script>
 	alert("잘못된 입력 입니다");
-	location.href="./noticeWrite.jsp";
+	location.href="<%=request.getContextPath()%>/admin";
 	</script>
 	<%
 	}

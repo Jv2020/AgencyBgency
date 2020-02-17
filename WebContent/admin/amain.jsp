@@ -1,3 +1,5 @@
+<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
+<%@page import="NWH.member.dto.MemberDto"%>
 <%@page import="BJH.notice.dto.NoticeDto"%>
 <%@page import="java.util.List"%>
 <%@page import="BJH.notice.dao.NoticeDao"%>
@@ -5,34 +7,78 @@
     pageEncoding="UTF-8"%>
 <% 
 
-//공지사항
-NoticeDao noticeDao = NoticeDao.getInstance();
-//List<NoticeDto> noticeList = noticeDao.getNoticeList();
-NoticeDto noticeDto = null;
-	// 공지 검색
-	String noticeSearchWord = request.getParameter("noticeSearchWord");
-	String noticeSearchChoice = request.getParameter("noticeSearchChoice");
-	System.out.println ("noticeSearchWord ="+noticeSearchWord);
-	System.out.println ("noticeSearchChoice ="+noticeSearchChoice);
-	
-	if(noticeSearchChoice == null || noticeSearchChoice.equals("")){
-		noticeSearchChoice = "sel";
-	}
-	// 검색어 없을 경우
-	if(noticeSearchChoice.equals("sel")){
-		noticeSearchWord="";
-	}
-	if(noticeSearchWord == null){
-		noticeSearchWord = "";
-		noticeSearchChoice = "sel";
-	}
-	String result = request.getParameter("result");
-	System.out.println("result="+result);
-	
-	
-//전시내역
+List<NoticeDto> noticeList = (List<NoticeDto>)request.getAttribute("noticeList");
+List<MemberDto> memberList = (List<MemberDto>)request.getAttribute("memberList");
+List<ExhibitDto> exhibitList = (List<ExhibitDto>)request.getAttribute("exhibitList");
 
-//회원관리
+String snoticePageNumber = (String)request.getAttribute("noticePageNumber");
+String saccessPageNumber = (String)request.getAttribute("accessPageNumber");
+String sexhibitPageNumber = (String)request.getAttribute("exhibitPageNumber");
+  
+int noticePageNumber = 0;
+if(snoticePageNumber != null){
+	noticePageNumber = Integer.parseInt(snoticePageNumber);
+}
+System.out.println("noticePageNumber = "+noticePageNumber);
+
+int accessPageNumber = 0;
+if(saccessPageNumber != null){
+	accessPageNumber = Integer.parseInt(saccessPageNumber);
+}
+System.out.println("accessPageNumber = "+accessPageNumber);
+
+int exhibitPageNumber = 0;
+if(sexhibitPageNumber != null){
+	exhibitPageNumber = Integer.parseInt(sexhibitPageNumber);
+}
+System.out.println("exhibitPageNumber = "+exhibitPageNumber);
+
+Object snoticeLength = request.getAttribute("noticeLength");
+Object saccessLength = request.getAttribute("accessLength");
+Object sexhibitLength = request.getAttribute("exhibitLength");
+
+int accessLength = 0;
+if(saccessLength != null){
+	accessLength = (Integer)saccessLength;
+}
+System.out.println("accessLength = "+accessLength);
+
+int noticeLength = 0;
+if(snoticeLength != null){
+	noticeLength = (Integer)snoticeLength;
+}
+System.out.println("noticeLength = "+noticeLength);
+
+int exhibitLength = 0;
+if(sexhibitLength != null){
+	exhibitLength = (Integer)sexhibitLength;
+}
+System.out.println("exhibitLength = "+exhibitLength);
+
+NoticeDto noticeDto = null;
+MemberDto memberDto = null;
+ExhibitDto exhibitDto = null;
+
+//5개씩 만 보여주기
+int noticePage = noticeLength / 5;
+if(noticeLength % 5 > 0) {
+noticePage = noticePage + 1;
+}
+System.out.println("noticePage = "+noticePage);
+
+int accessPage = accessLength / 5;
+if(accessLength % 5 > 0) {
+	accessPage = accessPage + 1;
+}
+System.out.println("accessPage = "+accessPage);
+
+int exhibitPage = exhibitLength / 5;
+if(exhibitLength % 5 > 0) {
+	exhibitPage = exhibitPage + 1;
+}
+System.out.println("exhibitPage = "+exhibitPage);
+//
+String noticeResult = request.getParameter("noticeResult");
 
 
 %>
@@ -52,462 +98,441 @@ NoticeDto noticeDto = null;
  <link rel="stylesheet" href="/AgencyBgencyy/css/admin.css" type="text/css"> 
 </head>
 <body>
-
-
-
-<script type="text/javascript">
-$(document).ready(function () {
-	var _choice = '<%=noticeSearchChoice %>';
-	var _searchWord = '<%=noticeSearchWord %>';
-	if(_choice != '' && _choice != 'sel'){		
-		if(_searchWord != ""){			
-			$("#choice").val(_choice);
-			$("#search").val(_searchWord);
-		}
-	}
-});
-</script>
-
-<%
-	//공지사항 페이징
-	String sNoticePageNumber = request.getParameter("noticePageNumber");
-	int noticePageNumber =0;
-	
-	
-	if(sNoticePageNumber != null && !sNoticePageNumber.equals("")){
-		noticePageNumber = Integer.parseInt(sNoticePageNumber);
-	}
-	
-
-		List<NoticeDto> noticeList = noticeDao.getNoticePagingList(noticeSearchChoice,noticeSearchWord,noticePageNumber);
-		
-		
-	int noticeLength = noticeDao.getAllNotice(noticeSearchChoice,noticeSearchWord);
-	System.out.println("DEL=0 총 갯수="+noticeLength);
-	
-	
-	// 5개씩
-	int noticePage = noticeLength / 5;
-	if(noticeLength % 5 > 0 ){
-		noticePage = noticePage + 1 ;
-	}
-	
-	
-%>
-
 <div id="wrap" class="admin">
 	<div class="inner">
 		<div class="m_tit admin">
 			<h2>관리자 페이지입니다</h2>
 			<span></span>	
-			
-
-
 		</div>	<!-- //m_tit admin -->
-		
-		
-<!-- JH 작업 영역 -->
-<!-- 공지 사항 -->
-
-				<div>
-					<h3>공지사항관리(총 게시글 수 : <%=noticeLength  %>개)</h3>
-					<div align="right">
-							<input type="button" name="btn_noticeWrite" value="공지등록" onclick="location.href='./noticeWrite.jsp'">							
-							<input type="button" name="btn_noticeDelete" id ="btn_noticeDelete" value="삭제" >
-					</div>
-					<table border="1">					
-						<col width="70"><col width="100"><col width="200"><col width="100"><col width="180"><col width="20">
-						<tr>
-							<th>글번호 </th>
-							<th colspan="2">목록</th>
-							<th>작성자</th>
-							<th>작성일</th>
-							<th><input type="checkbox" name="checkboxAll" class="checkboxAll" id="checkboxAll"></th>
-						</tr>
-						
-						<%//공지 글 없을시 
-						if(noticeList.size() == 0 && noticeList == null){
-						%>
-						<tr>
-							<td colspan="6">공지사항이 없습니다</td>
-						</tr>
-						<%// 공지 글 존재 시
-						}else{
-							
-							// 공지사항 반복문 
-								int noticeCount = 0;;
-								System.out.println("DEL=0 페이지 공지 갯수 = " + noticeList.size());
-								
-								
-							if(noticeLength <= 5){
-								noticeCount = noticeLength; //총 공지갯수 
-							}else{
-								noticeCount = noticeLength-(5*noticePageNumber);	//글 번호 순차
-							}
-							for(int i = 0;  i < noticeList.size(); i++){
-								noticeDto = noticeList.get(i);
-								if(noticeDto.getDel()==0){// del=0  만 추출 
-								%>
-						<tr>
-							<td><%=noticeCount--%></td>
-									<% 
-									if(noticeDto.getChoice() == 3){
-									%>
-							<td><strong>[할인정보]</strong></td>
-							
-							
-									<%
-									}else if(noticeDto.getChoice() == 2){
-									%>
-							<td><strong>[이벤트]</strong></td>
-							
-							
-							<%
-									}else{
-									%>
-									<td><strong>[공지사항]</strong></td>
-							
-							<%
-									}
-							%>
-							<td align="left">
-							<!-- 링크 넣어야함 -->
-								<!-- <a href="../notice_detail?seq=<%=noticeDto.getSeq() %>"> -->
-								<a href="<%=request.getContextPath() %>/notice_detail?seq=<%=noticeDto.getSeq() %>">
-								
-									<%=noticeDto.getTitle() %>
-								</a>
-							</td>
-							<td><%=noticeDto.getId() %></td>
-							<td><%=noticeDto.getReg_date() %></td>
-							<td><input type="checkbox" id ="checkbox" name="checkbox" value="<%=noticeDto.getSeq()%>"></td>
-						</tr>
-						<% 
-								}// DEL=0
-								} // for end
-						} // else
-						%>
 	
-					</table>
-					<div align="center">
-						<div align="center">
-							<% // 현재 페이지 번호
-							for(int i = 0; i<noticePage; i++){
-								if(noticePageNumber == i ){
-							%>
-							<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
-								<%=i+1 %>
-							</span>&nbsp;
-							<% // 그외 페이지 번호
-								}else{
-							%>
-							<a href="#none" title="<%=i+1 %>페이지" onclick="noticeGoPage(<%=i %>)"
-								style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
-								[<%=i +1 %>]
-							</a>&nbsp;
-							
-							<%
-								}
-							}
-							%>
-						</div>
-					
-						<div align="center">
-							<select id="noticeSearchChoice">
-								<option value="select" selected="selected">선택</option>
-								<option value="title">제목</option>
-								<option value="content">내용</option>
-							</select>
-							<input type="text" id ="noticeSearchWord" name="noticeSearchWord" width="80" value="">
-							<input type="button" name="btn_noticeSearch" value="검색" onclick="searchNotice()">
-						</div>
-						
-						
-					</div>
-
-<!-- //공지사항 end -->				
-		
-				<div>	
-					<h3>전시 관리</h3>
-					<div align="right">
-						<input type="button" name="btn_write" value="전시등록" onclick="location.href='#'">
-						<input type="button" name="btn_delete" value="삭제" onclick="location.href='#'">
-					</div>
-					<table border="1">					
-						<col width="50"><col width="200"><col width="200"><col width="100"><col width="150"><col width="20">
-						<tr>
-							<th>글번호 </th>
-							<th>전시명</th>
-							<th>전시관명</th>
-							<th>게시자ID</th>
-							<th>작성일</th>
-							<th><input type="checkbox"></th>
-						</tr>
-						
-						<tr>
-							<td>1</td>
-							<td>아재개그넘버원 </td>
-							<td>비트캠프강남지점</td>
-							<td>mrCHOI</td>
-							<td>2020-02-11</td>
-							<td><input type="checkbox"></td>
-						</tr>
-					</table>
-				</div>
-<!--전시페이징 -->
-		  
-				<div align="center">
-						<%-- <div align="center">
-							<% // 현재 페이지 번호
-							for(int i = 0; i<exhibitPage; i++){
-								if(exhibitPageNumber == i ){
-							%>
-							<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
-								<%=i+1 %>
-							</span>&nbsp;
-							<% // 그외 페이지 번호
-								}else{
-							%>
-							<a href="#none" title="<%=i+1 %>페이지" onclick="exhibitGoPage(<%=i %>)"
-								style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
-								[<%=i +1 %>]
-							</a>&nbsp;
-							
-							<%
-								}
-							}
-							%>
-						</div> --%>
-					
-						<div align="center">
-							<select id="exhibitSearchChoice">
-								<option value="select" selected="selected">선택</option>
-								<option value="exhibit">전시명</option>
-								<option value="place">전시관</option>
-								<option value="name">게시자명</option>
-							</select>
-							<input type="text" id ="exhibitSearchWord" name="exhibitSearchWord" width="80" value="">
-							<input type="button" name="btn_exhibitSearch" value="검색" onclick="searchExhibit()">
-						</div>
-				</div> 
-
-<!-- //전시페이징 end  -->				
+<!-- 공지사항 -->
+		<div>
+			<h3 align="center">공지사항관리(총 게시글 수 :<%=noticeLength%>개)</h3>
+			<div align="right">
+				<input type="button" name="noticeWrite" value="공지등록" onclick="location.href='<%=request.getContextPath() %>/Notice?notice=write'">							
+				<input type="button" name="btn_noticeDelete" id ="btn_noticeDelete" value="삭제" >
+			</div>
+			<table border="1">
+				<col width="70"><col width="100"><col width="200"><col width="100"><col width="180"><col width="20">
+				<tr>						
+					<th>글번호 </th>
+					<th colspan="2">타이틀</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th><input type="checkbox" name="chk_noticeAll" class="chk_noticeAll" id="chk_noticeAll"></th>
+				</tr>
 				
-<!-- 큐레이터승인 -->	
+		<%
+		if(noticeLength == 0 || noticeList == null || noticeList.size() ==0){
+		%>
+				<tr>
+					<td colspan="6">공지사항이 없습니다</td>
+				</tr>
+		<% //공지글 존재시 반복문 
+		}else{
+			int noticeCount = 0;
+			if(noticeLength <= 5){
+				noticeCount = noticeLength;
+			}else{
+				noticeCount = noticeLength-(5*noticePageNumber);
+			}
+			for(int i = 0;  i < noticeList.size(); i++){
+				noticeDto = noticeList.get(i);
+				if(noticeDto.getDel()==0){// del=0  만 추출 
+				%>
+				<tr>
+					<td><%= noticeCount-- %></td>
+					<%
+					if(noticeDto.getChoice() == 3 ){
+					%>
+					<td><strong>[할인정보]</strong></td>
+					<%
+					}else if(noticeDto.getChoice() == 2){
+					%>
+					<td><strong>[이벤트]</strong></td>
+					<%
+					}else{
+					%>
+					<td><strong>[공지사항]</strong></td>
+					<%
+					}//if end
+					%>
+					<td>
+						<a href="<%=request.getContextPath() %>/Notice?notice=detail&seq=<%=noticeDto.getSeq() %>">
+							<%=noticeDto.getTitle() %>
+						</a>
+					</td>
+					<td><%=noticeDto.getId() %></td>
+					<td><%=noticeDto.getReg_date()%></td>
+					<td><input type="checkbox" id ="chk_notice" name="chk_notice" value="<%=noticeDto.getSeq()%>" ></td>
+				</tr>
+				<%
+				}	// if end
+			}// for end
+		}//else end
+				%>
 
-				<div>	
-					<h3>!!큐레이터 승인대기자!!</h3>
-					<div align="right">
-						<input type="button" name="btn_waiting" value="승인" onclick="location.href='#'">
-						
-					</div>
-					<table border="1">					
-						<col width="50"><col width="200"><col width="200"><col width="150"><col width="150"><col width="20">
-						<tr>
-							<th>대기번호</th>	<!-- 카운트 -->
-							<th>전시장명</th><!--memberDto.Exhibit_name -->
-							<th>자격번호</th><!--memberDto.certi_num -->
-							<th>실명</th><!--memberDto.name -->
-							<th>계정명</th><!-- memberDto.id -->
-							<th><input type="checkbox"></th>
-							
-						</tr>
-						<tr>
-							<td>1</td>	
-							<td>싱글벙글페스티벌 </td>
-							<td>2018-2008-318</td>
-							<td>최용호</td>
-							<td>sadMovie</td>
-							<td><input type="checkbox"></td>
-						</tr>
-					</table>
-				</div>
-<!-- //큐레이터승인 -->
+			</table>
+			<div align="center">
+				<% // 현재 페이지 번호
+				for(int i = 0; i<noticePage; i++){
+					if(noticePageNumber == i ){
+				%>
+				<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
+					<%=i+1 %>
+				</span>&nbsp;
+				<% // 그외 페이지 번호
+					}else{
+				%>
+				<a href="#none" title="<%=i+1 %>페이지" onclick="noticeGoPage(<%=i %>)"
+					style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
+					[<%=i +1 %>]
+				</a>&nbsp;
 				
-<!--큐레이터 페이징 -->
-		   
-				<div align="center">
-						<%-- <div align="center">
-							<% // 현재 페이지 번호
-							for(int i = 0; i<accessPage; i++){
-								if(accessPageNumber == i ){
-							%>
-							<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
-								<%=i+1 %>
-							</span>&nbsp;
-							<% // 그외 페이지 번호
-								}else{
-							%>
-							<a href="#none" title="<%=i+1 %>페이지" onclick="accessGoPage(<%=i %>)"
-								style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
-								[<%=i +1 %>]
-							</a>&nbsp;
-							
-							<%
-								}
-							}
-							%>
-						</div> --%>
-					
-						<div align="center">
-							<select id="accessSearchChoice">
-								<option value="select" selected="selected">선택</option>
-								<option value="title">전시관명</option>
-								<option value="content">성명</option>
-							</select>
-							<input type="text" id ="accessSearchWord" name="accessSearchWord" width="80" value="">
-							<input type="button" name="btn_accessSearch" value="검색" onclick="searchAccess()">
-						</div>
-				</div>
-
-<!-- //큐레이터 페이징 --> 
-
-<!-- 회원검색 -->
+				<%
+					}
+				}
+				%>
+			</div>
+			<div align="center">
+				<select id="noticeSearchChoice">
+					<option value="sel" selected="selected">선택</option>
+					<option value="title">제목</option>
+					<option value="content">내용</option>
+				</select>
+				<input type="text" id ="noticeSearchWord" name="noticeSearchWord" width="80" value="">
+				<input type="button" name="btn_noticeSearch" value="검색" onclick="searchNotice()">
+			</div>					
 			
-				<div >	
-					<h3>회원 관리</h3>
-					<table border="1">					
-						<col width="870">
-						<tr>
-							<th>회원검색</th>
-						</tr>
-						<tr>
-							<td>
-								<select id="memberSearchChoice">
-									<option value="select" selected="selected">선택</option>
-									<option value="id">ID</option>
-									<option value="name">이름</option>
-								</select>
-								<input type="text" id="memberSearchWord"name="memberSearchWord" width="80" value="">
-								<!-- 회원검색이동  -->
-								<input type="button" id="btn_id" name="btn_id" value="검색" onclick="location.href='<%=request.getContextPath()%>/Member_detail'">
-								
-								
-								<!-- <form method="post" action="../Member_list">
-									<input type="submit" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기">
-								</form> -->
-								
-								<!-- 회원검색이동  -->
-								
-								<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기"
-										onclick="location.href='<%=request.getContextPath()%>/Member_list'">
-								
-								
-							</td>
-						</tr>
-					</table>
-				</div>
-					
+			
+		</div><!-- //공지  -->
+< 		
+<!-- 전시  -->		
+		<div>
+			<h3 align="center">전시관리(총 등록 수 :<%=exhibitLength%>개)</h3>
+			<div align="right">
+				<input type="button" name="exhibitWrite" value="전시등록" onclick="location.href='../admin/noticeWrite.jsp'">							
+				<input type="button" name="btn_exhibitDelete" id ="btn_exhibitDelete" value="전시삭제" >
+			</div>
+			<table border="1">
+				<col width="70"><col width="100"><col width="200"><col width="100"><col width="180"><col width="20">
+				<tr>						
+					<th>글번호 </th>
+					<th>전시명</th>
+					<th>전시관명</th>					
+					<th>시작일</th>
+					<th>종료일</th>
+					<th><input type="checkbox" name="chk_exhibitAll" class="chk_exhibitAll" id="chk_exhibitAll"></th>
+				</tr>
 				
+		<%
+		if(exhibitList.size() == 0 || exhibitList == null || exhibitLength == 0 ){
+		%>
+				<tr>
+					<td colspan="6">등록된 전시가 없습니다</td>
+				</tr>
+		<% //전시 존재시 반복문 
+		}else{
+			int exhibitCount = 0;
+			if(noticeLength <= 5){
+				exhibitCount = exhibitLength;
+			}else{
+				exhibitCount = exhibitLength-(5*exhibitPageNumber);
+			}
+			for(int i = 0;  i < exhibitList.size(); i++){
+				exhibitDto = exhibitList.get(i);
+				if(exhibitDto.getDel()==0){// del=0  만 추출 
+				%>
+				<tr>
+					<td><%= exhibitCount-- %></td>
+					<td>
+						<a href="<%=request.getContextPath()%>/exhibit_detail?seq=<%=exhibitDto.getSeq() %>">
+							<%=exhibitDto.getTitle() %>
+						</a>
+					</td>
+					<td><%=exhibitDto.getPlace() %></td>
+					<td><%=exhibitDto.getBegindate() %>
+					<td><%=exhibitDto.getEnddate() %>
+					<td><input type="checkbox" id ="chk_exhibit" name="chk_exhibit" value="<%=exhibitDto.getSeq()%>"></td>
+				</tr>
+				<%
+				}	// if end
+			}// for end
+		}//else end
+				%>
+
+			</table>
+			<div align="center">
+				<select id="exhibitSearchChoice">
+					<option value="sel" selected="selected">선택</option>
+					<option value="title">전시명</option>
+					<option value="place">장소</option>
+				</select>
+				<input type="text" id ="exhibitSearchWord" name="exhibitSearchWord" width="80" value="">
+				<input type="button" name="btn_exhibitSearch" value="검색" onclick="searchExhibit()">
+			</div>
+			
+			<div align="center">
+				<% // 현재 페이지 번호
+				for(int i = 0; i<exhibitPage; i++){
+					if(exhibitPageNumber == i ){
+				%>
+				<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
+					<%=i+1 %>
+				</span>&nbsp;
+				<% // 그외 페이지 번호
+					}else{
+				%>
+				<a href="#none" title="<%=i+1 %>페이지" onclick="exhibitGoPage(<%=i %>)"
+					style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
+					[<%=i +1 %>]
+				</a>&nbsp;
 				
-<script type="text/javascript">
+				<%
+					}
+				}
+		
+				%>
+			</div>
+		</div><!-- //전시관리  -->
+ 
+<!-- 승인대기인원  -->		
+		<div>
+			<h3 align="center">큐레이터 승인(총 신청 수 :<%=accessLength %>개</h3>
+			<div align="right">
+				<input type="button" id="btn_access" name="btn_access" value="승인" >							
 
+			</div>
+			<table border="1">
+				<col width="50"><col width="200"><col width="200"><col width="150"><col width="150"><col width="20">
+				<tr>						
+					<th>번호</th>
+					<th>전시관명</th>
+					<th>자격번호</th>					
+					<th>회원명</th>
+					<th>계정</th>
+					<th><input type="checkbox" name="chk_accessAll" class="chk_accessAll" id="chk_accessAll"></th>
+				</tr>
+		<%
+		if(accessLength == 0 || memberList == null || memberList.size()==0 ){
+		%>
+				<tr>
+					<td colspan="6">대기중인 인원이 없습니다</td>
+				</tr>
+		<%
+		}else{
+			int accessCount = 0;
+				if(accessLength <= 5){
+					accessCount = accessLength;
+				}else{
+					accessCount = accessLength-(5*accessPageNumber);
+				}
+			for(int i = 0 ; i<memberList.size(); i++){
+				memberDto = memberList.get(i);
+				if(memberDto.getAuth() == 1 && memberDto.getDel()==0){
+			%>
+				<tr>
+					<td><%=accessCount-- %></td>
+					<td><%=memberDto.getExhibit_name() %></td>
+					<td><%=memberDto.getCerti_num() %></td>
+					<td><%=memberDto.getName() %></td>
+					<td><%=memberDto.getId() %></td>
+					<td>
+						<input type="checkbox" name="chk_access" id="chk_access" value="<%=memberDto.getId()%>">
+					</td>
+				</tr>
+			<%
+				};//if end
+			};// for end
+		}
+			%>	
+			</table>
+			<div align="center">
+				<select id="accessSearchChoice">
+					<option value="sel" selected="selected">선택</option>
+					<option value="id">ID</option>
+					<option value="place">전시관명</option>
+					<option value="name">회원명</option>
+				</select>
+				<input type="text" id ="accessSearchWord" name="accessSearchWord" width="80" value="">
+				<input type="button" name="btn_accessSearch" value="검색" onclick="searchAccess()">
+			
+			</div>
+			<div align="center">
+				<% // 현재 페이지 번호
+				for(int i = 0; i<accessPage; i++){
+					if(accessPageNumber == i ){
+				%>
+				<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
+					<%=i+1 %>
+				</span>&nbsp;
+				<% // 그외 페이지 번호
+					}else{
+				%>
+				<a href="#none" title="<%=i+1 %>페이지" onclick="accessGoPage(<%=i %>)"
+					style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
+					[<%=i +1 %>]
+				</a>&nbsp;
+				
+				<%
+					}
+				}		
+				%>
+			</div>
+			
+		</div><!-- //승인대기  -->
 
+<!-- 회원관리 -->
+	<form action="<%=request.getContextPath()%>/Admin_Member?member=search" method="POST">
+		<div>
+			<h3>회원 관리</h3>
+			<table border="1">
+				<tr>
+					<th>회원 검색</th>
+				</tr>
+				<tr>
+					<td>
+							<select id="searchChoice" name="searchChoice">
+								<option value="sel" selected="selected">선택</option>
+								<option value="id">ID</option>
+								<option value="name">이름</option>
+							</select>
+							
+							<input type="text" id="searchWord"name="searchWord" width="80" value="">
+							<!-- 회원검색이동  -->
+							<input type="submit" id="btn_id" name="btn_id" value="검색">
+							<input type="button" id="btn_memberAll" name="btn_memberAll" value="전체리스트보기" 
+								onclick="location.href='<%=request.getContextPath()%>/Admin_Member?member=list'">
+					</td>
+				</tr>
+			</table>
+			
+		
+		</div>
+	</form>
 
-// 공지사항  javascript
-function noticeGoPage(pageNum) {
-	var choice = $("#noticeSearchChoice").val();
-	var word = $("#noticeSearchWord").val();
-	
-	if(word == ""){
-		document.getElementById("noticeSearchChoice").value='sel';
-	};
-	var linkStr = "amain.jsp?noticePageNumber=" + pageNum;
-	if(choice != 'sel' && word != ""){
-		linkStr = linkStr + "&noticeSearchWord=" + word + "&noticeSearchChoice=" + choice;
-	};
-	location.href = linkStr;
-	
-};
-function searchNotice(){
-	var choice = $("#noticeSearchChoice").val();
-	var word = $("#noticeSearchWord").val();
-	
-	if(word==""){
-		document.getElementById("noticeSearchChoice").value='sel';
-	};
-	
-	location.href = "./amain.jsp?noticeSearchWord=" + word + "&noticeSearchChoice=" + choice;
-};
-
-//큐레이터 승인
-function acc
-
-
-
-
-
-
-
-
-
-$(document).ready(function(){
-    //최상단 체크박스 클릭
-    $("#checkboxAll").click(function(){
-        //클릭되었으면
-        if($("#checkboxAll").prop("checked")){
-            //input태그의 name이 checkbox인 태그들을 찾아서 checked옵션을 true로 정의
-            $("input[name=checkbox]").prop("checked",true);
-            
-        //클릭이 안되있으면
-        }else{
-            //input태그의 name이 checkbox인 태그들을 찾아서 checked옵션을 false로 정의
-            $("input[name=checkbox]").prop("checked",false);
-            
-        }
-    });
-    
-	
-	var checkboxCount = $('input:checkbox[id="checkbox"]:checked').length ;
-	var checkbox_val = $('input:checkbox[id="checkbox"]').val();
-	
-	
-	$("#btn_noticeDelete").click(function(){
-		var noticeDel = confirm("정말로 삭제 하시겠습니까?");
-		var deleteList = new Array();
-		   $('input[name="checkbox"]:checked').each(function(index, item){
-			   deleteList.push($(item).val());
-		   });// for each end
-	  	if(noticeDel){
-		   
-		   var jsonData = {"pdeleteList":deleteList}
-		   
-		   alert("선택한 공지글 SEQ="+deleteList);
-			   $.ajax({
-					type : "POST",
-					url : "${pageContext.request.contextPath}/Notice_delete",
-					data : jsonData,
-					contentType :"application/x-www-form-urlencoded; charset=UTF-8",
-					datatype : "json",
-			  		success : function(data) {
-			  			 console.log(data);
-			       		 alert("성공적으로 삭제되었습니다.");
-			       		 location.href="amain.jsp";
-			       		 
-			        },
-			    	error : function(xhr,status,error) {
-			    		// Ajax error
-			    		alert("삭제에 실패 했습니다.");
-			    		location.href="amain.jsp";
-						
-			    		
-			    	}
-				 
-					});// ajax end
-	  	}// if end
-	}); //click end
-}); //JQuery ready end
-
-
-
-
-</script>
-				<!-- //JH 작업 영역  end-->	
-					
 
 			<span></span>
 	</div><!-- //inner -->
 </div><!-- //wrap -->
+<script type="text/javascript">
+
+
+
+// 공지 삭제
+$("#btn_noticeDelete").click(function(){
+	var noticeDel = confirm("정말로 삭제 하시겠습니까?");
+	var deleteList = new Array();
+	   $('input[name="chk_notice"]:checked').each(function(index, item){
+		   deleteList.push($(item).val());
+	   });// for each end
+	console.log(deleteList);
+  	if(noticeDel){
+	   
+	   var jsonData = {"deleteList":deleteList}
+	   
+	   alert("선택한 공지글 SEQ="+deleteList);
+		   $.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/Notice?notice=delete",
+				data : jsonData,
+				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
+				datatype : "text",
+		  		success : function(data) {
+		  			 console.log(data);
+		       		 alert("성공적으로 삭제되었습니다.");
+		       		 if(data==true){
+			       		location.href="<%=request.getContextPath()%>/admin";
+		       		 }
+		        },
+		    	error : function(xhr,status,error) {
+		    		// Ajax error
+		    		alert("삭제에 실패 했습니다.");
+		    		
+		    		location.href="<%=request.getContextPath()%>/admin";
+		    	}
+			 
+				});// ajax end
+  	}// if end
+}); //click end
+
+//전시 삭제
+$("#btn_exhibitDelete").click(function(){
+	var exhibitDel = confirm("정말로 삭제 하시겠습니까?");
+	var deleteList = new Array();
+	   $('input[name="chk_exhibit"]:checked').each(function(index, item){
+		   deleteList.push($(item).val());
+	   });// for each end
+	console.log(deleteList);
+  	if(noticeDel){
+	   
+	   var jsonData = {"deleteList":deleteList}
+	   
+	   alert("선택한 공지글 SEQ="+deleteList);
+		   $.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/Exhibit_delete",
+				data : jsonData,
+				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
+				datatype : "text",
+		  		success : function(data) {
+		  			 console.log(data);
+		       		 alert("성공적으로 삭제되었습니다.");
+		       		 location.href="<%=request.getContextPath()%>/admin/test.jsp";
+		       		 
+		        },
+		    	error : function(xhr,status,error) {
+		    		// Ajax error
+		    		alert("삭제에 실패 했습니다.");
+		    		location.href="<%=request.getContextPath()%>/admin/test.jsp";
+		    	}
+			 
+				});// ajax end
+  	}// if end
+}); //click end
+
+//큐레이터 승인
+$("#btn_access").click(function(){
+	var access = confirm("승인 하시겠습니까?");
+	var accessList = new Array();
+	   $('input[name="chk_access"]:checked').each(function(index, item){
+		   accessList.push($(item).val());
+	   });// for each end
+	console.log(accessList);
+  	if(access){
+	   
+	   var jsonData = {"accessList":accessList}
+	   
+	   alert("선택한 회원 ID="+accessList);
+		   $.ajax({
+				type : "POST",
+				url : "${pageContext.request.contextPath}/Admin_Member?member=access",
+				data : jsonData,
+				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
+				datatype : "text",
+		  		success : function(data) {
+		  			 console.log(data);
+		       		 if(data==true){
+		       		 alert("승인 허용 되었습니다.");
+			       		location.href="<%=request.getContextPath()%>/admin";
+		       		 }else{
+		       		alert("승인 실패 "); 
+		       			location.href="<%=request.getContextPath()%>/admin";
+		       		 }
+		        },
+		    	error : function(xhr,status,error) {
+		    		// Ajax error
+		    		alert("승인에 실패 했습니다.");
+		    		
+		    		location.href="<%=request.getContextPath()%>/admin";
+		    	}
+			 
+				});// ajax end
+  	}// if end
+}); //click end
+
+</script>
+<script src="<%=request.getContextPath()%>/admin/admin.js"></script>
 
 </body>
 </html>

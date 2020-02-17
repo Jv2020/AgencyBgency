@@ -25,7 +25,7 @@ public class NoticeDao {
 	
 	// ���� ����Ʈ 
 	public List<NoticeDto> getNoticeList(){
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE,FILENAME "
 				+ " FROM NOTICE "
 				+ " ORDER BY SEQ DESC ";
 		
@@ -52,7 +52,8 @@ public class NoticeDao {
 													rs.getString(i++),//REGDATE
 													rs.getInt(i++),//READCOUNT
 													rs.getInt(i++),//DEL
-													rs.getInt(i++));//CHOICE
+													rs.getInt(i++),
+													rs.getString(i++));//CHOICE
 				noticeList.add(noticeDto);
 			}
 			System.out.println("4/4 getNoticeList Success");
@@ -69,8 +70,8 @@ public class NoticeDao {
 	// ���� ��� 
 	public boolean notice_Insert(NoticeDto dto) {
 		
-		String sql = " INSERT INTO NOTICE(SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE)"
-				+ " VALUES(SEQ_NOTICE.NEXTVAL ,?, ?, ?, SYSDATE, 0, 0, ?) ";
+		String sql = " INSERT INTO NOTICE(SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE,FILENAME)"
+				+ " VALUES(SEQ_NOTICE.NEXTVAL ,?, ?, ?, SYSDATE, 0, 0, ?,null) ";
 			
 		
 		Connection conn = null;
@@ -103,13 +104,51 @@ public class NoticeDao {
 		return noticeResult>0?true:false;
 	}
 	
+	public boolean notice_Update(int seq, NoticeDto dto ) {
+		
+		String sql = " UPDATE NOTICE "
+				+ " SET TITLE=? , CONTENT=? , CHOICE= ? "
+				+ " WHERE SEQ= ? ";
+			
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int noticeResult = 0;
+		
+		
+		try {
+			conn = DBConnection.getConnection();
+				System.out.println("1/4 notice_Update ");
+			psmt = conn.prepareStatement(sql);
+				System.out.println("2/4 notice_Update ");
+				
+				psmt.setString(1, dto.getTitle());
+				psmt.setString(2, dto.getContent());
+				psmt.setInt(3, dto.getChoice());
+				psmt.setInt(4, seq);
+				System.out.println("3/4 notice_Update ");
+			noticeResult = psmt.executeUpdate();
+				System.out.println("4/4 notice_Update Successs");
+			
+		} catch (SQLException e) {
+			System.out.println("notice_Update fail ");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, null);
+			
+		}
+		
+		
+		return noticeResult>0?true:false;
+	}
+	
 	public List<NoticeDto> getNoticePagingList(String choice, String searchWord, int page){
 		System.out.println("int page = "+page);
-		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE, FILENAME "
 				+ " FROM ";
 		
 			   sql += " (SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC) AS RNUM, "
-				+ " SEQ,ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE "
+				+ " SEQ,ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE, FILENAME "
 				+ " FROM NOTICE ";
 			   
 	    String sqlWord = "";
@@ -158,7 +197,8 @@ public class NoticeDao {
 										rs.getString(i++), // reg_date
 										rs.getInt(i++),	// readcount
 										rs.getInt(i++), // del
-										rs.getInt(i++)); //choice
+										rs.getInt(i++),//choice
+										rs.getString(i++)); //filename
 										
 				noticeList.add(noticeDto);
 			}
@@ -181,8 +221,10 @@ public class NoticeDao {
 		
 		if(choice.equals("title")) {
 			sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
-		}else {
+		}else if(choice.equals("content")){
 			sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
+		}else {
+			sqlWord = " WHERE DEL = 0 ";
 		}
 		sql += sqlWord;
 		
@@ -213,7 +255,7 @@ public class NoticeDao {
 	
 	public boolean notice_delete(String[] sdeleteList) {
 	
-		String sql = "UPDATE NOTICE "
+		String sql = " UPDATE NOTICE "
 				+ " SET DEL=1 "
 				+ " WHERE SEQ = ? ";
 		
@@ -249,7 +291,7 @@ public class NoticeDao {
 		
 	}
 	public NoticeDto notice_detail(int seq) {
-		String sql = " SELECT SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE "
+		String sql = " SELECT SEQ,ID,TITLE,CONTENT,REG_DATE,READCOUNT,DEL,CHOICE,FILENAME "
 				+ " FROM NOTICE "
 				+ " WHERE SEQ=? " ;
 		
@@ -273,7 +315,8 @@ public class NoticeDao {
 											rs.getString(i++),
 											rs.getInt(i++),
 											rs.getInt(i++),
-											rs.getInt(i++));
+											rs.getInt(i++),
+											rs.getString(i++));
 				
 			}
 			System.out.println(noticeDto);

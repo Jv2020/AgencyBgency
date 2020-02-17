@@ -13,6 +13,7 @@ NoticeDto noticeDto = (NoticeDto)request.getAttribute("noticeDetail");
 System.out.println(noticeDto);
 
 System.out.println("성공!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+int seq = noticeDto.getSeq();
 %>
 
 <html>
@@ -30,7 +31,7 @@ System.out.println("성공!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 </head>
 <body>
-<form action="<%=request.getContextPath() %>/notice_update" method="post" enctype="multipart/form-data"> 
+<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq %>" method="post" > 
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">
@@ -102,12 +103,12 @@ System.out.println("성공!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			<tr align="center" >
 				<td colspan="2">
 					<input type="submit" value="수정하기">
-					<input type="button" value="이전으로" onclick="location.href='<%=request.getContextPath() %>/admin/amain.jsp'">
+					<input type="button" value="이전으로" onclick="location.href='<%=request.getContextPath() %>/admin/test.jsp'">
 				</td>
 			</tr>
-			
 		</table>
 	</div>
 </form>
 </body>
+
 </html>

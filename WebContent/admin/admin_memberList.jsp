@@ -4,9 +4,31 @@
 	pageEncoding="UTF-8"%>
 
 <%
+	
 	//response.sendRedirect("/Member_list");
 	request.setCharacterEncoding("utf-8");	
 	List<MemberDto> memberList = (List<MemberDto>)request.getAttribute("memberList");
+	List<MemberDto> outMemberList = (List<MemberDto>)request.getAttribute("outMemberList");
+	String sadmin_memberPageNumber = (String)request.getAttribute("admin_memberPageNumber");
+	int admin_memberPageNumber = 0;
+	if(sadmin_memberPageNumber != null){
+		admin_memberPageNumber = Integer.parseInt(sadmin_memberPageNumber);
+	}
+	System.out.println("admin_memberPageNumber = "+admin_memberPageNumber);
+	Object sadmin_memberLength = request.getAttribute("admin_memberLength");
+	
+	int admin_memberLength = 0;
+	if(sadmin_memberLength != null){
+		admin_memberLength = (Integer)sadmin_memberLength;
+	}
+	System.out.println("admin_memberLength = "+admin_memberLength);
+	MemberDto admin_memberDto = null;
+	
+	int admin_memberPage = admin_memberLength / 10;
+	if(admin_memberLength % 10 > 0) {
+		admin_memberPage = admin_memberPage + 1;
+	}
+	System.out.println("admin_memberPage = "+admin_memberPage);
 	//휴면계정 보기
 	
 	
@@ -37,13 +59,11 @@
 		} ;
 	} ;
 
-	for (int i = 0; i < memberList.size(); i++) {
+	for (int i = 0; i < outMemberList.size(); i++) {
 
-		if (memberList.get(i).getDel() == 1) {
+		if (outMemberList.get(i).getDel() == 1) {
 			memberOutCount += 1;
-		} else if (memberList.get(i).getDel() == 0) {
-			memberTotalCount += 1;
-		} ;
+		};
 	} ;
 	System.out.println("size=" + memberList.size());
 	System.out.println("회원수=" + memberTotalCount);
@@ -62,10 +82,10 @@
 <div align="center">
 		<h3>회원 리스트 :</h3>
 		<h4>
-			[현재 회원:<%=memberTotalCount%>명(일반:<%=memberBasic%>명),(승인대기:<%=memberWait%>명),(큐레이터:<%=memberQ%>명),(관리자:<%=adminCount%>명)]
+			[현재 회원:<%=admin_memberLength%>명(일반:<%=memberBasic%>명),(승인대기:<%=memberWait%>명),(큐레이터:<%=memberQ%>명),(관리자:<%=adminCount%>명)]
 		</h4>
 		<h3 align="center">
-		<input type="button" value="메인으로"	onclick="location.href='./admin/amain.jsp'">	
+		<input type="button" value="메인으로"	onclick="location.href='<%=request.getContextPath()%>/admin'">	
 		</h3>
 	<div><!-- 현재회원 -->
 		<table border="1">
@@ -146,6 +166,27 @@
 
 		</table>
 		<div align="center">
+				<% // 현재 페이지 번호
+				for(int i = 0; i<admin_memberPage; i++){
+					if(admin_memberPageNumber == i ){
+				%>
+				<span style="font-size: 15pt; color: #0000ff; font-weight: bold;">
+					<%=i+1 %>
+				</span>&nbsp;
+				<% // 그외 페이지 번호
+					}else{
+				%>
+				<a href="#none" title="<%=i+1 %>페이지" onclick="GoPage(<%=i %>)"
+					style="font-size: 15pt; color: #000; font-weight: bold; text-decoration: none">
+					[<%=i +1 %>]
+				</a>&nbsp;
+				
+				<%
+					}
+				}
+				%>
+			</div>
+		<div align="center">
 			<input type="button" id="btn_memberDelete" value="탈퇴" onclick="memberDelete()">
 		</div>
 	</div><!-- // 현재회원 -->
@@ -178,21 +219,21 @@
 				<th><input type="checkbox" id="checkboxAll2" name="checkboxAll2"></th>
 			</tr>
 			<%
-				for (int i = 0; i < memberList.size(); i++) {
-					System.out.println(i + "번dto=" + memberList.get(i));
-					if (memberList.get(i).getDel() == 1) {
+				for (int i = 0; i < outMemberList.size(); i++) {
+					System.out.println(i + "번dto=" + outMemberList.get(i));
+					if (outMemberList.get(i).getDel() == 1) {
 			%>
 			<tr align="center">
 				<%
-					if (memberList.get(i).getAuth() == 0) {
+					if (outMemberList.get(i).getAuth() == 0) {
 				%>
 				<td align="left">[일반회원]</td>
 				<%
-					} else if (memberList.get(i).getAuth() == 1) {
+					} else if (outMemberList.get(i).getAuth() == 1) {
 				%>
 				<td align="left">[큐레이터(대기)]</td>
 				<%
-					} else if (memberList.get(i).getAuth() == 2) {
+					} else if (outMemberList.get(i).getAuth() == 2) {
 				%>
 				<td align="left">[큐레이터]</td>
 				<%
@@ -203,22 +244,22 @@
 					} // if 회원 구분
 				%>
 
-				<td><%=memberList.get(i).getId()%></td>
-				<td><%=memberList.get(i).getPassword()%></td>
-				<td><%=memberList.get(i).getName()%></td>
-				<td><%=memberList.get(i).getEmail()%></td>
-				<td><%=memberList.get(i).getAddress()%></td>
-				<td><%=memberList.get(i).getBirthday()%></td>
-				<td><%=memberList.get(i).getGender()%></td>
-				<td><%=memberList.get(i).getPhone()%></td>
-				<td><%=memberList.get(i).getQuestion()%></td>
-				<td><%=memberList.get(i).getHint()%></td>
-				<td><%=memberList.get(i).getAuth()%></td>
-				<td><%=memberList.get(i).getExhibit_name()%></td>
-				<td><%=memberList.get(i).getCerti_num()%></td>
+				<td><%=outMemberList.get(i).getId()%></td>
+				<td><%=outMemberList.get(i).getPassword()%></td>
+				<td><%=outMemberList.get(i).getName()%></td>
+				<td><%=outMemberList.get(i).getEmail()%></td>
+				<td><%=outMemberList.get(i).getAddress()%></td>
+				<td><%=outMemberList.get(i).getBirthday()%></td>
+				<td><%=outMemberList.get(i).getGender()%></td>
+				<td><%=outMemberList.get(i).getPhone()%></td>
+				<td><%=outMemberList.get(i).getQuestion()%></td>
+				<td><%=outMemberList.get(i).getHint()%></td>
+				<td><%=outMemberList.get(i).getAuth()%></td>
+				<td><%=outMemberList.get(i).getExhibit_name()%></td>
+				<td><%=outMemberList.get(i).getCerti_num()%></td>
 				
 				<td><input type="checkbox" id="checkbox2" name="checkbox2"
-					value="<%=memberList.get(i).getId()%>"></td>
+					value="<%=outMemberList.get(i).getId()%>"></td>
 			</tr>
 
 			<%
@@ -288,17 +329,17 @@ function memberDelete(){
 	   alert("선택한 회원 ID="+memDeleteList);
 		   $.ajax({
 				type : "POST",
-				url : "${pageContext.request.contextPath}/Member_Delete",
+				url : "${pageContext.request.contextPath}/Admin_Member?member=delete",
 				data : jsonData,  
 				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 				datatype : "text",
 		  		success : function(data) {
 		       		 alert("성공적으로 탈퇴처리 되었습니다.");
 		       		 console.log(data)
-		       		 //location.href="admin_memberList.jsp";
+		       		 
 		       		 if(data === true){
 		       			 
-		       			 location.href="${pageContext.request.contextPath}/Member_list";
+		       			 location.href="${pageContext.request.contextPath}/Admin_Member?member=list";
 		       		 }
 		        },
 		    	error : function(xhr,status,error) {
@@ -320,7 +361,7 @@ function memberRecover() {
 	   alert("선택한 회원 ID="+memRecoverList);
 		   $.ajax({
 				type : "POST",
-				url : "${pageContext.request.contextPath}/Member_Recover",
+				url : "${pageContext.request.contextPath}/Admin_Member?member=recovery",
 				data : jsonData,  
 				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 				datatype : "text",
@@ -329,7 +370,7 @@ function memberRecover() {
 		  				console.log(data)
 		       		 if(data === true){
 
-		       			 location.href="${pageContext.request.contextPath}/Member_list";
+		       			 location.href="${pageContext.request.contextPath}/Admin_Member?member=list";
 		       		 }
 		        },
 		    	error : function(xhr,status,error) {
@@ -339,6 +380,15 @@ function memberRecover() {
 				});// ajax end
   	}// if end
 }
+
+function GoPage(pageNum) {
+
+	
+	var linkStr = getContextPath() + "/Admin_Member?member=list&admin_memberPageNumber="+pageNum;
+	
+	location.href = linkStr;
+	
+};
 </script>
 
 
