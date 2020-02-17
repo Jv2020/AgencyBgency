@@ -2,15 +2,22 @@
 <%@page import="java.util.List"%>
 <%@page import="KEC.reserv.dao.ReservDao"%>
 <%@include file ="../include/header.jsp" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>    
-<%
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<%
+request.setCharacterEncoding("utf-8");
+
+// 로그인 세션
+MemberDto sdto = (MemberDto)session.getAttribute("loginuser");
+%>
+
+<%
 List<ExhibitDto>list = (List<ExhibitDto>)request.getAttribute("list");
 int listPage = (int)request.getAttribute("listPage");
 int pageNumber = (int)request.getAttribute("pageNumber");
 
 System.out.println(pageNumber);
-System.out.println(listPage); 
+System.out.println(listPage);
 
 %>
 
@@ -45,12 +52,12 @@ System.out.println(listPage);
 					<%if (list.get(i).getDel() == 1)  { %>
 					<span style="color:red;">예매취소</span>
 					<% } else { %>
-					<a href="#none">리뷰작성</a>
+					<a href="#" onclick="window.open('/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>&loginuser=<%=sdto.getId() %>', '_blank', 'writereview', 'width=800, height=600, left=100, top=50')">리뷰작성</a>
 					<% } %>
 				</td>
 			</tr>
 			<%
-				}				
+				}
 			%>					
 		</tbody>		
 	</table>	

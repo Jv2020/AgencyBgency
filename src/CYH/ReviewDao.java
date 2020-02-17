@@ -678,104 +678,104 @@ public class ReviewDao {
 	}
 	
 	//=================== 리뷰 게시판 용 ======================================================================================
-		// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
-		public List<ExhibitDto> getExhibitReview(int pageNum){
-			String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
-						+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
-						+ " FROM ( SELECT ROW_NUMBER()OVER ( ORDER BY BEGINDATE DESC ) AS RNUM, "
-								+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
-								+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
-								+ " FROM EXHIBIT "
-								+ " WHERE BEGINDATE <= SYSDATE ) "
-						+ " WHERE RNUM >= ? AND RNUM <= ? ";
-			Connection conn = null;
-			PreparedStatement psmt = null;
-			ResultSet rs = null;
+	// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
+	public List<ExhibitDto> getExhibitReview(int pageNum){
+		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
+					+ " FROM ( SELECT ROW_NUMBER()OVER ( ORDER BY BEGINDATE DESC ) AS RNUM, "
+							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+							+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
+							+ " FROM EXHIBIT "
+							+ " WHERE BEGINDATE <= SYSDATE ) "
+					+ " WHERE RNUM >= ? AND RNUM <= ? ";
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		// 페이징 시작과 끝
+		// 뿌릴 개수 : 5 
+		int start = 1 + pageNum * 5;	// 처음 페이지 인덱스는 0이 들어옴  
+		int end = 5 + pageNum * 5;		// 0번 페이지 : 1+0*5 = 1, 5+0*5 = 5
+		// 1 ~ 5, 6 ~ 10... 
+		
+		
+		try {
 			
-			List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, start);
+			psmt.setInt(2, end);
 			
-			// 페이징 시작과 끝
-			// 뿌릴 개수 : 5 
-			int start = 1 + pageNum * 5;	// 처음 페이지 인덱스는 0이 들어옴  
-			int end = 5 + pageNum * 5;		// 0번 페이지 : 1+0*5 = 1, 5+0*5 = 5
-			// 1 ~ 5, 6 ~ 10... 
+			rs = psmt.executeQuery();
 			
-			
-			try {
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++),
+												rs.getInt(i++),
+												rs.getString(i++));
+				list.add(dto);
 				
-				conn = DBConnection.getConnection();
-				psmt = conn.prepareStatement(sql);
-				psmt.setInt(1, start);
-				psmt.setInt(2, end);
-				
-				rs = psmt.executeQuery();
-				
-				while(rs.next()) {
-					int i = 1;
-					ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getString(i++), 
-													rs.getInt(i++), 
-													rs.getString(i++), 
-													rs.getString(i++),
-													rs.getInt(i++),
-													rs.getString(i++));
-					list.add(dto);
-					
-				}
-				
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			finally {
-				DBClose.close(psmt, conn, rs);
 			}
 			
-			return list;
 			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+		
+	}
 		// 페이징 할 때 모든 전시 콘텐츠 수 구하는 함수 
-		public int getReviewExhibitNum() {
-			
-			String sql =  " SELECT COUNT(*) "
-						+ " FROM EXHIBIT "
-						+ " WHERE BEGINDATE <= SYSDATE ";
+	public int getReviewExhibitNum() {
+		
+		String sql =  " SELECT COUNT(*) "
+					+ " FROM EXHIBIT "
+					+ " WHERE BEGINDATE <= SYSDATE ";
 
-			Connection conn = null;
-			PreparedStatement psmt = null;
-			ResultSet rs = null;
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int size = 0; 
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
 			
-			int size = 0; 
+			rs = psmt.executeQuery();
 			
-			try {
-				conn = DBConnection.getConnection();
-				psmt = conn.prepareStatement(sql);
-				
-				rs = psmt.executeQuery();
-				
-				if(rs.next()) {
-					size = rs.getInt(1);
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(rs.next()) {
+				size = rs.getInt(1);
 			}
-			finally {
-				
-				DBClose.close(psmt, conn, rs);
-				
-			}
-			
-			
-			return size;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		finally {
+			
+			DBClose.close(psmt, conn, rs);
+			
+		}
+		
+		
+		return size;
+	}
 }
 
 
