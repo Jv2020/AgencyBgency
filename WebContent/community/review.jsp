@@ -21,6 +21,7 @@ int pages = (int)Math.ceil(allContents / 5.0);	// 전체 페이지수를 pages�
 
 %>
 
+<div id="re-layoutWrap">
 <%
 List<ExhibitDto> list = (List<ExhibitDto>)request.getAttribute("list");
 
@@ -32,34 +33,36 @@ for(int i = 0; i < list.size(); i++) {
 	String enddate = dto.getEnddate().substring(0,11);
 %>
 
-	<div class="re-layout clfix">	
-		<div class="reviewImg"><a href="<%=request.getContextPath() %>/onereview?title=<%=dto.getTitle() %>&re_pageNum=0"><img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586" alt=""></a></div>
-		<div class="content">
-			<p><span>제 목</span><a href="<%=request.getContextPath() %>/onereview?title=<%=dto.getTitle() %>&re_pageNum=0"><%=dto.getTitle() %></a></p>
-			<p><span>장 소</span><%=dto.getPlace() %></p>
-			<p><span>날 짜</span><%=dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
+	<div class="re-layout clfix"><a href="<%=request.getContextPath() %>/onereview?title=<%=dto.getTitle() %>&re_pageNum=0">	
+		<div class="reviewImg"><img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586" alt=""></div>
+		<div class="reviewTxt">
+			<div class="t-cell">
+				<p><span>제 목</span><%=dto.getTitle() %></p>
+				<p><span>장 소</span><%=dto.getPlace() %></p>
+				<p><span>날 짜</span><%=dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
+			</div>
 		</div>	
-	</div>
+	</a></div>
 <%
 }
 %>
+</div>
 
-<div style="text-align: center">
+<div class="pagingWrap">
 	<%
 	for(int i = 0; i < pages; i++) {
 		if(i == pageNum) {
 			%>
-			<span><b><%=i + 1 %></b></span>
+			<span class="on"><%=i + 1 %></span>
 			<%
 		}
 		else{
 			%>
-			<span><a href="/AgencyBgencyy/showReviewList?pageNum=<%=i %>">[<%=i + 1 %>]</a></span>
+			<span onclick="location.href='/AgencyBgencyy/showReviewList?pageNum=<%=i %>'"><%=i + 1 %></span>
 			<%
-		}
-		
+		}		
 	}
-	 %>
+	%>
 </div>
 
 

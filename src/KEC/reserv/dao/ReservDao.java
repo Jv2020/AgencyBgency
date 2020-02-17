@@ -10,6 +10,7 @@ import java.util.List;
 import DB.DBClose;
 import DB.DBConnection;
 import KEC.reserv.dto.ReservDto;
+import KSJ.exhibit.dto.ExhibitDto;
 
 public class ReservDao {
 	
@@ -368,7 +369,116 @@ public class ReservDao {
 	
 	
 	
-	
+	// MYPAGE 관람한 전시 총 개수  ( 한 페이지당 10개씩 추출 )
+	public int getAllExhibit() {
+		String sql = " SELECT COUNT(*) FROM EXHIBIT ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int len = 0;
+		
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getAllExhibit success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getAllExhibit success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getAllExhibit success");
+			
+			if(rs.next()) {
+				len = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("getAllExhibit fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return len;		
+	}
+		
+	// MYPAGE 관람한 전시 list - paging 처리 	
+	public List<ExhibitDto> getExPagingList(int pageNumber) {
+		/*
+			1. row 번호
+			2. 검색
+			3. 정렬
+			4. 범위 1 ~ 10
+		*/
+		
+		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+				   + " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
+				   + " FROM ";
+		
+			   sql += " (SELECT ROWNUM AS RNUM, "
+			   		+ "	SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT , "
+			   		+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
+			   		+ " FROM EXHIBIT "
+					+ " ORDER BY ENDDATE DESC) ";
+		 
+			   sql += " WHERE RNUM >= ? AND RNUM <= ? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		int start, end;
+		start = 1 + 10 * pageNumber; // 0 -> 1	1 -> 11
+		end = 10 + 10 * pageNumber;  // 0 -> 10	1 -> 20
+				
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getExPagingList success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, start);
+			psmt.setInt(2, end);
+			System.out.println("2/6 getExPagingList success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getExPagingList success");
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++),
+												rs.getInt(i++),
+												rs.getString(i++));
+
+				
+				list.add(dto);
+				System.out.println("4/6 getExPagingList success");
+
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("getExPagingList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;	
+		
+	}
 	
 	
 }
