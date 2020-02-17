@@ -64,7 +64,7 @@ public void process(HttpServletRequest req, HttpServletResponse resp) throws Ser
         
         
 		// list 전송
-		req.getRequestDispatcher("./mypage/myexhibit.jsp").forward(req, resp);
+		req.getRequestDispatcher("/mypage/myexhibit.jsp").forward(req, resp);
 	}
 
 }

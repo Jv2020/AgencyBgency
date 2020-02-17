@@ -32,7 +32,7 @@ public class ReserveDelete extends HttpServlet {
 		System.out.println(isS);
 		
 		if(isS) {
-			resp.sendRedirect("/AgencyBgencyy/mypage/rsvdelete.jsp");
+			resp.sendRedirect("/AgencyBgencyy/reservelist");
 		}else {
 			
 		}

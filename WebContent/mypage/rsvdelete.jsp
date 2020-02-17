@@ -4,7 +4,7 @@
 
 <script>
 	alert("예매 취소되었습니다.");
-	location.href="<%=request.getContextPath()%>/mypage/myreserv.jsp"
+	location.href="<%=request.getContextPath()%>/reservelist"
 </script>
 
 

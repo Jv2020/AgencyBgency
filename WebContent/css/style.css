@@ -87,12 +87,31 @@
 #visual li p {height:570px; background-position:center top !important; background-size:cover !important;}
 
 #contents {}
-#contents > div {min-height:400px;}
+#contents > div {min-height:300px; padding-bottom:90px;}
 #contents > div:nth-child(even) {background:#f7f7f7;}
-.m_tit {text-align:center; font-size:0; padding:50px 0 0;}
+.m_tit {text-align:center; font-size:0; padding:50px 0 0; margin-bottom:50px;}
 .m_tit h2 {font-size:40px;}
 .m_tit span {display:inline-block; margin-top:15px; width:50px; height:3px; background:#5f0080;}
 .m_tit.admin {padding-bottom:40px;}
+
+/* 메인 - 공지사항 */
+.n-cont{}
+.n-cont li {float:left; width:330px; height:200px; margin-left:30px; box-shadow:0 0 10px rgba(0,0,0,0.2);}
+.n-cont li:first-child {margin-left:0;}
+.n-cont li a {position:relative; display:block; width:100%; height:100%; padding:30px 25px;}
+.n-cont li h3 {width:100%; color:#000; font-size:20px; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; transition:all 0.3s ease-in-out;}
+.n-cont li p {margin-top:10px;
+	heigth:48px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2; /* 라인수 */
+	-webkit-box-orient: vertical;
+	word-wrap:break-word; 
+	line-height: 24px;
+}
+.n-cont li span {display:block; line-height:1; position:absolute; bottom:20px; right:25px;}
+.n-cont li:hover h3 {color:#5f0080;} 
 
 .btn_top{position:fixed; bottom:0; right:15px; z-index:300; width:58px; height:58px;
 background: url(../images/main/btn_top.png) no-repeat 0 0/100% 100%; opacity: 0;

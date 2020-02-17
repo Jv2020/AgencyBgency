@@ -10,7 +10,7 @@
         </div>
 		전체메뉴
 	</a></li>
-	<li><a href="/AgencyBgencyy/about/aboutus.jsp">ABOUT US</a></li>
+	<li><a href="<%=request.getContextPath()%>/aboutusentrance">ABOUT US</a></li>
 	<li><a href="/AgencyBgencyy/exhibitlist">EXHIBIT</a></li>
 	<li><a href="/AgencyBgencyy/exhibitschedule">SCHEDULE</a></li>
 	<li><a href="/AgencyBgencyy/community/notice.jsp">COMMUNITY</a></li>					
@@ -21,7 +21,7 @@
 		<ul>
 			<li>
 				<strong>ABOUT US</strong>
-				<a href="#none">모두의 전시</a>
+				<a href="<%=request.getContextPath()%>/aboutusentrance">모두의 전시</a>
 			</li>
 			<li>
 				<strong>EXHIBIT</strong>

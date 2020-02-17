@@ -24,7 +24,7 @@ detail= radr[2];
 
 %>
 <style>
-.depth02.mypageDepth a.reservedepth{background:#5f0080; color:#fff;}
+.depth02.mypageDepth a.depthReserve{background:#5f0080; color:#fff;}
 </style>
 
 <div class="ConfirmFrm">

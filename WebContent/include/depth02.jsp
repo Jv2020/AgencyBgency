@@ -47,8 +47,7 @@ if (durl.contains("/mypage")){
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreview.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myreview.jsp">나의 리뷰
 	</a>
-	
-	<a class="<% if (durl.contains("reserv")){ %> active <% } %> reservedepth"	
+	<a class="depthReserve ${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreserv.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/reservelist">나의 예매내역
 	</a>
 	

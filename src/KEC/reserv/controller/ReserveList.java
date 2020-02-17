@@ -65,7 +65,7 @@ public class ReserveList extends HttpServlet{
         
         
 		// list 전송
-		req.getRequestDispatcher("./mypage/myreserv.jsp").forward(req, resp);
+		req.getRequestDispatcher("/mypage/myreserv.jsp").forward(req, resp);
 	}
 
 	

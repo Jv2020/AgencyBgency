@@ -63,7 +63,7 @@ public class ReservGet extends HttpServlet{
 		req.setAttribute("dto", dto);
 		
 		// 짐 보내기
-		req.getRequestDispatcher("./mypage/rsvwrite.jsp").forward(req, resp);
+		req.getRequestDispatcher("/mypage/rsvwrite.jsp").forward(req, resp);
 		
 	}
 

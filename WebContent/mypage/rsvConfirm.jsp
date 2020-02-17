@@ -23,7 +23,7 @@ detail= radr[2];
 
 %>
 <style>
-.depth02.mypageDepth a.reservedepth{background:#5f0080; color:#fff;}
+.depth02.mypageDepth a.depthReserve{background:#5f0080; color:#fff;}
 </style>
 
 <div class="ConfirmFrm">
@@ -103,8 +103,8 @@ detail= radr[2];
 		<div class="reserv_btnWrap">
 			<div class="clfix">
 				<button class="reserv_btn02" type="button" style="float:left; margin-left:0;" onclick="del()">예매취소</button>		
-				<a class="reserv_btn02 submit" style="float:left;" href="/AgencyBgencyy/reservget?seq=<%=dto.getSeq() %>&page=update">정보수정</a>
-				<a class="reserv_btn02" style="float:right; width:200px; background:#5f0080; color:#fff;" href="/AgencyBgencyy/exhibitlist">목록</a>7
+				<a class="reserv_btn02 submit" style="float:left;" href="<%=request.getContextPath()%>/reservget?seq=<%=dto.getSeq() %>&page=update">정보수정</a>
+				<a class="reserv_btn02" style="float:right; width:200px; background:#5f0080; color:#fff;" href="<%=request.getContextPath()%>/exhibitlist">목록</a>
 			</div>		
 		</div>
 		
@@ -134,10 +134,11 @@ $(".totalPrice strong").text(totalPrice);
 // 예매취소
 function del() {
 if(confirm("예매 취소하시겠습니까?")) {
-		// 확인 
-		location.href="/AgencyBgencyy/reservedelte?seq=<%=dto.getSeq() %>";
+		// 확인 		
+		alert("예매가 취소되었습니다");
+		location.href="/AgencyBgencyy/reservedelte?seq=<%=dto.getSeq() %>";		
 	} else {
-		// 취소 
+		// 취소 		
 	}
 }
 

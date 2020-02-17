@@ -177,12 +177,12 @@ public class ReservDao {
 				   + " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
 				   + " FROM ";
 		
-			   sql += " (SELECT ROWNUM AS RNUM, "
+			   sql += " ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC) AS RNUM,  "
 			   		+ "	SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
 			   		+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
-			   		+ " FROM RESERVATION "
-					+ " ORDER BY SEQ DESC) ";
-		 
+			   		+ " FROM RESERVATION) " ;
+					// + " ORDER BY SEQ DESC) ";
+
 		sql += " WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		Connection conn = null;
@@ -416,11 +416,10 @@ public class ReservDao {
 				   + " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
 				   + " FROM ";
 		
-			   sql += " (SELECT ROWNUM AS RNUM, "
+			   sql += " (SELECT ROW_NUMBER()OVER(ORDER BY ENDDATE DESC) AS RNUM, "
 			   		+ "	SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT , "
 			   		+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-			   		+ " FROM EXHIBIT "
-					+ " ORDER BY ENDDATE DESC) ";
+			   		+ " FROM EXHIBIT) ";
 		 
 			   sql += " WHERE RNUM >= ? AND RNUM <= ? ";
 		
