@@ -42,7 +42,7 @@ if (durl.contains("/mypage")){
 	href="/AgencyBgencyy/MyPageEntrance">회원정보
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myexhibit.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/myexhibit.jsp">관람한 전시
+	href="/AgencyBgencyy/myexhibitiist">관람한 전시
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreview.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/mypage/myreview.jsp">나의 리뷰

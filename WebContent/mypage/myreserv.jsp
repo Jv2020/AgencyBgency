@@ -13,36 +13,6 @@ System.out.println(pageNumber);
 System.out.println(listPage); 
 
 %>
-
-<style>
-/* mypage - 나의 예매내역 */
-#myReserve {width:100%;}
-table.reservetbl {width:100%; text-align:center;}
-table.reservetbl th {position:relative; height:50px; line-height:50px; background:#f7f7f7; border-top:1px solid #ddd; border-bottom:1px solid #ddd; font-weight:normal;}
-table.reservetbl th:before {position:absolute; top:50%; left:0; margin-top:-10px; content:''; width:1px; height:20px; background:#ddd;}
-table.reservetbl th:first-child:before {display:none;}
-table.reservetbl td {position:relative; padding:0 20px; height:80px; border-bottom:1px solid #ddd;}
-table.reservetbl td > span {
-	overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    word-wrap: break-word;
-    line-height:25px;
-    max-height:50px;
-}
-table.reservetbl td a, table.reservetbl td button {position:relative; z-index:1; display:inline-block; border:1px solid #5f0080; transition:all 0.3s ease-in-out; line-height:35px; padding:0 20px; color:#5f0080; overflow:hidden; outline:none;}
-table.reservetbl td a:before, table.reservetbl td button:before {position:absolute; top:0; left:0; transform: translate(-100%, 0); display:inline-block; transition:all 0.3s ease-in-out; width:100%; height:100%; content:''; background:#5f0080; z-index:-1;}
-table.reservetbl td a:hover, table.reservetbl td button:hover {color:#fff;}
-table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {transform: translate(0);}
-
-.pagingWrap {width:100%; text-align:center; font-size:0;}
-.pagingWrap span {position:relative; display:inline-block; width:35px; height:35px; line-height:35px; color:#333; font-size:18px; margin:50px 10px 0; cursor:pointer;}
-.pagingWrap span.on {color:#5f0080;}
-.pagingWrap span.on:before {position:absolute; bottom:0; left:50%; margin-left:-10px; content:''; width:20px; height:2px; background:#5f0080;}
-.pagingWrap span:hover {color:#5f0080;}
-</style>
 <div id="myReserve">	
 	<table class="reservetbl">
 		<colgroup>
