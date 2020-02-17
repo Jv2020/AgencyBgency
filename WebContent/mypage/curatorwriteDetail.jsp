@@ -62,7 +62,6 @@ public String makeDate(String date){
 	String mm = date.split("-")[1];
 	String dd = date.split("-")[2].split(" ")[0];
 
-	System.out.println(yy+"-"+mm+"-"+dd);
 	return yy+"-"+mm+"-"+dd;
 }
 %>
@@ -76,7 +75,7 @@ public String makeDate(String date){
 		<%
 	}else{
 		%>
-		 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=<%=titleFile.getFilepath()%>&filename=<%=titleFile.getFilename()%>"/>
+		 <img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/filedownload?filepath=<%=titleFile.getFilepath()%>&filename=<%=titleFile.getFilename()%>"/>
 		<%
 	}
 	%>

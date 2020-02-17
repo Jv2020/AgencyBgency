@@ -29,13 +29,13 @@ public class CuratorDelete extends HttpServlet {
 		if(exhibitDelete) {
 			System.out.println("전시 디비 지워짐 ");
 			// 파일 지우기 : false 일때는 이미지 파일이 없는 것 
-			resp.sendRedirect("./filedelete?seq="+seq);
+			//resp.sendRedirect("./filedelete?seq="+seq);
 			
 		}else {
 			System.out.println("전시 지우기 실패");
-			resp.sendRedirect("./mypage/curatorDeleteCheck.jsp?delete="+exhibitDelete);
 			
 		}
+		resp.sendRedirect("./mypage/curatorDeleteCheck.jsp?delete="+exhibitDelete);
 		
 	}
        

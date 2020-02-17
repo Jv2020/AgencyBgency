@@ -29,7 +29,6 @@ public String makeDate(String date){
 	String mm = date.split("-")[1];
 	String dd = date.split("-")[2].split(" ")[0];
 
-	System.out.println(yy+"-"+mm+"-"+dd);
 	return yy+"-"+mm+"-"+dd;
 }
 %>
