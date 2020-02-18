@@ -44,17 +44,7 @@ public class MemberDelete extends HttpServlet{
 		doGet(req, resp);
 		
 		
-//		MemberDao dao = MemberDao.getInstance();
-//		
-//		boolean bisS = dao.delMemberById(id);
-//		System.out.println("딜리트서블릿불린: "+bisS);
-//		String isS = String.valueOf(bisS);
-//		 System.out.println("딜리트서블릿스프링: "+isS);
-//		String gson = new Gson().toJson(bisS);
-//		
-//		PrintWriter out = resp.getWriter();
-//		out.write(isS);
-//		out.flush();
+
 		
 		
 	}

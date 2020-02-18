@@ -418,9 +418,8 @@ public class MemberDao {
 			DBClose.close(psmt, conn, rs);			
 		}
 		return count>0?true:false;
-		
-		
-	}
+	}	
+	
 	
 	//ADMIN MEMBER DELETE
 	public boolean member_delete(String[] deleteList) {

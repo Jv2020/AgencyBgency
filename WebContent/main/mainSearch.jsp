@@ -1,3 +1,4 @@
+<%@page import="BJH.notice.dto.NoticeDto"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="KSJ.exhibit.dto.ExhibitDto"%>
@@ -66,7 +67,7 @@ request.setCharacterEncoding("UTF-8");
 
 <style>
 /* main - 전체 검색 */
-#searchResult {width:100%;}
+.searchResult {width:100%;}
 table.searchtbl {width:100%; text-align:center;}
 table.searchtbl th {position:relative; height:50px; line-height:50px; background:#f7f7f7; border-top:1px solid #ddd; border-bottom:1px solid #ddd; font-weight:normal;}
 table.searchtbl th:before {position:absolute; top:50%; left:0; margin-top:-10px; content:''; width:1px; height:20px; background:#ddd;}
@@ -96,12 +97,13 @@ table.reservetbl td a:hover:before, table.reservetbl td button:hover:before {tra
 <%
 
 Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)request.getAttribute("exhibitDtolist");
+List<NoticeDto> noticeAllList = (List<NoticeDto>)request.getAttribute("noticeAllList");
 
 %>
 
 <!-- 전시제목 -->
 <h1>전시 제목에 대한 결과</h1>
-<div id ="searchResult">
+<div class ="searchResult">
 	<table class="searchtbl">
 		<colgroup>
 			<col style="width:35%">
@@ -150,10 +152,10 @@ Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)req
 		</tbody>
 	</table>
 </div>
-
+<br>
 <!-- 전시컨텐츠 -->
 <h1>전시 컨텐츠에 대한 결과</h1>
-<div id ="searchResult">
+<div class ="searchResult">
 	<table class="searchtbl">
 		<colgroup>
 			<col style="width:35%">
@@ -200,8 +202,8 @@ Map<String, List<ExhibitDto>> exhibitDtomap = (Map<String, List<ExhibitDto>>)req
 		</tbody>
 	</table>
 </div>
-
-
+<br>
+	
 
 
 <%@include file ="../include/footer.jsp" %>

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import BJH.notice.dao.NoticeDao;
+import BJH.notice.dto.NoticeDto;
 import KSJ.exhibit.dto.ExhibitDto;
 import NWH.mainSearch.dao.mainSearchDao;
 
@@ -22,6 +24,7 @@ public class MainSearch extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		req.setCharacterEncoding("UTF-8");
+		int page = 0;
 		
 		String searchWord = req.getParameter("mainSearchWord");
 		System.out.println("서치 컨트롤러: "+ searchWord);
@@ -43,15 +46,21 @@ public class MainSearch extends HttpServlet{
 		List<ExhibitDto> exhibitByContentList = dao.getExhibitListAfterSeachContent(searchWord);
 		if(exhibitByContentList.size()>0) {
 			System.out.println(exhibitByContentList.get(0).toString());
-			exhibitDtolist.put("content", exhibitByContentList);
+			exhibitDtolist.put("content",
+					exhibitByContentList);
 			
 		} else {
 			System.out.println("컨텐츠 	검색없음");
 		}
 		
+		NoticeDao noticeDao = NoticeDao.getInstance();
+		List<NoticeDto> noticeAllList = noticeDao.getNoticeList();
 		
+		req.setAttribute("noticeAllList", noticeAllList);
 		req.setAttribute("exhibitDtolist", exhibitDtolist);
 		req.getRequestDispatcher("/main/mainSearch.jsp").forward(req, resp);
+		
+		
 		
 	}
 	
