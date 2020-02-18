@@ -131,8 +131,8 @@ public class ReservDao {
 	}
 	
 	// 나의 예매내역 총 개수  ( 한 페이지당 10개씩 추출 )
-	public int getAllreserve() {
-		String sql = " SELECT COUNT(*) FROM RESERVATION ";
+	public int getAllreserve(String id) {
+		String sql = " SELECT COUNT(*) FROM RESERVATION WHERE ID = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -146,7 +146,7 @@ public class ReservDao {
 			
 			psmt = conn.prepareStatement(sql);
 			System.out.println("2/6 getAllreserve success");
-			
+			psmt.setString(1, id);
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getAllreserve success");
 			
@@ -165,7 +165,7 @@ public class ReservDao {
 	}
 	
 	// paging 처리 	
-	public List<ReservDto> getPagingList(int pageNumber) {
+	public List<ReservDto> getPagingList(int pageNumber, String id) {
 		/*
 			1. row 번호
 			2. 검색
@@ -180,7 +180,8 @@ public class ReservDao {
 			   sql += " ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC) AS RNUM,  "
 			   		+ "	SEQ, ID, NAME, BIRTHDATE, PHONE, EMAIL, ADDRESS, "
 			   		+ " RECEIVE, QTY, TOTAL_PRICE, PAY_METHOD, DEL, TITLE, RDATE, DURING "
-			   		+ " FROM RESERVATION) " ;
+			   		+ " FROM RESERVATION "
+			   		+ " WHERE ID = ? ) " ;
 					// + " ORDER BY SEQ DESC) ";
 
 		sql += " WHERE RNUM >= ? AND RNUM <= ? ";
@@ -200,8 +201,9 @@ public class ReservDao {
 			System.out.println("1/6 getPaging success");
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, start);
-			psmt.setInt(2, end);
+			psmt.setString(1, id);
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
 			System.out.println("2/6 getPaging success");
 			
 			rs = psmt.executeQuery();
@@ -370,8 +372,13 @@ public class ReservDao {
 	
 	
 	// MYPAGE 관람한 전시 총 개수  ( 한 페이지당 10개씩 추출 )
-	public int getAllExhibit() {
-		String sql = " SELECT COUNT(*) FROM EXHIBIT ";
+	public int getAllExhibit(String myId) {
+		String sql =  " SELECT COUNT(*) "
+				+ "	FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID  "
+						+ "  FROM RESERVATION "
+						+ " WHERE ID = ? )) r, Exhibit e "
+				+ " WHERE r.title = e.title ";
+	
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -384,7 +391,8 @@ public class ReservDao {
 			System.out.println("1/6 getAllExhibit success");
 			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getAllExhibit success");
+			System.out.println("2/6 getAllExhibit success");			
+			psmt.setString(1, myId);
 			
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getAllExhibit success");
@@ -404,7 +412,7 @@ public class ReservDao {
 	}
 		
 	// MYPAGE 관람한 전시 list - paging 처리 	
-	public List<ExhibitDto> getExPagingList(int pageNumber) {
+	public List<ExhibitDto> getExPagingList(int pageNumber, String loginId) {
 		/*
 			1. row 번호
 			2. 검색
@@ -414,14 +422,9 @@ public class ReservDao {
 		
 		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
 				   + " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-				   + " FROM ";
+				   + " FROM EXHIBIT "
+				   + " WHERE SEQ = ? ";
 		
-			   sql += " (SELECT ROW_NUMBER()OVER(ORDER BY ENDDATE DESC) AS RNUM, "
-			   		+ "	SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT , "
-			   		+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-			   		+ " FROM EXHIBIT) ";
-		 
-			   sql += " WHERE RNUM >= ? AND RNUM <= ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -438,8 +441,9 @@ public class ReservDao {
 			System.out.println("1/6 getExPagingList success");
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, start);
-			psmt.setInt(2, end);
+			psmt.setString(1, loginId);
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
 			System.out.println("2/6 getExPagingList success");
 			
 			rs = psmt.executeQuery();
@@ -479,5 +483,80 @@ public class ReservDao {
 		
 	}
 	
-	
+	// 관람한 전시 제목 불러오기
+	public List<ExhibitDto> getMyExhibitList(int pageNumber, String myId){
+		String sql =  " SELECT e.SEQ, e.BEGINDATE, e.ENDDATE, e.TITLE, e.PLACE, e.EX_TIME "
+					+ "	FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID  "
+							+ "  FROM RESERVATION "
+							+ " WHERE ID = ? )) r, Exhibit e "
+					+ " WHERE r.title = e.title AND r.RNUM >= ? AND r.RNUM <= ?";
+		
+		/*
+				 
+			SELECT r.seq, e.seq, e.title, e.begindate, e.enddate, e.ex_time, e.place
+		    FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID
+		                            FROM RESERVATION 
+		                            WHERE ID ='rrr111')) r, Exhibit e
+		    where r.title = e.title AND r.RNUM <=10;
+		    
+		*/
+		
+		
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;		
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		int start, end;
+		start = 1 + 10 * pageNumber; // 0 -> 1	1 -> 11
+		end = 10 + 10 * pageNumber;  // 0 -> 10	1 -> 20
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 getExPagingList success");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, myId);
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
+			System.out.println("2/6 getExPagingList success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getExPagingList success");
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												null, 
+												rs.getString(i++), 
+												null, 
+												0, 
+												null, 
+												null, 
+												0, 
+												null);
+				
+				list.add(dto);
+				System.out.println("4/6 getExPagingList success");
+
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("getExPagingList fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+		
+	}
 }

@@ -29,7 +29,6 @@ public class ReserveSet extends HttpServlet{
 		ExhibitDto dto = edao.getExDetail(seq);
 		
 		req.setAttribute("exhibitDto", dto);
-		
 		RequestDispatcher dis = req.getRequestDispatcher("./reservation/reserv.jsp");
 		dis.forward(req, resp);
 				

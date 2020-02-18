@@ -6,9 +6,18 @@
 // 전시 디테일 dto
 ExhibitDto edto = (ExhibitDto)request.getAttribute("exhibitDto");
 //System.out.println("edto title : " + edto.getTitle());
-
+if(edto != null ){
+	System.out.println("null");
+	System.out.println(edto.getTitle());
+	System.out.println(edto);
+}
 // member 
 MemberDto mem = (MemberDto)session.getAttribute("loginuser");
+
+if(mem != null ){
+//	System.out.println("me null");
+	System.out.println("mem: " + mem.toString());
+}
 
 // email - split
 String email = mem.getEmail();
@@ -23,7 +32,7 @@ detail= madr[2];
 	
 }
 
-%>	
+%>
 
 <div class="reserv_exInfo">
 	<h3><%=edto.getTitle() %></h3>
@@ -131,7 +140,7 @@ detail= madr[2];
 			
 		</form><!-- // insertFrm -->
 	</div><!-- // insertFrm -->
-</div><!-- // reservePage -->
+</div><!-- // reservePage --> 
 <!-- 카카오 주소 검색 -->
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>

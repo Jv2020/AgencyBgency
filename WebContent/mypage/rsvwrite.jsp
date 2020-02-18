@@ -116,13 +116,9 @@ detail= radr[2];
 	</form><!-- ConfirmFrm -->
 </div><!-- formWrap -->
 
-<script type="text/javascript">
-jQuery.noConflict();
-var j$ = jQuery;
-</script>
+
 
 <script>
-
 
 var total = <%=dto.getTotalPrice() %>;	
 

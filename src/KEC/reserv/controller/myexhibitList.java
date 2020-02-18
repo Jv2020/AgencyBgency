@@ -8,9 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import KEC.reserv.dao.ReservDao;
 import KSJ.exhibit.dto.ExhibitDto;
+import NWH.member.dto.MemberDto;
 
 @WebServlet("/myexhibitiist")
 public class myexhibitList extends HttpServlet{
@@ -43,8 +45,14 @@ public void process(HttpServletRequest req, HttpServletResponse resp) throws Ser
 		// singleton
 		ReservDao dao = ReservDao.getInstance();		
 		
+		HttpSession session = req.getSession();
+		MemberDto loginuser = (MemberDto)session.getAttribute("loginuser");
+		String myId = loginuser.getId();
+		
+		List<ExhibitDto> list = dao.getMyExhibitList(pageNumber, myId); // list / paging	
+		
 		int len = 0;
-		len = dao.getAllExhibit();
+		len = dao.getAllExhibit(myId);
 		System.out.println("총 글의 갯수:" + len);
 
 		int listPage = len / 10;	// 예: 22개의 글 -> 3페이지
@@ -54,8 +62,6 @@ public void process(HttpServletRequest req, HttpServletResponse resp) throws Ser
 
 		System.out.println(listPage);
 		
-
-		List<ExhibitDto> list = dao.getExPagingList(pageNumber); // list / paging	
 
         // 데이터(list) 포장
         req.setAttribute("list", list);       
