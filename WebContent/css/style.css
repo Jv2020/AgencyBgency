@@ -135,8 +135,14 @@ ul.tab {text-align:center;}
 ul.tab li {float:left; width:25%; height:50px; line-height:48px; border:1px solid #5f0080; font-size:18px; color:#5f0080; border-left:0; cursor:pointer;}
 ul.tab li:first-child {border-left:1px solid #5f0080;}
 ul.tab li.on {background:#5f0080; color:#fff;}
+
+#dot {position:fixed; top:50%; margin-top:-75px; right:0;}
+#dot li {font-size:15px; line-height:30px; padding:0 20px; margin-top:10px;}
+#dot li:first-child {margin-top:0;}
+#dot li.on a {color:#5f0080;}
+
 .tabcontWrap {margin-top:50px;}
-.tabcontWrap .tab_con {}
+.tabcontWrap .tab_con {margin-top:100px;}
 .tabcontWrap .tab_con h3 {text-align:center; color:#333; font-size:35px;}
 .admin-btn{width:100%; text-align:right; overflow:hidden; font-size:0; margin:20px 0 20px;}
 .admin-btn span {display:block; float:left; font-size:17px; color:#333; line-height:40px; font-weight:bold;}

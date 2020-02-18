@@ -106,17 +106,17 @@
 				<span></span>
 			</div>
 			<!-- //m_tit -->
-
-			<ul class="tab clfix">
-				<li class="on">공지사항관리</li>
-				<li>전시관리</li>
-				<li>큐레이터 승인</li>
-				<li>회원 관리</li>
+			
+			<ul id="dot">
+				<li><a href="#admin01">공지사항관리</a></li>
+				<li><a href="#admin02">전시관리</a></li>
+				<li><a href="#admin03">큐레이터승인</a></li>
+				<li><a href="#admin04">회원관리</a></li>
 			</ul>
 
 			<div class="tabcontWrap">
 				<!-- 공지사항 시작 -->
-				<div class="tab_con">
+				<div class="tab_con" id="admin01">
 					<h3>공지사항관리</h3>
 					<div class="admin-btn">
 						<span>총 게시글 수: <%=noticeLength%>개</span>
@@ -226,7 +226,7 @@
 						
 				
 				<!-- 전시관리 시작 -->	
-				<div class="tab_con">
+				<div class="tab_con" id="admin02">
 					<h3>전시관리</h3>
 					<div class="admin-btn">
 						<span>총 등록 수: <%=exhibitLength%>개</span>
@@ -323,7 +323,7 @@
 				</div><!-- // 전시관리 끝  -->
 				
 				<!-- 큐레이터 승인 시작 -->	
-				<div class="tab_con">
+				<div class="tab_con" id="admin03">
 					<h3>큐레이터 승인</h3>
 					<div class="admin-btn">
 						<span>총 신청 수: <%=accessLength%>개</span>
@@ -409,7 +409,7 @@
 				</div><!-- // 큐레이터 승인 끝  -->
 				
 				<!-- 회원 관리 시작 -->	
-				<div class="tab_con">
+				<div class="tab_con" id="admin04">
 					<form action="<%=request.getContextPath()%>/Admin_Member?member=search" method="POST">
 						<h3>회원 관리</h3>			
 						<table class="admintbl mt40">
@@ -441,15 +441,9 @@
 		<!-- //inner -->
 	</div>
 	<!-- //wrap -->
+
 <script type="text/javascript">
-// tab menu
-var cnt = 0;
-$('.tabcontWrap > .tab_con').hide().eq(0).show();
-$('.tab li').click(function() {
-   cnt = $(this).index()
-   $('.tab li').removeClass('on').eq(cnt).addClass('on');
-   $('.tabcontWrap .tab_con').hide().eq(cnt).fadeIn();
-});
+
 
 // 공지 삭제
 $("#btn_noticeDelete").click(function(){
