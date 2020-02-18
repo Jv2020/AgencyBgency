@@ -378,7 +378,7 @@ public class ExhibitDao {
 					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 					+ " FROM EXHIBIT "
 					+ " WHERE  TO_CHAR(ENDDATE,'YYMM') > TO_CHAR(SYSDATE,'YYMM') AND "
-					+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')  AND DEL = 0 ) "
+							+ " TO_CHAR(BEGINDATE,'YYMM') < TO_CHAR(SYSDATE,'YYMM')  AND DEL = 0 ) "
 					+ " WHERE RNUM = 1 ";
 
 		Connection conn = null;
@@ -659,6 +659,7 @@ public class ExhibitDao {
 		System.out.println("1");
 		
 		try {
+			
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
 			System.out.println("1");

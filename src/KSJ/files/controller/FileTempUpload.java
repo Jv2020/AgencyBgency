@@ -2,6 +2,7 @@ package KSJ.files.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +29,7 @@ public class FileTempUpload extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 	
 		
-		 System.out.println("file download connected");
+		 System.out.println("file tempupload connected");
 
 		//2가지 방법이 있음
 		//1. tomcat에 배포(Server)	-> 자료가 사라질 가능성 있음()
@@ -97,17 +98,19 @@ public class FileTempUpload extends HttpServlet {
 						// fileload
 						// file 일 때
 						if(item.getFieldName().equals("file")){	// fileload 일 때
-							filename = processUploadFile(item, fupload);
+							origin_name = processUploadFile(item, fupload);
 							// item을 만들어서 fuload라는 경로에 넣어두어라
 						}
 					}
 				}
-				
-			File oldfile1 = new File(fupload,origin_name);
-			File newfile = new File(fupload,filename);
+				System.out.println("origin_name:"+origin_name);
+				String fname = (new Date().getTime()) + "__";
+				filename = fname + origin_name;
+				File oldfile1 = new File(fupload,origin_name);
+				File newfile = new File(fupload,filename);
 			
 			if(oldfile1.exists()) {
-//				System.out.println("파일이름 바꿔랑");
+				System.out.println("파일이름 바꿔랑");
 				oldfile1.renameTo(newfile);
 			}
 			System.out.println("filename: "+ filename );

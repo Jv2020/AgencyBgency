@@ -21,7 +21,7 @@ public class FileDelete extends HttpServlet {
 		
 		System.out.println("file 지우는 서블릿으로 이동 ");
 		FilesDao fdao = FilesDao.getInstance();
-		boolean filesDelete = fdao.deleteExhibit("exhibit", seq);
+		boolean filesDelete = fdao.deleteExhibitFile("exhibit", seq);
 		
 		resp.sendRedirect("./mypage/curatorDeleteCheck.jsp?delete="+filesDelete);
 			

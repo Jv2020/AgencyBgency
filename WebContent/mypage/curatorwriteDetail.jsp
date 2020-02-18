@@ -36,19 +36,19 @@ else{
 	// 표지 파일 이름
 	FilesDto titleFile =(FilesDto)request.getAttribute("fdto");
 	boolean imgExist = true;
-	if(titleFile==null){
+	if(titleFile == null){
 		imgExist = false;
-	System.out.println("imgExist:"+imgExist);
 		
 	}
+	System.out.println("imgExist:"+imgExist);
 	//String filepath = (String)request.getAttribute("filepath");
 	//String filename = (String)request.getAttribute("filename");
 	//
 	//System.out.println(filename);
 	//System.out.println(filepath); 
 	
-	String begindate = edto.getBegindate().substring(0, 4)+"-"+ edto.getBegindate().substring(4, 6)+"-"+ edto.getBegindate().substring(6);
-	String enddate = edto.getEnddate().substring(0, 4)+"-"+ edto.getEnddate().substring(4, 6)+"-"+ edto.getEnddate().substring(6);
+	//String begindate = edto.getBegindate().substring(0, 4)+"-"+ edto.getBegindate().substring(4, 6)+"-"+ edto.getBegindate().substring(6);
+	//String enddate = edto.getEnddate().substring(0, 4)+"-"+ edto.getEnddate().substring(4, 6)+"-"+ edto.getEnddate().substring(6);
 	
 	/* 
  */	
