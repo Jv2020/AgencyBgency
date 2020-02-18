@@ -2,6 +2,7 @@ package KSJ.files.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,6 +21,9 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import com.google.gson.Gson;
 
+import KSJ.files.dao.FilesDao;
+import KSJ.files.dto.FilesDto;
+
 @WebServlet("/fileupload")
 public class FileUpload extends HttpServlet {
 
@@ -29,8 +33,6 @@ public class FileUpload extends HttpServlet {
 	
 		
 		 System.out.println("file upload to content connected");
-
-//		String fupload = "/Users/sunjukim/Desktop/tmp_pic/";		// 하드의 특정 공간에 저장
 
 		String filepath = "/upload/content/";
 		String fupload = req.getSession().getServletContext().getRealPath(filepath);
@@ -54,7 +56,14 @@ public class FileUpload extends HttpServlet {
 
 		// file name
 		String filename = "";
+		
+		// 디비에 담기위해
+		List<String> filenames = new ArrayList<String>();
+		List<String> origin_names = new ArrayList<String>();
+		
+		// 
 
+		Map<String, String> map = new HashMap<>();
 		// multipart 가 맞는지 확인
 		boolean isMultipart = ServletFileUpload.isMultipartContent(req);
 
@@ -77,6 +86,7 @@ public class FileUpload extends HttpServlet {
 			// list 저장 -> id, title, content, file 등을 저장
 			List<FileItem> items;
 			
+			
 			try {
 				items = upload.parseRequest(req);
 				// list에서 get 아닌 iterator로 꺼낸다
@@ -84,33 +94,37 @@ public class FileUpload extends HttpServlet {
 				
 				// 데이터 구분하기 (form과 file 데이터 구분하기)
 				while(it.hasNext()){
-					
 					FileItem item = it.next();
 					if(!item.isFormField()){	
-						// fileload
 						// file 일 때
 						if(item.getFieldName().equals("file")){	// fileload 일 때
-							filename = processUploadFile(item, fupload);
+							origin_name = processUploadFile(item, fupload);
+							origin_names.add(origin_name);
 							// item을 만들어서 fuload라는 경로에 넣어두어라
 						}
+					}else {
+						//filename
+						if(item.getFieldName().equals("filename")){
+							filename = item.getString("utf-8");
+							filenames.add(filename);
+							System.out.println("filename!!!!! " + filename);
+						}
+						
 					}
 				}
+			// 파일 이름 바꿔주기 	
+			for(int i=0; i < filenames.size(); i++) {
+				File oldfile1 = new File(fupload,origin_names.get(i));
+				File newfile = new File(fupload,filenames.get(i));
 				
-			File oldfile1 = new File(fupload,origin_name);
-			File newfile = new File(fupload,filename);
-			
-			if(oldfile1.exists()) {
-//				System.out.println("파일이름 바꿔랑");
-				oldfile1.renameTo(newfile);
+				if(oldfile1.exists()) {
+	//				System.out.println("파일이름 바꿔랑");
+					oldfile1.renameTo(newfile);
+				}
 			}
-			System.out.println("filename: "+ filename );
-			System.out.println("file_seq: "+ file_seq);
-			System.out.println("bbs_name: "+ bbs_name);
-			System.out.println("bbs_seq: "+ bbs_seq);
-			System.out.println("filepath: "+ filepath);
-			System.out.println("orgin_name: "+ origin_name);
-				
-				
+			
+			
+			
 			} catch (FileUploadException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -122,15 +136,12 @@ public class FileUpload extends HttpServlet {
 			System.out.println("multipart가 아님");
 			
 		}
-		Map<String, String> map = new HashMap<>();
-		map.put("filename",filename);
-		map.put("filepath",filepath);
-		map.put("origin_name",origin_name);
+		
+		
 
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("utf-8");
-		String gson = new Gson().toJson(map);
-		resp.getWriter().write(gson);
+		resp.getWriter().write("file upload to /upload/content/");
 		
 	}
 

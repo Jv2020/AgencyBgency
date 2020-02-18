@@ -37,7 +37,8 @@ public class ExhibitInsert extends HttpServlet {
 		 resp.setCharacterEncoding("utf-8");
 		
 			
-		 List<FilesDto> flist = new ArrayList<>();
+		List<String> filenames = new ArrayList<String>();
+		List<String> origin_names = new ArrayList<String>();
  		// 파일 업로딩 	
 		// FileDto - 표지 이미지만 우선 저장하기 
 
@@ -83,6 +84,7 @@ public class ExhibitInsert extends HttpServlet {
 		String origin_name ="";	//origin_name
 		String bbs_name = "exhibit";
 		String sfile_seq = "";
+		String contentfilename = "";
 		
 		int price = -1;
 		int bbs_seq = -1;	// 이거는 전시 insert 후에 메소드로 받아오기 
@@ -154,6 +156,14 @@ public class ExhibitInsert extends HttpServlet {
 							sfile_seq = item.getString("utf-8");
 							file_seq = Integer.parseInt(sfile_seq);
 						}
+						else if(item.getFieldName().equals("contentfilename")){
+							contentfilename = item.getString("utf-8");
+							filenames.add(contentfilename);
+							System.out.println("contentfilename:"+contentfilename);
+							String orgin = contentfilename.split("__")[1];
+							origin_names.add(orgin);
+							System.out.println("orginfilename:"+orgin);
+						}
 					}
 						else{	
 //						// file 일 때
@@ -163,6 +173,7 @@ public class ExhibitInsert extends HttpServlet {
 						}
 					}
 				}
+				
 				// 파일 이름 바꾸기 
 				File oldfile1 = new File(fupload,origin_name);
 				File newfile = new File(fupload,filename);
@@ -170,6 +181,7 @@ public class ExhibitInsert extends HttpServlet {
 				if(oldfile1.exists()) {
 					oldfile1.renameTo(newfile);
 				}
+				 
 					
 
 				
@@ -184,6 +196,9 @@ public class ExhibitInsert extends HttpServlet {
 			System.out.println("multipart가 아님");
 			resp.sendRedirect("./main/main.jsp");
 		}
+		
+		
+		
 		
 		
 		System.out.println("title : "+title);
@@ -204,46 +219,73 @@ public class ExhibitInsert extends HttpServlet {
 		System.out.println("filepath: "+ filepath);
 		System.out.println("orgin_name: "+ origin_name);
 
-		
+	
+		 
 		ExhibitDao dao = ExhibitDao.getInstance();;
 		FilesDao fdao = FilesDao.getInstance();
 		// dto로 정보 담기 
-		ExhibitDto dto = new ExhibitDto(-1, begindate, enddate, title, place, content, ex_time, 
+		ExhibitDto edto = new ExhibitDto(-1, begindate, enddate, title, place, content, ex_time, 
 				loc_info, 0, contact, certi_num, price, filename);
 		
 		
+		// 콘텐츠 파일 디비에 입력하기 위한 Dto 작성 
+		List<FilesDto> flist = new ArrayList<FilesDto>();
+
+		
+		//boolean insertdContentFile = dao.insertContentFile(flist);
+//		System.out.println(b);
+
+		boolean insertExhibitSuccess = dao.insertExhibit(edto);
 		 
-		boolean b = dao.insertExhibit(dto);
-		 
-		if(b) {
+		if(insertExhibitSuccess) {
 			System.out.println("전시 디비 입력 성공 ");
 			bbs_seq = fdao.getExhibitSeq(filename);	// 파일에 저장하기 위해 시퀀스 불러오기 
 			System.out.println("bbs_seq : " + bbs_seq);
-			FilesDto fdto = new FilesDto(-1, filename, origin_name, filepath, bbs_name, bbs_seq, 0, file_seq);
-			flist.add(fdto);
+			// Title Img -> dto 
+			FilesDto titleDto = new FilesDto(-1, filename, origin_name, filepath, bbs_name, bbs_seq, 0, file_seq);
 			
-			System.out.println(fdto.toString());
+			// contentImg -> dto
+			for(int i=0; i< filenames.size(); i++) {
+				FilesDto contentDto = new FilesDto(-1, 	// seq  db에서 입력 
+											filenames.get(i), // new filename 
+											origin_names.get(i),	// old origin_name
+											"/upload/content/", 	// filepath
+											"exhibit", 				// bbs_name
+											bbs_seq, 	// bbs_seq : dao에서 넣기 
+											0,		// del
+											i+2 );	// file_seq
+				flist.add(contentDto);
+			}
+			
+			System.out.println(titleDto.toString());
 			//req.setAttribute("newFiles", newFile);
 			
-			boolean fileSuccess = fdao.insertFile(fdto);
+			boolean titleSuccess = fdao.insertFile(titleDto);
 			
-			if(fileSuccess) {
+			if(titleSuccess) {
+				System.out.println("Title file into database succeed");
 				
-				req.setAttribute("edto", dto);
-				req.setAttribute("flist", flist);
-				req.setAttribute("filename", filename);
-				req.setAttribute("filepath", filepath);
+				boolean contentSuccess = fdao.insertContentFile(flist);
 				
-				System.out.println("send filepath :"+filepath);
-				System.out.println("send filepath :"+filename);
-			
-				
-				RequestDispatcher dis = req.getRequestDispatcher("./mypage/curatorwriteDetail.jsp");
-				dis.forward(req, resp);
+				if(contentSuccess) {
+					System.out.println("content files into database succeed");
+					
+					resp.sendRedirect("./exhibitcuratordetail?seq="+bbs_seq);
 
+				}else {
+					System.out.println("fail to save conetent to db");
+					resp.sendRedirect("./curatorexhibitlist?page=0");
+				}
+
+			}else {
+				System.out.println("fail to save title to db");
+				resp.sendRedirect("./curatorexhibitlist?page=0");
 			}
+			
+		}else {
+			System.out.println("fail to save exhibit to db");
+			resp.sendRedirect("./curatorexhibitlist?page=0");
 		}
-
 		
 	}
 	

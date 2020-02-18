@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import DB.DBClose;
 import DB.DBConnection;
@@ -142,27 +143,27 @@ public class FilesDao {
 	}
 	
 	// 전시 삭제하기
-		public boolean deleteExhibit(String bbs_name ,int bbs_seq) {
+		public boolean deleteExhibitFile(String bbs_name ,int bbs_seq) {
 			String sql=   " UPDATE FILES "
 						+ " SET DEL = 1 "
 						+ " WHERE BBS_NAME = ? AND BBS_SEQ = " + bbs_seq;
 			Connection conn = null;
 			PreparedStatement psmt = null;
 
-			int count[] = null;
-			boolean result =true;
+			int count[] = new int[100];
+			boolean result = true;
 			
 			try {
 
 				conn = DBConnection.getConnection();
 				
 				//commit 
-				conn.commit();
 				conn.setAutoCommit(false);
 				
 				psmt = conn.prepareStatement(sql);
 				
-				for (int i = 0; i < psmt.getUpdateCount(); i++) {
+				System.out.println(" psmt.getUpdateCount():"+ psmt.getUpdateCount());
+				for (int i = 0; i < 100; i++) {
 					
 					psmt.setString(1, bbs_name);
 					psmt.addBatch();
@@ -171,8 +172,9 @@ public class FilesDao {
 				count = psmt.executeBatch();
 				
 				for (int i = 0; i < count.length; i++) {
-					if(count[i]<=0) {
+					if(count[i]!=-2) {
 						result = false;
+						break;
 					}
 				}
 				
@@ -182,7 +184,7 @@ public class FilesDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 				try {
-					conn.rollback();
+					conn.rollback();	// 오류시 롤백 
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -203,6 +205,76 @@ public class FilesDao {
 			
 		}
 	
+	
+		// content file 업로드
+		public boolean insertContentFile(List<FilesDto> flist) {
+			String sql =  " INSERT INTO FILES ( SEQ, FILENAME, ORIGIN_NAME, FILEPATH, BBS_NAME, BBS_SEQ, DEL, FILE_SEQ )"
+						+ " VALUES ( SEQ_FILES.NEXTVAL, ?, ?, ?, ?, ?, 0, ? ) ";
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+
+			int count[] = new int[flist.size()];
+			boolean result = true;
+			
+			try {
+
+				conn = DBConnection.getConnection();
+				
+				//commit 
+				conn.setAutoCommit(false);
+				
+				psmt = conn.prepareStatement(sql);
+				
+				System.out.println(" psmt.getUpdateCount():"+ psmt.getUpdateCount());
+				for (int i = 0; i < count.length; i++) {
+					FilesDto dto = flist.get(i);
+					
+					psmt.setString(1, dto.getFilename() );
+					psmt.setString(2, dto.getOriginName());
+					psmt.setString(3, dto.getFilepath());
+					psmt.setString(4, dto.getBbsName());
+					psmt.setInt(5, dto.getBbsSeq());
+					psmt.setInt(6, dto.getFile_seq());
+					psmt.addBatch();
+				}
+
+				count = psmt.executeBatch();
+				
+				for (int i = 0; i < count.length; i++) {
+					if(count[i]!=-2) {
+						result = false;
+						break;
+					}
+				}
+				
+				
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				try {
+					conn.rollback();	// 오류시 롤백 
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+			finally {
+				try {
+					conn.commit();
+					conn.setAutoCommit(true);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				DBClose.close(psmt, conn, null);
+			}
+			
+			return result;
+			
+		}
+		
 	
 	
 }

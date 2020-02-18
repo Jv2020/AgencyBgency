@@ -20,22 +20,23 @@ public class CuratorDelete extends HttpServlet {
 		int seq = Integer.parseInt(sseq);
 		
 		System.out.println("지우는 서블릿으로 이동 ");
+		System.out.println("seq : " +seq);
 		// 전시 del
-		ExhibitDao edao = ExhibitDao.getInstance();
-		boolean exhibitDelete = edao.deleteExhibit(seq);
+		ExhibitDao edaooo = ExhibitDao.getInstance();
+		boolean exhibitDelete = edaooo.deleteExhibit(seq);
 		
 		// 파일 del
 		
 		if(exhibitDelete) {
 			System.out.println("전시 디비 지워짐 ");
 			// 파일 지우기 : false 일때는 이미지 파일이 없는 것 
-			//resp.sendRedirect("./filedelete?seq="+seq);
+			resp.sendRedirect("./filedelete?seq="+seq);
 			
 		}else {
 			System.out.println("전시 지우기 실패");
+			resp.sendRedirect("./mypage/curatorDeleteCheck.jsp?delete="+exhibitDelete);
 			
 		}
-		resp.sendRedirect("./mypage/curatorDeleteCheck.jsp?delete="+exhibitDelete);
 		
 	}
        

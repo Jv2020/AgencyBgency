@@ -19,14 +19,7 @@ public class ExhibitCuratorDetail extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-/*
-		req.setAttribute("edto", dto);
-		req.setAttribute("flist", flist);
-		req.setAttribute("filename", filename);
-		req.setAttribute("filepath", filepath);
- */		
 		String sseq = req.getParameter("seq");
-		String certi_num = req.getParameter("certi_num");
 		
 		int seq = Integer.parseInt(sseq);
 		ExhibitDao edao = ExhibitDao.getInstance();
@@ -41,6 +34,8 @@ public class ExhibitCuratorDetail extends HttpServlet {
 		
 		req.setAttribute("edto", edto);
 		req.setAttribute("fdto", fdto);
+		System.out.println("fdto:"+fdto) ;
+		System.out.println("edto:"+edto) ;
 		
 		req.getRequestDispatcher("./mypage/curatorwriteDetail.jsp").forward(req, resp);;
 		

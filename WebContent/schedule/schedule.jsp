@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" integrity="sha384-v8BU367qNbs/aIZIxuivaU55N5GPF89WBerHoGA4QTcbUjYiLQtKdrfXnqAcXyTv" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="/AgencyBgencyy/schedule/css/schedule.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<%! 
+<%-! 
 // 현재 날짜 확인하기
 public String getDate(){
 	Calendar cal = Calendar.getInstance();

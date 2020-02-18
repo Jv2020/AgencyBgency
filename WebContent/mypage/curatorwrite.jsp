@@ -255,7 +255,7 @@ request.setCharacterEncoding("UTF-8");
 		      enctype: 'multipart/form-data',
 		      success: function (url) { 
 		        var key = ('img_' + keyCnt);
-		    	console.log(url);
+		    	//console.log(url);
 		    	fileArray.push({
 		    		'key': key,
 		    		'filename': url.filename,
@@ -321,6 +321,9 @@ $("#writeBtn").click(function() {
 	
 	var contentHtml = $('#content').val();
 	
+	console.log(tempArr);
+	console.log(fileArray);
+	
 	var splitedCode = contentHtml.split('<img ');
 	var tempArr =[];
 	for (var ele of splitedCode) {
@@ -341,9 +344,15 @@ $("#writeBtn").click(function() {
 		tempArr.push(obj);
 		
 	}
+	/*  
 	console.log(tempArr);
+	console.log(fileArray);
+	*/
 	
-	return; // submit 막음 
+	
+	//return; // submit 막음 
+	
+	
 	
 	// 전시 날짜 확인 
 	var start = datepicker1.toLocaleDateString();
@@ -396,17 +405,70 @@ $("#writeBtn").click(function() {
 	//alert(ex_time);
 	
 	if(confirm("전시를 등록하시겠습니까?")){
+		var titleAddText = today.getTime();
+		
 		$("#frm").attr("action","${pageContext.request.contextPath}/exhibitinsert");
 		
+		var fileLength =fileArray.length;
 		
+		// 파일데이터를 담을 formData
+		let data = new FormData;
 		
-		
+		for(var i = 0; i < fileLength; i++){
+			var check = 0;
+			for(var j = 0; j < tempArr.length; j++  ){
+				if(fileArray[i].filename === tempArr[j].filename && 
+						fileArray[i].filepath === tempArr[j].filepath && 
+							fileArray[i].key === tempArr[j].key ) {
+					console.log("이거는 있는 컨텐츠: "+fileArray[i].filename);
+					check=1;
+					 fileArray[i].file.name = fileArray[i].filename;
+					
+				 	data.append("file", fileArray[i].file );
+				 	data.append("filename", fileArray[i].filename );
+				 	$("#frm").append("<input type='hidden' name='contentfilename' value='"+fileArray[i].filename+"'>");
+					break;
+				}
+			}
+			if(check == 0){
+				//console.log("이거는 없는 컨텐츠: "+fileArray[i].filename);
+				var s = fileArray.splice(i,1);
+				//console.log(s);
+			}
+		}
 
-		var modifiedContent = contentHtml.replace(/\/upload\/temp/gi, '/upload/content');
-		console.log(modifiedContent);
-		/* 
+		// return;
+		console.log(fileArray);
+		console.log(data);
+		// ajax로 콘텐츠 사진부터 업로드하기 
+		$.ajax({
+		      data: data,
+		      type: 'POST',
+		      url: "/AgencyBgencyy/fileupload",
+		      cache: false,
+		      contentType: false,
+		      processData: false,
+		      enctype: 'multipart/form-data',
+		      success: function (url) { 
+		    	console.log(url);
+		    	
+		      }
+		   });
+	//	return;
+		$(document).ajaxComplete(function(){
+			alert('sumbit');	
+			
+			console.log($("#content").val());
+				
+				var modifiedContent = contentHtml.replace(/\/upload\/temp/gi, '/upload/content');
+				console.log(modifiedContent);
+				
+				$("#frm").submit(); 
+			
+		});
 		
-		$("#frm").submit(); */
+/* 		return;
+ */		
 	}
 	
 	
@@ -438,7 +500,7 @@ function handleImgFileSelect(e) {
 			if(lastIndex == -1){
 				lastIndex = $("#titlefile").val().lastIndexOf("\\");
 			}  
-		 	alert($("#titlefile").val());
+		 	//alert($("#titlefile").val());
            var originname = $("#titlefile").val().substring(lastIndex+1);
 			
            var lastIndex2 = $("#titlefile").val().lastIndexOf(".");
@@ -447,8 +509,8 @@ function handleImgFileSelect(e) {
            $("#origin_name").val(originname);
            $("#filename").val("<%=fname%>"+originname);
            
-           alert($("#origin_name").val());
-           alert($("#filename").val()); 
+           /* alert($("#origin_name").val());
+            alert($("#filename").val());  */
            
         }
         reader.readAsDataURL(f);
