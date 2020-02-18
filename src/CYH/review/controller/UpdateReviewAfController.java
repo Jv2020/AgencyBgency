@@ -2,6 +2,7 @@ package CYH.review.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,20 +16,22 @@ public class UpdateReviewAfController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		int id = Integer.parseInt(req.getParameter("id"));
+		int seq = Integer.parseInt(req.getParameter("seq"));
+		System.out.println("updatereviewAf에 들어온 seq는 " + seq);
 		String review = req.getParameter("review");
-		int star = Integer.parseInt(req.getParameter("star"));
+		System.out.println("updatereviewAf에 들어온 리뷰내용은 " + review);
+		int star = Integer.parseInt(req.getParameter("starrate"));
+		System.out.println("updatereviewAf에 들어온 별갯수는 " + star);
 		
 		ReviewDao dao = ReviewDao.getInstance();
-		Boolean isS = dao.updateReview(id, review, star);
+		Boolean sisS = dao.updateReview(seq, review, star);
 		
-		if(isS) {
-			resp.sendRedirect("/mypage/myexhibit.jsp");
-		}else {
-			resp.sendRedirect("/mypage/myexhibit.jsp");
-		}
+		String isS = String.valueOf(sisS);
 		
+		req.setAttribute("isS", isS);
 		
+		RequestDispatcher disp = req.getRequestDispatcher("/community/updateReviewAf.jsp");
+		disp.forward(req, resp);
 	}
 
 }

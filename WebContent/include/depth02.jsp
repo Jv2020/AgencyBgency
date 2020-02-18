@@ -45,7 +45,7 @@ if (durl.contains("/mypage")){
 	href="/AgencyBgencyy/myexhibitiist">관람한 전시
 	</a>
 	<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreview.jsp' ? ' active' : ''}"
-	href="/AgencyBgencyy/mypage/myreview.jsp">나의 리뷰
+	href="/AgencyBgencyy/myReviews?id=<%=mem.getId() %>">나의 리뷰
 	</a>
 	<a class="depthReserve ${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/myreserv.jsp' ? ' active' : ''}"
 	href="/AgencyBgencyy/reservelist">나의 예매내역

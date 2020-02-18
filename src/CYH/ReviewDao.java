@@ -368,21 +368,21 @@ public class ReviewDao {
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 writeReview Success");
+			System.out.println("1/4 updateReview Success");
 			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 writeReview Success");
+			System.out.println("2/4 updateReview Success");
 			
 			psmt.setString(1, review);
 			psmt.setInt(2, star);
 			psmt.setInt(3, seq);
-			System.out.println("3/6 writeReview Success");
+			System.out.println("3/4 updateReview Success");
 			
 			count = psmt.executeUpdate();
-			System.out.println("4/6 writeReview Success");
+			System.out.println("4/4 updateReview Success");
 			
 		} catch (SQLException e) {
-			System.out.println("writeReview Fail");
+			System.out.println("updateReview Fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
@@ -392,7 +392,7 @@ public class ReviewDao {
 	}
 	
 	public boolean deleteReview(int seq) {		// 자신이 쓴 글에 대한 삭제 메소드
-		String sql = " UPDATE EXHIBIT_REIVEW "
+		String sql = " UPDATE EXHIBIT_REVIEW "
 					+ " SET DEL=1 "
 					+ " WHERE SEQ=? ";
 		
@@ -403,16 +403,19 @@ public class ReviewDao {
 		
 		try {
 			conn = DBConnection.getConnection();
-			System.out.println("1/6 deleteReview Success");
+			System.out.println("1/4 deleteReview Success");
 			
 			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 deleteReview Success");
+			System.out.println("2/4 deleteReview Success");
 			
 			psmt.setInt(1, seq);
-			System.out.println("3/6 deleteReview Success");
+			System.out.println("3/4 deleteReview Success");
+			
+			count = psmt.executeUpdate();
+			System.out.println("4/4 deleteReview Success");
 			
 		} catch (SQLException e) {
-			System.out.println("deleteReview Success");
+			System.out.println("deleteReview Fail");
 			e.printStackTrace();
 		} finally {
 			DBClose.close(psmt, conn, null);
@@ -775,6 +778,103 @@ public class ReviewDao {
 		
 		
 		return size;
+	}
+	
+	public List<ReviewDto> getMyReviews(String id, int page) {	// mypage.jsp에 뿌려줄 메소드, 첫번째 파라미터는 세션아이디
+		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL"
+					+ " FROM (	SELECT ROW_NUMBER()OVER ( ORDER BY REG_DATE DESC ) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+					+ " FROM EXHIBIT_REVIEW "
+					+ " WHERE ID=?	) "
+					+ " WHERE RNUM >=? AND RNUM <=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ReviewDto> list = new ArrayList<ReviewDto>();
+		
+		// 페이징 시작과 끝
+		// 뿌릴 갯수 : 10
+		int start = 1 + page * 10;
+		int end = 10 + page * 10;
+		// 1 ~ 10, 11 ~ 20, ...
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/4 getMyReviews Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/4 getMyReviews Success");
+			
+			psmt.setString(1, id);
+			psmt.setInt(2, start);
+			psmt.setInt(3, end);
+			System.out.println("3/4 getMyReview Success");
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				ReviewDto dto = new ReviewDto(	rs.getInt(i++),				//seq,
+												rs.getString(i++),			//id,
+												rs.getString(i++),			//title,
+												rs.getString(i++),			//regdate,
+												rs.getInt(i++),				//star,
+												rs.getString(i++),			//review,
+												rs.getInt(i++),				//like_number,
+												rs.getInt(i++),				//dislike_number,
+												rs.getInt(i++));			//del
+				list.add(dto);
+			}
+			System.out.println("4/4 getMyReview Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMyReview Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return list;
+	}
+	
+	public int getMyReviewsCount(String id) {
+		String sql = " SELECT COUNT(*) "
+					+ " FROM EXHIBIT_REVIEW "
+					+ " WHERE ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/5 getMyReviewsCount Success");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/5 getMyReviewsCount Success");
+			
+			psmt.setString(1, id);
+			System.out.println("3/5 getMyReviewsCount Success");
+			
+			rs = psmt.executeQuery();
+			System.out.println("4/5 getMyReviewsCount Success");
+			
+			if(rs.next()) {
+				count = rs.getInt(1);
+			}
+			System.out.println("5/5 getMyReviewsCount Success");
+			
+		} catch (SQLException e) {
+			System.out.println("getMyReviewsCount Fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(psmt, conn, rs);
+		}
+		
+		return count;
 	}
 }
 

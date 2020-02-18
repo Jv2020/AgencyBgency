@@ -17,13 +17,13 @@ public class WriteReviewAfController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String id = req.getParameter("id");
-		System.out.println("넘어온 id는 " + id);
+		System.out.println("writereviewAf에 넘어온 id는 " + id);
 		String title = req.getParameter("title");
-		System.out.println("넘어온 title은 " + title);
+		System.out.println("writereviewAf에 넘어온 title은 " + title);
 		String review = req.getParameter("review");
-		System.out.println("넘어온reivew는 " + review);
-		int star = Integer.parseInt(req.getParameter("star"));
-		System.out.println("들어온 별갯수는 " + star);
+		System.out.println("writereviewAf에 넘어온reivew는 " + review);
+		int star = Integer.parseInt(req.getParameter("starrate"));
+		System.out.println("writereviewAf에 들어온 별갯수는 " + star);
 		
 		ReviewDao dao = ReviewDao.getInstance();
 		boolean isS = dao.writeReview(new ReviewDto(id, title, review, star));

@@ -18,7 +18,7 @@ public class WriteReviewController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int seq = Integer.parseInt(req.getParameter("seq"));
-		System.out.println("넘어온 전시seq는 " + seq);
+		//System.out.println("넘어온 전시seq는 " + seq);
 		
 		ExhibitDao dao = ExhibitDao.getInstance();
 		ExhibitDto dto = dao.getExDetail(seq);

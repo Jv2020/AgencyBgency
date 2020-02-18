@@ -10,29 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import CYH.ReviewDao;
+import CYH.ReviewDto;
 
-@WebServlet("/deletereview")
-public class DeleteReviewController extends HttpServlet {
+@WebServlet("/reviewdetail")
+public class GetMyReviewDetailController extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	//	String sseq = req.getParameter("seq");
-	//	int seq = Integer.parseInt(sseq);
 		int seq = Integer.parseInt(req.getParameter("seq"));
-		System.out.println("\"수정할\" 리뷰seq는 " + seq);
+		System.out.println("디테일서블렛으로 들어온 seq는 " + seq);
 		
 		ReviewDao dao = ReviewDao.getInstance();
-		boolean sisS = dao.deleteReview(seq);
-		String isS = String.valueOf(sisS);
+		ReviewDto dto = dao.getOneReview(seq);
 		
-		System.out.println("isS = " + isS);
+		req.setAttribute("dto", dto);
 		
-		//resp.sendRedirect("/mypage/myreviewDeleteAf.jsp?isS=" + isS);
-		
-		req.setAttribute("isS", isS);
-		
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/mypage/myreviewDeleteAf.jsp");
-		dispatcher.forward(req, resp);
+		RequestDispatcher disp = req.getRequestDispatcher("mypage/myreviewDetail.jsp");
+		disp.forward(req, resp);
 	}
-	
+
 }

@@ -20,7 +20,12 @@ System.out.println("들어온 전시명은 " + title);
 <meta charset="UTF-8">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="dist/starrr.css">
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+
+<script src="<%=request.getContextPath() %>/community/starrr-gh-pages/dist/starrr.js"></script>
+<link rel="stylesheet" href="<%=request.getContextPath() %>/community/starrr-gh-pages/dist/starrr.css">
+
 <style type='text/css'>
 	img.ribbon {
       position: fixed;
@@ -54,7 +59,13 @@ System.out.println("들어온 전시명은 " + title);
 			<input type="hidden" name="title" value="<%=dto.getTitle() %>">
 		</div>
 		<div class="3-2">
-			평점 : <input type="text" name="star">점
+			평점 : <div class='starrr' id='star1'></div>
+			    <div>
+			      <span class='your-choice-was' style='display: none;'>
+			        <span class='choice'></span>/5
+			        <input type="hidden" id="starrate" name="starrate">
+			      </span>
+			    </div>
 		</div>
 	</div>
 	<div class="2-2">
@@ -80,7 +91,7 @@ function closeWindow() {
 	}
 }
 </script>
-
+<!-- 
 <div class="container">
     <div class='starrr' id='star1'></div>
     <div>&nbsp;
@@ -89,23 +100,28 @@ function closeWindow() {
       </span>
     </div>
 </div>
-
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-  <script src="dist/starrr.js"></script>
-  <script>
-    $('#star1').starrr({
+ -->
+  
+<script>
+$(document).ready(function () {
+  $('#star1').starrr({
       change: function(e, value){
         if (value) {
           $('.your-choice-was').show();
           $('.choice').text(value);
+        //	alert($('.choice').text());
+          $('#starrate').val($('.choice').text());
+          
         } else {
           $('.your-choice-was').hide();
+          $('#starrate').val("");
         }
       }
     });
+});
 
-	
-  </script>
+
+</script>
   <script type="text/javascript">
 	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -115,35 +131,6 @@ function closeWindow() {
 	ga('create', 'UA-39205841-5', 'dobtco.github.io');
 	ga('send', 'pageview');
   </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
