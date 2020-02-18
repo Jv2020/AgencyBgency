@@ -19,7 +19,7 @@
 				<th>삭제</th>
 			<tr>
 		</thead>
-		<tbody>			
+		<tbody>
 			<tr>
 				<td><span>2020 인상주의 회화 전시</span></td>
 				<td><span>리뷰 내용을 입력해주세요</span></td>

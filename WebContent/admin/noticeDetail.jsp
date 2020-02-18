@@ -1,3 +1,12 @@
+<%@page import="java.io.BufferedOutputStream"%>
+<%@page import="java.io.BufferedInputStream"%>
+<%@page import="java.io.FileNotFoundException"%>
+<%@page import="java.io.OutputStream"%>
+<%@page import="java.io.InputStream"%>
+<%@page import="org.apache.catalina.util.URLEncoder"%>
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.File"%>
+<%@page import="KSJ.files.dto.FilesDto"%>
 <%@page import="BJH.notice.dto.NoticeDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -8,13 +17,25 @@
 request.setCharacterEncoding("utf-8");
 
 
+
 NoticeDto noticeDto = (NoticeDto)request.getAttribute("noticeDetail");
+FilesDto fileDto = (FilesDto)request.getAttribute("fileDto");
 
-System.out.println(noticeDto);
+String fileName = fileDto.getFilename();
+String originName = fileDto.getOriginName();
 
-System.out.println("성공!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-int seq = noticeDto.getSeq();
+String savePath = request.getSession().getServletContext().getRealPath(fileDto.getFilepath());//"/upload/notice"
+System.out.println("savePath= "+savePath);
+ServletContext context = getServletContext();
+int seq = noticeDto.getSeq(); 
+
+
+
 %>
+
+
+
+
 
 <html>
 <head>
@@ -31,7 +52,7 @@ int seq = noticeDto.getSeq();
 
 </head>
 <body>
-<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq %>" method="post" > 
+<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq%>" method="post" enctype="multipart/form-data"> 
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">
@@ -52,7 +73,18 @@ int seq = noticeDto.getSeq();
 			<tr>
 				<th>파일 업로드</th>
 				<td>
-					<input type="file" name="fileName"  style="width:400px" >
+					<%
+					if(fileDto.getFilename()==null || fileDto.getFilename().equals("")){
+					%>
+					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >	
+					<% 
+					}else{
+					%>
+					<a href="#"><%=fileDto.getOriginName() %></a>
+					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >
+					<%
+					}
+					%>
 				</td>
 			</tr>
 			

@@ -40,7 +40,7 @@ System.out.println(listPage);
 			<tr>
 		</thead>
 		<tbody>
-			<%				
+			<%
 				for (int i = 0; i < list.size(); i++) {
 			%>
 			<tr>
@@ -52,7 +52,7 @@ System.out.println(listPage);
 					<%if (list.get(i).getDel() == 1)  { %>
 					<span style="color:red;">예매취소</span>
 					<% } else { %>
-					<a href="#" onclick="window.open('/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>&loginuser=<%=sdto.getId() %>', '_blank', 'writereview', 'width=800, height=600, left=100, top=50')">리뷰작성</a>
+					<a href="/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>" >리뷰작성</a>
 					<% } %>
 				</td>
 			</tr>

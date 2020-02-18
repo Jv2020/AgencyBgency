@@ -31,18 +31,23 @@ public class Admin_Member extends HttpServlet {
 				// 회원  리스트
 			  if(member.equals("list")) {
 				  String sadmin_memberPageNumber = req.getParameter("admin_memberPageNumber");
-				  
 				  int admin_memberPageNumber = 0;
-				  if(sadmin_memberPageNumber != null&& sadmin_memberPageNumber.equals("")) {
+				  int memberPageNumber;
+				  if(sadmin_memberPageNumber!= null && !sadmin_memberPageNumber.equals("")) {
 					  admin_memberPageNumber = Integer.parseInt(sadmin_memberPageNumber);
+					 
 				  }
+				  
 				  int admin_memberLength = adminDao.getMemberPageLength();
+				  System.out.println("s컨트롤러:"+sadmin_memberPageNumber);
+				  System.out.println("i컨트롤러:"+admin_memberPageNumber);
 					
 					//List<MemberDto> memberList = adminDao.getMemberList();
 				  List<MemberDto> memberList =null;
 				  List<MemberDto> outMemberList = null;
 				  memberList = adminDao.getMemberListPaging(admin_memberPageNumber);
 				  outMemberList = adminDao.getMemberList();
+				  
 					req.setAttribute("memberList", memberList);
 					req.setAttribute("admin_memberPageNumber", sadmin_memberPageNumber);
 					req.setAttribute("admin_memberLength", admin_memberLength);
@@ -96,7 +101,7 @@ public class Admin_Member extends HttpServlet {
 					  dispatcher.forward(req, resp);
 				  }else {
 					  
-					  resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?false");
+					  resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=false");
 				  }
 				  
 			  //큐레이터 허용

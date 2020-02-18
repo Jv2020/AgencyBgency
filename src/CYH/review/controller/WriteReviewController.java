@@ -25,7 +25,7 @@ public class WriteReviewController extends HttpServlet {
 		
 		//resp.sendRedirect("/AgencyBgencyy/community/writeReview.jsp?title=" + title + "&id=" + id);
 		req.setAttribute("dto", dto);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/community/writeReview.jsp");
+		RequestDispatcher dispatcher = req.getRequestDispatcher("/community/starrr-gh-pages/writeReview.jsp");
 		dispatcher.forward(req, resp);
 		
 	}
