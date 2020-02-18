@@ -52,7 +52,7 @@ if (durl.contains("/mypage")){
 	</a>
 	
 	<%
-	if(mem.getAuth() != 0){
+	if(mem.getAuth() > 1){
 	%>
 		<a class="${pageContext.request.requestURI eq '/AgencyBgencyy/mypage/curatordetail.jsp' ? ' active' : ''}"
 		href="/AgencyBgencyy/curatorexhibitlist?page=0">나의 전시

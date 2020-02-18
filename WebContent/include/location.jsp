@@ -314,3 +314,29 @@ if (lourl.contains("/curatorwrite.jsp")){
 <%
 }	
 %>
+<% 
+if (lourl.contains("/curatorexhibitlist.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>나의 전시</span>
+</div>
+<%
+}	
+%>
+<% 
+if (lourl.contains("/curatorwriteDetail.jsp")){
+%>
+<div class="location">
+	<span>HOME</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>MYPAGE</span>
+	<img src="${pageContext.request.contextPath}/images/sub/lo_arrow.jpg" alt=">">
+	<span>상세보기</span>
+</div>
+<%
+}	
+%>

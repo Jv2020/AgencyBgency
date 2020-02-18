@@ -40,69 +40,25 @@ System.out.println(request.getContextPath());
 .imgBox:hover > label {z-index:2;}
 .img_wrap {width:300px; height:400px; text-align:center; vertical-align:middle;}
 .img_wrap img {position:absolute; top:50%; left:50%;  z-index:1; display:block; max-width:300px; max-height:400px; transform:translate(-50%, -50%);}
-
-.cont-top ul{
-	float: right;
-	width: 580px;
-}
-.cont-top ul li{
-	width: 100%;
-	position:relative;
-	margin-top: 30px;
-	padding-left:150px;
-}
-.cont-top ul li:first-child{
-	margin-top: 0;
-}
-.cont-top ul li > span{
-	position:absolute; top:50%; left:0;
-	line-height:30px;
-	margin-top:-15px;
-	display: block;
-	width: 150px;
-	font-size: 20px;
-}
-.cont-top ul li input{
-	display: block;
-	width: 300px;
-	height: 30px;
-} 
-.cont-mid {
-	padding-left: 80px;
-}
-.cont-mid textarea{
-width: 845px;
-    height: 500px;
-    margin-top: 50px;
-	outline: none;
-}
-.cont-mid input{
-display: block;
-width: 100px;
-margin: 20px auto 0;
-
-}
-.cont-btm{
-
-display: block;
-width: 100px;
-margin: 20px auto 0;
-}
+.cont-top ul{ float: right; width: 580px; }
+.cont-top ul li{ width: 100%; position:relative; margin-top: 30px; padding-left:150px; }
+.cont-top ul li:first-child{ margin-top: 0; }
+.cont-top ul li > span{ position:absolute; top:50%; left:0; line-height:30px; 
+margin-top:-15px; display: block; width: 150px; font-size: 20px; }
+.cont-top ul li input{ display: block; width: 300px; height: 30px; } 
+.cont-mid { padding-left: 80px; margin-top:50px; }
+.cont-mid textarea{ width: 845px; height: 500px; margin-top: 50px;outline: none; }
+.cont-mid input{ display: block; width: 100px; margin: 20px auto 0; }
+.cont-btm{ display: block; width: 200px; height:70px; margin: 20px auto 0; margin-top: 100px;
+font-size:18px; text-align:center; line-height:70px; color: #5f0080; border: 1px solid #5f0080;
+border-radius: 10px; transition: all 0.2s ease-in-out; }
+.cont-btm:hover{ color: #fff; background: #5f0080; }
 #dist,#dist2{text-align:center;}
 #dist > div:first-child {display:none;}
 #dist2 > div:first-child {display:none;}
-.fa-plus-circle{
-	color:#bdc3c7;
-	transition: all 0.2s ease-in-out;
-}
-.fa-plus-circle:hover{
-	color:#5f0080;
-	transition: all 0.2s ease-in-out;
-	cursor: pointer;
-}
-#file{
-	display: none;
-}
+.fa-plus-circle{ color:#bdc3c7; transition: all 0.2s ease-in-out; }
+.fa-plus-circle:hover{ color:#5f0080; transition: all 0.2s ease-in-out; cursor: pointer; }
+#file{ display: none; }
 </style>
 <%
 // login session
@@ -205,7 +161,7 @@ request.setCharacterEncoding("UTF-8");
 		</li>
 		<li>
 				<span> 가격 </span>
-				<input type="text" id="price" name="price" value="1000">
+				<input type="text" id="price" name="price" value="">
 		</li>
 		<li>
 				<span> 큐레이터번호 </span>
@@ -221,8 +177,10 @@ request.setCharacterEncoding("UTF-8");
 <!-- 텍스트 에디터 -->
 	<textarea name="content" id="content"></textarea>
 </div>
-<div class="cont-btm">
-	<input type="button" id="writeBtn"value="작성하기">
+<!-- 작성하기 -->
+<div class="cont-btm" id="writeBtn">
+작성하기
+	<!-- <input type="button" id="writeBtn" value="작성하기"> -->
 </div>
 </form>
 
@@ -326,6 +284,7 @@ $("#writeBtn").click(function() {
 	
 	var splitedCode = contentHtml.split('<img ');
 	var tempArr =[];
+	// of 는 ES6에 추가된 요소라 오류로 인식할수도 있음(오류 아님)
 	for (var ele of splitedCode) {
 		
 		if (!ele.includes('src')) continue;
@@ -344,15 +303,6 @@ $("#writeBtn").click(function() {
 		tempArr.push(obj);
 		
 	}
-	/*  
-	console.log(tempArr);
-	console.log(fileArray);
-	*/
-	
-	
-	//return; // submit 막음 
-	
-	
 	
 	// 전시 날짜 확인 
 	var start = datepicker1.toLocaleDateString();
@@ -366,21 +316,20 @@ $("#writeBtn").click(function() {
 	 v = $("#price").val();
 	
 	// 빈칸확인 
-	 if(checkBlank($("#title").val())){
+	 if(checkBlank($("#title").val())){	// title
 		alert("빈칸을 모두 채워주세요!");
+		$("#title").focus();
 		return false;
 	} 
 	 
-	 if(checkBlank($("#price").val())){
+	 if(checkBlank($("#price").val())){	// price
 		alert("빈칸을 모두 채워주세요!");
-		return false;
-	}
-	 if(checkBlank($("#price").val())){
-		alert("빈칸을 모두 채워주세요!");
+		$("#price").focus();
 		return false;
 	}
 	 if(checkBlank($("#content").val())){
 		alert("전시 내용을 입력하세요! ");
+		$("#content").focus();
 		return false;
 	}
 	// 날짜 확인 
@@ -431,13 +380,10 @@ $("#writeBtn").click(function() {
 				}
 			}
 			if(check == 0){
-				//console.log("이거는 없는 컨텐츠: "+fileArray[i].filename);
 				var s = fileArray.splice(i,1);
-				//console.log(s);
 			}
 		}
 
-		// return;
 		console.log(fileArray);
 		console.log(data);
 		// ajax로 콘텐츠 사진부터 업로드하기 
@@ -454,7 +400,6 @@ $("#writeBtn").click(function() {
 		    	
 		      }
 		   });
-	//	return;
 		$(document).ajaxComplete(function(){
 			alert('sumbit');	
 			
@@ -467,8 +412,6 @@ $("#writeBtn").click(function() {
 			
 		});
 		
-/* 		return;
- */		
 	}
 	
 	
@@ -518,6 +461,7 @@ function handleImgFileSelect(e) {
 }
 
 /*
+섬머노트 원래 코드 
 $('#ddbtn').click(function() {
     let code = $('#summernote').summernote('code');
     $.ajax({

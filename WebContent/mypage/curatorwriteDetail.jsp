@@ -24,36 +24,21 @@ else{
 }
 %>
 
-
 <%
 	request.setCharacterEncoding("utf-8");
 	String nowpath = request.getContextPath();
 
 	//등록한 전시 dto
 	ExhibitDto edto = (ExhibitDto)request.getAttribute("edto");
-	// 저장한 파일 file list
-	// List<FilesDto>  flist = (List<FilesDto>)request.getAttribute("flist");
-	// 표지 파일 이름
+
+	// 표지 파일
 	FilesDto titleFile =(FilesDto)request.getAttribute("fdto");
+	// 표지 파일 있는 지 확인하기 
 	boolean imgExist = true;
 	if(titleFile == null){
 		imgExist = false;
-		
 	}
 	System.out.println("imgExist:"+imgExist);
-	//String filepath = (String)request.getAttribute("filepath");
-	//String filename = (String)request.getAttribute("filename");
-	//
-	//System.out.println(filename);
-	//System.out.println(filepath); 
-	
-	//String begindate = edto.getBegindate().substring(0, 4)+"-"+ edto.getBegindate().substring(4, 6)+"-"+ edto.getBegindate().substring(6);
-	//String enddate = edto.getEnddate().substring(0, 4)+"-"+ edto.getEnddate().substring(4, 6)+"-"+ edto.getEnddate().substring(6);
-	
-	/* 
- */	
-		
-	
 %>
 <%!
 public String makeDate(String date){
@@ -87,8 +72,10 @@ public String makeDate(String date){
 		<p><span>시간	</span><%=edto.getEx_time().substring(0, 2) +":" +edto.getEx_time().substring(2, 4)+" - " + edto.getEx_time().substring(4, 6) +":" +edto.getEx_time().substring(6, 8) %></p>
 		<p id="price"><span>관람료</span></p>
 		<p><span>문의</span><%= edto.getContact()==null? "": edto.getContact()%></p>
-		<a href="#" id="showMyExhibit">목록보기</a>
-		<a href="#" class="delete"id="deleteMyExhibit">등록취소</a>
+		<div class="ex-btnwrap">
+			<a href="#" class="showlist" id="showMyExhibit">목록보기</a>
+			<a href="#" class="delete"id="deleteMyExhibit">등록취소</a>
+		</div>
 		<!-- ${pageContext.request.contextPath}/reservation/reserv.jsp -->
 	</div>
 </div>
@@ -99,12 +86,20 @@ public String makeDate(String date){
 	</div>
 </div>
 <style>
-.ex-datail-top .cont a.delete{
-	display:block; width:240px; height:70px; line-height:68px;
-margin:70px auto 0; border:1px solid #5f0080; background: none;/* #5f0080; */ outline:none;
-font-size:18px; color:#000/* #fff */; text-align: center;
-position: absolute; bottom:0; left:0 !important; margin:0;
-border-radius: 10px;
+.ex-btnwrap{
+position: absolute; bottom:0; left:0; text-align:center;
+font-size:0; width:550px;
+}
+
+.ex-btnwrap a {
+display:inline-block; width:180px; height:70px; line-height:68px;
+transition : all 0.3s ease-in-out; font-size:18px; color:#fff;
+border:1px solid #5f0080; background: #5f0080; outline:none;
+font-size:18px; color:#fff; text-align: center; border-radius: 10px;
+margin:0 10px;
+}
+.ex-datail-top .cont a.delete:hover,a.showlist:hover{
+	color: #5f0080; background: none;
 }
 </style>
 <script>

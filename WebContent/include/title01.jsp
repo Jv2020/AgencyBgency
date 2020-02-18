@@ -173,7 +173,7 @@ if (ifurl.contains("memdelete.jsp")){
 
 <!-- Mypage 큐레이터 -->
 <% 
-if (ifurl.contains("curatordetail.jsp")){
+if (ifurl.contains("curatorexhibitlist.jsp")){
 %>
 <h2>나의 전시</h2>
 <%
@@ -184,6 +184,13 @@ if (ifurl.contains("curatordetail.jsp")){
 if (ifurl.contains("curatorwrite.jsp")){
 %>
 <h2>전시등록하기</h2>
+<%
+}   
+%>
+<% 
+if (ifurl.contains("curatorwriteDetail.jsp")){
+%>
+<h2>상세보기</h2>
 <%
 }   
 %>

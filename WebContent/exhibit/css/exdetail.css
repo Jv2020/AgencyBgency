@@ -32,7 +32,7 @@
 	width: 110px;
 	color:#868686;
 }
-.ex-datail-top .cont a{
+.ex-datail-top .cont > a{
 	display:block; width:240px; height:70px; line-height:68px;
 margin:70px auto 0; border:1px solid #5f0080; background: #5f0080; outline:none;
 font-size:18px; color:#fff; text-align: center;
