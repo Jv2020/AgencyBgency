@@ -20,24 +20,27 @@
 </head>
 <body>
 
+	<script>
 <% 
 if(result.equals("true")){
 	%>
-	<script>
 	alert("정상적으로 등록 되었음");
 	location.href="<%=request.getContextPath()%>/admin";
-	</script>
+	
 	<%
-	}else{
-		
+}else if(result.equals("fail")){
 	%>
-	<script>
+	alert("파일 업로드에 실패하였습니다.");
+	location.href="<%=request.getContextPath()%>/admin";
+	<%
+}else{
+	%>
 	alert("잘못된 입력 입니다");
 	location.href="<%=request.getContextPath()%>/admin";
-	</script>
 	<%
-	}
+}
 	%>
+	</script>
 
 
 </body>

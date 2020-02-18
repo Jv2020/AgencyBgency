@@ -382,12 +382,13 @@ function memberRecover() {
 }
 
 function GoPage(pageNum) {
-
+	alert("page이동");
+	alert(pageNum)
+	/* var linkStr = getContextPath() + "/Admin_Member?member=list&"
+	linkStr += "admin_memberPageNumber="+pageNum; */
 	
-	var linkStr = getContextPath() + "/Admin_Member?member=list&admin_memberPageNumber="+pageNum;
-	
-	location.href = linkStr;
-	
+	location.href = "${pageContext.request.contextPath}/Admin_Member?member=list&admin_memberPageNumber="+pageNum;
+	alert("된거니?");
 };
 </script>
 

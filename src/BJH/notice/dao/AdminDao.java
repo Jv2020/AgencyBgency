@@ -79,6 +79,7 @@ private static AdminDao adminDao = new AdminDao();
 	}
 	// 멤버 리스트 paging
 	public List<MemberDto> getMemberListPaging(int pageNum){
+		System.out.println("DB pageNum="+pageNum);
 		String sql = " SELECT ID, PASSWORD, NAME, EMAIL, ADDRESS, BIRTHDAY, GENDER, PHONE, QUESTION, HINT, EXHIBIT_NAME, CERTI_NUM, DEL, AUTH "
 				+    " FROM ";
 				sql += " (SELECT ROW_NUMBER()OVER(ORDER BY ID ASC) AS RNUM,"

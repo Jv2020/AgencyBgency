@@ -18,14 +18,15 @@
 </head>
 <body>
 <!-- action="<%=request.getContextPath() %>/Notice_insert" -->
-<form id="form" action="<%=request.getContextPath() %>/NoticeInsert" method="POST" enctype="multipart/form-data"> 
+<form id="form" action="<%=request.getContextPath() %>/Notice?notice=insert" method="POST" enctype="multipart/form-data"> 
+<%-- <form id="form" action="<%=request.getContextPath() %>/NoticeInsert" method="POST" enctype="multipart/form-data"> --%>
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">
 			<tr>
 				<th>아이디</th>
-				<td>관리자
-					<input type="hidden" name="id" value="관리자" readonly="readonly">
+				<td>
+					<input type="text" name="id" value="관리자" readonly="readonly">
 				</td>
 			</tr>
 			
