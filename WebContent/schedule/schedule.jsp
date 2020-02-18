@@ -22,13 +22,12 @@ public String getDate(){
 	
 	if(day<10){ today += "0" + day; }
 	else{ today += day; }
-	
 		
 	return today;
 }
 
 public String getDate(String date){
-	String str = date.substring(0,11);
+	String str = date.substring(0,10);
 	str = str.replaceAll("-", "").trim();
 	return str;
 }
@@ -53,34 +52,63 @@ public String getExPeriod(String begindatefull, String enddatefull){
 }
 %>
 <%
-	
 	List<ExhibitDto> newlist = (List<ExhibitDto>)request.getAttribute("newlist");	// 이달의 새로운 전시 
 	List<ExhibitDto> endlist = (List<ExhibitDto>)request.getAttribute("endlist");	// 이달의 마감 전시
 	List<ExhibitDto> monthList = (List<ExhibitDto>)request.getAttribute("monthList");	// 이달의 전시 
 	ExhibitDto recommandDto = (ExhibitDto)request.getAttribute("recommandDto");		// 이달의 추천 전시 
-
 %>    
 
 <%
+	String recommandPeriod="";
 	// 추천전시 상태 
-	String recommandPeriod = getExPeriod(recommandDto.getBegindate(),recommandDto.getEnddate() );
-%>
-
-
-<!-- 추천전시 및 일정 -->
+	if( recommandDto.getBegindate() != null ){	// 추천전시가 null이 아닐때 
+		recommandPeriod = getExPeriod(recommandDto.getBegindate(),recommandDto.getEnddate() );
+	}
+%> <!-- 추천전시 및 일정 -->
 <div class="sch-top clfix">
 	<div class="recommand clfix">
 		<div class="img">
-			<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586">
+		<%	// 추천전시가 없을 때 
+				if( recommandDto.getTitle() == null ){
+				%>
+					 <img alt="이미지 없음" src="${pageContext.request.contextPath}/images/sub/commingsoon.jpeg" style="margin-top: 120px;"> 
+				<%
+				}else{
+					// 추천전시 있을 때 
+					// 표지 있을 때 
+					if(recommandDto.getFilename() == null ){
+						%>
+							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 80px; display: inline-block;"/>
+						<%
+					}
+					else {	// 표지 없을 때 
+						%>
+							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=recommandDto.getFilename()%>"/> 
+						<%
+					}
+				
+				}
+			%>
 		</div>
 		<div class="txt">
 			<strong>이달의 추천전시</strong>
-			<h3>
-				<a href="${pageContext.request.contextPath}/exdetail?ex=<%=recommandPeriod %>&seq=<%=recommandDto.getSeq()%>">
-					<%=recommandDto.getTitle() %>
-				</a>
-			</h3>
-			<p><%= recommandDto.getBegindate().substring(0,11)+" ~ " +  recommandDto.getEnddate().substring(0,11) %></p>
+			<%	// 추천전시가 있을 때
+				if(  recommandDto.getTitle() != null ){
+				%>
+					<h3>
+						<a href="${pageContext.request.contextPath}/exdetail?ex=<%=recommandPeriod %>&seq=<%=recommandDto.getSeq()%>">
+							<%=recommandDto.getTitle() %>
+						</a>
+					</h3>
+					<p><%= recommandDto.getBegindate().substring(0,11)+" ~ " +  recommandDto.getEnddate().substring(0,11) %></p>
+				<%
+				}else{
+					// 추천전시 없을 때 
+					%>
+					<h4 style="margin-top: 130px; text-align: center">진행된 전시가 없습니다.</h4>
+					<%
+				}
+			%>
 		</div>
 	</div>
 <!-- 캘린더 -->
@@ -97,8 +125,7 @@ public String getExPeriod(String begindatefull, String enddatefull){
 			<ul id="cal-data">
 		<!-- 캘린더 데이터 들어감 -->
 		<%
-			
-			
+		if(monthList.size()>0){
 			for(int i=0; i< monthList.size(); i++){ 
 				ExhibitDto dto = monthList.get(i);
 				String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
@@ -112,6 +139,9 @@ public String getExPeriod(String begindatefull, String enddatefull){
 				</li>
 				
 				<%
+			}
+			}else{
+				
 			}
 		%>
 			</ul>
@@ -140,7 +170,23 @@ public String getExPeriod(String begindatefull, String enddatefull){
 		<li>
 			<div class='img'>
 				<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
-					<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
+				 <%
+					// 표지 없을 때 
+					if(dto.getFilename() == null ){
+						%>
+							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 82px;margin-bottom: 82px;"/>
+						<%
+					}
+					// 표지 있을 때 
+					else {	
+						%>
+							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>" /> 
+						<%
+					}
+				
+				%>
+				
+				
 				</a>
 			</div>
 			<div class='txt'>
@@ -183,7 +229,21 @@ public String getExPeriod(String begindatefull, String enddatefull){
 					<li>
 						<div class='img'>
 							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
-								<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
+								 <%
+								// 표지 있을 때 
+								if(dto.getFilename() == null ){
+									%>
+										<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 82px;margin-bottom: 82px;"/>
+									<%
+								}
+								else {	// 표지 없을 때 
+									%>
+										 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+									<%
+								}
+							
+							%>
+								
 							</a>
 						</div>
 						<div class='txt'>
@@ -211,6 +271,7 @@ public String getExPeriod(String begindatefull, String enddatefull){
 	</div>
 </div>
 </div>
+
 
 <!-- 전시 스케쥴 보기 버튼 바꿈 -->
 <script>
