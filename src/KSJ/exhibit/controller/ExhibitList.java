@@ -49,7 +49,8 @@ public class ExhibitList extends HttpServlet {
 			sendLink="exhibit_future.jsp";
 		}
 		
-		
+		int allContentSize = dao.getContentNumber(choice);
+		req.setAttribute("allContentSize", allContentSize);
 		req.setAttribute("list", list);
 		req.getRequestDispatcher("./exhibit/"+sendLink).forward(req, resp);
 	

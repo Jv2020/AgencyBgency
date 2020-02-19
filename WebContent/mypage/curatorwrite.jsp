@@ -401,13 +401,9 @@ $("#writeBtn").click(function() {
 		      }
 		   });
 		$(document).ajaxComplete(function(){
-			alert('sumbit');	
 			
-			console.log($("#content").val());
-				
+				console.log($("#titlefile").val());
 				var modifiedContent = contentHtml.replace(/\/upload\/temp/gi, '/upload/content');
-				console.log(modifiedContent);
-				
 				$("#frm").submit(); 
 			
 		});

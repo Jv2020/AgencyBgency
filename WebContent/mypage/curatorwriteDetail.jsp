@@ -35,7 +35,7 @@ else{
 	FilesDto titleFile =(FilesDto)request.getAttribute("fdto");
 	// 표지 파일 있는 지 확인하기 
 	boolean imgExist = true;
-	if(titleFile == null){
+	if(titleFile.getFilename() == null){
 		imgExist = false;
 	}
 	System.out.println("imgExist:"+imgExist);

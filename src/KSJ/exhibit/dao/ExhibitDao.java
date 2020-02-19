@@ -38,9 +38,9 @@ public class ExhibitDao {
 		if(choice.equals("now")) {	// 현재 전시
 			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE  AND DEL = 0  ";
 		}else if(choice.equals("past")) {	// 지난 전시 
-			str += " WHERE ENDDATE <= SYSDATE AND DEL = 0  ";
-		}else if(choice.equals("future")) {		// 예정 전시 
-			str += " WHERE BEGINDATE >= SYSDATE  AND DEL = 0 ";
+			str += " WHERE ENDDATE < SYSDATE AND DEL = 0  ";
+		}else if(choice.equals("fut")) {		// 예정 전시 
+			str += " WHERE BEGINDATE > SYSDATE  AND DEL = 0 ";
 		}
 		
 		sql += str;
@@ -92,7 +92,7 @@ public class ExhibitDao {
 		finally {
 			DBClose.close(psmt, conn, rs);
 		}
-		
+		System.out.println("list.size():"+list.size());
 		return list;
 	}
 	// 더보기로 끌어오는 경우 작업
@@ -125,6 +125,9 @@ public class ExhibitDao {
 		int start = setContentSize + count * 8 ;
 		int end = start + 8;
 
+		System.out.println("start:"+start);
+		System.out.println("end:"+end);
+		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -183,7 +186,7 @@ public class ExhibitDao {
 			str += " WHERE ENDDATE >= SYSDATE AND BEGINDATE <= SYSDATE  AND DEL = 0   ";
 		}else if(choice.equals("past")) {	// 지난 전시 
 			str += " WHERE ENDDATE < SYSDATE  AND DEL = 0  ";
-		}else if(choice.equals("future")) {		// 예정 전시 
+		}else if(choice.equals("fut")) {		// 예정 전시 
 			str += " WHERE BEGINDATE > SYSDATE  AND DEL = 0  ";
 		}
 		

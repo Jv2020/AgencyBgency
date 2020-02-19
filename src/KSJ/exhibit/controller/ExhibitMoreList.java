@@ -29,10 +29,10 @@ public class ExhibitMoreList extends HttpServlet {
 		String scount =  req.getParameter("count");
 		
 		int count = Integer.parseInt(scount);
-		int numOfContent = 4;	// 초기 데이터 사이즈
+		int numOfContent = 12;	// 초기 데이터 사이즈
 		int numOfPlus = 4;		// 추가되는 데이터 사이즈
 		int allContentSize = dao.getContentNumber(choice);
-		
+		System.out.println("allContentSize:"+allContentSize);
 		
 		if( numOfContent + count * numOfPlus > allContentSize ) {
 			System.out.println("콘텐츠 초과됨 ");
@@ -47,6 +47,7 @@ public class ExhibitMoreList extends HttpServlet {
 		
 		String gson = new Gson().toJson(list);
 		resp.getWriter().write(gson);
+		resp.getWriter().write(allContentSize);
 		
 		
 		

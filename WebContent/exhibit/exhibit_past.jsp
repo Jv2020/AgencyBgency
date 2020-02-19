@@ -20,7 +20,8 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 <ul class="e_list clfix" id="main-exhibits">
 <%
 	List<ExhibitDto> list = (List<ExhibitDto>)request.getAttribute("list");
-
+	int allContentSize = (int)request.getAttribute("allContentSize");
+	
 	for(int i=0; i < list.size(); i++ ){
 		ExhibitDto dto = list.get(i);
 		String begindate = dto.getBegindate().substring(0,11);
@@ -28,9 +29,21 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 		%>
 		<li>
 			<div class='img'>
-				<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq=<%=dto.getSeq()%>'>
-					<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>
-				</a>
+			<%
+				if(dto.getFilename() == null) {
+				%>
+					<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>' style="background: #f8f8f7;">
+						<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+					</a>
+				<%
+				}else{
+					%>
+					<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+						<img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+					</a>	
+					<%
+				}
+			%>
 			</div>
 			<div class='txt'>
 				<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq=<%=dto.getSeq()%>'><h3><%=dto.getTitle() %></h3></a>
@@ -53,6 +66,11 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 <script>
 var morecount = 0;
 // 더보기버튼
+var showContent = $("#main-exhibits li").length;	// 
+var allcontents = <%=allContentSize%>;	// 현재 모든 컨텐츠 개수 
+if( showContent >= allcontents  ){
+	$("#moreBtn").hide();
+}
 function listmore(){
 	$.ajax({
 		// 지난 전시 더 가져오기 
@@ -72,20 +90,42 @@ function listmore(){
 				
 				var begindate = data[i].begindate.substring(0,11);
 				var enddate = data[i].enddate.substring(0,11);
-				document.querySelector("#main-exhibits").innerHTML += 
-					"<li>"+
-						"<div class='img'>" + 
-							"<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq="+data[i].seq+"'>"+
-							"<img src='https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586'>"+
-							"</a>"+
-						"</div>"+
-						"<div class='txt'>"+
-							"<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
-							"<p>"+data[i].content+"</p>"+
-							"<span>"+begindate+" ~ "+enddate+"</span>"+
-						"</div>"+
-					"</li>";
-			}	
+				if(data[i].filename == null){	// 타이틀 이미지 없음 
+					document.querySelector("#main-exhibits").innerHTML += 
+						"<li>"+
+							"<div class='img'>" + 
+								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"' style='background: #f8f8f7;'>"+
+									"<img alt='이미지 없음' src='${pageContext.request.contextPath}/images/sub/noimg.gif'> "+
+								"</a>"+
+							"</div>"+
+							"<div class='txt'>"+
+								"<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+								"<p>"+data[i].content+"</p>"+
+								"<span>"+begindate+" ~ "+enddate+"</span>"+
+							"</div>"+
+						"</li>";
+				}else{
+					document.querySelector("#main-exhibits").innerHTML += 
+						"<li>"+
+							"<div class='img'>" + 
+								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'>"+
+								"<img alt='이미지 없음' src='${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename="+data[i].filename+"'/>"+
+								"</a>"+
+							"</div>"+
+							"<div class='txt'>"+
+								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+								"<p>"+data[i].content+"</p>"+
+								"<span>"+begindate+" ~ "+enddate+"</span>"+
+							"</div>"+
+						"</li>";
+				}
+				
+			}
+			showContent = $("#main-exhibits li").length;
+			console.log(showContent);
+			if( showContent <= allcontents ){
+				$("#moreBtn").hide();
+			}
 		}
 	});
 	morecount = morecount+1;

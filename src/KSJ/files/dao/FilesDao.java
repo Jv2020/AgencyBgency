@@ -28,11 +28,12 @@ public class FilesDao {
 	
 	
 	// 전시 seq 꺼내기
-	public int getExhibitSeq(String filename) {
+	public int getExhibitSeq(String certi_num) {
 		String sql=   " SELECT SEQ "
-					+ " FROM EXHIBIT "
-					+ " WHERE FILENAME = ? ";
-		
+					+ " FROM (SELECT ROW_NUMBER()OVER( ORDER BY SEQ DESC)  AS RNUM, SEQ, TITLE, FILENAME "
+							+ " FROM EXHIBIT "
+							+ " WHERE CERTI_NUM = ? )"
+					+ " WHERE RNUM = 1 ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -43,7 +44,7 @@ public class FilesDao {
 		try {
 			conn = DBConnection.getConnection();
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, filename);
+			psmt.setString(1, certi_num);
 			
 			rs = psmt.executeQuery();
 			if(rs.next()) {

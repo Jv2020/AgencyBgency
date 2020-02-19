@@ -75,13 +75,16 @@ public String getExPeriod(String begindatefull, String enddatefull){
 				<%
 				}else{
 					// 추천전시 있을 때 
-					// 표지 있을 때 
 					if(recommandDto.getFilename() == null ){
+						// 표지 없을 때 
 						%>
+						<span>
 							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 80px; display: inline-block;"/>
+						</span>
 						<%
 					}
-					else {	// 표지 없을 때 
+					else {	
+					// 표지 있을 때 
 						%>
 							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=recommandDto.getFilename()%>"/> 
 						<%
@@ -169,18 +172,19 @@ public String getExPeriod(String begindatefull, String enddatefull){
 		%>
 		<li>
 			<div class='img'>
-				<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 				 <%
 					// 표지 없을 때 
 					if(dto.getFilename() == null ){
 						%>
-							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 82px;margin-bottom: 82px;"/>
+							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'   style="background: #f8f8f7;">
+								<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
 						<%
 					}
 					// 표지 있을 때 
 					else {	
 						%>
-							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>" /> 
+							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
+								 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>" /> 
 						<%
 					}
 				
@@ -228,16 +232,17 @@ public String getExPeriod(String begindatefull, String enddatefull){
 					%>
 					<li>
 						<div class='img'>
-							<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 								 <%
 								// 표지 있을 때 
 								if(dto.getFilename() == null ){
 									%>
-										<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif" style="margin-top: 82px;margin-bottom: 82px;"/>
+									<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>' style="background: #f8f8f7;">
+										<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
 									<%
 								}
 								else {	// 표지 없을 때 
 									%>
+									<a href='${pageContext.request.contextPath}/exdetail?ex=<%=exstatus %>&seq=<%=dto.getSeq()%>'>
 										 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
 									<%
 								}

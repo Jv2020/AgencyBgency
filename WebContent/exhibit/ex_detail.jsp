@@ -32,7 +32,19 @@ if( loginuser != null){
 <link rel="stylesheet" type="text/css" href="<%=nowpath %>/exhibit/css/exdetail.css">
 <div class="ex-datail-top clfix">
 	<div class="img">
-		<img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586">
+	<%	// 추천전시가 없을 때 
+					// 표지 있을 때 
+					if(dto.getFilename() == null ){
+						%>
+							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+						<%
+					}
+					else {	// 표지 없을 때 
+						%>
+							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+						<%
+					}
+			%>
 	</div>
 	<div class="cont">
 		<h4>&lt; <%=dto.getTitle() %> &gt;</h4>

@@ -239,7 +239,7 @@ public class ExhibitInsert extends HttpServlet {
 		 
 		if(insertExhibitSuccess) {
 			System.out.println("전시 디비 입력 성공 ");
-			bbs_seq = fdao.getExhibitSeq(filename);	// 파일에 저장하기 위해 시퀀스 불러오기 
+			bbs_seq = fdao.getExhibitSeq(certi_num);	// 파일에 저장하기 위해 시퀀스 불러오기 
 			System.out.println("bbs_seq : " + bbs_seq);
 			// Title Img -> dto 
 			FilesDto titleDto = new FilesDto(-1, filename, origin_name, filepath, bbs_name, bbs_seq, 0, file_seq);
