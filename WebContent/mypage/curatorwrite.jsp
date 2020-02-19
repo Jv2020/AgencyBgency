@@ -59,6 +59,8 @@ border-radius: 10px; transition: all 0.2s ease-in-out; }
 .fa-plus-circle{ color:#bdc3c7; transition: all 0.2s ease-in-out; }
 .fa-plus-circle:hover{ color:#5f0080; transition: all 0.2s ease-in-out; cursor: pointer; }
 #file{ display: none; }
+
+a {text-decoration:none !important;}
 </style>
 <%
 // login session
@@ -455,6 +457,8 @@ function handleImgFileSelect(e) {
         reader.readAsDataURL(f);
     });
 }
+
+$('.note-btn.btn.btn-default.btn-sm.btn-fullscreen').hide();
 
 /*
 섬머노트 원래 코드 

@@ -137,7 +137,6 @@ while (point < len) {
 
 $(".totalPrice strong").text(totalPrice);
 
-
 </script>
 
 
