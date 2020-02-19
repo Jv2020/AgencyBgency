@@ -33,7 +33,7 @@ MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 	} else {
 	%>
 		<script>
-			location.href="<%=request.getContextPath()%>/main/main.jsp"
+			location.href="<%=request.getContextPath()%>/mainEntrance"
 		</script>
 	<%
 	}

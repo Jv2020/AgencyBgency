@@ -4,7 +4,7 @@
 request.setCharacterEncoding("UTF-8");
 %>
 
-<h1>로그아웃</h1>
+
 <%
 session.invalidate();
 %>
