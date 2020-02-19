@@ -5,9 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
 <%
 // 로그인 세션
 MemberDto sdto = (MemberDto)session.getAttribute("loginuser");
@@ -34,11 +31,9 @@ System.out.println("allRe_Contents는 " + allRe_Contents);
 int pages = (int)Math.ceil(allRe_Contents/ 5.0);
 %>
 
-<h1 style="text-align: center"><b><%=title %>에 대한 전체 리뷰</b></h1>
+<h1 style="text-align: center"><b>'<%=title %>'</b>에 대한 전체 리뷰</h1>
 
 <%
-
-
 List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 
 // 확인용
@@ -47,47 +42,37 @@ List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 for(int i = 0; i < list.size(); i++) {
 	ReviewDto dto = list.get(i);
 %>
-<div class="reviewBox">
-	<div class="reviewTit">
-		<ul>
-			<li>
-				<%=dto.getStar() %>/5
-			</li>
-		</ul>
-	</div>
-	<div class="reviewCont">
-		<ul class="">
-			<li>
-				<%=dto.getReview() %>
-			</li>
-		</ul>
-	</div>
-	<div class="reviewBtm">
-		<ul class="clfix">
-			<li>
-				<%=dto.getId() %>
-			</li>
-			<li>
-				<%=dto.getRegdate() %>
-			</li>
-			<li>
-			<% if(logincheck){ %>
-				<a href="/AgencyBgencyy/likeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> :<%=dto.getLike_number() %>	/
-				<a href="/AgencyBgencyy/dislikeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>" onclick="reload()"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> :<%=dto.getDislike_number() %>
-				<%
-			} else{
-				%>
-				 <img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요 :<%=dto.getLike_number() %>	/
-				<img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요 :<%=dto.getDislike_number() %>
-				 
-				 <%
-			}
-			%>
+<div class="reviewDtail">
+	<div class="box">
+		<div class="box-top">
 			
-			 </li>
-		</ul>
-	</div>
-</div><!-- //reviewBox -->
+			<div class="rv-info">
+				<ul class="clfix">
+					<li><span><b>아이디</b></span> <%=dto.getId() %></li>
+					<li><span><b>작성일</b></span> <%=dto.getRegdate() %></li>
+					<li><span><b>점수</b></span> <%=dto.getStar() %>/5</li>
+					<li>
+						<%-- <% if(logincheck) { %>
+							<a href="/AgencyBgencyy/likeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>&regdate=<%=dto.getRegdate() %>" onclick="reload()"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> : <%=dto.getLike_number() %>
+							<a href="/AgencyBgencyy/dislikeadd?title=<%=title %>&writerid=<%=dto.getId() %>&sessionid=<%=sdto.getId() %>&re_pageNum=<%=i %>&regdate=<%=dto.getRegdate() %>" onclick="reload()"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> : <%=dto.getDislike_number() %>
+						<%
+							} else {
+						%>
+								<img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요 : <%=dto.getLike_number() %>
+								<img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요 : <%=dto.getDislike_number() %>
+						<%
+							}
+						%> --%>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="rv-txt">
+			<%=dto.getReview() %>
+		</div>	 		
+	</div><!-- //box -->
+	
+</div><!-- //reviewDtail -->
 <%
 }
 %>
@@ -109,67 +94,6 @@ for(int i = 0; i < pages; i++) {
 }
 %>
 </div>
-
-<script>
-function reload() {
-	location.reload();
-}
-</script>
-
-<div class="reviewDtail">
-	<div class="box">
-		<div class="box-top">
-			<h3 class="rv-tit">전시제목을 입력해주세요</h3>
-			<div class="rv-info">
-				<ul class="clfix">
-					<li><span>아이디</span> yonghotest</li>
-					<li><span>작성일</span> 2020-02-17 20:28:11.0</li>
-					<li><span>평점</span> 2점</li>
-					<li>
-						<a href="#none"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> 1
-						<a href="#none"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> 2
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="rv-txt">
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.
-		</div>	 		
-	</div><!-- //box -->
-	
-	<div class="box">
-		<div class="box-top">
-			<h3 class="rv-tit">전시제목을 입력해주세요</h3>
-			<div class="rv-info">
-				<ul class="clfix">
-					<li><span>아이디</span> yonghotest</li>
-					<li><span>작성일</span> 2020-02-17 20:28:11.0</li>
-					<li><span>평점</span> 2점</li>
-					<li>
-						<a href="#none"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> 1
-						<a href="#none"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> 2
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="rv-txt">
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.<br>
-			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.
-		</div>	 		
-	</div><!-- //box -->
-	
-</div><!-- //reviewDtail -->
-
-
 
 
 <%@include file ="../include/footer.jsp" %>

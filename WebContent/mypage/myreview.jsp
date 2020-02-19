@@ -21,7 +21,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 %>
 
 
-<div id="myReserve">	
+<div id="myReserve">
 	<table class="reservetbl">
 		<colgroup>
 			<col style="width:34%">

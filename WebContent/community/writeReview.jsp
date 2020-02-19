@@ -2,6 +2,7 @@
 <%@page import="NWH.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<!-- 버려진 파일 -->
 <%-- <%
 // 로그인 세션
 MemberDto sdto = (MemberDto)session.getAttribute("loginuser");

@@ -176,7 +176,7 @@ public class ReviewDao {
 	public List<ReviewDto> getReviewList(String title, int re_pageNum) {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
 		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
 				+ " FROM ( "
-				+ " SELECT ROWNUM AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+				+ " SELECT ROW_NUMBER()OVER (ORDER BY REG_DATE DESC) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
 				+ " FROM EXHIBIT_REVIEW "
 				+ " WHERE TITLE=?) "
 				+ " WHERE RNUM >=? AND RNUM <=? ";

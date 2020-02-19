@@ -41,10 +41,6 @@ public class GetOneReviewController extends HttpServlet {
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/community/reviewDetail.jsp");
 		dispatcher.forward(req, resp);
-		
-		
-		
-		
 	}
 
 }

@@ -6,7 +6,7 @@
 <title>모두의 전시</title>
 </head>
 <body>
-<script>           
+<script>
 	location.href="<%=request.getContextPath()%>/mainEntrance";
 </script>
 
