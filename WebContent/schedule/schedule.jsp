@@ -164,8 +164,8 @@ public String getExPeriod(String begindatefull, String enddatefull){
 			for(int i=0; i<newlist.size();i++) {
 		
 			ExhibitDto dto = newlist.get(i);
-			String bdate = getDate(dto.getBegindate());
-			String edate = getDate(dto.getEnddate());
+			String bdate = dto.getBegindate().substring(0,11);
+			String edate = dto.getEnddate().substring(0,11);
 			
 			String exstatus = getExPeriod(dto.getBegindate(), dto.getEnddate());
 		
@@ -187,10 +187,7 @@ public String getExPeriod(String begindatefull, String enddatefull){
 								 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>" /> 
 						<%
 					}
-				
 				%>
-				
-				
 				</a>
 			</div>
 			<div class='txt'>

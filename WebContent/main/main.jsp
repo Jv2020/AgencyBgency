@@ -71,7 +71,7 @@ NoticeDto noticeDto = null;
 				%>
 				
 				<span><a href="<%=contextPath %>/community/notice.jsp">공지사항</a></span>
-				<h1 class="logo"><a href="<%=contextPath %>/main/main.jsp">
+				<h1 class="logo"><a href="#none">
 					<img src="<%=contextPath %>/images/main/logo.png" alt="모두의 전시" />
 				</a></h1>	
 			</div><!-- //inner -->
@@ -110,16 +110,6 @@ NoticeDto noticeDto = null;
 				}
 			});
 		});
-		
-		$('.navi_btn').click(function(e){
-			if($(this).hasClass('on')){	
-				$(this).removeClass('on')		
-				$('.navi_btn img').attr("src","../images/main/navi_btn.jpg");
-			}else{	
-				$(this).addClass('on')		
-				$('.navi_btn img').attr("src","../images/main/navi_btn_close.jpg");
-			}
-		});				
 	});
 	</script>	
 	
@@ -127,9 +117,9 @@ NoticeDto noticeDto = null;
 		<link rel="stylesheet" href="../css/bxslider.css" type="text/css" />
 		<script type="text/javascript" src="../js/bxslider.js"></script>
 		<ul id="visual">
-			<li><p style="background:url(../images/main/visual3.gif) no-repeat;"></p></li>
-			<li><p style="background:url(../images/main/visual2.gif) no-repeat;"></p></li>
-			<li><p style="background:url(../images/main/visual1.gif) no-repeat;"></p></li>
+			<li><p style="background:url(/AgencyBgencyy/images/main/visual3.gif) no-repeat;"></p></li>
+			<li><p style="background:url(/AgencyBgencyy/images/main/visual2.gif) no-repeat;"></p></li>
+			<li><p style="background:url(/AgencyBgencyy/images/main/visual1.gif) no-repeat;"></p></li>
 		</ul>
 	</div><!-- //visual_wrap -->
 	<script type="text/javascript">
@@ -210,19 +200,19 @@ NoticeDto noticeDto = null;
 
 	<div id="footer">
 		<div class="inner">
-			<div class="footer_logo"><a href="/AgencyBgencyy/main/main.jsp">
-				<img src="../images/main/logo.png" alt="모두의 전시" />
+			<div class="footer_logo"><a href="#none">
+				<img src="/AgencyBgencyy/images/main/logo.png" alt="모두의 전시" />
 			</a></div>			
 			<address>
 			(주)모두의 전시 &nbsp;서울특별시 서초구 서초4동 강남대로 459
 			</address>
 			<p class="copyright">Copyright by bitcamp All Rights Reserved.</p>
 			<div class="footer_sns">
-				<span><a href="#"><img src="../images/main/ico_insta.png" alt="인스타그램"></a></span>
-				<span><a href="#"><img src="../images/main/ico_fb.png" alt="페이스북"></a></span>
-				<span><a href="#"><img src="../images/main/ico_blog.png" alt="네이버블로그"></a></span>
-				<span><a href="#"><img src="../images/main/ico_naverpost.png" alt="네이버포스트"></a></span>
-				<span><a href="#"><img src="../images/main/ico_youtube.png" alt="유튜브"></a></span>				
+				<span><a href="#"><img src="/AgencyBgencyy/images/main/ico_insta.png" alt="인스타그램"></a></span>
+				<span><a href="#"><img src="/AgencyBgencyy/images/main/ico_fb.png" alt="페이스북"></a></span>
+				<span><a href="#"><img src="/AgencyBgencyy/images/main/ico_blog.png" alt="네이버블로그"></a></span>
+				<span><a href="#"><img src="/AgencyBgencyy/images/main/ico_naverpost.png" alt="네이버포스트"></a></span>
+				<span><a href="#"><img src="/AgencyBgencyy/images/main/ico_youtube.png" alt="유튜브"></a></span>				
 			</div>
 		</div><!-- //inner -->
 	</div><!-- //footer -->

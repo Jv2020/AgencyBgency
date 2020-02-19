@@ -688,14 +688,16 @@ public class ExhibitDao {
 	// TODO: main 용 추천전시
 	public List<ExhibitDto> mainRecommandExhibit() {
 		String sql = " SELECT e.SEQ, e.BEGINDATE, e.ENDDATE , e.TITLE , e.PLACE , e.CONTENT , e.EX_TIME , e.LOC_INFO , e.DEL , e.CONTACT , e.CERTI_NUM , e.PRICE , e.FILENAME " + 
-					 " FROM (SELECT ROW_NUMBER()OVER(ORDER BY CNT DESC) AS RNUM, TITLE, CNT "
-					 		+ " FROM ( SELECT TITLE, COUNT(*) AS CNT "
-					 			+ " FROM EXHIBIT_REVIEW "
+					 " FROM (SELECT ROW_NUMBER()OVER(ORDER BY S_QTY DESC) AS RNUM, TITLE, S_QTY "
+					 		+ " FROM ( SELECT TITLE, SUM(QTY) AS S_QTY "
+					 			+ " FROM RESERVATION "
 					 			+ " WHERE DEL = 0 "
-					 			+ " GROUP BY TITLE)) r, EXHIBIT e "
+					 			+ " GROUP BY TITLE)) r, "
+					 	+ " (SELECT * FROM EXHIBIT WHERE BEGINDATE <= SYSDATE AND SYSDATE < ENDDATE ) e  "
 		 			+ " WHERE r.TITLE = e.TITLE AND "
-		 			+ " RNUM <= 4 ";
-
+		 			+ " RNUM <= 4 "
+		 			+ " ORDER BY RNUM ";
+		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
