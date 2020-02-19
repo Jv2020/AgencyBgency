@@ -21,11 +21,16 @@ request.setCharacterEncoding("utf-8");
 NoticeDto noticeDto = (NoticeDto)request.getAttribute("noticeDetail");
 FilesDto fileDto = (FilesDto)request.getAttribute("fileDto");
 
-String fileName = fileDto.getFilename();
-String originName = fileDto.getOriginName();
-
+String fileName = "";
+String originName = "";
+if(fileDto != null){
+	
+fileName = fileDto.getFilename();
+originName = fileDto.getOriginName();
 String savePath = request.getSession().getServletContext().getRealPath(fileDto.getFilepath());//"/upload/notice"
 System.out.println("savePath= "+savePath);
+}
+
 ServletContext context = getServletContext();
 int seq = noticeDto.getSeq(); 
 
@@ -74,13 +79,15 @@ int seq = noticeDto.getSeq();
 				<th>파일 업로드</th>
 				<td>
 					<%
-					if(fileDto.getFilename()==null || fileDto.getFilename().equals("")){
+					if(fileDto != null){
+					
 					%>
-					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >	
+					<a href="#"><%=fileDto.getOriginName() %></a>
+					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >
 					<% 
 					}else{
 					%>
-					<a href="#"><%=fileDto.getOriginName() %></a>
+					<p>첨부파일 없음</p>
 					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >
 					<%
 					}

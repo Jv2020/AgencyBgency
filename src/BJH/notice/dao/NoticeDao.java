@@ -27,6 +27,7 @@ public class NoticeDao {
 	public List<NoticeDto> getNoticeList(){
 		String sql = " SELECT SEQ, ID, TITLE, CONTENT, REG_DATE, READCOUNT, DEL, CHOICE,FILENAME "
 				+ " FROM NOTICE "
+				+ " WHERE DEL=0 "
 				+ " ORDER BY SEQ DESC ";
 		
 		Connection conn = null;

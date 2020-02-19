@@ -73,7 +73,7 @@ int noticePageNumber =0;
 				
 			%>
 			<tr>
-				<!--  체크 박스 안 보이게  -->
+				
 				<td><%=noticeCount-- %></td>
 				<%
 				if(dto.getChoice()==3){
@@ -84,7 +84,7 @@ int noticePageNumber =0;
 					choice="[ 공지사항 ]";
 				}
 				%>
-				<td><span><b><%=choice %></b> <%=dto.getTitle() %></span></td>
+				<td align="left"><span><b><%=choice %></b> <%=dto.getTitle() %></span></td>
 				<td><%=regDate%></td>
 				<td>
 									
@@ -95,17 +95,7 @@ int noticePageNumber =0;
 			}//for end
 		}//if end
 		%>
-		<!-- 
-			<tr>
-				 체크 박스 보이게 
-				<td><label><input type="checkbox" class="mr10">1</label></td>
-				<td><span><b>[ 공지사항 ]</b> 첫번째 공지사항입니다.</span></td>
-				<td>2020-02-17 15:22:42.0</td>
-				<td>					
-					<a href="#">더보기 +</a>					
-				</td>
-			</tr>	
-			 -->
+	
 		</tbody>		
 	</table>	
 	

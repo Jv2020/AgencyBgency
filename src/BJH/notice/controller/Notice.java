@@ -135,7 +135,9 @@ public class Notice extends HttpServlet {
 				//문제발생
 				FilesDto fileDto = fileDao.getOriginName(seq);		
 				
-				req.setAttribute("fileDto", fileDto);
+				if(fileDto != null) {
+					req.setAttribute("fileDto", fileDto);					
+				}
 				req.setAttribute("noticeDetail", noticeDto);
 				RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/noticeDetail.jsp");
 				dispatcher.forward(req	, resp);

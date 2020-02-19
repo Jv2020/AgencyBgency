@@ -10,20 +10,24 @@
 
 NoticeDto dto = (NoticeDto)request.getAttribute("noticeDto");
 FilesDto fDto = (FilesDto)request.getAttribute("fileDto");
-
+String savePath ="";
+String fileName ="";
+String originName = "";
+	if(fDto != null){
+		savePath = request.getSession().getServletContext().getRealPath(fDto.getFilepath());
+		fileName = fDto.getFilename();
+		originName = fDto.getOriginName();
+	}
 String choice = "";
-if(dto.getChoice()==3){
-	choice="[ 할인정보 ]";
-}else if(dto.getChoice()==2){
-	choice="[ 이벤트 ]";
-}else{
-	choice="[ 공지사항 ]";
-}
+	if(dto.getChoice()==3){
+		choice="[ 할인정보 ]";
+	}else if(dto.getChoice()==2){
+		choice="[ 이벤트 ]";
+	}else{
+		choice="[ 공지사항 ]";
+	}
 String regDate = dto.getReg_date();
 String title = dto.getTitle();
-String savePath = request.getSession().getServletContext().getRealPath(fDto.getFilepath());
-String fileName = fDto.getFilename();
-String originName = fDto.getOriginName();
 String content = dto.getContent();
 
 
@@ -62,16 +66,16 @@ String content = dto.getContent();
 				<th>첨부파일</th>
 				<td>
 					<%
-					if(fDto.getFilename()==null || fDto.getFilename().equals("")){
+					if(fDto != null){
+					/* if(fDto.getFilename()==null || fDto.getFilename().equals("")){ */
+					System.out.println("path="+savePath+fileName);
 					%>
-					<label>첨부파일 없음</label>	
+					<a href="<%=savePath+fileName%>"><%=originName %></a>
 					<% 
 					}else{
 					%>
-					<a href="<%=savePath+fileName%>"><%=originName %></a>
-					
+					<a href="#">첨부파일 없음</a>
 					<%
-					System.out.println("path="+savePath+fileName);
 					}
 					%>
 				</td>
