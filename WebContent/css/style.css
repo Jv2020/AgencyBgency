@@ -493,4 +493,19 @@ transition:all 0.2s ease-in-out;
 #re-layoutWrap .re-layout .reviewTxt p span {position:absolute; top:0; left:0; display:block; width:65px; letter-spacing:7px; color:#000;}
 #re-layoutWrap .re-layout:hover p {color:#5f0080;}
 
+/* 리뷰 view */
+.reviewDtail {}
+.reviewDtail > div.box:first-child {margin-top:0;}
+.reviewDtail > div.box {border:1px solid #ddd; margin-top:50px;}
+.reviewDtail > div.box .box-top {padding:20px 30px; background:#f7f7f7;}
+.reviewDtail > div.box h3.rv-tit {font-size:25px;}
+.reviewDtail > div.box .rv-info {margin-top:20px;}
+.reviewDtail > div.box .rv-info ul {}
+.reviewDtail > div.box .rv-info ul li {float:left; margin-left:30px;}
+.reviewDtail > div.box .rv-info ul li span {display:inline-block; margin-right:5px;}
+.reviewDtail > div.box .rv-info ul li:first-child {margin-left:0;}
+.reviewDtail > div.box .rv-info ul li a {margin-left:20px;}
+.reviewDtail > div.box .rv-info ul li a:first-child {margin-left:0;}
+.reviewDtail > div.box .rv-txt {border-top:1px solid #ddd; border-bottom:1px solid #ddd; padding:20px 30px; min-height:150px;}
+
 
