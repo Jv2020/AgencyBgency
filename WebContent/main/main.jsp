@@ -118,7 +118,7 @@ public String getExPeriod(String begindatefull, String enddatefull){
 				%>
 				
 				<span><a href="<%=contextPath %>/community/notice.jsp">공지사항</a></span>
-				<h1 class="logo"><a href="<%=contextPath %>/main/main.jsp">
+				<h1 class="logo"><a href="#none">
 					<img src="<%=contextPath %>/images/main/logo.png" alt="모두의 전시" />
 				</a></h1>	
 			</div><!-- //inner -->
@@ -384,7 +384,7 @@ public String getExPeriod(String begindatefull, String enddatefull){
 
 	<div id="footer">
 		<div class="inner">
-			<div class="footer_logo"><a href="/AgencyBgencyy/main/main.jsp">
+			<div class="footer_logo"><a href="#none">
 				<img src="/AgencyBgencyy/images/main/logo.png" alt="모두의 전시" />
 			</a></div>			
 			<address>
