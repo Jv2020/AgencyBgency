@@ -56,7 +56,7 @@ System.out.println(listPage);
 					<% } %>
 					<!-- 리뷰쓰기 modal -->
 					<div id="rvwrite<%=i %>" class="modal">
-					 	<form id="frm" action="<%=request.getContextPath()%>/writereviewAf">
+					 	<form id="frm1" action="<%=request.getContextPath()%>/writereviewAf">
 						 <input type="hidden" name="id" value="<%=sdto.getId() %>">
 						 	<div class="modal-top">
 						 		<ul>
@@ -71,7 +71,7 @@ System.out.println(listPage);
 								
 							<textarea name="review" id="review"></textarea>
 							<div class="modal-btm">
-								<input type="button" value="글쓰기" id="submit">
+								<input type="button" value="글쓰기" id="submitBtn">
 								<input class="closeBtn" type="button" value="취소">
 							</div>
 						</form>
@@ -148,7 +148,7 @@ function goPage(pageNumber) {
 
 <script>
 
-$("#submit").click(function () {
+$("#submitBtn").click(function () {
 	
 	var review = $("#review").val();
 	var star = $("#starrate").val();
@@ -164,7 +164,8 @@ $("#submit").click(function () {
 	}else {
 		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
 		/* cyh.submit(); */
-		$("#frm").submit();
+		/* alert("ㅋㅋ"); */
+		$("#frm1").submit();
 	}
 });
 

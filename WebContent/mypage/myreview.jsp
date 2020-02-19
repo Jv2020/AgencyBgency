@@ -83,7 +83,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 						
 							<!-- 리뷰쓰기 modal -->
 							<div id="rvwrite<%=i %>" class="modal">
-							 	<form action="/AgencyBgencyy/updatereviewAf">
+							 	<form id="frm2" action="/AgencyBgencyy/updatereviewAf">
 								 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 								 	<div class="modal-top">
 								 		<ul>
@@ -98,10 +98,10 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 										
 									<textarea name="review"><%=dto.getReview() %></textarea>
 									<div class="modal-btm">
-										<input type="submit" value="글쓰기">									
+										<input type="button" value="글쓰기" id="submitBtn">									
 										<input class="closeBtn" type="button" value="취소">
 									</div>
-								</form>						
+								</form>
 							</div><!-- //rvwrite -->
 					</td>
 					<td>
@@ -175,6 +175,27 @@ $('.starrr').starrr({
 $('.modal-btm .closeBtn').click(function(event) {
 	 $('textarea').val("");
 	 $('.jquery-modal').fadeOut('fast');
+});
+
+$("#submitBtn").click(function () {
+	
+	var review = $("#review").val();
+	var star = $("#starrate").val();
+	
+//	alert(review);
+//	alert("star는 " + star);
+
+	if(review == "") {
+		alert("리뷰를 적어 주십시오.");
+		$("#review").focus();
+	}else if(star == "") {
+		alert("별점을 설정해주십시오.");
+	}else {
+		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
+		/* cyh.submit(); */
+		/* alert("ㅋㅋ"); */
+		$("#frm1").submit();
+	}
 });
 </script>
 
