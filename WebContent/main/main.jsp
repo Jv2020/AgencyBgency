@@ -1,3 +1,5 @@
+<%@page import="KSJ.exhibit.dto.ExhibitDto"%>
+<%@page import="java.util.List"%>
 <%@page import="NWH.member.dto.MemberDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -7,6 +9,11 @@
 	// 로그인 세션
 	MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 %>
+<%--
+	List<ExhibitDto> list = (List<ExhibitDto>)request.getAttribute("list");
+	int allContentSize = (int)request.getAttribute("allContentSize");
+--%>
+					
 <!DOCTYPE html>
 <html>
 <head>
@@ -133,6 +140,7 @@
 				<div class="m_tit">
 					<h2>인기전시</h2>
 					<span></span>
+					
 				</div>
 			</div><!-- //inner -->
 		</div><!-- //section1 -->

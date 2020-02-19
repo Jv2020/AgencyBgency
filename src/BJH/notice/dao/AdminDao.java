@@ -17,7 +17,7 @@ public class AdminDao {
 private static AdminDao adminDao = new AdminDao();
  	
 	private AdminDao() {
-		
+		DBConnection.initConnection();
 	}
 	
 	public static AdminDao getInstance() {

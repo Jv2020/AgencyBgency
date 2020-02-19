@@ -685,5 +685,55 @@ public class ExhibitDao {
 		
 	}
 	
+	// TODO: main 용 추천전시
+	public List<ExhibitDto> mainRecommandExhibit() {
+		String sql = " SELECT e.SEQ, e.BEGINDATE, e.ENDDATE , e.TITLE , e.PLACE , e.CONTENT , e.EX_TIME , e.LOC_INFO , e.DEL , e.CONTACT , e.CERTI_NUM , e.PRICE , e.FILENAME " + 
+					 " FROM (SELECT ROW_NUMBER()OVER(ORDER BY CNT DESC) AS RNUM, TITLE, CNT "
+					 		+ " FROM ( SELECT TITLE, COUNT(*) AS CNT "
+					 			+ " FROM EXHIBIT_REVIEW "
+					 			+ " WHERE DEL = 0 "
+					 			+ " GROUP BY TITLE)) r, EXHIBIT e "
+		 			+ " WHERE r.TITLE = e.TITLE AND "
+		 			+ " RNUM <= 4 ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<ExhibitDto> list = new ArrayList<ExhibitDto>();
+		
+		try {
+			conn = DBConnection.getConnection();
+			psmt = conn.prepareStatement(sql);
+			
+			rs = psmt.executeQuery();
+			
+			while(rs.next()) {
+				int i = 1;
+				ExhibitDto dto = new ExhibitDto(rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getString(i++), 
+												rs.getInt(i++), 
+												rs.getString(i++), 
+												rs.getString(i++),
+												rs.getInt(i++),
+												rs.getString(i++));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			DBClose.close(psmt, conn, rs);
+		}
+
+		return list;
+	}
 	
 }
