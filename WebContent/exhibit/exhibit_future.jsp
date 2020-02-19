@@ -126,12 +126,14 @@ function listmore(){
 							"</div>"+
 						"</li>";
 				}
-				showContent += $("#main-exhibits li").length;
-				console.log(showContent);
-				if( showContent <= allcontents ){
-					$("#moreBtn").hide();
-				}
 			}	
+		},
+		complete: function(data) {
+			showContent += $("#main-exhibits li").length;
+			console.log(showContent);
+			if( showContent >= allcontents ){
+				$("#moreBtn").hide();
+			}
 		}
 	});
 	morecount = morecount+1;
