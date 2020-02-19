@@ -27,7 +27,7 @@ MemberDto mem = (MemberDto)session.getAttribute("loginuser");
 	%>
 		<script>
 			alert("관리자");
-			location.href = "<%=request.getContextPath()%>/Admin_List";
+			location.href = "<%=request.getContextPath()%>/admin";
 		</script>
 	<%		
 	} else {
