@@ -8,10 +8,14 @@ MemberDto mem = (MemberDto)request.getAttribute("loginuser");
 String address = mem.getAddress();
 String[] radr = address.split("/");
 %>
+<style>
+span.alert-red{color:red; font-size:13px}
+span.alert-green{color:#3ec629; font-size:13px}
+</style>
 
 <div class="ConfirmFrm">
 	<p style="text-align:right; margin-bottom:20px;"><b class="p-color">*</b> 표시가 있는 부분은 수정 가능합니다</p>
-	<form method="post" action="<%=request.getContextPath() %>/memberupdate">
+	<form method="post" action="">
 		<div class="frm_cont">
 			<div class="frm_line clfix">
 				<!-- 아이디 -->
@@ -31,8 +35,9 @@ String[] radr = address.split("/");
 			<div class="frm_line clfix">
 				<!-- 연락처 -->
 				<div class="tit">연락처 <b class="p-color">*</b></div>
-				<div class="cont">
-					<input type="text" id="phone" name="memberPhone" value="<%=mem.getPhone() %>" class="input-modify" placeholder="">
+				<div class="cont phoneComentColor">
+					<input type="text" id="phone" maxlength="11" class="memberPhone" name="memberPhone" value="<%=mem.getPhone() %>" class="input-modify" placeholder="">
+					<span class="phoneCheck"></span>
 				</div>
 			</div>
 			<div class="frm_line clfix">
@@ -229,6 +234,8 @@ String[] radr = address.split("/");
 
 
 
+
+<script src="<%=request.getContextPath() %>/js/memupdate.js"></script>
 
 <%@include file ="../include/footer.jsp" %>
 

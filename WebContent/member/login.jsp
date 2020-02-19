@@ -32,7 +32,7 @@ request.setCharacterEncoding("UTF-8");
 			</li>
 			<li>
 				<!-- 비밀번호 입력 -->
-				<input class="textBox" type="text" name="memberPassword" placeholder="비밀번호를 입력해주세요">
+				<input class="textBox" type="password" name="memberPassword" placeholder="비밀번호를 입력해주세요">
 			</li>
 			<li>
 				<!-- 아이디 찾기 버튼 -->

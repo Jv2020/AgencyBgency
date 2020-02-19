@@ -89,7 +89,7 @@ function idCheck(){
 
  // 패스워드 체크(정규식 + 멘트)
     var memPwd = document.querySelector(".memberPwd");
-    memPwd.addEventListener("blur", function(e){
+    memPwd.addEventListener("change", function(e){
     	var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
     	if($(".memberPwd").val() == ""){
     		if($('span.pwdCheck').hasClass('alert-red')) {
@@ -118,7 +118,7 @@ function idCheck(){
 // 패스워드 재확인 + 멘트
 var pw = document.querySelector(".memberPwdReCheck");
 
-pw.addEventListener("blur", function(e){
+pw.addEventListener("change", function(e){
 	var pw1 = document.querySelector(".memberPwd").value;
 	var pw2 = document.querySelector(".memberPwdReCheck").value;	
 	if(pw1 == "" || pw2 == ""){

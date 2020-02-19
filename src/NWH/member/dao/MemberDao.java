@@ -152,6 +152,7 @@ public class MemberDao {
 			
 			if(rs.next()) {
 				id = rs.getString(1);
+				System.out.println("아이디찾기 다오: "+ id);
 			}
 			System.out.println("4/6 memberFindId success");
 			
