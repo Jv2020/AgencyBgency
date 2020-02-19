@@ -148,6 +148,20 @@ public class Notice extends HttpServlet {
 				String filePath ="/upload/notice/";
 				
 				String upload = req.getSession().getServletContext().getRealPath(filePath);
+				File Folder = new File(upload);
+				
+				if (!Folder.exists()) {
+					try{
+					    Folder.mkdir(); //폴더 생성합니다.
+					    System.out.println("폴더가 생성되었습니다.");
+				        } 
+				        catch(Exception e){
+					    e.getStackTrace();
+					}        
+			         }else {
+					System.out.println("이미 폴더가 생성되어 있습니다.");
+				}
+				
 				//String upload = req.getContextPath()+filePath;
 				System.out.println("upload=" + upload);
 				// 사이즈 지정
