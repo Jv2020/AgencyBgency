@@ -56,7 +56,7 @@ System.out.println(listPage);
 					<% } %>
 					<!-- 리뷰쓰기 modal -->
 					<div id="rvwrite<%=i %>" class="modal">
-					 	<form action="/AgencyBgencyy/writereviewAf" method="get">
+					 	<form id="frm" action="<%=request.getContextPath()%>/writereviewAf">
 						 <input type="hidden" name="id" value="<%=sdto.getId() %>">
 						 	<div class="modal-top">
 						 		<ul>
@@ -64,17 +64,17 @@ System.out.println(listPage);
 						 			<li>
 						 				<span>평점</span>
 						 				<div class='starrr' id='star1'></div>
-									    <input type="hidden" id="starrate" name="starrate" value="">
+										<input type="hidden" id="starrate" name="starrate" value="">
 						 			</li>
 						 		</ul>							  
 							</div><!-- //modal-top -->
 								
-							<textarea name="review"></textarea>
+							<textarea name="review" id="review"></textarea>
 							<div class="modal-btm">
-								<input type="submit" value="글쓰기">									
+								<input type="button" value="글쓰기" id="submit">
 								<input class="closeBtn" type="button" value="취소">
 							</div>
-						</form>						
+						</form>
 					</div><!-- //rvwrite -->
 								
 				</td>
@@ -90,7 +90,7 @@ System.out.println(listPage);
 			</script>
 			<%
 				}
-			%>					
+			%>
 		</tbody>		
 	</table>	
 	
@@ -145,6 +145,35 @@ function goPage(pageNumber) {
 }
 
 </script>
+
+<script>
+
+$("#submit").click(function () {
+	
+	var review = $("#review").val();
+	var star = $("#starrate").val();
+	
+//	alert(review);
+//	alert("star는 " + star);
+
+	if(review == "") {
+		alert("리뷰를 적어 주십시오.");
+		$("#review").focus();
+	}else if(star == "") {
+		alert("별점을 설정해주십시오.");
+	}else {
+		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
+		/* cyh.submit(); */
+		$("#frm").submit();
+	}
+});
+
+
+</script>
+
+
+
+
 
 
 <%@include file ="../include/footer.jsp" %>		

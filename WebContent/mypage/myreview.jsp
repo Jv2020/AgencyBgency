@@ -81,7 +81,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 						<%-- <a href="/AgencyBgencyy/updateReview?seq=<%=dto.getSeq() %>">수정</a> --%>
 						<a class="btn" href="#rvwrite<%=i %>">수정</a>
 						
-						<!-- 리뷰쓰기 modal -->
+							<!-- 리뷰쓰기 modal -->
 							<div id="rvwrite<%=i %>" class="modal">
 							 	<form action="/AgencyBgencyy/updatereviewAf">
 								 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
@@ -144,11 +144,6 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 	</div>
 </div><!-- //myReserve -->
 
-<a href="#" class="fa-star fa"></a>
-<a href="#" class="fa-star fa"></a>
-<a href="#" class="fa-star fa"></a>
-<a href="#" class="fa-star fa"></a>
-<a href="#" class="fa-star-o fa"></a>
 <script type="text/javascript">
 
 function goPage(pageNumber) {

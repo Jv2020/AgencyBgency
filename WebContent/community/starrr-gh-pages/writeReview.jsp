@@ -63,17 +63,17 @@ System.out.println("들어온 전시명은 " + title);
 			    <div>
 			      <span class='your-choice-was' style='display: none;'>
 			        <span class='choice'></span>/5
-			        <input type="hidden" id="starrate" name="starrate">
+			        <input type="hidden" id="starrate" name="starrate" >
 			      </span>
 			    </div>
 		</div>
 	</div>
 	<div class="2-2">
-		<textarea rows="20" cols="60" name="review"></textarea>
+		<textarea rows="20" cols="60" name="review" id="review"></textarea>
 	</div>
 	<div class="2-3">
 		<div class="3-3">
-			<input type="submit" value="리뷰올리기" style="width: 300">
+			<input type="submit" value="리뷰올리기" style="width: 300" id="submit">
 		</div>
 		<div class="3-4">
 			<input type="button" onclick="closeWindow()" value="취소">
@@ -131,9 +131,6 @@ $(document).ready(function () {
 	ga('create', 'UA-39205841-5', 'dobtco.github.io');
 	ga('send', 'pageview');
   </script>
-
-
-
 
 
 
