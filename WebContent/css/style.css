@@ -508,4 +508,16 @@ transition:all 0.2s ease-in-out;
 .reviewDtail > div.box .rv-info ul li a:first-child {margin-left:0;}
 .reviewDtail > div.box .rv-txt {border-top:1px solid #ddd; border-bottom:1px solid #ddd; padding:20px 30px; min-height:150px;}
 
+/* 나의 관람한 전시 리뷰쓰기 modal */
+.modal-top{padding:20px 10px;}
+.modal-top ul {}
+.modal-top ul li {position:relative; font-size:17px; padding-left:80px; margin-top:10px;}
+.modal-top ul li:first-child {margin-top:0;}
+.modal-top ul li span {position:absolute; top:0; left:0; display:block; width:80px; font-weight:bold;}
+.modal textarea {width:100%; height:150px; padding:20px;}
+.modal-btm {width:100%; font-size:0; margin-top:20px; text-align:center;}
+.modal-btm input {display:inline-block; width:100px; height:35px; line-height:33px; margin-left:10px; border:1px solid #5f0080; color:#5f0080; background:#fff; outline:none; transition:all 0.3s ease-in-out; cursor:pointer;}
+.modal-btm input:first-child {margin-left:0;}
+.modal-btm input:hover{background:#5f0080; color:#fff;}
+
 

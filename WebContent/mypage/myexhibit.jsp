@@ -20,7 +20,6 @@ System.out.println(pageNumber);
 System.out.println(listPage);
 
 %>
-
 <div id="myReserve">	
 	<table class="reservetbl">
 		<colgroup>
@@ -52,10 +51,43 @@ System.out.println(listPage);
 					<%if (list.get(i).getDel() == 1)  { %>
 					<span style="color:red;">예매취소</span>
 					<% } else { %>
-					<a href="/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>" >리뷰작성</a>
+					<%-- <a href="/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>" >리뷰작성</a> --%>
+					<a class="btn" href="#rvwrite<%=i %>">리뷰작성</a>		
 					<% } %>
+					<!-- 리뷰쓰기 modal -->
+					<div id="rvwrite<%=i %>" class="modal">
+					 	<form action="/AgencyBgencyy/writereviewAf" method="">
+						 <input type="hidden" name="id" value="rrr111">								 			
+						 	<div class="modal-top">	
+						 		<ul>
+						 			<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value=""></li>
+						 			<li>
+						 				<span>평점</span> 
+						 				<div class='starrr' id='star1'></div>								    	
+									    <input type="hidden" id="starrate" name="starrate" value="">
+						 			</li>
+						 		</ul>							  
+							</div><!-- //modal-top -->
+								
+							<textarea name="review"></textarea>
+							<div class="modal-btm">
+								<input type="submit" value="글쓰기">									
+								<input class="closeBtn" type="button" value="취소">
+							</div>
+						</form>						
+					</div><!-- //rvwrite -->
+								
 				</td>
 			</tr>
+			<script>
+			// popup
+			$('a[href="#rvwrite<%=i %>"]').click(function(event) {
+				  event.preventDefault();	
+				  $(this).modal({
+				    fadeDuration: 150
+				  });  
+			});
+			</script>
 			<%
 				}
 			%>					
@@ -81,6 +113,33 @@ System.out.println(listPage);
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+<script src="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.js"></script>
+<link rel="stylesheet" href="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.css">
+
+<%
+
+%>
+<script>
+// star
+var $starinput = $('#starrate');
+$('.starrr').starrr({
+	max: 5,
+	rating: $starinput.val(),
+	change: function(e, value){
+	$starinput.val(value).trigger('input');
+	}
+});
+
+$('.modal-btm .closeBtn').click(function(event) {
+	 $('textarea').val("");
+	 $('.jquery-modal').fadeOut('fast');
+});
+</script>
+
 <script type="text/javascript">
 
 function goPage(pageNumber) {
@@ -89,8 +148,6 @@ function goPage(pageNumber) {
 }
 
 </script>
-
-
 
 
 <%@include file ="../include/footer.jsp" %>		
