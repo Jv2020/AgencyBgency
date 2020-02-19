@@ -59,10 +59,50 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 					<td><span><%=dto.getTitle() %></span></td>
 					<td><span><%=dto.getReview() %></span></td>
 					<td>
-						<a href="" onclick="window.open('/AgencyBgencyy/reviewdetail?seq=<%=dto.getSeq() %>', 'reviewDetail', 'width=800, height=600')">상세보기</a>
+						<%-- <a href="" onclick="window.open('/AgencyBgencyy/reviewdetail?seq=<%=dto.getSeq() %>', 'reviewDetail', 'width=800, height=600')">상세보기</a> --%>
+						<a class="btn" href="#rvwrite<%=i %>">상세보기</a>
+						
+						<!-- 리뷰보기 modal -->
+						<div id="rvwrite<%=i %>" class="modal">
+							 	<div class="modal-top">
+							 		<ul>
+							 			<li><span>전시명</span><%=dto.getTitle() %></li>
+							 		</ul>							  
+								</div><!-- //modal-top -->
+									
+								<textarea name="review" readonly="readonly"><%=dto.getReview() %></textarea>
+								<div class="modal-btm">
+									<input class="closeBtn" type="button" value="취소">
+								</div>
+						</div><!-- //rvwrite -->
+						
 					</td>
 					<td>
-						<a href="/AgencyBgencyy/updateReview?seq=<%=dto.getSeq() %>">수정</a>
+						<%-- <a href="/AgencyBgencyy/updateReview?seq=<%=dto.getSeq() %>">수정</a> --%>
+						<a class="btn" href="#rvwrite<%=i %>">수정</a>
+						
+						<!-- 리뷰쓰기 modal -->
+							<div id="rvwrite<%=i %>" class="modal">
+							 	<form action="/AgencyBgencyy/updatereviewAf">
+								 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+								 	<div class="modal-top">
+								 		<ul>
+								 			<li><span>전시명</span><%=dto.getTitle() %>
+								 			<li>
+								 				<span>평점</span>
+								 				<div class='starrr' id='star1'></div>
+											    <input type="hidden" id="starrate" name="starrate" value="">
+								 			</li>
+								 		</ul>
+									</div><!-- //modal-top -->
+										
+									<textarea name="review"><%=dto.getReview() %></textarea>
+									<div class="modal-btm">
+										<input type="submit" value="글쓰기">									
+										<input class="closeBtn" type="button" value="취소">
+									</div>
+								</form>						
+							</div><!-- //rvwrite -->
 					</td>
 					<td>
 						<a href="/AgencyBgencyy/deletereview?seq=<%=dto.getSeq() %>">삭제</a>
@@ -70,14 +110,22 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 					<%
 				}
 				%>
-					
 				</tr>
+					<script>
+					// popup
+					$('a[href="#rvwrite<%=i %>"]').click(function(event) {
+						  event.preventDefault();	
+						  $(this).modal({
+						    fadeDuration: 150
+						  });  
+					});
+					</script>
 			</tbody>
 			<%
 		}
 		%>
-				
-	</table>	
+			
+	</table>
 	
 	<div class="pagingWrap">
 		<%
@@ -96,6 +144,11 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 	</div>
 </div><!-- //myReserve -->
 
+<a href="#" class="fa-star fa"></a>
+<a href="#" class="fa-star fa"></a>
+<a href="#" class="fa-star fa"></a>
+<a href="#" class="fa-star fa"></a>
+<a href="#" class="fa-star-o fa"></a>
 <script type="text/javascript">
 
 function goPage(pageNumber) {
@@ -104,5 +157,30 @@ function goPage(pageNumber) {
 }
 </script>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+<script src="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.js"></script>
+<link rel="stylesheet" href="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.css">
+
+<script>
+// star
+var $starinput = $('#starrate');
+$('.starrr').starrr({
+	max: 5,
+	rating: $starinput.val(),
+	change: function(e, value){
+	$starinput.val(value).trigger('input');
+	}
+});
+
+$('.modal-btm .closeBtn').click(function(event) {
+	 $('textarea').val("");
+	 $('.jquery-modal').fadeOut('fast');
+});
+</script>
 
 <%@include file ="../include/footer.jsp" %>		

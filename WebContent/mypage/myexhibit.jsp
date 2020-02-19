@@ -52,18 +52,18 @@ System.out.println(listPage);
 					<span style="color:red;">예매취소</span>
 					<% } else { %>
 					<%-- <a href="/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>" >리뷰작성</a> --%>
-					<a class="btn" href="#rvwrite<%=i %>">리뷰작성</a>		
+					<a class="btn" href="#rvwrite<%=i %>">리뷰작성</a>
 					<% } %>
 					<!-- 리뷰쓰기 modal -->
 					<div id="rvwrite<%=i %>" class="modal">
-					 	<form action="/AgencyBgencyy/writereviewAf" method="">
-						 <input type="hidden" name="id" value="rrr111">								 			
-						 	<div class="modal-top">	
+					 	<form action="/AgencyBgencyy/writereviewAf" method="get">
+						 <input type="hidden" name="id" value="<%=sdto.getId() %>">
+						 	<div class="modal-top">
 						 		<ul>
-						 			<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value=""></li>
+						 			<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value="<%=list.get(i).getTitle() %>"></li>
 						 			<li>
-						 				<span>평점</span> 
-						 				<div class='starrr' id='star1'></div>								    	
+						 				<span>평점</span>
+						 				<div class='starrr' id='star1'></div>
 									    <input type="hidden" id="starrate" name="starrate" value="">
 						 			</li>
 						 		</ul>							  
@@ -120,9 +120,6 @@ System.out.println(listPage);
 <script src="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.js"></script>
 <link rel="stylesheet" href="/AgencyBgencyy/community/starrr-gh-pages/dist/starrr.css">
 
-<%
-
-%>
 <script>
 // star
 var $starinput = $('#starrate');

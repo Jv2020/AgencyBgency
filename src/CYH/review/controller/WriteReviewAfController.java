@@ -2,6 +2,7 @@ package CYH.review.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,18 +27,19 @@ public class WriteReviewAfController extends HttpServlet{
 		System.out.println("writereviewAf에 들어온 별갯수는 " + star);
 		
 		ReviewDao dao = ReviewDao.getInstance();
-		boolean isS = dao.writeReview(new ReviewDto(id, title, review, star));
+		boolean sisS = dao.writeReview(new ReviewDto(id, title, review, star));
 		
 	//	resp.sendRedirect("/AgencyBgencyy/index.jsp");
-		resp.sendRedirect("/AgencyBgencyy/mypage/myexhibitAf.jsp");
+	//	resp.sendRedirect("/AgencyBgencyy/mypage/myexhibitAf.jsp");
+		
+		String isS = String.valueOf(sisS);
+		
+		req.setAttribute("isS", isS);
+		
+		RequestDispatcher disp = req.getRequestDispatcher("/mypage/myexhibitAf.jsp");
+		disp.forward(req, resp);
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-	}
-	
 }
 
 

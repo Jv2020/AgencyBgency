@@ -38,11 +38,14 @@ List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 
 // 확인용
 // System.out.println("list.size()는" + list.size());
+%>
 
+
+<div class="reviewDtail">
+<%
 for(int i = 0; i < list.size(); i++) {
 	ReviewDto dto = list.get(i);
 %>
-<div class="reviewDtail">
 	<div class="box">
 		<div class="box-top">
 			
@@ -71,11 +74,11 @@ for(int i = 0; i < list.size(); i++) {
 			<%=dto.getReview() %>
 		</div>	 		
 	</div><!-- //box -->
-	
-</div><!-- //reviewDtail -->
 <%
 }
 %>
+	
+</div><!-- //reviewDtail -->
 
 <div class="pagingWrap">
 <%
