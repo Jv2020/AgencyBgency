@@ -96,16 +96,16 @@ for(int i = 0; i < list.size(); i++) {
 }
 %>
 
-<div style="text-align: center">
+<div class="pagingWrap">
 <%
 for(int i = 0; i < pages; i++) {
 	if(i == re_pageNum) {
 		%>
-		<span><b><%=i + 1 %></b></span>
+		<span class="on"><%=i + 1 %></span>
 		<%
 	}else {
 		%>
-		<span><a href="/AgencyBgencyy/onereview?title=<%=title %>&re_pageNum=<%=i %>">[<%=i + 1 %>]</a></span>
+		<span onclick="location.href='/AgencyBgencyy/onereview?title=<%=title %>&re_pageNum=<%=i %>'"><%=i + 1 %></span>
 		<%
 	}
 	 %>
@@ -119,6 +119,59 @@ function reload() {
 	location.reload();
 }
 </script>
+
+<div class="reviewDtail">
+	<div class="box">
+		<div class="box-top">
+			<h3 class="rv-tit">전시제목을 입력해주세요</h3>
+			<div class="rv-info">
+				<ul class="clfix">
+					<li><span>아이디</span> yonghotest</li>
+					<li><span>작성일</span> 2020-02-17 20:28:11.0</li>
+					<li><span>평점</span> 2점</li>
+					<li>
+						<a href="#none"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> 1
+						<a href="#none"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> 2
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="rv-txt">
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.
+		</div>	 		
+	</div><!-- //box -->
+	
+	<div class="box">
+		<div class="box-top">
+			<h3 class="rv-tit">전시제목을 입력해주세요</h3>
+			<div class="rv-info">
+				<ul class="clfix">
+					<li><span>아이디</span> yonghotest</li>
+					<li><span>작성일</span> 2020-02-17 20:28:11.0</li>
+					<li><span>평점</span> 2점</li>
+					<li>
+						<a href="#none"><img src="/AgencyBgencyy/community/LIKE.jpg" width="20" height="20"> 좋아요</a> 1
+						<a href="#none"><img src="/AgencyBgencyy/community/DISLIKE.jpg" width="20" height="20"> 싫어요</a> 2
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="rv-txt">
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요. 리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.<br>
+			리뷰내용을 입력해주세요.  리뷰내용을 입력해주세요.
+		</div>	 		
+	</div><!-- //box -->
+	
+</div><!-- //reviewDtail -->
 
 
 
