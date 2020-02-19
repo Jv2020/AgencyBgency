@@ -59,18 +59,19 @@
 	}%>
 <input type="hidden" id="current" value="now">
 <div class="listmore" id="moreBtn" onclick="listmore()">더보기</div>
-<script src="${pageContext.request.contextPath}/exhibit/js/exhibitlist.js?ver=1"></script>
 
 
 <script>
 var morecount = 0;
 // 더보기버튼
 var showContent = $("#main-exhibits li").length;	// 
+alert(showContent);
 var allcontents = <%=allContentSize%>;	// 현재 모든 컨텐츠 개수 
 if( showContent >= allcontents  ){
 	$("#moreBtn").hide();
 }
 function listmore(){
+	var choice = $("#current").val();
 	$.ajax({
 		// 현재 전시 가져오기 
 		url:"${pageContext.request.contextPath}/exhibitmorelist",
@@ -119,14 +120,16 @@ function listmore(){
 							"</div>"+
 						"</li>";
 					
-				}
-				
-				showContent += $("#main-exhibits li").length;
-				console.log(showContent);
-				if( showContent <= allcontents ){
-					$("#moreBtn").hide();
-				}
-			}	
+				}}
+		},
+		complete: function(data) {
+
+			alert($("#main-exhibits li").length);
+			showContent += $("#main-exhibits li").length;
+			console.log(showContent);
+			if( showContent >= allcontents ){
+				$("#moreBtn").hide();
+			}
 		}
 	});
 	morecount = morecount+1;

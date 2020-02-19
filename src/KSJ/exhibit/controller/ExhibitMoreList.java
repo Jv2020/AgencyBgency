@@ -47,7 +47,6 @@ public class ExhibitMoreList extends HttpServlet {
 		
 		String gson = new Gson().toJson(list);
 		resp.getWriter().write(gson);
-		resp.getWriter().write(allContentSize);
 		
 		
 		

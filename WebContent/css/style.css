@@ -87,12 +87,14 @@
 #visual li p {height:570px; background-position:center top !important; background-size:cover !important;}
 
 #contents {}
-#contents > div {min-height:300px; padding-bottom:90px;}
+#contents > div {min-height:300px; padding-bottom:100px;}
 #contents > div:nth-child(even) {background:#f7f7f7;}
-.m_tit {text-align:center; font-size:0; padding:50px 0 0; margin-bottom:50px;}
+.m_tit {text-align:center; font-size:0; padding:90px 0 0; margin-bottom:80px;}
 .m_tit h2 {font-size:40px;}
 .m_tit span {display:inline-block; margin-top:15px; width:50px; height:3px; background:#5f0080;}
 .m_tit.admin {padding-bottom:40px;}
+/* 메인 - 인기전시 */
+#main-exhibits li:last-child{ margin-right:0; }
 
 /* 메인 - 공지사항 */
 .n-cont{}

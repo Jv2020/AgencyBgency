@@ -7,6 +7,7 @@
 	width: 660px;
 	padding: 30px;
 	border: 1px solid #ddd;
+	background-color: #fff;
 }
 .sch-top .recommand .img{
 	width:240px;
@@ -105,6 +106,7 @@
 	padding:20px;
 	border: 1px solid #ddd;
 	border-top: none;
+	background-color: #fff;
 
 }
 .sch-top .calendar .cal-cont ul{
