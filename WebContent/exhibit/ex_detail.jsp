@@ -33,21 +33,23 @@ if( loginuser != null){
 <div class="ex-datail-top clfix">
 	<div class="img">
 	<%	// 추천전시가 없을 때 
-					// 표지 있을 때 
+					// 표지  없을 때 
 					if(dto.getFilename() == null ){
 						%>
-							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+						<span>
+							<img alt="NO IMG" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+						</span>
 						<%
 					}
-					else {	// 표지 없을 때 
-						%>
-							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+					else {// 표지 있을 때 
+						%>						
+						 <img alt="NO IMG" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
 						<%
 					}
 			%>
 	</div>
 	<div class="cont">
-		<h4>&lt; <%=dto.getTitle() %> &gt;</h4>
+		<h4><%=dto.getTitle() %></h4>
 		<p><span>장소</span><%=dto.getPlace() %> </p>
 		<p><span>기간</span><%= dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
 		<p><span>시간	</span><%=dto.getEx_time().substring(0, 2) +":" +dto.getEx_time().substring(2, 4)+" - " + dto.getEx_time().substring(4, 6) +":" +dto.getEx_time().substring(6, 8) %></p>
