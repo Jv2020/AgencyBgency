@@ -25,7 +25,7 @@ $('.categoryBox span').click(function(){
 
 // 아이디 체크(정규식 + 멘트)
 var memId = document.querySelector(".memberId");
-memId.addEventListener("blur", function(e){
+memId.addEventListener("change", function(e){
 	var idReg = /^[a-z]+[a-z0-9]{5,19}$/g;
 	if($(".memberId").val() == ""){ // 빈칸일 때
 		if($('span.idCheck').hasClass('alert-green')) { 
@@ -45,8 +45,14 @@ memId.addEventListener("blur", function(e){
 	    	document.querySelector(".idCheck").innerHTML = "아이디는 영문자(소문자)로 시작하는 6~20자 영문자 또는 숫자이어야 합니다.";
 	        return;
 	    }  else {
-	    	$('.idComentColor span').addClass('alert-red');
-	    	document.querySelector(".idCheck").innerHTML = "중복체크 전입니다.";
+	    	if($('span.idCheck').hasClass('alert-green')) { 
+	    		$('.idComentColor span').removeClass('alert-green');
+	    		$('.idComentColor span').addClass('alert-red');
+	    		document.querySelector(".idCheck").innerHTML = "중복체크 전입니다.";
+	    	} else {
+	    		$('.idComentColor span').addClass('alert-red');
+	    		document.querySelector(".idCheck").innerHTML = "중복체크 전입니다.";
+	    	}
 	    }
 	}
 });
@@ -60,13 +66,11 @@ function idCheck(){
 		dataType:"text",
 		data : "idcheck="+$("#id").val(),
 		success:function(data){
-			if(!idReg.test( $(".memberId").val() )){
-				
-			} else {
+			if(idReg.test( $(".memberId").val() )){
 				if(data === "true"){
 					$('.idComentColor span').removeClass('alert-green');
 					$('.idComentColor span').addClass('alert-red');
-					document.querySelector(".idCheck").innerHTML = "이미 등록된 아이디입니다.";
+					document.querySelector(".idCheck").innerHTML = "사용할 수 없는 아이디입니다.";
 
 				} else {
 					$('.idComentColor span').removeClass('alert-red');
