@@ -57,7 +57,7 @@ function exhibitGoPage(pageNum) {
 	var choice = $("#exhibitSearchChoice").val();
 	var word = $("#exhibitSearchWord").val();
 	
-	if(word == ""){
+	if(word == "" || word == null){
 		document.getElementById("exhibitSearchChoice").value='sel';
 	};
 	var linkStr = getContextPath() + "/admin?exhibitPageNumber=" + pageNum;
@@ -91,7 +91,7 @@ function accessGoPage(pageNum) {
 	var choice = $("#accessSearchChoice").val();
 	var word = $("#accessSearchWord").val();
 	
-	if(word == ""){
+	if(word == "" || word ==null){
 		document.getElementById("accessSearchChoice").value='sel';
 	};
 	var linkStr = getContextPath() + "/admin?accessPageNumber=" + pageNum;
@@ -139,7 +139,9 @@ $(document).ready(function(){
 	 
 	 	var chkNoticeCount = $('input:checkbox[id="chk_notice"]:checked').length ;
 		var chkNotice_val = $('input:checkbox[id="chk_notice"]').val();
-		
+
+		// 새로고침 시 get 파라미터 초기화
+		window.onkeydown = function() { var kcode = event.keyCode; if(kcode == 116) { history.replaceState({}, null, location.pathname); } }
 		
 		
 	 

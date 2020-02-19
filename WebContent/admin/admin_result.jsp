@@ -24,13 +24,13 @@
 <% 
 if(result.equals("true")){
 	%>
-	alert("정상적으로 등록 되었음");
+	alert("정상적으로 적용 되었음");
 	location.href="<%=request.getContextPath()%>/admin";
 	
 	<%
 }else if(result.equals("fail")){
 	%>
-	alert("파일 업로드에 실패하였습니다.");
+	alert("첨부파일 없이 적용되었습니다.");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
 }else{

@@ -149,6 +149,15 @@ public class Admin extends HttpServlet {
 		req.setAttribute("accessLength", accessLength);
 		req.setAttribute("exhibitLength", exhibitLength);
 		
+		req.setAttribute("noticeSearchWord", noticeSearchWord);
+		req.setAttribute("accessSearchWord", accessSearchWord);
+		req.setAttribute("exhibitSearchWord", exhibitSearchWord);
+		
+		req.setAttribute("noticeSearchChoice", noticeSearchChoice);
+		req.setAttribute("accessSearchChoice", accessSearchChoice);
+		req.setAttribute("exhibitSearchChoice", exhibitSearchChoice);
+		
+		//System.out.println("exhibitSearchWord"+exhibitSearchWord);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/amain.jsp");
 		dispatcher.forward(req	, resp);
 		

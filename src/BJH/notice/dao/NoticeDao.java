@@ -106,9 +106,9 @@ public class NoticeDao {
 	}
 	// 공지 업데이트
 	public boolean notice_Update(int seq, NoticeDto dto ) {
-		
+		System.out.println("updateDto"+dto);
 		String sql = " UPDATE NOTICE "
-				+ " SET TITLE=? , CONTENT=? , CHOICE= ? FILENAME= ?"
+				+ " SET ID=?, TITLE=? , CONTENT=? , CHOICE= ? ,FILENAME= ?"
 				+ " WHERE SEQ= ? ";
 			
 		
@@ -122,11 +122,12 @@ public class NoticeDao {
 				System.out.println("1/4 notice_Update ");
 			psmt = conn.prepareStatement(sql);
 				System.out.println("2/4 notice_Update ");
-				
-				psmt.setString(1, dto.getTitle());
-				psmt.setString(2, dto.getContent());
-				psmt.setInt(3, dto.getChoice());
-				psmt.setInt(4, seq);
+				psmt.setString(1, dto.getId());
+				psmt.setString(2, dto.getTitle());
+				psmt.setString(3, dto.getContent());
+				psmt.setInt(4, dto.getChoice());
+				psmt.setString(5,dto.getFilename());
+				psmt.setInt(6, seq);
 				System.out.println("3/4 notice_Update ");
 			noticeResult = psmt.executeUpdate();
 				System.out.println("4/4 notice_Update Successs");

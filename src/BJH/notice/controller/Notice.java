@@ -44,44 +44,83 @@ public class Notice extends HttpServlet {
 				resp.sendRedirect(req.getContextPath()+"/admin/noticeWrite.jsp");
 			// 공지 업데이트	
 			}else if(notice.equals("update")){
+				req.setCharacterEncoding("utf-8");
+				resp.setCharacterEncoding("utf-8");
+				String sseq = req.getParameter("seq");
+				int seq = Integer.parseInt(sseq);
+				// 실제 저장 경로 
+				MultipartRequest multi =null;
+				String filePath ="/upload/notice/";
+				
+				String upload = req.getSession().getServletContext().getRealPath(filePath);
+				//String upload = req.getContextPath()+filePath;
+				System.out.println("upload=" + upload);
+				// 사이즈 지정
+				int maxSize = 100*1024*1024;
+				//int maxMemSize = 100 * 1024;
+				
+				// 파라미터 받기위한 변수
+				String id ="";
+				String title ="";
+				String content="";
+				String fileName ="";
+				int choice =0;
+				
+				//파일
+				String originName="";
+				String bbs_name = "notice";
+				int bbs_seq = -1;
+
+				try {
+					multi= new MultipartRequest(
+							req, 
+							upload,
+							maxSize,
+							"utf-8",
+							new DefaultFileRenamePolicy());
+					
+					id = multi.getParameter("id");
+					title= multi.getParameter("title");
+					content = multi.getParameter("content");
+					String schoice = multi.getParameter("choice");
+					choice = Integer.parseInt(schoice);
+					fileName = multi.getFilesystemName("fileName");
+					System.out.println("fileName="+fileName);
+					//실제 내가 올린 파일명
+					originName = multi.getOriginalFileName("fileName");
+					System.out.println("originName="+originName);
+				
+				}catch(Exception e) {
+					System.out.println("파일업로드 문제 발생");
+					System.out.println(e.getMessage());
+				}
+				NoticeDao noticeDao = NoticeDao.getInstance();
+				FileDao fileDao = FileDao.getInstance();
+				NoticeDto noticeDto = new NoticeDto(id,title,content,choice,fileName);
+				
+				
+				boolean result = noticeDao.notice_Update(seq,noticeDto);
+				
+				if(result) {
+					System.out.println("공지 DB 수정 완료");
+					bbs_seq = fileDao.getNoticeSeq(fileName);
+					FilesDto fileDto = new FilesDto(-1,fileName,originName,
+													filePath,bbs_name,bbs_seq,0,2);
+					boolean fileResult = fileDao.updateFile(fileDto);
+					if(fileResult) {
+						
+						System.out.println("send filePath = "+filePath);
+						System.out.println("send fileName = "+fileName);
+						
+						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+					}else {
+						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
+					}
+				}else {
+					resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=false");
+				}
+
 				 
-				 
-				 String sseq = req.getParameter("seq");
-				 String id = req.getParameter("id");
-				 String title = req.getParameter("title");
-				 String content = req.getParameter("content");
-				 String fileName = req.getParameter("fileName");
-				 String choice2 = req.getParameter("choice");
-				 
-				 FileDao fileDao = FileDao.getInstance();
-				 //String originName = fileDao.getOriginName();
-				 
-				 System.out.println("choice ==" + choice2);
-				 System.out.println("seq="+sseq);
-				 System.out.println("id="+id);
-				 System.out.println("title="+title);
-				 System.out.println("content="+content);
-				 int seq = Integer.parseInt(sseq);
-				 int choice = Integer.parseInt(choice2);
-				 System.out.println("fileName="+fileName);
-				 System.out.println("choice="+choice);
-				 System.out.println("seq="+seq);
-				 
-				 //업로드 폴더위치 및 업로드 폴더 이름 
-				 String savePath = "/upload/notice";
-				 ServletContext context = getServletContext();
-				 
-				 String sDownPath = context.getRealPath(savePath);
-				 System.out.println("다운로드 위치 = "+ sDownPath);
-				 
-				 
-				 
-				 boolean result = false;
-				 NoticeDao noticeDao = NoticeDao.getInstance();
-				 result = noticeDao.notice_Update(seq,new NoticeDto(id,title,content,choice,fileName));
-				 System.out.println("result="+result);
-				 
-				 resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result="+result);
 			//공지 디테일
 			}else if(notice.equals("detail")) {
 				
@@ -89,10 +128,11 @@ public class Notice extends HttpServlet {
 				String sseq = req.getParameter("seq");
 				System.out.println("seq="+sseq);
 				int seq = Integer.parseInt(sseq);
-				NoticeDao noticeDao = NoticeDao.getInstance();
+				NoticeDao noticeDao = NoticeDao.getInstance(); 
 				FileDao fileDao = FileDao.getInstance();
 				
 				NoticeDto noticeDto = noticeDao.notice_detail(seq);
+				//문제발생
 				FilesDto fileDto = fileDao.getOriginName(seq);		
 				
 				req.setAttribute("fileDto", fileDto);
@@ -108,6 +148,7 @@ public class Notice extends HttpServlet {
 				String filePath ="/upload/notice/";
 				
 				String upload = req.getSession().getServletContext().getRealPath(filePath);
+				//String upload = req.getContextPath()+filePath;
 				System.out.println("upload=" + upload);
 				// 사이즈 지정
 				int maxSize = 100*1024*1024;
@@ -194,11 +235,15 @@ public class Notice extends HttpServlet {
 				boolean noticeResult = false;
 				NoticeDao noticeDao = NoticeDao.getInstance();
 				noticeResult = noticeDao.notice_delete(deleteList);
+				if(noticeResult) {
+					FileDao fileDao = FileDao.getInstance();
+					boolean fileResult = fileDao.file_delete(deleteList);
+				}
 				System.out.println("del_result="+noticeResult);
 				
 				String result = noticeResult+"";
 				//String gson = new Gson().toJson(noticeResult);
-				resp.getWriter().write(result);
+				resp.getWriter().write(result);  
 			}
 		// notice 파라미터 없을시 메인뷰 이동 			
 		}else {

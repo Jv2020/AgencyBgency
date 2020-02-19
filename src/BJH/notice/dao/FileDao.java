@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import BJH.notice.dto.NoticeDto;
 import DB.DBClose;
 import DB.DBConnection;
-import KSJ.exhibit.dto.ExhibitDto;
 import KSJ.files.dto.FilesDto;
 
 
@@ -62,11 +61,84 @@ public class FileDao {
 			return count >0? true:false;
 			
 		}
+		// update file 
+		public boolean updateFile(FilesDto dto) {
+			
+			String sql = " UPDATE FILES "
+					+ " SET FILENAME = ?,ORIGIN_NAME = ? "
+					+ " WHERE BBS_SEQ=? AND BBS_NAME='notice' ";
+					
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			
+			int count = 0;
+			
+			try {
+				conn = DBConnection.getConnection();
+				System.out.println("1/4 updateFile");
+				psmt = conn.prepareStatement(sql);
+				System.out.println("2/4 updateFile");
+				psmt.setString(1, dto.getFilename());
+				psmt.setString(2, dto.getOriginName());
+				psmt.setInt(3, dto.getBbsSeq());
+				System.out.println("3/4 updateFile");
+				count = psmt.executeUpdate();
+				System.out.println("4/4 updateFile");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			finally {
+				DBClose.close(psmt, conn, null);
+			}
+			
+			return count >0? true:false;
+			
+		}
+		// delete file 
+				public boolean file_delete(String delList[]) {
+					
+					String sql = " UPDATE FILES "
+							+ " SET DEL=1 "
+							+ " WHERE BBS_SEQ = ? BBS_NAME = 'notice' ";
+					
+					Connection conn = null;
+					PreparedStatement psmt = null;
+					int[] deleteList = new int[delList.length];
+					int result = 0;
+					
+					for (int i = 0; i < delList.length; i++) {
+						deleteList[i] = Integer.parseInt(delList[i]);
+						
+						try {
+							conn = DBConnection.getConnection();
+							System.out.println("1/4 file_delete["+i+"]번째");
+							psmt= conn.prepareStatement(sql);
+							System.out.println("2/4 file_delete["+i+"]번째");
+							psmt.setInt(1, deleteList[i]);
+							System.out.println("3/4 file_delete["+i+"]번째");
+							result = psmt.executeUpdate();
+							System.out.println("4/4 file_delete["+i+"]번째 Success" );
+							
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}finally {
+							DBClose.close(psmt, conn, null);
+						}
+						
+					}// for end 
+					
+					
+					return result>0?true:false;
+			}
+	
 	//notice seq 추출
 	public int getNoticeSeq(String filename) {
 		String sql=   " SELECT SEQ "
 					+ " FROM NOTICE "
-					+ " WHERE FILENAME = ? ";
+					+ " WHERE FILENAME = ? AND DEL=0";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -93,12 +165,14 @@ public class FileDao {
 		}
 		return notice_seq;
 	}
-
+	
+	
+	// 원본명 가져오기
 	public FilesDto getOriginName(int seq) {
 		
 		String sql = " SELECT SEQ,FILENAME,ORIGIN_NAME, FILEPATH,BBS_NAME,BBS_SEQ,DEL,FILE_SEQ "
 				+ " FROM FILES "
-				+ " WHERE BBS_SEQ=? AND DEL=0 ";
+				+ " WHERE BBS_SEQ=? AND BBS_NAME='notice' AND DEL=0 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -131,6 +205,7 @@ public class FileDao {
 		} finally {
 			DBClose.close(psmt, conn, rs);
 		}
+		System.out.println(fileDto);
 		return fileDto;
 	}
 	

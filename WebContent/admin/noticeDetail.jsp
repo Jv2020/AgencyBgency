@@ -52,7 +52,7 @@ int seq = noticeDto.getSeq();
 
 </head>
 <body>
-<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq%>" method="post" enctype="multipart/form-data"> 
+<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq%>" method="POST" enctype="multipart/form-data"> 
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">
@@ -134,7 +134,7 @@ int seq = noticeDto.getSeq();
 			
 			<tr align="center" >
 				<td colspan="2">
-					<input type="submit" value="수정하기">
+					<input type="submit" id="btn_submit" name="btn_submit" value="수정하기">
 					<input type="button" value="이전으로" onclick="location.href='<%=request.getContextPath() %>/admin/test.jsp'">
 				</td>
 			</tr>
@@ -142,5 +142,33 @@ int seq = noticeDto.getSeq();
 	</div>
 </form>
 </body>
+<script type="text/javascript">
+$("#btn_submit").click(function (){
+
+	 
+	 var title = $('#title').val();
+	 var choice = $('#choice').val();
+
+	 
+	console.log(title);
+	console.log(content);
+
+		if(!title == "" && title != null){
+			if(!content =="" && content != null){
+				
+				var check = confirm("수정 하시겠습니까?");
+				
+				
+				if(check){
+				$("#btn_submit").submit();
+				
+				}
+			}else{
+				alert("내용이 입력되지 않았습니다.")
+			}
+		}else{
+			alert("제목이 입력되지 않았습니다");
+		}
+</script>
 
 </html>

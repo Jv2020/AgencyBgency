@@ -570,7 +570,7 @@ public boolean member_access(String[] accessList) {
 		String sqlWord = "";
 		
 		if(choice.equals("title")) {
-			sqlWord = " WHERE ID TITLE '%" + searchWord.trim() + "%' AND DEL=0";
+			sqlWord = " WHERE TITLE LIKE'%" + searchWord.trim() + "%' AND DEL=0";
 		}else if(choice.equals("place")){
 			sqlWord = " WHERE PLACE LIKE '%" + searchWord.trim() + "%' AND DEL=0 ";
 		
@@ -678,5 +678,40 @@ public boolean member_access(String[] accessList) {
 		
 		return exhibitList;
 	}
+	
+	// 전시 삭제
+	public boolean exhibit_delete(String[] exhibitList) {
+			
+			String sql = " UPDATE EXHIBIT "
+					+ " SET DEL=1 "
+					+ " WHERE SEQ=? " ;
+			
+			Connection conn = null;
+			PreparedStatement psmt = null;
+			int result =0;
+			
+			for (int i = 0; i < exhibitList.length; i++) {
+				
+				try {
+					conn = DBConnection.getConnection();
+					System.out.println("1/4 exhibit_delete ["+i+"]번째");
+					psmt= conn.prepareStatement(sql);
+					System.out.println("2/4 exhibit_delete["+i+"]번째");
+					psmt.setString(1, exhibitList[i]);
+					System.out.println("3/4 exhibit_delete["+i+"]번째");
+					result = psmt.executeUpdate();
+					System.out.println("4/4 exhibit_delete["+i+"]번째 Success" );
+					
+				} catch (SQLException e) {
+					System.out.println(" exhibit_delete["+i+"]번째 fail" );
+					e.printStackTrace();
+				}finally {
+					DBClose.close(psmt, conn, null);
+				}
+			}
+			
+			return result>0?true:false;
+			
+		}
 	
 }

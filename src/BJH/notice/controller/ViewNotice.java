@@ -20,11 +20,13 @@ public class ViewNotice extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String sseq = req.getParameter("seq");
+		System.out.println("vNotice seq ="+sseq);
 		NoticeDao noticeDao = NoticeDao.getInstance();
 		
 		
 		
 		if(sseq == null) {
+			System.out.println("sseq="+sseq);
 			req.setCharacterEncoding("utf-8");
 			String spageNum = req.getParameter("pageNum");
 			
@@ -55,7 +57,7 @@ public class ViewNotice extends HttpServlet {
 			
 			NoticeDto noticeDto = noticeDao.notice_detail(seq);
 			FileDao fileDao = FileDao.getInstance();
-			FilesDto fileDto = fileDao.getOriginName(seq);
+			FilesDto fileDto = fileDao.getOriginName(noticeDto.getSeq());
 			
 			req.setAttribute("fileDto", fileDto);
 			req.setAttribute("noticeDto", noticeDto);

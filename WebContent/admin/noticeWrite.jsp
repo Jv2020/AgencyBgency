@@ -19,7 +19,7 @@
 <body>
 <!-- action="<%=request.getContextPath() %>/Notice_insert" -->
 <form id="form" action="<%=request.getContextPath() %>/Notice?notice=insert" method="POST" enctype="multipart/form-data"> 
-<%-- <form id="form" action="<%=request.getContextPath() %>/NoticeInsert" method="POST" enctype="multipart/form-data"> --%>
+<%-- <form id="form" action="<%=request.getContextPath() %>/NoticeInsert" method="POST" enctype="multipart/form-data">  --%> 
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">

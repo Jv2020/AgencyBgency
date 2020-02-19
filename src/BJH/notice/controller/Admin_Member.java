@@ -32,7 +32,7 @@ public class Admin_Member extends HttpServlet {
 			  if(member.equals("list")) {
 				  String sadmin_memberPageNumber = req.getParameter("admin_memberPageNumber");
 				  int admin_memberPageNumber = 0;
-				  int memberPageNumber;
+				  
 				  if(sadmin_memberPageNumber!= null && !sadmin_memberPageNumber.equals("")) {
 					  admin_memberPageNumber = Integer.parseInt(sadmin_memberPageNumber);
 					 
