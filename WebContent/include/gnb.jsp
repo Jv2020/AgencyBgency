@@ -25,19 +25,19 @@
 			</li>
 			<li>
 				<strong>EXHIBIT</strong>
-				<a href="#none">현재전시</a>
-				<a href="#none">예정전시</a>
-				<a href="#none">지난전시</a>
+				<a href="/AgencyBgencyy/exhibitlist?choice=now">현재전시</a>
+				<a href="/AgencyBgencyy/exhibitlist?choice=fut">예정전시</a>
+				<a href="/AgencyBgencyy/exhibitlist?choice=past">지난전시</a>
 			</li>
 			<li>
 				<strong>SCHEDULE</strong>
-				<a href="#none">월별 전시</a>
+				<a href="/AgencyBgencyy/exhibitschedule">월별 전시</a>
 			</li>
 			<li>
 				<strong>COMMUNITY</strong>
 				<a href="#none">공지사항</a>
-				<a href="#none">자주묻는질문</a>
-				<a href="#none">리뷰</a>
+				<a href="/AgencyBgencyy/community/faq.jsp">자주묻는질문</a>
+				<a href="/AgencyBgencyy/showReviewList?pageNum=0">리뷰</a>
 			</li>
 		</ul>
 	</div>
