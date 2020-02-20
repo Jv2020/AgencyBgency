@@ -70,7 +70,7 @@ String content = dto.getContent();
 					/* if(fDto.getFilename()==null || fDto.getFilename().equals("")){ */
 					System.out.println("path="+savePath+fileName);
 					%>
-					<a href="<%=savePath+fileName%>"><%=originName %></a>
+					<a href="<%=request.getContextPath()%>/upload/notice/<%=fileName%>"><%=originName %></a>
 					<% 
 					}else{
 					%>
