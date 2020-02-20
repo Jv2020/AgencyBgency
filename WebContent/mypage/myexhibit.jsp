@@ -68,23 +68,25 @@ System.out.println(listPage);
 										<input type="hidden" id="starrate" name="starrate" value="">
 										<input type="hidden" class="starrate<%=i %>" name="starrate" value="">
 										<script type="text/javascript">
-											var star1 = $("#starrate").val();											
+											var star1 = $("#starrate").val();
 											$(document).ready(function() {
 												$(".starrate<%=i %>").val(star1);
 											});
 										</script> --%>
-										<input type="radio" class="starrate<%=i %>" name="starrate" value="1">1점
-										<input type="radio" class="starrate<%=i %>" name="starrate" value="2">2점
-										<input type="radio" class="starrate<%=i %>" name="starrate" value="3" selected>3점
-										<input type="radio" class="starrate<%=i %>" name="starrate" value="4">4점
-										<input type="radio" class="starrate<%=i %>" name="starrate" value="5">5점
+										<select name="starrate" id="starrate<%=i %>">
+											<option value="1">1점
+											<option value="2">2점
+											<option value="3" selected>3점
+											<option value="4">4점
+											<option value="5">5점
+										</select>
 									</li>
 								</ul>
 							</div><!-- //modal-top -->
 								
 							<textarea name="review" id="review<%=i %>"></textarea>
 							<div class="modal-btm">
-								<input type="button" value="글쓰기" class="submitBtn" textAid="review<%=i %>" star="starrate<%=i %>" >
+							 <input type="submit" value="글쓰기" class="submitBtn">
 								<input class="closeBtn" type="button" value="취소">
 							</div>
 						</form>
@@ -101,27 +103,6 @@ System.out.println(listPage);
 				  });
 			});
 			
-			<%-- $("#submitBtn<%=i %>").click(function () {
-				alert("class submitBtn click");
-				
-				var review = $(".review<%=i %>").val();
-				var star = $(".starrate<%=i %>").val();
-				
-				alert(review);
-//				alert("star는 " + star);
-
-				if(review == "") {
-					alert("리뷰를 적어 주십시오.");
-					$(".review<%=i %>").focus();
-				}else if(star == "") {
-					alert("별점을 설정해주십시오.");
-				}else {
-				//	$("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); 
-				//	cyh.submit(); 
-				//	alert("ㅋㅋ"); 
-					$(".frm1").submit();
-				}
-			}); --%>
 			</script>
 			<%
 				}
@@ -182,24 +163,30 @@ function goPage(pageNumber) {
 </script>
 
 <script>
-$(document).ready(function () {
+function testBtn() {
+	var starrate = document.getElementById("starrate").value;
+	
+	alert(starrate);
+};
+
+
+/* $(document).ready(function () {
 	
 	$(".submitBtn").click(function () {
 		alert("submitBtn click");
-		
+		 
 	//	$("#" + $(this).attr("textAid").val()).val("");		
 	//	alert($(this).attr("textAid"));
 			
-		/*		
-		var review = $("#" + $(this).attr("textAid")).val();		
-		var star = $("#" + $(this).attr("star")).val();
+			
+		var review = $("#" + $(this).attr("textAid")).val();
 		
 		alert("review:" + review);
-		alert("star:" + star);
 		
-		$("#" + $(this).attr("textAid")).val("");*/
+		
+		$("#" + $(this).attr("textAid")).val("");
 	});
-	
+});	 */
 	<%-- var size = '<%=list.size() %>';
 	alert(size);
 	
@@ -243,7 +230,7 @@ $(document).ready(function () {
 		}
 	});
  */
-})
+
 
 
 

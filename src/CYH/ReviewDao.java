@@ -312,13 +312,14 @@ public class ReviewDao {
 	
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
 		String sql = " INSERT INTO EXHIBIT_REVIEW "
-					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL ) "
+					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, DEL ) "
 					+ " VALUES(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0 ) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
 		int count = 0 ;
+		boolean b = false;
 		
 		try {
 			conn = DBConnection.getConnection();
@@ -335,15 +336,18 @@ public class ReviewDao {
 			
 			count = psmt.executeUpdate();
 			System.out.println("4/6 writeReview Success");
+			if(count>0) {
+				b = true;
+			}
 			
 		} catch (SQLException e) {
 			System.out.println("writeReview Fail");
-			e.printStackTrace();
+			e.getMessage();
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}
 		
-		return count > 0 ? true : false;
+		return b;
 	}
 	
 	public boolean updateReview(int seq, String review, int star) {		// 자신이 쓴 글에 대한 수정 메소드 ※ 주의! 파라미터 순서를 잘 확인해!
@@ -373,7 +377,7 @@ public class ReviewDao {
 			
 		} catch (SQLException e) {
 			System.out.println("updateReview Fail");
-			e.printStackTrace();
+			e.getMessage();
 		} finally {
 			DBClose.close(psmt, conn, null);
 		}

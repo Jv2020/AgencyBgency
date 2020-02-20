@@ -14,11 +14,10 @@ String id = dto.getId();
 %>
 
 <%
-//String isS = request.getParameter("isS");
-String isS = "true";
+boolean isS = (boolean)request.getAttribute("isS");
 System.out.println("isS는 " + isS);
 
-if(isS.equals("true")) {
+if(isS) {
 %>
 	<script type="text/javascript">
 	alert("리뷰를 작성했습니다.");
@@ -29,7 +28,7 @@ if(isS.equals("true")) {
 %>
 	<script type="text/javascript">
 	alert("리뷰작성에 실패했습니다.");
-	location.href="/AgencyBgencyy/myreviewEntrance?id=<%=id %>s";
+	location.href="/AgencyBgencyy/myreviewEntrance?id=<%=id %>";
 	</script>
 <%
 }

@@ -91,13 +91,13 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 								 			<li><span>전시명</span><%=dto.getTitle() %>
 								 			<li>
 								 				<span>평점</span>
-								 				<%-- <div class='starrr' id='star1'></div>
-												<input type="hidden" id="starrate" name="starrate" value="<%=dto.getStar() %>"> --%>
-												<input type="radio" class="starrate<%=i %>" name="starrate" value="1">1점
-												<input type="radio" class="starrate<%=i %>" name="starrate" value="2">2점
-												<input type="radio" class="starrate<%=i %>" name="starrate" value="3" selected>3점
-												<input type="radio" class="starrate<%=i %>" name="starrate" value="4">4점
-												<input type="radio" class="starrate<%=i %>" name="starrate" value="5">5점
+								 					<select name="starrate" id="starrate<%=i %>">
+														<option value="1">1점
+														<option value="2">2점
+														<option value="3" selected>3점
+														<option value="4">4점
+														<option value="5">5점
+													</select>
 								 			</li>
 								 		</ul>
 									</div><!-- //modal-top -->
