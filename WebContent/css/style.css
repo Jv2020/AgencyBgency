@@ -163,8 +163,7 @@ table.admintbl td {height:55px; border-bottom:1px solid #b1b1b1;}
 .pagingWrap.admin span.on:before {position:absolute; bottom:0; left:50%; margin-left:-10px; content:''; width:20px; height:2px; background:#333;}
 .pagingWrap.admin span:hover {color:#333;}
 
-
-
+input#sample4_roadAddress{width:307px !important;}
 
 /*============ SUB ============*/
 #sub_contents{width:100%; min-height:800px; padding:50px 0 100px;}
