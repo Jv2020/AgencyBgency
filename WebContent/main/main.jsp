@@ -354,7 +354,13 @@ NoticeDto noticeDto = null;
 				</div>
 				<ul class="n-cont clfix">
 					<% if(noticeList.size() != 0){
-						for(int i = 0 ; i<3 ; i++){
+						int size = 0;
+						if(noticeList.size() < 4){
+							size = noticeList.size();
+						}else{
+							size = 3;
+						}
+						for(int i = 0 ; i<size ; i++){
 						noticeDto = noticeList.get(i);
 						String sregDate = noticeDto.getReg_date();
 						int idx = sregDate.indexOf(" ");
