@@ -31,8 +31,6 @@ System.out.println("allRe_Contents는 " + allRe_Contents);
 int pages = (int)Math.ceil(allRe_Contents/ 5.0);
 %>
 
-<h1 style="text-align: center"><b>'<%=title %>'</b>에 대한 전체 리뷰</h1>
-
 <%
 List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 
@@ -42,13 +40,13 @@ List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 
 
 <div class="reviewDtail">
+
 <%
 for(int i = 0; i < list.size(); i++) {
 	ReviewDto dto = list.get(i);
 %>
 	<div class="box">
 		<div class="box-top">
-			
 			<div class="rv-info">
 				<ul class="clfix">
 					<li><span><b>아이디</b></span> <%=dto.getId() %></li>
@@ -77,7 +75,7 @@ for(int i = 0; i < list.size(); i++) {
 <%
 }
 %>
-	
+
 </div><!-- //reviewDtail -->
 
 <div class="pagingWrap">
@@ -97,6 +95,10 @@ for(int i = 0; i < pages; i++) {
 }
 %>
 </div>
+
+<script>
+document.getElementById("ex-title").innerHTML = "<%=title %>";
+</script>
 
 
 <%@include file ="../include/footer.jsp" %>

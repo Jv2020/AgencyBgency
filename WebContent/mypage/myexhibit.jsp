@@ -64,22 +64,27 @@ System.out.println(listPage);
 									<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value="<%=list.get(i).getTitle() %>"></li>
 									<li>
 										<span>평점</span>
-										<div class='starrr' id='star1'></div>
+										<%-- <div class='starrr' id='star1'></div>
 										<input type="hidden" id="starrate" name="starrate" value="">
-										<%-- <input type="hidden" class="starrate<%=i %>" name="starrate" value=""> --%>
+										<input type="hidden" class="starrate<%=i %>" name="starrate" value="">
 										<script type="text/javascript">
 											var star1 = $("#starrate").val();											
 											$(document).ready(function() {
 												$(".starrate<%=i %>").val(star1);
 											});
-										</script>
+										</script> --%>
+										<input type="radio" class="starrate<%=i %>" name="starrate" value="1">1점
+										<input type="radio" class="starrate<%=i %>" name="starrate" value="2">2점
+										<input type="radio" class="starrate<%=i %>" name="starrate" value="3" selected>3점
+										<input type="radio" class="starrate<%=i %>" name="starrate" value="4">4점
+										<input type="radio" class="starrate<%=i %>" name="starrate" value="5">5점
 									</li>
 								</ul>
 							</div><!-- //modal-top -->
 								
 							<textarea name="review" id="review<%=i %>"></textarea>
 							<div class="modal-btm">
-								<input type="button" value="글쓰기" class="submitBtn" textAid="review<%=i %>" star="starrate" >
+								<input type="button" value="글쓰기" class="submitBtn" textAid="review<%=i %>" star="starrate<%=i %>" >
 								<input class="closeBtn" type="button" value="취소">
 							</div>
 						</form>
@@ -152,14 +157,14 @@ System.out.println(listPage);
 
 <script>
 // star
-var $starinput = $('#starrate');
+/* var $starinput = $('#starrate');
 $('.starrr').starrr({
 	max: 5,
 	rating: $starinput.val(),
 	change: function(e, value){
 	$starinput.val(value).trigger('input');
 	}
-});
+}); */
 
 $('.modal-btm .closeBtn').click(function(event) {
 	 $('textarea').val("");
@@ -185,14 +190,14 @@ $(document).ready(function () {
 	//	$("#" + $(this).attr("textAid").val()).val("");		
 	//	alert($(this).attr("textAid"));
 			
-				
+		/*		
 		var review = $("#" + $(this).attr("textAid")).val();		
 		var star = $("#" + $(this).attr("star")).val();
 		
 		alert("review:" + review);
 		alert("star:" + star);
 		
-		$("#" + $(this).attr("textAid")).val("");
+		$("#" + $(this).attr("textAid")).val("");*/
 	});
 	
 	<%-- var size = '<%=list.size() %>';

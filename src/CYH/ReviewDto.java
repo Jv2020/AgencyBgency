@@ -9,8 +9,6 @@ CREATE TABLE EXHIBIT_REVIEW (
 		REG_DATE DATE NOT NULL,
 		STAR NUMBER(8) NOT NULL,
 		REVIEW VARCHAR2(4000) NOT NULL,
-		LIKE_NUMBER NUMBER(8),
-		DISLIKE NUMBER(8),
 		DEL NUMBER(1)
 	);
 
@@ -37,9 +35,6 @@ public class ReviewDto implements Serializable {
 	private String regdate;
 	private int star;
 	private String review;
-
-	private int like_number;
-	private int dislike_number;
 	
 	private int del;
 
@@ -47,8 +42,7 @@ public class ReviewDto implements Serializable {
 	}
 
 	
-	public ReviewDto(int seq, String id, String title, String regdate, int star, String review, int like_number,
-			int dislike_number, int del) {
+	public ReviewDto(int seq, String id, String title, String regdate, int star, String review, int del) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -56,8 +50,6 @@ public class ReviewDto implements Serializable {
 		this.regdate = regdate;
 		this.star = star;
 		this.review = review;
-		this.like_number = like_number;
-		this.dislike_number = dislike_number;
 		this.del = del;
 	}
 
@@ -117,22 +109,6 @@ public class ReviewDto implements Serializable {
 		this.star = star;
 	}
 
-	public int getLike_number() {
-		return like_number;
-	}
-
-	public void setLike_number(int like_number) {
-		this.like_number = like_number;
-	}
-
-	public int getDislike_number() {
-		return dislike_number;
-	}
-
-	public void setDislike_number(int dislike_number) {
-		this.dislike_number = dislike_number;
-	}
-
 	public int getDel() {
 		return del;
 	}
@@ -143,8 +119,7 @@ public class ReviewDto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ReviewDto [seq=" + seq + ", id=" + id + ", title=" + title + ", review=" + review
-				+ ", regdate=" + regdate + ", star=" + star + ", like_number=" + like_number
-				+ ", dislike_number=" + dislike_number + ", del=" + del + "]";
+		return "ReviewDto [seq=" + seq + ", id=" + id + ", title=" + title + ", regdate=" + regdate + ", star=" + star
+				+ ", review=" + review + ", del=" + del + "]";
 	}
 }

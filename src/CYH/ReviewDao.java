@@ -50,8 +50,6 @@ public class ReviewDao {
 												rs.getString(i++),	//regdate
 												rs.getInt(i++),		//star_number
 												rs.getString(i++),	//review
-												rs.getInt(i++),		//like_number
-												rs.getInt(i++),		//dislike_number
 												rs.getInt(i++)	);	//del
 				reviewList.add(dto);
 			}
@@ -108,8 +106,6 @@ public class ReviewDao {
 												rs.getString(i++),	//regdate
 												rs.getInt(i++),		//star_number
 												rs.getString(i++),	//review
-												rs.getInt(i++),		//like_number
-												rs.getInt(i++),		//dislike_number
 												rs.getInt(i++)	);	//del
 				reviewList.add(dto);
 			}
@@ -156,8 +152,6 @@ public class ReviewDao {
 												rs.getString(i++),	//regdate
 												rs.getInt(i++),		//star_number
 												rs.getString(i++),	//review
-												rs.getInt(i++),		//like_number
-												rs.getInt(i++),		//dislike_number
 												rs.getInt(i++)	);	//del
 				reviewList.add(dto);
 			}
@@ -174,9 +168,9 @@ public class ReviewDao {
 	}
 	
 	public List<ReviewDto> getReviewList(String title, int re_pageNum) {		// 리뷰페이지에 뿌려질 리뷰"리스트"를 가져와(get)
-		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, DEL "
 				+ " FROM ( "
-				+ " SELECT ROW_NUMBER()OVER (ORDER BY REG_DATE DESC) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+				+ " SELECT ROW_NUMBER()OVER (ORDER BY REG_DATE DESC) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, DEL "
 				+ " FROM EXHIBIT_REVIEW "
 				+ " WHERE TITLE=?) "
 				+ " WHERE RNUM >=? AND RNUM <=? ";
@@ -217,8 +211,6 @@ public class ReviewDao {
 												rs.getString(i++),	//regdate
 												rs.getInt(i++),		//star_number
 												rs.getString(i++),	//review
-												rs.getInt(i++),		//like_number
-												rs.getInt(i++),		//dislike_number
 												rs.getInt(i++)	);	//del
 				reviewList.add(dto);
 			}
@@ -266,8 +258,6 @@ public class ReviewDao {
 									rs.getString(i++),			//regdate,
 									rs.getInt(i++),				//star,
 									rs.getString(i++),			//review,
-									rs.getInt(i++),				//like_number,
-									rs.getInt(i++),				//dislike_number,
 									rs.getInt(i++));			//del
 			}
 			System.out.println("5/5 getOneReview 성공");
@@ -323,7 +313,7 @@ public class ReviewDao {
 	public boolean writeReview(ReviewDto dto) {		// 리뷰를 쓰고싶은 메소드
 		String sql = " INSERT INTO EXHIBIT_REVIEW "
 					+ " (SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL ) "
-					+ " VALUES(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0, 0, 0 ) ";
+					+ " VALUES(SEQ_REVIEW.NEXTVAL, ?, ?, SYSDATE, ?, ?, 0 ) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -424,205 +414,6 @@ public class ReviewDao {
 		return count > 0 ? true : false;
 	}
 	
-	// 어떤 아이디가 어떤 전시회명에 대해 '좋아요'를 눌렀는지 안눌렀는지 판정할꺼야
-	public int getLIKE_Decision(String sessionid, String title) {
-		String sql = " SELECT LIKE_DECISION "
-					+ " FROM LI_DI_DECISION "
-					+ " WHERE ID=? AND TITLE=? ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		int count = 0;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 getLIKE_Decision Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getLIKE_Decision Success");
-			
-			psmt.setString(1, sessionid);
-			psmt.setString(2, title);
-			System.out.println("3/6 getLIKE_Decision Success");
-			
-			rs = psmt.executeQuery();
-			System.out.println("4/6 getLIKE_Decision Success");
-			
-			while(rs.next()) {
-				count = rs.getInt(1);
-			}
-			System.out.println("5/6 getLIKE_Decision Success");
-			
-		} catch (SQLException e) {
-			System.out.println("getLIKE_Decision Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
-		}
-		
-		return count;
-	}
-	
-	public void setLIKE_Decision(String sessionid, String title) {
-		String sql = " INSERT INTO LI_DI_DECISION "
-					+ " VALUES(?, ?, 1, 0) ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 setLIKE_Decision Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 setLIKE_Decision Success");
-			
-			psmt.setString(1, sessionid);
-			psmt.setString(2, title);
-			System.out.println("3/6 setLIKE_Decision Success");
-			
-			psmt.executeUpdate();
-			System.out.println("4/6 setLIKE_Decision Success");
-			
-		} catch (SQLException e) {
-			System.out.println("setLIKE_Decision Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-	}
-	
-	public void likeCount(String writerid, String title) {		// '좋아요'수를 올려줘
-		String sql = " UPDATE EXHIBIT_REVIEW "
-					+ " SET LIKE_NUMBER=LIKE_NUMBER+1 "
-					+ " WHERE ID=? AND TITLE=? ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 likeCount Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 likeCount Success");
-			
-			psmt.setString(1, writerid);
-			psmt.setString(2, title);
-			System.out.println("3/6 likeCount Success");
-			
-			psmt.executeUpdate();
-			System.out.println("4/6 likeCount Success");
-			
-		} catch (SQLException e) {
-			System.out.println("likeCount Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-	}
-	
-	public int getDISLIKE_Decision(String sessionid, String title) {
-		String sql = " SELECT DISLIKE_DECISION "
-					+ " FROM LI_DI_DECISION "
-					+ " WHERE ID=? AND TITLE=? ";
-		
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		ResultSet rs = null;
-		
-		int count = 0;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 getDISLIKE_Decision Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 getDISLIKE_Decision Success");
-			
-			psmt.setString(1, sessionid);
-			psmt.setString(2, title);
-			System.out.println("3/6 getDISLIKE_Decision Success");
-			
-			rs = psmt.executeQuery();
-			System.out.println("4/6 getDISLIKE_Decision Success");
-			
-			if(rs.next()) {
-				count = rs.getInt(1);
-			}
-			System.out.println("5/6 getDISLIKE_Decision Success");
-			
-		} catch (SQLException e) {
-			System.out.println("getDISLIKE_Decision Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, rs);
-		}
-		
-		return count;
-	}
-	
-	public void setDISLIKE_Decision(String sessionid, String title) {
-		String sql = " INSERT INTO LI_DI_DECISION "
-					+ " VALUES(?, ?, 0, 1) ";
-	
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 DISLIKE_Decision Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 DISLIKE_Decision Success");
-			
-			psmt.setString(1, sessionid);
-			psmt.setString(2, title);
-			System.out.println("3/6 DISLIKE_Decision Success");
-			
-			psmt.executeUpdate();
-			System.out.println("4/6 DISLIKE_Decision Success");
-			
-		} catch (SQLException e) {
-			System.out.println("DISLIKE_Decision Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-	}
-	
-	public void dislikeCount(String writerid, String title) {	// '싫어요'수를 올려줘
-		String sql = " UPDATE EXHIBIT_REVIEW "
-				+ " SET DISLIKE=DISLIKE+1 "
-				+ " WHERE ID=? AND TITLE=? ";
-	
-		Connection conn = null;
-		PreparedStatement psmt = null;
-		
-		try {
-			conn = DBConnection.getConnection();
-			System.out.println("1/6 dislikeCount Success");
-			
-			psmt = conn.prepareStatement(sql);
-			System.out.println("2/6 dislikeCount Success");
-			
-			psmt.setString(1, writerid);
-			psmt.setString(2, title);
-			System.out.println("3/6 dislikeCount Success");
-			
-			psmt.executeUpdate();
-			System.out.println("4/6 dislikeCount Success");
-			
-		} catch (SQLException e) {
-			System.out.println("dislikeCount Fail");
-			e.printStackTrace();
-		} finally {
-			DBClose.close(psmt, conn, null);
-		}
-	}
-	
 	// 전시 디테일 뷰에 뿌릴 리뷰 3개 
 	public List<ReviewDto> getReviewToDetail(String title){
 		String sql =  " SELECT ID, TITLE, REG_DATE, STAR, REVIEW "
@@ -662,8 +453,6 @@ public class ReviewDao {
 												rs.getString(i++),	//regdate
 												rs.getInt(i++),		//star_number
 												rs.getString(i++),	//review
-												0,		//like_number
-												0,		//dislike_number
 												0);	//del
 				list.add(dto);
 			}
@@ -781,8 +570,8 @@ public class ReviewDao {
 	}
 	
 	public List<ReviewDto> getMyReviews(String id, int page) {	// mypage.jsp에 뿌려줄 메소드, 첫번째 파라미터는 세션아이디
-		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL"
-					+ " FROM (	SELECT ROW_NUMBER()OVER ( ORDER BY REG_DATE DESC ) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, LIKE_NUMBER, DISLIKE, DEL "
+		String sql = " SELECT SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, DEL"
+					+ " FROM (	SELECT ROW_NUMBER()OVER ( ORDER BY REG_DATE DESC ) AS RNUM, SEQ, ID, TITLE, REG_DATE, STAR, REVIEW, DEL "
 					+ " FROM EXHIBIT_REVIEW "
 					+ " WHERE ID=?	) "
 					+ " WHERE RNUM >=? AND RNUM <=? ";
@@ -821,8 +610,6 @@ public class ReviewDao {
 												rs.getString(i++),			//regdate,
 												rs.getInt(i++),				//star,
 												rs.getString(i++),			//review,
-												rs.getInt(i++),				//like_number,
-												rs.getInt(i++),				//dislike_number,
 												rs.getInt(i++));			//del
 				list.add(dto);
 			}
@@ -877,58 +664,3 @@ public class ReviewDao {
 		return count;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
