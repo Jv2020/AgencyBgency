@@ -500,16 +500,14 @@ $("#btn_exhibitDelete").click(function(){
   	if(exhibitDel){
 	   
 	   var jsonData = {"pexhDeleteList":deleteList}
-	   alert(deleteList);
+	   
 	   //alert("선택한 전시글 SEQ="+deleteList);
 		   $.ajax({
 				type : "POST",
-				url : "${pageContext.request.contextPath}/Admin_Exhibit?exhibit=delete",
 				data : jsonData,
 				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 				datatype : "text",
 		  		success : function(data) {
-		  			alert(data);
 		  			 console.log(data);
 		       		 alert("성공적으로 삭제되었습니다.");
 		       		 location.href="<%=request.getContextPath()%>/admin/admin_result.jsp?result=true";
