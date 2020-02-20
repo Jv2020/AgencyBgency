@@ -18,7 +18,7 @@ public class UpdateReviewAfController extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int seq = Integer.parseInt(req.getParameter("seq"));
 		System.out.println("updatereviewAf에 들어온 seq는 " + seq);
-		String review = req.getParameter("review");
+		String review = req.getParameter("review1");
 		System.out.println("updatereviewAf에 들어온 리뷰내용은 " + review);
 		int star = Integer.parseInt(req.getParameter("starrate"));
 		System.out.println("updatereviewAf에 들어온 별갯수는 " + star);

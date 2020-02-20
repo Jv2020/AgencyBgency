@@ -60,14 +60,14 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 					<td><span><%=dto.getReview() %></span></td>
 					<td>
 						<%-- <a href="" onclick="window.open('/AgencyBgencyy/reviewdetail?seq=<%=dto.getSeq() %>', 'reviewDetail', 'width=800, height=600')">상세보기</a> --%>
-						<a class="btn" href="#rvwrite<%=i %>">상세보기</a>
+						<a class="btn" href="#showdetail<%=i %>">상세보기</a>
 						
 						<!-- 리뷰보기 modal -->
-						<div id="rvwrite<%=i %>" class="modal">
+						<div id="showdetail<%=i %>" class="modal">
 							 	<div class="modal-top">
 							 		<ul>
 							 			<li><span>전시명</span><%=dto.getTitle() %></li>
-							 		</ul>							  
+							 		</ul>
 								</div><!-- //modal-top -->
 									
 								<textarea name="review" readonly="readonly"><%=dto.getReview() %></textarea>
@@ -81,24 +81,24 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 						<%-- <a href="/AgencyBgencyy/updateReview?seq=<%=dto.getSeq() %>">수정</a> --%>
 						<a class="btn" href="#rvwrite<%=i %>">수정</a>
 						
-							<!-- 리뷰쓰기 modal -->
+							<!-- 리뷰수정 modal -->
 							<div id="rvwrite<%=i %>" class="modal">
 							 	<form id="frm2" action="/AgencyBgencyy/updatereviewAf">
-								 <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
+								   <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 								 	<div class="modal-top">
 								 		<ul>
 								 			<li><span>전시명</span><%=dto.getTitle() %>
 								 			<li>
 								 				<span>평점</span>
 								 				<div class='starrr' id='star1'></div>
-											    <input type="hidden" id="starrate" name="starrate" value="">
+												<input type="hidden" id="starrate" name="starrate" value="<%=dto.getStar() %>">
 								 			</li>
 								 		</ul>
 									</div><!-- //modal-top -->
 										
-									<textarea name="review"><%=dto.getReview() %></textarea>
+									<textarea name="review1" id="review1"><%=dto.getReview() %></textarea>
 									<div class="modal-btm">
-										<input type="button" value="글쓰기" id="submitBtn">									
+										<input type="button" value="수정하기" id="submitBtn">
 										<input class="closeBtn" type="button" value="취소">
 									</div>
 								</form>
@@ -113,11 +113,19 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 				</tr>
 					<script>
 					// popup
+					
 					$('a[href="#rvwrite<%=i %>"]').click(function(event) {
 						  event.preventDefault();	
 						  $(this).modal({
 						    fadeDuration: 150
-						  });  
+						  });
+					});
+					
+					$('a[href="#showdetail<%=i %>"]').click(function(event) {
+						  event.preventDefault();	
+						  $(this).modal({
+						    fadeDuration: 150
+						  });
 					});
 					</script>
 			</tbody>
@@ -179,22 +187,22 @@ $('.modal-btm .closeBtn').click(function(event) {
 
 $("#submitBtn").click(function () {
 	
-	var review = $("#review").val();
-	var star = $("#starrate").val();
+	var review = $("#review1").val();
+	var star1 = $("#starrate").val();
 	
-//	alert(review);
-//	alert("star는 " + star);
+	alert(review);
+	alert("star는 " + star1);
 
 	if(review == "") {
 		alert("리뷰를 적어 주십시오.");
-		$("#review").focus();
-	}else if(star == "") {
+		$("#review1").focus();
+	}else if(star1 == "") {
 		alert("별점을 설정해주십시오.");
 	}else {
 		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
 		/* cyh.submit(); */
-		/* alert("ㅋㅋ"); */
-		$("#frm1").submit();
+		//alert("이후에 submit");
+		$("#frm2").submit();
 	}
 });
 </script>

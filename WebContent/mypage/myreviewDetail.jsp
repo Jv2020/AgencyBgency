@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<%
+<%-- <%
 ReviewDto dto = (ReviewDto)request.getAttribute("dto");
 %>
 <div class="1">
@@ -20,7 +20,7 @@ ReviewDto dto = (ReviewDto)request.getAttribute("dto");
 </div>
 <div class="3">
 <input type="button" value="닫기" onclick="window.close();">
-</div>
+</div> --%>
 
 </body>
 </html>

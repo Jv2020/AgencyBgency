@@ -66,7 +66,7 @@ System.out.println(listPage);
 						 				<div class='starrr' id='star1'></div>
 										<input type="hidden" id="starrate" name="starrate" value="">
 						 			</li>
-						 		</ul>							  
+						 		</ul>
 							</div><!-- //modal-top -->
 								
 							<textarea name="review" id="review"></textarea>
@@ -76,7 +76,7 @@ System.out.println(listPage);
 							</div>
 						</form>
 					</div><!-- //rvwrite -->
-								
+					
 				</td>
 			</tr>
 			<script>
@@ -85,7 +85,7 @@ System.out.println(listPage);
 				  event.preventDefault();	
 				  $(this).modal({
 				    fadeDuration: 150
-				  });  
+				  });
 			});
 			</script>
 			<%
