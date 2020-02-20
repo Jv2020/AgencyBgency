@@ -105,7 +105,7 @@ request.setCharacterEncoding("UTF-8");
 	               <input class="mt08" type="text" value="2층 2강의실" readonly="readonly"> -->
 	               <input type="text" id="sample4_postcode" name="memberPostCode" readonly="readonly" placeholder="우편번호"> 
 	                <span onclick="sample4_execDaumPostcode()" class="frm_adr_btn">주소검색</span><br>
-	                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소">
+	                <input type="text" class="mt08" id="sample4_roadAddress" name="memberStreetName" placeholder="도로명주소" readonly="readonly">
 	                <input type="text" style="display:none;" id="sample4_jibunAddress" placeholder="지번주소">
 	                <span id="guide" style="color:#999;display:none"></span>
 	                <input type="text"  class="mt08" id="sample4_detailAddress" name="memberDetailStreetName" placeholder="상세주소">

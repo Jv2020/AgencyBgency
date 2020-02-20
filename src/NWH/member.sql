@@ -90,7 +90,8 @@ VALUES(8,
 	    5000, 
 	    null);
 
-
+DELETE FROM MEMBER
+WHERE ID = 'curator123'
 
 
 
