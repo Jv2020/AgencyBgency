@@ -107,7 +107,7 @@ request.setCharacterEncoding("UTF-8");
 	<ul class="info">
 		<li>
 				<span> 제목 </span>
-				<input type="text" id="title" name="title" maxlength="20">
+				<input type="text" id="title" name="title" maxlength="40">
 		</li>
 		<li>
 				<span> 시작일 </span>

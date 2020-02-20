@@ -66,7 +66,7 @@ public String makeDate(String date){
 	%>
 	</div>
 	<div class="cont">
-		<h4>&lt; <%=edto.getTitle() %> &gt;</h4>
+		<h4><%=edto.getTitle() %></h4>
 		<p><span>장소</span><%=edto.getPlace() %> </p>
 		<p><span>기간</span><%=makeDate(edto.getBegindate()) +" ~ " + makeDate(edto.getEnddate())%></p>
 		<p><span>시간	</span><%=edto.getEx_time().substring(0, 2) +":" +edto.getEx_time().substring(2, 4)+" - " + edto.getEx_time().substring(4, 6) +":" +edto.getEx_time().substring(6, 8) %></p>

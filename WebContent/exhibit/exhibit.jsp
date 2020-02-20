@@ -24,16 +24,17 @@
 						%>
 						<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>' style="background: #f8f8f7;">
 							<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+						</a>
 						<%
 					}
 					else {	// 표지 없을 때 
 						%>
 						<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
 							 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+						</a>
 						<%
 					}
 			%>
-				</a>
 			</div>
 			<div class='txt'>
 				<h3>
@@ -94,13 +95,13 @@ function listmore(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"' style='background: #f8f8f7;'>"+
+								"<a href='exdetail?ex=now&seq="+data[i].seq+"' style='background: #f8f8f7;'>"+
 								"<img alt='이미지 없음' src='${pageContext.request.contextPath}/images/sub/noimg.gif'> "+
 								"</a>"+
 							"</div>"+
 							"<div class='txt'>"+
-								"<h3><a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'>"+ data[i].title +"</a></h3>"+
-								"<p>"+data[i].content+"</p>"+
+								"<h3><a href='exdetail?ex=now&seq="+data[i].seq+"'>"+ data[i].title +"</a></h3>"+
+								"<p>"+data[i].place+"</p>"+
 								"<span>"+begindate+" ~ "+enddate+"</span>"+
 							"</div>"+
 						"</li>";
@@ -108,13 +109,13 @@ function listmore(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'>"+
+								"<a href='exdetail?ex=now&seq="+data[i].seq+"'>"+
 								"<img alt='이미지 없음' src='${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename="+data[i].filename+"'/>"+
 								"</a>"+
 							"</div>"+
 							"<div class='txt'>"+
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
-								"<p>"+data[i].content+"</p>"+
+								"<a href='exdetail?ex=now&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+								"<p>"+data[i].place+"</p>"+
 								"<span>"+begindate+" ~ "+enddate+"</span>"+
 							"</div>"+
 						"</li>";

@@ -32,13 +32,13 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 			<%
 				if(dto.getFilename() == null) {
 				%>
-					<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>' style="background: #f8f8f7;">
+					<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq=<%=dto.getSeq()%>' style="background: #f8f8f7;">
 						<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
 					</a>
 				<%
 				}else{
 					%>
-					<a href='${pageContext.request.contextPath}/exdetail?ex=now&seq=<%=dto.getSeq()%>'>
+					<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq=<%=dto.getSeq()%>'>
 						<img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
 					</a>	
 					<%
@@ -57,7 +57,7 @@ document.querySelector("#loc_depth02").innerHTML="지난전시";
 %>
 
 </ul>
-<input type="hidden" id="current" value="now">
+<input type="hidden" id="current" value="past">
 <div class="listmore" id="moreBtn" onclick="listmore()">더보기</div>
 
 <script src="${pageContext.request.contextPath}/exhibit/js/exhibitlist.js?ver=1"></script>
@@ -94,13 +94,13 @@ function listmore(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"' style='background: #f8f8f7;'>"+
+								"<a href='exdetail?ex=past&seq="+data[i].seq+"' style='background: #f8f8f7;'>"+
 									"<img alt='이미지 없음' src='${pageContext.request.contextPath}/images/sub/noimg.gif'> "+
 								"</a>"+
 							"</div>"+
 							"<div class='txt'>"+
-								"<a href='${pageContext.request.contextPath}/exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
-								"<p>"+data[i].content+"</p>"+
+								"<a href='exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+								"<p>"+data[i].place+"</p>"+
 								"<span>"+begindate+" ~ "+enddate+"</span>"+
 							"</div>"+
 						"</li>";
@@ -108,13 +108,13 @@ function listmore(){
 					document.querySelector("#main-exhibits").innerHTML += 
 						"<li>"+
 							"<div class='img'>" + 
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'>"+
+								"<a href='exdetail?ex=past&seq="+data[i].seq+"'>"+
 								"<img alt='이미지 없음' src='${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename="+data[i].filename+"'/>"+
 								"</a>"+
 							"</div>"+
 							"<div class='txt'>"+
-								"<a href='ex_detail.jsp?ex=now&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
-								"<p>"+data[i].content+"</p>"+
+								"<a href='exdetail?ex=past&seq="+data[i].seq+"'><h3>"+ data[i].title +"</h3></a>"+
+								"<p>"+data[i].place+"</p>"+
 								"<span>"+begindate+" ~ "+enddate+"</span>"+
 							"</div>"+
 						"</li>";

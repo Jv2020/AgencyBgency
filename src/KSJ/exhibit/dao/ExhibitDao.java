@@ -376,13 +376,18 @@ public class ExhibitDao {
 	// 이달의 추천전시 불러오기 ( 일단은 가격순  / 나중에 
 	public ExhibitDto getRecommandExhibit() {
 		
-		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
-					+ " FROM ( SELECT ROW_NUMBER()OVER( ORDER BY PRICE DESC ) AS RNUM,  "
-					+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
-					+ " FROM EXHIBIT "
-					+ " WHERE  TO_CHAR(ENDDATE,'YYMM') >= TO_CHAR(SYSDATE,'YYMM') AND "
-							+ " TO_CHAR(BEGINDATE,'YYMM') = TO_CHAR(SYSDATE,'YYMM')  AND DEL = 0 ) "
+		String sql =  " SELECT SEQ,BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
+					+ " FROM (  SELECT ROW_NUMBER()OVER(ORDER BY r.S_QTY DESC) AS RNUM,e.SEQ, e.BEGINDATE, e.ENDDATE , e.TITLE , e.PLACE , e.CONTENT , e.EX_TIME , e.LOC_INFO , e.DEL , e.CONTACT , e.CERTI_NUM , e.PRICE , e.FILENAME  "
+							+ " FROM ( SELECT TITLE, SUM(QTY) AS S_QTY "
+									+ " FROM RESERVATION "
+									+ " WHERE DEL = 0 "
+									+ " GROUP BY TITLE ) r, "
+						 + " ( SELECT * "
+						   + " FROM EXHIBIT "
+						   + " WHERE (BEGINDATE <= SYSDATE AND SYSDATE <= ENDDATE) OR BEGINDATE > SYSDATE ) e "
+						   + " WHERE r.TITLE = e.TITLE ) "
 					+ " WHERE RNUM = 1 ";
+		
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -693,7 +698,7 @@ public class ExhibitDao {
 					 			+ " FROM RESERVATION "
 					 			+ " WHERE DEL = 0 "
 					 			+ " GROUP BY TITLE)) r, "
-					 	+ " (SELECT * FROM EXHIBIT WHERE BEGINDATE <= SYSDATE AND SYSDATE < ENDDATE ) e  "
+					 	+ " (SELECT * FROM EXHIBIT WHERE (BEGINDATE <= SYSDATE AND SYSDATE <= ENDDATE) OR BEGINDATE > SYSDATE ) e  "
 		 			+ " WHERE r.TITLE = e.TITLE AND "
 		 			+ " RNUM <= 4 "
 		 			+ " ORDER BY RNUM ";

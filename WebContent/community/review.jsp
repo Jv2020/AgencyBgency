@@ -5,7 +5,6 @@
     pageEncoding="UTF-8"%>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<link rel="stylesheet" href="/AgencyBgencyy/community/css/review.css">
 
 <%
 String spageNum = request.getParameter("pageNum");
@@ -33,16 +32,32 @@ for(int i = 0; i < list.size(); i++) {
 	String enddate = dto.getEnddate().substring(0,11);
 %>
 
-	<div class="re-layout clfix"><a href="<%=request.getContextPath() %>/onereview?title=<%=dto.getTitle() %>&re_pageNum=0">
-		<div class="reviewImg"><img src="https://www.sangsangmadang.com/feah/temp/2019/201910/2cc23368-8ce4-4a08-9bf3-ce1c66567586" alt=""></div>
-		<div class="reviewTxt">
-			<div class="t-cell">
-				<p><span>제 목</span><%=dto.getTitle() %></p>
-				<p><span>장 소</span><%=dto.getPlace() %></p>
-				<p><span>날 짜</span><%=dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
+	<div class="re-layout clfix">
+		<a href="<%=request.getContextPath() %>/onereview?title=<%=dto.getTitle() %>&re_pageNum=0">
+			<div class="reviewImg">
+			<%	
+			// 표지 있을 때 
+			if(dto.getFilename() == null ){
+				%>
+					<img alt="이미지 없음" id="title" src="${pageContext.request.contextPath}/images/sub/noimg.gif"/>
+				<%
+			}
+			else {	// 표지 없을 때 
+				%>
+					 <img alt="이미지 없음" src="${pageContext.request.contextPath}/filedownload?filepath=/upload/title/&filename=<%=dto.getFilename()%>"/> 
+				<%
+					}
+			%>
 			</div>
-		</div>
-	</a></div>
+			<div class="reviewTxt">
+				<div class="t-cell">
+					<p><span>제 목</span><%=dto.getTitle() %></p>
+					<p><span>장 소</span><%=dto.getPlace() %></p>
+					<p><span>날 짜</span><%=dto.getBegindate().substring(0, 10)+" ~ "+ dto.getEnddate().substring(0, 10) %></p>
+				</div>
+			</div>
+		</a>
+	</div>
 <%
 }
 %>
