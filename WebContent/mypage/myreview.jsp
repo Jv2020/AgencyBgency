@@ -91,8 +91,13 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 								 			<li><span>전시명</span><%=dto.getTitle() %>
 								 			<li>
 								 				<span>평점</span>
-								 				<div class='starrr' id='star1'></div>
-												<input type="hidden" id="starrate" name="starrate" value="<%=dto.getStar() %>">
+								 				<%-- <div class='starrr' id='star1'></div>
+												<input type="hidden" id="starrate" name="starrate" value="<%=dto.getStar() %>"> --%>
+												<input type="radio" class="starrate<%=i %>" name="starrate" value="1">1점
+												<input type="radio" class="starrate<%=i %>" name="starrate" value="2">2점
+												<input type="radio" class="starrate<%=i %>" name="starrate" value="3" selected>3점
+												<input type="radio" class="starrate<%=i %>" name="starrate" value="4">4점
+												<input type="radio" class="starrate<%=i %>" name="starrate" value="5">5점
 								 			</li>
 								 		</ul>
 									</div><!-- //modal-top -->
@@ -169,21 +174,21 @@ function goPage(pageNumber) {
 
 <script>
 // star
-var $starinput = $('#starrate');
+/* var $starinput = $('#starrate');
 $('.starrr').starrr({
 	max: 5,
 	rating: $starinput.val(),
 	change: function(e, value){
 	$starinput.val(value).trigger('input');
 	}
-});
+}); */
 
 //$( document ).ready(function() {
 $('.modal-btm .closeBtn').click(function(event) {
 	 $('.jquery-modal').fadeOut('fast');
 });
 
-function rewrite(){
+/* function rewrite(){
 		//alert('submitBtn1 ss');
 		var review = $("#review1").val();
 		var star1 = $("#starrate").val();
@@ -199,20 +204,19 @@ function rewrite(){
 			alert("별점을 설정해주십시오.");
 			return false;
 		}else {
-			/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
+			/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit();
 			/* cyh.submit(); */
 			//alert("이후에 submit");
 			//$("#frm"+).submit();
 //			$("#submitBtn1").attr("type","submit");
 		//	document.querySelector("#submitBtn1").type="submit";
 		//	document.querySelector("#submitBtn1").submit()
-			return true;
-		} 
-		
-		
-}
-	$("#submitBtn1").click(function () {
-	});
+//			return true;
+//		}	
+//} */
+
+/* 	$("#submitBtn1").click(function () {
+	}); */
 	
 //s});
 </script>
