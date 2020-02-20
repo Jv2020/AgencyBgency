@@ -16,7 +16,7 @@ request.setCharacterEncoding("UTF-8");
 	         <div class="frm_line clfix">
 	            <div class="tit">아이디</div>
 	            <div class="cont idComentColor">
-	               <input class="ttext memberId" type="text" maxlength="20" name="memberId" id="id" value="" placeholder="6~20자 영문자 또는 숫자">
+	               <input class="ttext memberId" type="text" maxlength="20" name="memberId" id="id" value="" placeholder="6~20자 영문자, 숫자">
 	               <button type="button" onclick="idCheck()" class="frm_adr_btn">중복체크</button>
 	               <span class="idCheck"></span>
 	            </div>            
@@ -25,7 +25,7 @@ request.setCharacterEncoding("UTF-8");
 	         <div class="frm_line clfix">
 	            <div class="tit">비밀번호</div>
 	            <div class="cont pwdComentColor">
-	               <input class="ttext memberPwd" type="password" maxlength="20" name="memberPassword" value="" placeholder="6~20자 영문자 또는 숫자">
+	               <input class="ttext memberPwd" type="password" maxlength="20" name="memberPassword" value="" placeholder="6~20자 영문자, 숫자">
 	               <span class="pwdCheck"></span>
 	            </div>            
 	         </div>

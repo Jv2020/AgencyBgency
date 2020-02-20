@@ -97,6 +97,13 @@ button.reserv_btn02:hover {background:#5f0080; color:#fff; transition:all .2s ea
 <div class="ConfirmFrm">
 	<form method="post" action="<%=request.getContextPath() %>/MemberGetIdBeforeUpdate">
 		<div class="frm_cont">
+			<%
+			if(mem.getAuth() == 1){
+			%>
+				<span>큐레이터 승인대기 중입니다</span>
+			<%	
+			}
+			%>
 			<div class="frm_line clfix">
 				<div class="tit">아이디</div>
 				<div class="cont">
