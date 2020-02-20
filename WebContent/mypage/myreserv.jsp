@@ -32,6 +32,11 @@ System.out.println(listPage);
 			<tr>
 		</thead>
 		<tbody>
+			<% if (list.size() == 0) {%>
+			<tr>
+				<td colspan="5">예매 내역이 없습니다</td>
+			</tr>
+			<% } %>
 			<%				
 				for (int i = 0; i < list.size(); i++) {
 			%>

@@ -488,7 +488,7 @@ public class ReservDao {
 		String sql =  " SELECT e.SEQ, e.BEGINDATE, e.ENDDATE, e.TITLE, e.PLACE, e.EX_TIME "
 					+ "	FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID  "
 							+ "  FROM RESERVATION "
-							+ " WHERE ID = ? )) r, Exhibit e "
+							+ " WHERE ID = ? AND DEL = 0 )) r, Exhibit e "
 					+ " WHERE r.title = e.title AND r.RNUM >= ? AND r.RNUM <= ?";
 		
 		/*

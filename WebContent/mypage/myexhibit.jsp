@@ -39,6 +39,11 @@ System.out.println(listPage);
 			<tr>
 		</thead>
 		<tbody>
+			<% if (list.size() == 0) {%>
+			<tr>
+				<td colspan="5">관람한 전시가 없습니다.</td>
+			</tr>
+			<% } %>
 			<%
 				for (int i = 0; i < list.size(); i++) {
 			%>
@@ -48,12 +53,8 @@ System.out.println(listPage);
 				<td><%=list.get(i).getEx_time().substring(0,2)+":"+list.get(i).getEx_time().substring(2,4)+"~"+list.get(i).getEx_time().substring(4,6)+":"+list.get(i).getEx_time().substring(6)%></td>
 				<td><%=list.get(i).getPlace() %></td>
 				<td>
-					<%if (list.get(i).getDel() == 1)  { %>
-					<span style="color:red;">예매취소</span>
-					<% } else { %>
 					<%-- <a href="/AgencyBgencyy/writereview?seq=<%=list.get(i).getSeq() %>" >리뷰작성</a> --%>
 					<a class="btn" href="#rvwrite<%=i %>">리뷰작성</a>
-					<% } %>
 					<!-- 리뷰쓰기 modal -->
 					<div id="rvwrite<%=i %>" class="modal">
 						<form class="frm1" action="<%=request.getContextPath()%>/writereviewAf">
