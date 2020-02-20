@@ -630,7 +630,7 @@ public class ReviewDao {
 								+ " ID, TITLE, REG_DATE, STAR, REVIEW "
 							+ " FROM EXHIBIT_REVIEW  "
 							+ " WHERE DEL = 0  AND TITLE = ? "
-							+ " ORDER BY LIKE_NUMBER DESC, DISLIKE ASC ) "
+							+ " ORDER BY REG_DATE ) "
 					+ " WHERE RNUM <= 4 ";
 		
 		Connection conn = null;
