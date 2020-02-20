@@ -522,7 +522,8 @@ public boolean member_access(String[] accessList) {
 	public List<ExhibitDto> getExhibitList(){
 		
 		String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-				+ " FROM EXHIBIT ";
+				+ " FROM EXHIBIT "
+				+ " WHERE DEL=0 ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;

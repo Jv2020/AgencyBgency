@@ -497,10 +497,10 @@ $("#btn_exhibitDelete").click(function(){
 		   deleteList.push($(item).val());
 	   });// for each end
 	console.log(deleteList);
-  	if(noticeDel){
+  	if(exhibitDel){
 	   
-	   var jsonData = {"deleteList":deleteList}
-	   
+	   var jsonData = {"pexhDeleteList":deleteList}
+	   alert(deleteList);
 	   //alert("선택한 전시글 SEQ="+deleteList);
 		   $.ajax({
 				type : "POST",
@@ -509,15 +509,16 @@ $("#btn_exhibitDelete").click(function(){
 				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 				datatype : "text",
 		  		success : function(data) {
+		  			alert(data);
 		  			 console.log(data);
 		       		 alert("성공적으로 삭제되었습니다.");
-		       		 location.href="<%=request.getContextPath()%>/admin/test.jsp";
+		       		 location.href="<%=request.getContextPath()%>/admin/admin_result.jsp?result=true";
 		       		 
 		        },
 		    	error : function(xhr,status,error) {
 		    		// Ajax error
 		    		alert("삭제에 실패 했습니다.");
-		    		location.href="<%=request.getContextPath()%>/admin/test.jsp";
+		    		location.href="<%=request.getContextPath()%>/admin/admin/admin_result.jsp?result=false";
 		    	}
 			 
 				});// ajax end
