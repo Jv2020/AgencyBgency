@@ -35,7 +35,7 @@
 			</li>
 			<li>
 				<strong>COMMUNITY</strong>
-				<a href="#none">공지사항</a>
+				<a href="/AgencyBgencyy/community/notice.jsp">공지사항</a>
 				<a href="/AgencyBgencyy/community/faq.jsp">자주묻는질문</a>
 				<a href="/AgencyBgencyy/showReviewList?pageNum=0">리뷰</a>
 			</li>

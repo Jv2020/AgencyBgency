@@ -1,6 +1,6 @@
 
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
     
     
 <%
@@ -9,7 +9,7 @@
 	
 	String result = request.getParameter("result");
 	
-	System.out.println("ÀÔ·Â°á°ú="+result);
+	System.out.println("ì…ë ¥ê²°ê³¼="+result);
 %>	
 	
 <!DOCTYPE html>
@@ -24,23 +24,23 @@
 <% 
 if(result.equals("true")){
 	%>
-	alert("Á¤»óÀûÀ¸·Î Àû¿ë µÇ¾úÀ½");
+	alert("ì •ìƒì ìœ¼ë¡œ ì ìš© ë˜ì—ˆìŒ");
 	location.href="<%=request.getContextPath()%>/admin";
 	
 	<%
 }else if(result.equals("fail")){
 	%>
-	alert("Ã·ºÎÆÄÀÏ ¹Ì Àû¿ëµÇ¾ú½À´Ï´Ù.");
+	alert("ì²¨ë¶€íŒŒì¼ ë¯¸ ì ìš©ë˜ì—ˆìŠµë‹ˆë‹¤.");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
 }else if(result.equals("mfalse")){
 	%>
-	alert("°Ë»ö °á°ú°¡ ¾ø½À´Ï´Ù.");
+	alert("ê²€ìƒ‰ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
 }else{
 	%>
-	alert("Àß¸øµÈ ÀÔ·Â ÀÔ´Ï´Ù");
+	alert("ì˜ëª»ëœ ì…ë ¥ ì…ë‹ˆë‹¤");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
 }
