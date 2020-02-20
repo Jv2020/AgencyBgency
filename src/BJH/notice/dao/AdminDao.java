@@ -609,7 +609,7 @@ public boolean member_access(String[] accessList) {
 				+    " FROM ";
 		
 		sql += "(SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC) AS RNUM, "
-				+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME"
+				+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
 				+ " FROM EXHIBIT ";
 		
 		String sqlWord = "";

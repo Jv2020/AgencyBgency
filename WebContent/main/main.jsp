@@ -79,7 +79,10 @@ public String getExPeriod(String begindatefull, String enddatefull){
 <%//-------------공지사항 list--------------------
 NoticeDao noticeDao = NoticeDao.getInstance();
 List<NoticeDto> noticeList = noticeDao.getNoticeList();
+System.out.println("noticeList="+noticeList);
 NoticeDto noticeDto = null;
+
+
 %>
 
 
@@ -350,7 +353,8 @@ NoticeDto noticeDto = null;
 					<span></span>
 				</div>
 				<ul class="n-cont clfix">
-					<% for(int i = 0 ; i<3 ; i++){
+					<% if(noticeList.size() != 0){
+						for(int i = 0 ; i<3 ; i++){
 						noticeDto = noticeList.get(i);
 						String sregDate = noticeDto.getReg_date();
 						int idx = sregDate.indexOf(" ");
@@ -362,8 +366,18 @@ NoticeDto noticeDto = null;
 						<span><%=regDate %></span>
 					</a></li>
 					<%	
+						}
+					}else{
+					%>
+					<li><a href="#none">
+						<h3>공지사항없음</h3>
+						<p></p>
+						<span></span>
+					</a></li>
+					<%
 					}
 					%>
+					
 				</ul>			
 			</div><!-- //inner -->
 		</div><!-- //section3 -->		
