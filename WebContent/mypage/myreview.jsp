@@ -46,6 +46,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 		
 		for(int i = 0; i < myReviews.size(); i++) {
 			ReviewDto dto = myReviews.get(i);
+			
 			%>
 			<tbody>
 				<tr>
@@ -83,7 +84,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 						
 							<!-- 리뷰수정 modal -->
 							<div id="rvwrite<%=i %>" class="modal">
-							 	<form id="frm2" action="/AgencyBgencyy/updatereviewAf">
+							 	<form id="frm2" action="/AgencyBgencyy/updatereviewAf" onsubmit="return rewrite()">
 								   <input type="hidden" name="seq" value="<%=dto.getSeq() %>">
 								 	<div class="modal-top">
 								 		<ul>
@@ -98,7 +99,7 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 										
 									<textarea name="review1" id="review1"><%=dto.getReview() %></textarea>
 									<div class="modal-btm">
-										<input type="button" value="수정하기" id="submitBtn">
+										<input type="submit" value="수정하기">
 										<input class="closeBtn" type="button" value="취소">
 									</div>
 								</form>
@@ -113,18 +114,15 @@ int pages = (int)Math.ceil(allMyReview / 10.0);
 				</tr>
 					<script>
 					// popup
-					
 					$('a[href="#rvwrite<%=i %>"]').click(function(event) {
 						  event.preventDefault();	
 						  $(this).modal({
-						    fadeDuration: 150
 						  });
 					});
 					
 					$('a[href="#showdetail<%=i %>"]').click(function(event) {
 						  event.preventDefault();	
 						  $(this).modal({
-						    fadeDuration: 150
 						  });
 					});
 					</script>
@@ -180,31 +178,43 @@ $('.starrr').starrr({
 	}
 });
 
+//$( document ).ready(function() {
 $('.modal-btm .closeBtn').click(function(event) {
-	 $('textarea').val("");
 	 $('.jquery-modal').fadeOut('fast');
 });
 
-$("#submitBtn").click(function () {
+function rewrite(){
+		//alert('submitBtn1 ss');
+		var review = $("#review1").val();
+		var star1 = $("#starrate").val();
+		
+		//alert(contNum);
+		alert("star는 " + star1);
+		alert(review);
+		if(review == "") {
+			alert("리뷰를 적어 주십시오.");
+			$("#review1").focus();
+			return false;
+		}else if(star1 == "") {
+			alert("별점을 설정해주십시오.");
+			return false;
+		}else {
+			/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
+			/* cyh.submit(); */
+			//alert("이후에 submit");
+			//$("#frm"+).submit();
+//			$("#submitBtn1").attr("type","submit");
+		//	document.querySelector("#submitBtn1").type="submit";
+		//	document.querySelector("#submitBtn1").submit()
+			return true;
+		} 
+		
+		
+}
+	$("#submitBtn1").click(function () {
+	});
 	
-	var review = $("#review1").val();
-	var star1 = $("#starrate").val();
-	
-	alert(review);
-	alert("star는 " + star1);
-
-	if(review == "") {
-		alert("리뷰를 적어 주십시오.");
-		$("#review1").focus();
-	}else if(star1 == "") {
-		alert("별점을 설정해주십시오.");
-	}else {
-		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
-		/* cyh.submit(); */
-		//alert("이후에 submit");
-		$("#frm2").submit();
-	}
-});
+//s});
 </script>
 
 <%@include file ="../include/footer.jsp" %>		
