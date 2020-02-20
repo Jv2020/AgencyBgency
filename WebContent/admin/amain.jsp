@@ -158,6 +158,9 @@
 								}
 								for (int i = 0; i < noticeList.size(); i++) {
 									noticeDto = noticeList.get(i);
+									String sregDate = noticeDto.getReg_date();
+									int idx = sregDate.indexOf(" ");
+									String noticeDate = sregDate.substring(0, idx);
 									if (noticeDto.getDel() == 0) {// del=0  만 추출
 						%>
 						<tr>
@@ -182,7 +185,7 @@
 									<%=noticeDto.getTitle()%>
 							</a></td>
 							<td><%=noticeDto.getId()%></td>
-							<td><%=noticeDto.getReg_date()%></td>
+							<td><%=noticeDate%></td>
 							<td><input type="checkbox" id="chk_notice" name="chk_notice"
 								value="<%=noticeDto.getSeq()%>"></td>
 						</tr>
@@ -267,6 +270,12 @@
 								}
 								for (int i = 0; i < exhibitList.size(); i++) {
 									exhibitDto = exhibitList.get(i);
+									String sBeginDate = exhibitDto.getBegindate();
+									String sEndDate = exhibitDto.getEnddate();
+									int idx = sBeginDate.indexOf(" ");
+									int idx2 = sEndDate.indexOf(" ");
+									String beginDate = sBeginDate.substring(0, idx);
+									String endDate = sEndDate.substring(0,idx2);
 									if (exhibitDto.getDel() == 0) {// del=0  만 추출
 						%>
 						<tr>
@@ -276,8 +285,8 @@
 									<%=exhibitDto.getTitle()%>
 							</a></td>
 							<td><%=exhibitDto.getPlace()%></td>
-							<td><%=exhibitDto.getBegindate()%>
-							<td><%=exhibitDto.getEnddate()%>
+							<td><%=beginDate%>
+							<td><%=endDate%>
 							<td><input type="checkbox" id="chk_exhibit"
 								name="chk_exhibit" value="<%=exhibitDto.getSeq()%>"></td>
 						</tr>
@@ -495,7 +504,7 @@ $("#btn_exhibitDelete").click(function(){
 	   //alert("선택한 전시글 SEQ="+deleteList);
 		   $.ajax({
 				type : "POST",
-				url : "${pageContext.request.contextPath}/Exhibit_delete",
+				url : "${pageContext.request.contextPath}/Admin_Exhibit?exhibit=delete",
 				data : jsonData,
 				contentType :"application/x-www-form-urlencoded; charset=UTF-8",
 				datatype : "text",

@@ -101,7 +101,7 @@ public class Admin_Member extends HttpServlet {
 					  dispatcher.forward(req, resp);
 				  }else {
 					  
-					  resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=false");
+					  resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=mfalse");
 				  }
 				  
 			  //큐레이터 허용

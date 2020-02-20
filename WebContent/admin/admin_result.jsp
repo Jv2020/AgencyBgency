@@ -33,6 +33,11 @@ if(result.equals("true")){
 	alert("첨부파일 미 적용되었습니다.");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
+}else if(result.equals("mfalse")){
+	%>
+	alert("검색 결과가 없습니다.");
+	location.href="<%=request.getContextPath()%>/admin";
+	<%
 }else{
 	%>
 	alert("잘못된 입력 입니다");

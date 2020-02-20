@@ -114,6 +114,8 @@ function searchMember(){
 		 if(txtId == "" || txtId == null){
 			 alert("검색어를 입력해주세요")
 			document.getElementById("searchChoice").value='sel';
+		 }else if(txtSel == 'sel'){
+			 alert("키워드를 선택하세요")
 		 }
 		 
 		 if(txtSel != 'sel' && txtId != ""){
