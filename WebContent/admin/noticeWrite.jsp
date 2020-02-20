@@ -65,7 +65,7 @@
 
 			<tr align="center">
 				<td colspan="2">
-					<input type="submit" id="btn_submit" name="btn_submit"value="올리기">
+					<input type="button" id="btn_submit" name="btn_submit" value="올리기">
 					<input type="button" id="btn_return" name="btn_return"value="이전으로">
 				</td>
 			</tr>
@@ -85,22 +85,21 @@ $("#btn_return").click(function (){
 $("#btn_submit").click(function (){
 
  
- var title = $('#title').val();
- var choice = $('#choice').val();
+ var title = document.getElementById("title").value;
+ var content = document.getElementById("content").value;
+ var choice = document.getElementById("choice").value;
 
  
 console.log(title);
 console.log(content);
+console.log(choice);
 
 	if(!title == "" && title != null){
 		if(!content =="" && content != null){
-			
 			var check = confirm("등록 하시겠습니까?");
-			
-			
 			if(check){
-			$("#btn_submit").submit();
-			
+				$("#form").submit();
+				//submitBT.submit();
 			}
 		}else{
 			alert("내용이 입력되지 않았습니다.")
@@ -108,10 +107,8 @@ console.log(content);
 	}else{
 		alert("제목이 입력되지 않았습니다");
 	}
+});
 	
-	
-
-
 
 </script>
 

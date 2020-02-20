@@ -30,7 +30,7 @@ if(result.equals("true")){
 	<%
 }else if(result.equals("fail")){
 	%>
-	alert("첨부파일 없이 적용되었습니다.");
+	alert("첨부파일 미 적용되었습니다.");
 	location.href="<%=request.getContextPath()%>/admin";
 	<%
 }else{

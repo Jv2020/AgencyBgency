@@ -28,7 +28,7 @@ if(fileDto != null){
 fileName = fileDto.getFilename();
 originName = fileDto.getOriginName();
 String savePath = request.getSession().getServletContext().getRealPath(fileDto.getFilepath());//"/upload/notice"
-System.out.println("savePath= "+savePath);
+//System.out.println("savePath= "+savePath);
 }
 
 ServletContext context = getServletContext();
@@ -57,7 +57,7 @@ int seq = noticeDto.getSeq();
 
 </head>
 <body>
-<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq%>" method="POST" enctype="multipart/form-data"> 
+<form action="<%=request.getContextPath() %>/Notice?notice=update&seq=<%=seq%>" id=updateFrm method="POST" enctype="multipart/form-data"> 
 	<div align ="center">
 		<table border="1">
 			<col width="200"><col width="500">
@@ -71,7 +71,7 @@ int seq = noticeDto.getSeq();
 			<tr>
 				<th>제목</th>
 				<td>
-					<input type="text" name="title" value="<%=noticeDto.getTitle()%>"size="50" >
+					<input type="text" name="title" id="title" value="<%=noticeDto.getTitle()%>"size="50" >
 				</td>
 			</tr>
 			
@@ -82,12 +82,14 @@ int seq = noticeDto.getSeq();
 					if(fileDto != null){
 					
 					%>
-					<a href="#"><%=fileDto.getOriginName() %></a>
+					<a href="#none"><%=fileDto.getOriginName() %></a>
 					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >
+					
 					<% 
 					}else{
 					%>
-					<p>첨부파일 없음</p>
+					<a href="#none">첨부파일 없음</a>
+					<input type="hidden" name="noFile" value="no">
 					<input type="file" name="fileName" title="첨부파일" value=""  style="width:400px" >
 					<%
 					}
@@ -98,7 +100,7 @@ int seq = noticeDto.getSeq();
 			<tr>
 				<th>내용</th>
 				<td align="left">
-					<textarea rows="20" cols="70" name="content">
+					<textarea rows="20" cols="70" name="content" id="content">
 						<%=noticeDto.getContent() %>
 					</textarea>
 				</td>
@@ -141,7 +143,7 @@ int seq = noticeDto.getSeq();
 			
 			<tr align="center" >
 				<td colspan="2">
-					<input type="submit" id="btn_submit" name="btn_submit" value="수정하기">
+					<input type="button" id="btn_submit" name="btn_submit" value="수정하기" onclick="update()">
 					<input type="button" value="이전으로" onclick="location.href='<%=request.getContextPath() %>/admin/test.jsp'">
 				</td>
 			</tr>
@@ -150,11 +152,10 @@ int seq = noticeDto.getSeq();
 </form>
 </body>
 <script type="text/javascript">
-$("#btn_submit").click(function (){
-
-	 
-	 var title = $('#title').val();
-	 var choice = $('#choice').val();
+function update(){
+	 var title = document.getElementById("title").value;
+	 var content = document.getElementById("content").value;
+	
 
 	 
 	console.log(title);
@@ -162,13 +163,9 @@ $("#btn_submit").click(function (){
 
 		if(!title == "" && title != null){
 			if(!content =="" && content != null){
-				
 				var check = confirm("수정 하시겠습니까?");
-				
-				
 				if(check){
-				$("#btn_submit").submit();
-				
+				$("#updateFrm").submit();
 				}
 			}else{
 				alert("내용이 입력되지 않았습니다.")
@@ -176,6 +173,12 @@ $("#btn_submit").click(function (){
 		}else{
 			alert("제목이 입력되지 않았습니다");
 		}
+	
+}
+
+/* $("#btn_submit").click(function (){
+} */
+	 
 </script>
 
 </html>

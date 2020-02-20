@@ -23,7 +23,8 @@ public class Admin extends HttpServlet {
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//----------------------- 공지 -------------------------------------------------
+
+		//----------------------- 공지 -------------------------------------------------
 		String noticeSearchChoice = req.getParameter("noticeSearchChoice");
 		System.out.println("-------noticeSearchChoice---------" + noticeSearchChoice);
 		String noticeSearchWord = req.getParameter("noticeSearchWord");
@@ -160,14 +161,9 @@ public class Admin extends HttpServlet {
 		//System.out.println("exhibitSearchWord"+exhibitSearchWord);
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/amain.jsp");
 		dispatcher.forward(req	, resp);
-		
-		
-	}
-	
-	
 
-	
 
-	
+}
+
 	
 }

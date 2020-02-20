@@ -408,7 +408,7 @@
 				
 				<!-- 회원 관리 시작 -->	
 				<div class="tab_con" id="admin04">
-					<form action="<%=request.getContextPath()%>/Admin_Member?member=search" method="POST">
+					<form action="<%=request.getContextPath()%>/Admin_Member?member=search" id = searchMem method="POST">
 						<h3>회원 관리</h3>			
 						<table class="admintbl mt40">
 							<tr>
@@ -420,8 +420,8 @@
 										<option value="id">ID</option>
 										<option value="name">이름</option>
 								</select> <input type="text" id="searchWord" name="searchWord" width="80"
-									value=""> <!-- 회원검색이동  --> <input type="submit"
-									id="btn_id" name="btn_id" value="검색"> <input
+									value=""> <!-- 회원검색이동  --> <input type="button"
+									id="btn_id" name="btn_id" value="검색" onclick="searchMember()"> <input
 									type="button" id="btn_memberAll" name="btn_memberAll"
 									value="전체리스트보기"
 									onclick="location.href='<%=request.getContextPath()%>/Admin_Member?member=list'">
@@ -455,7 +455,7 @@ $("#btn_noticeDelete").click(function(){
 	   
 	   var jsonData = {"deleteList":deleteList}
 	   
-	   alert("선택한 공지글 SEQ="+deleteList);
+	   //alert("선택한 공지글 SEQ="+deleteList);
 		   $.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/Notice?notice=delete",
@@ -492,7 +492,7 @@ $("#btn_exhibitDelete").click(function(){
 	   
 	   var jsonData = {"deleteList":deleteList}
 	   
-	   alert("선택한 공지글 SEQ="+deleteList);
+	   //alert("선택한 전시글 SEQ="+deleteList);
 		   $.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/Exhibit_delete",
@@ -527,7 +527,7 @@ $("#btn_access").click(function(){
 	   
 	   var jsonData = {"accessList":accessList}
 	   
-	   alert("선택한 회원 ID="+accessList);
+	   //alert("선택한 회원 ID="+accessList);
 		   $.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/Admin_Member?member=access",

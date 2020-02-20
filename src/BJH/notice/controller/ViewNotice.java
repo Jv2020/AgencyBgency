@@ -58,8 +58,9 @@ public class ViewNotice extends HttpServlet {
 			NoticeDto noticeDto = noticeDao.notice_detail(seq);
 			FileDao fileDao = FileDao.getInstance();
 			FilesDto fileDto = fileDao.getOriginName(noticeDto.getSeq());
-			
-			req.setAttribute("fileDto", fileDto);
+			if(fileDto != null) {
+				req.setAttribute("fileDto", fileDto);
+			}
 			req.setAttribute("noticeDto", noticeDto);
 			RequestDispatcher dispatcher = req.getRequestDispatcher("/community/noticeDetail.jsp");
 			dispatcher.forward(req	, resp);

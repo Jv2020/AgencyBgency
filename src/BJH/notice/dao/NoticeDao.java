@@ -106,13 +106,17 @@ public class NoticeDao {
 		return noticeResult>0?true:false;
 	}
 	// 공지 업데이트
-	public boolean notice_Update(int seq, NoticeDto dto ) {
+	public boolean notice_Update(int seq, NoticeDto dto ,boolean chkFile) {
 		System.out.println("updateDto"+dto);
-		String sql = " UPDATE NOTICE "
-				+ " SET ID=?, TITLE=? , CONTENT=? , CHOICE= ? ,FILENAME= ?"
-				+ " WHERE SEQ= ? ";
+		String sql = " UPDATE NOTICE ";
 			
-		
+		if(chkFile) {
+			sql += " SET ID=?, TITLE=? , CONTENT=? , CHOICE= ? ,FILENAME= ? ";
+		}else {
+			sql += " SET ID=? TITLE=? CONTENT=?  CHOICE=? ";
+		};
+			sql += " WHERE SEQ= ? ";
+			
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		int noticeResult = 0;
@@ -127,8 +131,12 @@ public class NoticeDao {
 				psmt.setString(2, dto.getTitle());
 				psmt.setString(3, dto.getContent());
 				psmt.setInt(4, dto.getChoice());
-				psmt.setString(5,dto.getFilename());
-				psmt.setInt(6, seq);
+				if(chkFile) {
+					psmt.setString(5,dto.getFilename());
+					psmt.setInt(6, seq);					
+				}else {
+					psmt.setInt(5, seq);
+				}
 				System.out.println("3/4 notice_Update ");
 			noticeResult = psmt.executeUpdate();
 				System.out.println("4/4 notice_Update Successs");

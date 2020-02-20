@@ -105,6 +105,24 @@ function accessGoPage(pageNum) {
 	
 };
 
+function searchMember(){
+	 
+		 
+		 var txtId = document.getElementById("searchWord").value;
+		 var txtSel = document.getElementById("searchChoice").value;
+		
+		 if(txtId == "" || txtId == null){
+			 alert("검색어를 입력해주세요")
+			document.getElementById("searchChoice").value='sel';
+		 }
+		 
+		 if(txtSel != 'sel' && txtId != ""){
+			 
+			 $("#searchMem").submit();
+		 }
+
+}
+
 
 $(document).ready(function(){
 	 
@@ -136,6 +154,8 @@ $(document).ready(function(){
 			 $("input[name=chk_access]").prop("checked",false);
 		 }
 	 });
+	 
+
 	 
 	 	var chkNoticeCount = $('input:checkbox[id="chk_notice"]:checked').length ;
 		var chkNotice_val = $('input:checkbox[id="chk_notice"]').val();

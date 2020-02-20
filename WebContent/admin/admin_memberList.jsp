@@ -116,7 +116,7 @@
 			</tr>
 			<%
 				for (int i = 0; i < memberList.size(); i++) {
-					System.out.println(i + "번dto=" + memberList.get(i));
+					//System.out.println(i + "번dto=" + memberList.get(i));
 					if (memberList.get(i).getDel() == 0) {
 			%>
 			<tr align="center">
@@ -317,7 +317,7 @@ $(document).ready(function(){
 
 //}); //JQuery ready end
 function memberDelete(){
-	var memberDel = confirm("정말로 탈퇴 시킬꺼야?");
+	var memberDel = confirm("정말 탈퇴 시키시겠습니까?");
 	var memDeleteList = new Array();
 	   $('input[name="checkbox"]:checked').each(function(index, item){
 		   memDeleteList.push($(item).val());
@@ -325,8 +325,6 @@ function memberDelete(){
   	if(memberDel){
 	   
 	   var jsonData = {"pmemDeleteList":memDeleteList}
-	   
-	   alert("선택한 회원 ID="+memDeleteList);
 		   $.ajax({
 				type : "POST",
 				url : "${pageContext.request.contextPath}/Admin_Member?member=delete",
@@ -382,13 +380,7 @@ function memberRecover() {
 }
 
 function GoPage(pageNum) {
-	alert("page이동");
-	alert(pageNum)
-	/* var linkStr = getContextPath() + "/Admin_Member?member=list&"
-	linkStr += "admin_memberPageNumber="+pageNum; */
-	
 	location.href = "${pageContext.request.contextPath}/Admin_Member?member=list&admin_memberPageNumber="+pageNum;
-	alert("된거니?");
 };
 </script>
 

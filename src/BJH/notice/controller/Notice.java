@@ -66,6 +66,7 @@ public class Notice extends HttpServlet {
 				String fileName ="";
 				int choice =0;
 				
+				
 				//파일
 				String originName="";
 				String bbs_name = "notice";
@@ -96,26 +97,55 @@ public class Notice extends HttpServlet {
 				}
 				NoticeDao noticeDao = NoticeDao.getInstance();
 				FileDao fileDao = FileDao.getInstance();
+				boolean chkFile = false; 
+				if(!fileName.equals("") && fileName != null) {
+					chkFile = true;
+				}
+				System.out.println("chkFile="+chkFile);
 				NoticeDto noticeDto = new NoticeDto(id,title,content,choice,fileName);
 				
+	//-----------------------------------예외처리 마무리할것!!
 				
-				boolean result = noticeDao.notice_Update(seq,noticeDto);
+				boolean result = noticeDao.notice_Update(seq,noticeDto,chkFile);
 				
 				if(result) {
 					System.out.println("공지 DB 수정 완료");
 					bbs_seq = fileDao.getNoticeSeq(fileName);
+					System.out.println("fileName = "+fileName);
 					FilesDto fileDto = new FilesDto(-1,fileName,originName,
 													filePath,bbs_name,bbs_seq,0,2);
-					boolean fileResult = fileDao.updateFile(fileDto);
-					if(fileResult) {
+					System.out.println("fileDto = "+ fileDto);
+					// case 1 기존 첨부 존재시 update
+					String noFile = multi.getParameter("noFile");
+					System.out.println("noFile = " + noFile);
+					if(noFile != null) {
+						System.out.println("상단 위치");
 						
-						System.out.println("send filePath = "+filePath);
-						System.out.println("send fileName = "+fileName);
-						
-						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+						boolean fileResult = fileDao.insertFile(fileDto);
+						if(fileResult) {
+							System.out.println("send filePath = "+filePath);
+							System.out.println("send fileName = "+fileName);
+							// 첨부파일 X --> 공지O 첨부 O update
+							resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+						}else {
+							// 첨부파일 X --> 공지O 첨부 X update
+							resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
+						}
+					// case 2 기존 첨부 미 존재시 update
 					}else {
-						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
+						System.out.println("하단 위치");
+						boolean fileResult = fileDao.updateFile(fileDto);
+						if(fileResult) {
+							System.out.println("send filePath = "+filePath);
+							System.out.println("send fileName = "+fileName);
+							// 첨부파일O --> 공지 O 첨부파일 O  update
+							resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+						}else {	
+							// 첨부파일O --> 공지 O 첨부파일 X  update
+							resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
+						}
 					}
+				//update Fail (공지 업데이트 실패 )
 				}else {
 					resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=false");
 				}
@@ -249,14 +279,15 @@ public class Notice extends HttpServlet {
 				
 				
 				boolean noticeResult = false;
+				boolean fileResult = false;
 				NoticeDao noticeDao = NoticeDao.getInstance();
 				noticeResult = noticeDao.notice_delete(deleteList);
 				if(noticeResult) {
 					FileDao fileDao = FileDao.getInstance();
-					boolean fileResult = fileDao.file_delete(deleteList);
+					fileResult = fileDao.file_delete(deleteList);
 				}
 				System.out.println("del_result="+noticeResult);
-				
+				System.out.println("file_result="+ fileResult);
 				String result = noticeResult+"";
 				//String gson = new Gson().toJson(noticeResult);
 				resp.getWriter().write(result);  
