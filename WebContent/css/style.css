@@ -1,5 +1,5 @@
 .inner {width:1050px; margin:0 auto;}
-
+a {text-decoration:none !important;}
 /*============ MAIN ============*/
 #wrap {position:relative; width:100%;  min-width:1200px; overflow:hidden;}
 #wrap.admin {min-height:100vh; background:#f7f7f7; padding-bottom:100px;}
@@ -186,13 +186,18 @@ table.admintbl td {height:55px; border-bottom:1px solid #b1b1b1;}
 .sub_cont {margin-top:60px;}
 
 /* about us */
-#aboutUs {position:relative; padding:70px 0;}
-#aboutUs:before {position:absolute; top:0; left:250px; content:''; width:800px; height:100%; border:10px solid #ddd; z-index:-1;}
+#aboutUs {position:relative; width:100%; heihgt:720px; border:10px solid #ddd; margin:0 auto; background:url(../images/sub/aboutbg.jpg) no-repeat right bottom; background-size:cover;}
+/* #aboutUs:before {position:absolute; top:0; left:250px; content:''; width:800px; height:100%; border:10px solid #ddd; z-index:-1;}
 #aboutUs img {display:block; float:left; width:500px;}
-#aboutUs .txt {float:left; padding:30px 30px; text-align:center; width:550px;}
-#aboutUs .txt h3 {font-size:38px; color:#333; margin-bottom:40px;}
-#aboutUs .txt p {font-size:18px; line-height:34px;}
+#aboutUs .txt {float:left; padding:30px 30px; text-align:center; width:550px;} */
+#aboutUs img {position:absolute;top:0; left:0; width:500px; z-index:-11;}
+/* #aboutUs:before {position:absolute; top:0; left:50%; margin-left:-450px; content:''; width:900px; height:100%; border:10px solid #ddd; z-index:-1;} */
+#aboutUs .txt {padding:100px 30px; text-align:center; background:rgba(0,0,0,0.8)}
+#aboutUs .txt h3 {font-size:38px; color:#fff; margin-bottom:40px;}
+#aboutUs .txt p {font-size:18px; line-height:34px; color:#fff;}
+#aboutUs .txt p.desc {line-height:24px; font-size:14px; margin-top:20px;}
 #aboutUs .txt span {display:block; margin-top:20px; color:#b3b3b3; font-size:11px;}
+.aboutDesc {width:100%; margin-top:30px; text-align:Center;}
 
 /* 회원가입 */
 #joinPage .insertFrm {}
