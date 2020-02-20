@@ -506,9 +506,9 @@ public class ExhibitDao {
 	// TODO: insert Exhibit
 	public boolean insertExhibit(ExhibitDto dto) {
 		
-		String sql=   " INSERT INTO EXHIBIT ( SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME ) "
+		String sql=   " INSERT INTO EXHIBIT ( SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME, WDATE ) "
 					+ " VALUES ( SEQ_EXHIBIT.NEXTVAL, TO_DATE( ?, 'YYYYMMDD' ), TO_DATE( ?, 'YYYYMMDD' ) , "
-								+ " ?, ?, ? , ?, ?, 0 , ?, ?, ? , ?) ";
+								+ " ?, ?, ? , ?, ?, 0 , ?, ?, ? , ?, SYSDATE ) ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -553,7 +553,7 @@ public class ExhibitDao {
 		// 처음은 0 
 		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
 							+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-					+ " FROM ( SELECT ROW_NUMBER()OVER(ORDER BY BEGINDATE DESC) AS RNUM,SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
+					+ " FROM ( SELECT ROW_NUMBER()OVER(ORDER BY WDATE) AS RNUM,SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
 							+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
 							+ " FROM EXHIBIT"
 							+ " WHERE CERTI_NUM = ? )"

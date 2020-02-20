@@ -19,7 +19,6 @@
 	display:block; top:0;left:0; 
 	width:240px; height:345px;
 	background:#f8f8f7;
-	z-index:-1;
 }
 .sch-top .recommand .img img{
 	width:100%;

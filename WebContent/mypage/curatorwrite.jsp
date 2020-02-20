@@ -107,7 +107,7 @@ request.setCharacterEncoding("UTF-8");
 	<ul class="info">
 		<li>
 				<span> 제목 </span>
-				<input type="text" id="title" name="title">
+				<input type="text" id="title" name="title" maxlength="20">
 		</li>
 		<li>
 				<span> 시작일 </span>
@@ -123,6 +123,7 @@ request.setCharacterEncoding("UTF-8");
 		<li>
 				<span> 시간 </span>
 				<select id="starttime">
+					<option value="0800">8:00</option>
 					<option value="0900" selected="selected">9:00</option>
 					<option value="1000">10:00</option>
 					<option value="1100">11:00</option>
@@ -133,13 +134,13 @@ request.setCharacterEncoding("UTF-8");
 				</select>
 				&nbsp;~&nbsp;
 				<select id="endtime">
-					<option value="1200" selected="selected">12:00</option>
+					<option value="1200">12:00</option>
 					<option value="1300">13:00</option>
 					<option value="1400">14:00</option>
 					<option value="1500">15:00</option>
 					<option value="1600">16:00</option>
 					<option value="1700">17:00</option>
-					<option value="1800">18:00</option>
+					<option value="1800" selected="selected">18:00</option>
 					<option value="1900">19:00</option>
 				</select>
 				<input type="hidden" id="ex_time" name="ex_time" value="">
@@ -163,7 +164,7 @@ request.setCharacterEncoding("UTF-8");
 		</li>
 		<li>
 				<span> 가격 </span>
-				<input type="text" id="price" name="price" value="">
+				<input type="text" id="price" name="price" value="" maxlength="5">
 		</li>
 		<li>
 				<span> 큐레이터번호 </span>
@@ -171,7 +172,7 @@ request.setCharacterEncoding("UTF-8");
 		</li>
 		<li>
 				<span> 문의 번호 </span>
-				<input type="text" name="contact" >
+				<input type="text" name="contact" maxlength="50">
 		</li>
 	</ul>
 </div>

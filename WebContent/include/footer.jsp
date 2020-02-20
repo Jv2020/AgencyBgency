@@ -25,7 +25,7 @@
 	<div id="footer">
 		<div class="inner">
 			<div class="footer_logo"><a href="/AgencyBgencyy.jsp">
-				<img src="/AgencyBgencyy/images/main/logo.png" alt="모두의 전시" />
+				<img src="/AgencyBgencyy/images/main/logo_footer.png" alt="모두의 전시" />
 			</a></div>			
 			<address>
 			(주)모두의 전시 &nbsp;서울특별시 서초구 서초4동 강남대로 459
