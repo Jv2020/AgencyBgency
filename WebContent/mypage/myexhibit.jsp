@@ -56,22 +56,29 @@ System.out.println(listPage);
 					<% } %>
 					<!-- 리뷰쓰기 modal -->
 					<div id="rvwrite<%=i %>" class="modal">
-					 	<form id="frm1" action="<%=request.getContextPath()%>/writereviewAf">
-						 <input type="hidden" name="id" value="<%=sdto.getId() %>">
-						 	<div class="modal-top">
-						 		<ul>
-						 			<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value="<%=list.get(i).getTitle() %>"></li>
-						 			<li>
-						 				<span>평점</span>
-						 				<div class='starrr' id='star1'></div>
+						<form class="frm1" action="<%=request.getContextPath()%>/writereviewAf">
+						<input type="hidden" name="id" value="<%=sdto.getId() %>">
+							<div class="modal-top">
+								<ul>
+									<li><span>전시명</span><%=list.get(i).getTitle() %><input type="hidden" name="title" value="<%=list.get(i).getTitle() %>"></li>
+									<li>
+										<span>평점</span>
+										<div class='starrr' id='star1'></div>
 										<input type="hidden" id="starrate" name="starrate" value="">
-						 			</li>
-						 		</ul>
+										<%-- <input type="hidden" class="starrate<%=i %>" name="starrate" value=""> --%>
+										<script type="text/javascript">
+											var star1 = $("#starrate").val();											
+											$(document).ready(function() {
+												$(".starrate<%=i %>").val(star1);
+											});
+										</script>
+									</li>
+								</ul>
 							</div><!-- //modal-top -->
 								
-							<textarea name="review" id="review"></textarea>
+							<textarea name="review" id="review<%=i %>"></textarea>
 							<div class="modal-btm">
-								<input type="button" value="글쓰기" id="submitBtn">
+								<input type="button" value="글쓰기" class="submitBtn" textAid="review<%=i %>" star="starrate" >
 								<input class="closeBtn" type="button" value="취소">
 							</div>
 						</form>
@@ -87,6 +94,28 @@ System.out.println(listPage);
 				    fadeDuration: 150
 				  });
 			});
+			
+			<%-- $("#submitBtn<%=i %>").click(function () {
+				alert("class submitBtn click");
+				
+				var review = $(".review<%=i %>").val();
+				var star = $(".starrate<%=i %>").val();
+				
+				alert(review);
+//				alert("star는 " + star);
+
+				if(review == "") {
+					alert("리뷰를 적어 주십시오.");
+					$(".review<%=i %>").focus();
+				}else if(star == "") {
+					alert("별점을 설정해주십시오.");
+				}else {
+				//	$("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); 
+				//	cyh.submit(); 
+				//	alert("ㅋㅋ"); 
+					$(".frm1").submit();
+				}
+			}); --%>
 			</script>
 			<%
 				}
@@ -147,27 +176,69 @@ function goPage(pageNumber) {
 </script>
 
 <script>
-
-$("#submitBtn").click(function () {
+$(document).ready(function () {
 	
-	var review = $("#review").val();
-	var star = $("#starrate").val();
+	$(".submitBtn").click(function () {
+		alert("submitBtn click");
+		
+	//	$("#" + $(this).attr("textAid").val()).val("");		
+	//	alert($(this).attr("textAid"));
+			
+				
+		var review = $("#" + $(this).attr("textAid")).val();		
+		var star = $("#" + $(this).attr("star")).val();
+		
+		alert("review:" + review);
+		alert("star:" + star);
+		
+		$("#" + $(this).attr("textAid")).val("");
+	});
 	
-//	alert(review);
-//	alert("star는 " + star);
+	<%-- var size = '<%=list.size() %>';
+	alert(size);
+	
 
-	if(review == "") {
-		alert("리뷰를 적어 주십시오.");
-		$("#review").focus();
-	}else if(star == "") {
-		alert("별점을 설정해주십시오.");
-	}else {
-		/* $("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); */
-		/* cyh.submit(); */
-		/* alert("ㅋㅋ"); */
-		$("#frm1").submit();
-	}
-});
+		$("#submitBtn" + 0).on("click", function () {			
+			
+			alert("submitBtn click " + 0);
+			var review = $("#review" + 0).val();			
+			
+			alert(review);
+		});
+		$("#submitBtn" + 1).on("click", function () {			
+			
+			alert("submitBtn click " + 1);
+			var review = $("#review" + 1).val();			
+			
+			alert(review);
+		}); --%>
+	
+	
+	/* 
+	$(".submitBtn").click(function () {
+		alert("class submitBtn click");
+		
+		var review = $("#review").val();
+		var star = $("#starrate").val();
+		
+		alert(review);
+//		alert("star는 " + star);
+
+		if(review == "") {
+			alert("리뷰를 적어 주십시오.");
+			$("#review").focus();
+		}else if(star == "") {
+			alert("별점을 설정해주십시오.");
+		}else {
+		//	$("#frm").attr({"action":"/AgencyBgencyy/updateWr", "target":"_self"}).submit(); 
+		//	cyh.submit(); 
+		//	alert("ㅋㅋ"); 
+			$("#frm1").submit();
+		}
+	});
+ */
+})
+
 
 
 </script>
