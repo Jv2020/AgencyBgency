@@ -129,7 +129,7 @@ function listmore(){
 			}	
 		},
 		complete: function(data) {
-			showContent += $("#main-exhibits li").length;
+			showContent = $("#main-exhibits li").length;
 			console.log(showContent);
 			if( showContent >= allcontents ){
 				$("#moreBtn").hide();

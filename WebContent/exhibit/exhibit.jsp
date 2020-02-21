@@ -66,7 +66,9 @@
 var morecount = 0;
 // 더보기버튼
 var showContent = $("#main-exhibits li").length;	// 
-var allcontents = <%=allContentSize%>;	// 현재 모든 컨텐츠 개수 
+var allcontents = <%=allContentSize%>;	// 현재 모든 컨텐츠 개수
+alert(showContent);
+alert(allcontents);
 if( showContent >= allcontents  ){
 	$("#moreBtn").hide();
 }
@@ -123,7 +125,7 @@ function listmore(){
 				}}
 		},
 		complete: function(data) {
-			showContent += $("#main-exhibits li").length;
+			showContent = $("#main-exhibits li").length;
 			console.log(showContent);
 			if( showContent >= allcontents ){
 				$("#moreBtn").hide();
