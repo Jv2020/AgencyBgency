@@ -488,16 +488,18 @@ public class ReservDao {
 		String sql =  " SELECT e.SEQ, e.BEGINDATE, e.ENDDATE, e.TITLE, e.PLACE, e.EX_TIME "
 					+ "	FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID  "
 							+ "  FROM RESERVATION "
-							+ " WHERE ID = ? AND DEL = 0 )) r, Exhibit e "
+							+ " WHERE ID = ? AND DEL = 0 )) r, (SELECT * FROM EXHIBIT WHERE BEGINDATE <= SYSDATE AND SYSDATE<=ENDDATE )e "
 					+ " WHERE r.title = e.title AND r.RNUM >= ? AND r.RNUM <= ?";
 		
 		/*
 				 
-			SELECT r.seq, e.seq, e.title, e.begindate, e.enddate, e.ex_time, e.place
-		    FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID
-		                            FROM RESERVATION 
-		                            WHERE ID ='rrr111')) r, Exhibit e
-		    where r.title = e.title AND r.RNUM <=10;
+			SELECT e.SEQ, e.BEGINDATE, e.ENDDATE, e.TITLE, e.PLACE, e.EX_TIME
+			FROM ( SELECT * FROM ( SELECT ROW_NUMBER()OVER(ORDER BY SEQ DESC)AS RNUM, TITLE, SEQ, ID 
+			FROM RESERVATION
+			WHERE ID = 'bit123' AND DEL = 0 )) r, 
+			        (SELECT * FROM EXHIBIT WHERE BEGINDATE <= SYSDATE AND SYSDATE<=ENDDATE )e
+			WHERE r.title = e.title AND r.RNUM >= 1 AND r.RNUM <=5;
+
 		    
 		*/
 		
