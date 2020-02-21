@@ -35,11 +35,18 @@ int pages = (int)Math.ceil(allRe_Contents/ 5.0);
 List<ReviewDto> list = (List<ReviewDto>)request.getAttribute("dtolist");
 
 // 확인용
-// System.out.println("list.size()는" + list.size());
+System.out.println("list.size()는" + list.size());
 %>
 
 
 <div class="reviewDtail">
+
+<%if(list.size() == 0) {
+	%>
+	<h3>등록된 리뷰가 없습니다.</h3>
+	<%
+}
+%>
 
 <%
 for(int i = 0; i < list.size(); i++) {
