@@ -359,8 +359,6 @@ public class ExhibitDao {
 				list.add(dto);
 				
 			}
-			
-			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

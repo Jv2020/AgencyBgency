@@ -18,7 +18,7 @@ public String getDate(){
 	today += year;
 	
 	if(month<10){ today += "0" + month; }
-	else{ today += month; }
+	else { today += month; }
 	
 	if(day<10){ today += "0" + day; }
 	else{ today += day; }
@@ -33,7 +33,7 @@ public String getDate(String date){
 	return str;
 }
 public String getExPeriod(String begindatefull, String enddatefull){
-	String status="";
+	String status = "";
 	// 기준 : 오늘 
 	int today = Integer.parseInt(getDate());
 	int begindate = Integer.parseInt(getDate(begindatefull));
@@ -55,7 +55,6 @@ public String getExPeriod(String begindatefull, String enddatefull){
 
 <%
 request.setCharacterEncoding("UTF-8");
-
 %>
 
 

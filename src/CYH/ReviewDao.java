@@ -421,11 +421,11 @@ public class ReviewDao {
 	// 전시 디테일 뷰에 뿌릴 리뷰 3개 
 	public List<ReviewDto> getReviewToDetail(String title){
 		String sql =  " SELECT ID, TITLE, REG_DATE, STAR, REVIEW "
-					+ " FROM  ( SELECT ROW_NUMBER()OVER (ORDER BY LIKE_NUMBER DESC) AS RNUM, "
+					+ " FROM  ( SELECT ROW_NUMBER()OVER (ORDER BY REG_DATE DESC) AS RNUM, "
 								+ " ID, TITLE, REG_DATE, STAR, REVIEW "
 							+ " FROM EXHIBIT_REVIEW  "
 							+ " WHERE DEL = 0  AND TITLE = ? "
-							+ " ORDER BY REG_DATE ) "
+							+ " ORDER BY REG_DATE DESC ) "
 					+ " WHERE RNUM <= 4 ";
 		
 		Connection conn = null;
