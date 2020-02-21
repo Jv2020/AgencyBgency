@@ -16,7 +16,12 @@ int allContents = (int)request.getAttribute("allContents");
 
 System.out.println("allcontents는 " + allContents);
 
-int pages = (int)Math.ceil(allContents / 5.0);	// 전체 페이지수를 pages에 담았어
+/* int pages = (int)Math.ceil(allContents / 5.0); */ // 전체 페이지수를 pages에 담았어
+int pages = allContents / 5;
+if(allContents % 5 > 0) {
+	pages = pages + 1;
+}
+System.out.println("전체 페이지수는 " + pages);
 
 %>
 

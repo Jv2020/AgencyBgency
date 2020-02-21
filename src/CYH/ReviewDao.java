@@ -477,13 +477,14 @@ public class ReviewDao {
 	// 리뷰 게시판에 전시 정보 뿌리기 (현재 및 지난 전시만)
 	public List<ExhibitDto> getExhibitReview(int pageNum){
 		String sql =  " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
-					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
-					+ " FROM ( SELECT ROW_NUMBER()OVER ( ORDER BY BEGINDATE DESC ) AS RNUM, "
+					+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
+					+ " FROM ( SELECT ROW_NUMBER()OVER ( ORDER BY SEQ DESC ) AS RNUM, "
 							+ " SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, "
 							+ " EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME  "
 							+ " FROM EXHIBIT "
-							+ " WHERE BEGINDATE <= SYSDATE ) "
-					+ " WHERE RNUM >= ? AND RNUM <= ? ";
+							+ " WHERE BEGINDATE <= SYSDATE AND DEL=0 "
+							+ " ORDER BY SEQ DESC )  "
+					+ " WHERE RNUM >= ? AND RNUM <= ? AND DEL=0 ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -542,7 +543,7 @@ public class ReviewDao {
 		
 		String sql =  " SELECT COUNT(*) "
 					+ " FROM EXHIBIT "
-					+ " WHERE BEGINDATE <= SYSDATE ";
+					+ " WHERE BEGINDATE <= SYSDATE AND DEL=0 ";
 
 		Connection conn = null;
 		PreparedStatement psmt = null;
