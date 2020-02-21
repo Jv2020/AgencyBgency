@@ -46,11 +46,9 @@ public class MainSearch extends HttpServlet{
 		List<ExhibitDto> exhibitByContentList = dao.getExhibitListAfterSeachContent(searchWord);
 		if(exhibitByContentList.size()>0) {
 			System.out.println(exhibitByContentList.get(0).toString());
-			exhibitDtolist.put("content",
-					exhibitByContentList);
-			
+			exhibitDtolist.put("content", exhibitByContentList);
 		} else {
-			System.out.println("컨텐츠 	검색없음");
+			System.out.println("컨텐츠 검색없음");
 		}
 		
 		NoticeDao noticeDao = NoticeDao.getInstance();

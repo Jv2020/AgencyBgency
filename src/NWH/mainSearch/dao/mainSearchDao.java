@@ -75,9 +75,10 @@ public class mainSearchDao {
 	 
 	 public List<ExhibitDto> getExhibitListAfterSeachContent(String searchWord){
 	      
-	      String sql = " SELECT SEQ, BEGINDATE, ENDDATE, TITLE, PLACE, CONTENT, EX_TIME, LOC_INFO, DEL, CONTACT, CERTI_NUM, PRICE, FILENAME "
-	            + 	   " FROM EXHIBIT"
-	            + 	   " WHERE CONTENT LIKE '%" + searchWord.trim() + "%' ";;
+	      String sql = " select b.* "
+	      		+ " from (select * from tbl_clob"
+	      		+ " where CONTENT like '%시간의 풍경%') a, EXHIBIT b "
+	      		+ " where a.seq = b.seq";
 	      
 	      Connection conn = null;
 	      PreparedStatement psmt = null;
