@@ -77,7 +77,7 @@ public class mainSearchDao {
 	      
 	      String sql = " select b.* "
 	      		+ " from (select * from tbl_clob"
-	      		+ " where CONTENT like '%시간의 풍경%') a, EXHIBIT b "
+	      		+ " where CONTENT like '%" + searchWord.trim() + "%') a, EXHIBIT b "
 	      		+ " where a.seq = b.seq";
 	      
 	      Connection conn = null;
