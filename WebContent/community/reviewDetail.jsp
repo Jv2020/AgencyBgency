@@ -69,7 +69,26 @@ for(int i = 0; i < list.size(); i++) {
 			</div>
 		</div>
 		<div class="rv-txt">
-			<%=dto.getReview() %>
+		<%-- <%=dto.getReview() %> --%>
+			<%-- <%=if( dto.getDel() == 1 ) { %>
+				<font color="#ff0000">작성자에 의해 삭제된 리뷰입니다.</font> 
+				<%
+			}else {
+				%>
+				
+				<%
+			}
+			 %> --%>
+			 <%if(dto.getDel() == 0)  {
+				 %>
+				 <%=dto.getReview() %>
+				 <%
+			 }else {
+				 %>
+				 <font color="#ff0000"><b>작성자에 의해 삭제된 리뷰입니다.</b></font> 
+				 <%
+			 }
+			 %>
 		</div>	 		
 	</div><!-- //box -->
 <%
