@@ -249,15 +249,17 @@ public class Notice extends HttpServlet {
 				if(result) {
 					System.out.println("공지 DB 입력 완료");
 					bbs_seq = fileDao.getNoticeSeq(fileName);
-					FilesDto fileDto = new FilesDto(-1,fileName,originName,
-													filePath,bbs_name,bbs_seq,0,2);
-					boolean fileResult = fileDao.insertFile(fileDto);
-					if(fileResult) {
-						
-						System.out.println("send filePath = "+filePath);
-						System.out.println("send fileName = "+fileName);
-						
-						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+					if(fileName != null && !fileName.equals("")) {
+						FilesDto fileDto = new FilesDto(-1,fileName,originName,
+												filePath,bbs_name,bbs_seq,0,2);
+						boolean fileResult = fileDao.insertFile(fileDto);
+						if(fileResult) {
+							System.out.println("send filePath = "+filePath);
+							System.out.println("send fileName = "+fileName);
+							resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=true");
+						}else {
+						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
+						}
 					}else {
 						resp.sendRedirect(req.getContextPath()+"/admin/admin_result.jsp?result=fail");
 					}
