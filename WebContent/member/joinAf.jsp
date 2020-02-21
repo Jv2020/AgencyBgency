@@ -30,7 +30,7 @@ if(isS.equals("true")){
 } else { 
 %>	
 	<script type="text/javascript">
-	alert("회원가입에 실패하였습니다. 입력사항을 다시 확인하여 주시기 바랍니다.");
+	alert("회원가입에 실패하였습니다. 연락처 혹은 이메일주소를 확인해 주세요.");
 	location.href=history.back();
 	</script>
 <%
