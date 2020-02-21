@@ -11,7 +11,7 @@ a {text-decoration:none !important;}
 #header.sub{box-shadow:0 5px 10px rgba(0,0,0,0.1);}
 .header_top {width:100%; height:41px; font-size:0; text-align:right;}
 .header_top .inner {position:relative;}
-.header_top .inner h1{ margin:30px}
+.header_top .inner h1{ margin:25px 0;}
 .header_top span {display:inline-block; line-height:42px;}
 .header_top span a {font-size:13px; color:#333; font-weight:300;}
 .header_top span img {vertical-align:3px; margin:0 15px;}
