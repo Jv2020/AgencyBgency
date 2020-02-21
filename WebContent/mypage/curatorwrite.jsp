@@ -460,6 +460,7 @@ function handleImgFileSelect(e) {
 }
 
 $('.note-btn.btn.btn-default.btn-sm.btn-fullscreen').hide();
+$('i.note-icon-video').parent(".note-btn.btn.btn-default.btn-sm").hide();
 
 /*
 섬머노트 원래 코드 
