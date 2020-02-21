@@ -11,6 +11,7 @@ a {text-decoration:none !important;}
 #header.sub{box-shadow:0 5px 10px rgba(0,0,0,0.1);}
 .header_top {width:100%; height:41px; font-size:0; text-align:right;}
 .header_top .inner {position:relative;}
+.header_top .inner h1{ margin:30px}
 .header_top span {display:inline-block; line-height:42px;}
 .header_top span a {font-size:13px; color:#333; font-weight:300;}
 .header_top span img {vertical-align:3px; margin:0 15px;}
@@ -22,7 +23,7 @@ a {text-decoration:none !important;}
 .header-btm.fixed {position:fixed; top:0; left:50%; margin-left:-1000px; width:2000px; z-index:9999; background:#fff; box-shadow:0 5px 10px rgba(0,0,0,0.1);}
 .header-btm.fixed .gnb {margin-top:0;}
 
-.gnb {margin-top:74px; width:100%;}
+.gnb {margin-top:100px; width:100%;}
 .gnb > li {position:relative; float:left; width:150px; height:70px; line-height:70px;}
 .gnb > li:before {position:absolute; top:26px; left:0; content:''; width:1px; height:18px; background:#eee;}
 .gnb > li:first-child:before {display:none;}
